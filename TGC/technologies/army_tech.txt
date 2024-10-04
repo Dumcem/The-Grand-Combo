@@ -5135,3 +5135,153 @@
 			}
 		}
 	}
+
+	combined_arms_maneuver = {
+		area = army_leadership
+	    	year = 1929
+	    	cost = 40000
+	    	unciv_military = yes
+
+	    	morale = 1
+	    	military_tactics = 0.4
+	    	army_base = { supply_consumption = 0.20 }
+	
+	    	ai_chance = {
+	        	factor = 1.3
+	        	modifier = {
+	            		factor = 2
+	            		OR = {
+	                		war = yes
+	                		has_recently_lost_war = yes
+	            		}
+	        	}
+	        	modifier = {
+	            		factor = 1.5
+	            		any_neighbor_country = {
+	                		OR = {
+	                    			AND = {
+	                        			civilized = yes
+	                        			NOT = { is_greater_power = yes }
+	                        			military_score = THIS
+	                    			}
+	                    			overlord = {
+	                        			civilized = yes
+	                        			NOT = { is_greater_power = yes }
+	                        			military_score = THIS
+	                    			}
+	                		}
+	            		}
+	        	}
+	        	modifier = {
+	            		factor = 1.5
+	            		is_greater_power = yes
+	            		any_neighbor_country = {
+	                		OR = {
+	                    			AND = {
+	                        			is_greater_power = yes
+	                        			military_score = THIS
+	                    			}
+	                    			overlord = {
+	                        			is_greater_power = yes
+	                        			military_score = THIS
+	                    			}
+	                    			sphere_owner  = {
+	                        			is_greater_power = yes
+	                        			military_score = THIS
+	                    			}
+	                		}
+	            		}
+	        	}
+	        	modifier = {
+	            		factor = 1.3
+	            		number_of_states = 5
+	           		rank = 16
+	        	}
+	        	modifier = {
+	            		factor = 1.3
+	            		OR = {
+	                		war_policy = jingoism
+	                		NOT = { has_unclaimed_cores = no  }
+	            		}
+	        	}
+	        	modifier = {
+	            		factor = 3
+	            		has_country_flag = army_tech
+	        	}
+	    	}
+	}
+
+	global_military_tactics = {
+		area = army_leadership
+	    	year = 1939
+	    	cost = 50000
+	    	unciv_military = yes
+
+	    	morale = 1
+	    	military_tactics = 0.4
+	    	army_base = { supply_consumption = 0.20 }
+	
+	    	ai_chance = {
+	        	factor = 1.3
+	        	modifier = {
+	            		factor = 2
+	            		OR = {
+	                		war = yes
+	                		has_recently_lost_war = yes
+	            		}
+	        	}
+	        	modifier = {
+	            		factor = 1.5
+	            		any_neighbor_country = {
+	                		OR = {
+	                    			AND = {
+	                        			civilized = yes
+	                        			NOT = { is_greater_power = yes }
+	                        			military_score = THIS
+	                    			}
+	                    			overlord = {
+	                        			civilized = yes
+	                        			NOT = { is_greater_power = yes }
+	                        			military_score = THIS
+	                    			}
+	                		}
+	            		}
+	        	}
+	        	modifier = {
+	            		factor = 1.5
+	            		is_greater_power = yes
+	           		any_neighbor_country = {
+	                		OR = {
+	                    			AND = {
+	                        			is_greater_power = yes
+	                        			military_score = THIS
+	                    			}
+	                    			overlord = {
+	                        			is_greater_power = yes
+	                        			military_score = THIS
+	                    			}
+	                    			sphere_owner  = {
+	                        			is_greater_power = yes
+	                        			military_score = THIS
+	                    			}
+	                		}
+	            		}
+	        	}
+	        	modifier = {
+	            		factor = 1.3
+	            		number_of_states = 5
+	            		rank = 16
+	        	}
+	        	modifier = {
+	            		factor = 1.3
+	            		OR = {
+	               			war_policy = jingoism
+	                		NOT = { has_unclaimed_cores = no  }
+	            		}
+	        	}
+	        	modifier = {
+	            		factor = 3
+	            		has_country_flag = army_tech
+	        	}
+	    	}
+	}
