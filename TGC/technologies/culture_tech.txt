@@ -203,6 +203,64 @@
 		}
 	}
 
+	roaring_twenties = {
+		area = aesthetics
+		year = 1921
+		cost = 40000
+	
+		prestige = 0.15
+
+		ai_chance = {
+			factor = 1.01
+			modifier = {
+				factor = 2
+				is_greater_power = yes
+			}
+			modifier = {
+				factor = 0.1
+				NOT = { literacy = 0.5  }
+				is_greater_power = no
+			}			
+			modifier = {
+				factor = 1.05
+				literacy = 0.6
+			}		
+			modifier = {
+				factor = 2
+				has_country_modifier = ts_culture
+			}
+		}
+	}
+	
+	depression_expression = {
+		area = aesthetics
+		year = 1935
+		cost = 50000
+	
+		prestige = 0.15
+
+		ai_chance = {
+			factor = 1.01
+			modifier = {
+				factor = 2
+				is_greater_power = yes
+			}
+			modifier = {
+				factor = 0.1
+				NOT = { literacy = 0.5  }
+				is_greater_power = no
+			}			
+			modifier = {
+				factor = 1.05
+				literacy = 0.6
+			}		
+			modifier = {
+				factor = 2
+				has_country_modifier = ts_culture
+			}
+		}
+	}
+
 ## Philosophy ##
 
 	late_enlightenment_philosophy = {
@@ -420,11 +478,67 @@
 			}
 			modifier = {
 				factor = 1.1
-				year = 1905
+				year = 1920
 			}
 			modifier = {
 				factor = 2
-				year = 1910
+				year = 1925
+			}
+		}
+	}
+
+	scientific_philosophy = {
+		area = philosophy
+		year = 1921
+		cost = 40000
+	
+		increase_research = 1.0
+
+		ai_chance = {
+			factor = 1000 #Was 100, multiplied by check that was always true (factor 10 for civilized = yes)
+			modifier = {
+				factor = 1.02
+				has_country_modifier = ts_culture
+			}
+			modifier = {
+				factor = 20
+				rank = 16
+			}
+			modifier = {
+				factor = 1.1
+				year = 1926
+			}
+			modifier = {
+				factor = 2
+				year = 1931
+			}
+		}
+	}
+	
+	reformative_movements = {
+		area = philosophy
+		year = 1935
+		cost = 50000
+	
+		increase_research = 1.0
+
+		ai_chance = {
+			factor = 1000 #Was 100, multiplied by check that was always true (factor 10 for civilized = yes)
+			modifier = {
+				factor = 1.02
+				has_country_modifier = ts_culture
+			}
+			modifier = {
+				factor = 20
+				rank = 16
+			}
+			modifier = {
+				factor = 1.1
+				year = 1940
+			}
+			modifier = {
+				factor = 2
+				year = 1945
 			}
 		}
 	}
@@ -733,6 +847,75 @@
 			}
 		}
 	}
+
+	urban_sociology = {
+		area = social_thought
+		year = 1919
+		cost = 40000
+		
+		colonial_migration = 0.05
+		education_efficiency = 0.5
+
+		ai_chance = {
+			factor = 1.5
+			modifier = {
+				factor = 2
+				is_greater_power = yes
+			}
+			modifier = {
+				factor = 2 #2
+				NOT = { literacy = 0.75 }
+			}
+			modifier = {
+				factor = 2 #2
+				NOT = { literacy = 0.50 }
+			}
+			modifier = {
+				factor = 2 #3
+				NOT = { literacy = 0.25 }
+			}
+			modifier = {
+				factor = 1.02
+				has_country_modifier = ts_culture
+			}
+		}
+	
+	}
+	
+	universal_education = {
+		area = social_thought
+		year = 1936
+		cost = 50000
+		
+		colonial_migration = 0.05
+		education_efficiency = 0.5
+
+		ai_chance = {
+			factor = 1.5
+			modifier = {
+				factor = 2
+				is_greater_power = yes
+			}
+			modifier = {
+				factor = 2 #2
+				NOT = { literacy = 0.75 }
+			}
+			modifier = {
+				factor = 2 #2
+				NOT = { literacy = 0.50 }
+			}
+			modifier = {
+				factor = 2 #3
+				NOT = { literacy = 0.25 }
+			}
+			modifier = {
+				factor = 1.02
+				has_country_modifier = ts_culture
+			}
+		}
+	
+	}
+
 ## Political Thought ##
 
 	enlightenment_thought = {
