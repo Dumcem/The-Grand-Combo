@@ -1116,6 +1116,10 @@
 				has_country_modifier = ts_culture
 			}
 			modifier = {
+            			factor = 50
+            			tag = PRU
+        		}
+			modifier = {
 				factor = 100
 				OR = {
 					AND = {
@@ -1228,6 +1232,62 @@
 				NOT = { literacy = 0.4 }
 			}
 		}
+	}
+
+	mass_state_media = {
+		area = political_thought
+		year = 1919
+		cost = 40000
+	
+		max_national_focus = 1.0
+
+		ai_chance = {
+			factor = 2
+			modifier = {
+				factor = 5
+				is_greater_power = yes
+			}
+			modifier = {
+				factor = 5
+				total_pops = 7000000
+			}
+			modifier = {
+				factor = 3
+				has_country_modifier = ts_culture
+			}
+			modifier = {
+				factor = 0.25
+				NOT = { literacy = 0.4 }
+			}
+		}	
+	}
+
+	international_protocol = {
+		area = political_thought
+		year = 1939
+		cost = 50000
+	
+		max_national_focus = 1.0
+
+		ai_chance = {
+			factor = 2
+			modifier = {
+				factor = 5
+				is_greater_power = yes
+			}
+			modifier = {
+				factor = 5
+				total_pops = 8000000
+			}
+			modifier = {
+				factor = 3
+				has_country_modifier = ts_culture
+			}
+			modifier = {
+				factor = 0.25
+				NOT = { literacy = 0.4 }
+			}
+		}	
 	}
 
 ## Psychology ##
@@ -1476,6 +1536,72 @@
 			modifier = {
 				factor = 2
 				year = 1920
+			}
+			modifier = {
+				factor = 0.25
+				NOT = { literacy = 0.4 }
+			}
+		}
+	}
+
+	media_psychology = {
+		area = psychology
+		year = 1919
+		cost = 40000
+	
+		regular_experience_level = 10
+		reinforce_rate = 0.1
+		
+		ai_chance = {
+			factor = 1.2
+			modifier = {
+				factor = 1.25
+				is_greater_power = yes
+			}
+			modifier = {
+				factor = 1.02
+				has_country_modifier = ts_culture
+			}
+			modifier = {
+				factor = 1.1
+				year = 1925
+			}
+			modifier = {
+				factor = 2
+				year = 1930
+			}
+			modifier = {
+				factor = 0.25
+				NOT = { literacy = 0.4 }
+			}
+		}
+	}
+
+	social_psychology = {
+		area = psychology
+		year = 1939
+		cost = 50000
+	
+		regular_experience_level = 10
+		reinforce_rate = 0.1
+		
+		ai_chance = {
+			factor = 1.2
+			modifier = {
+				factor = 1.25
+				is_greater_power = yes
+			}
+			modifier = {
+				factor = 1.02
+				has_country_modifier = ts_culture
+			}
+			modifier = {
+				factor = 1.1
+				year = 1945
+			}
+			modifier = {
+				factor = 2
+				year = 1950
 			}
 			modifier = {
 				factor = 0.25
