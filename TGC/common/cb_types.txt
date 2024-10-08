@@ -1377,8 +1377,8 @@ unification_GP_humiliate = {
 	good_relation_militancy_factor = 1
 
 	can_use = {
-		is_greater_power = yes
 		THIS = { is_greater_power = yes }
+		is_greater_power = yes
 		is_culture_group = THIS
 		culture_has_union_tag = yes
 		cultural_union = { exists = no }
@@ -1451,11 +1451,10 @@ unification_release_puppet_cb = {
 	good_relation_militancy_factor = 1
 
 	can_use = {
-		THIS = { is_greater_power = yes }
+		THIS = { is_greater_power = yes nationalism_n_imperialism = 1 }
 		num_of_vassals_no_substates = 1
 		THIS = {
 			culture_has_union_tag = yes
-			nationalism_n_imperialism = 1
 			NOT = { is_cultural_union = yes }
 			NOT = { tag = KUK }
 			NOT = { tag = UBD }
@@ -1520,7 +1519,6 @@ unification_add_to_sphere = {
 
 	can_use = {
 		THIS = { is_greater_power = yes }
-		is_culture_group = THIS
 		THIS = {
 			nationalism_n_imperialism = 1
 			NOT = { tag = KUK }
@@ -1532,6 +1530,7 @@ unification_add_to_sphere = {
 			NOT = { has_country_modifier = no_more_war }
 			ai = yes
 		}
+		is_culture_group = THIS
 		part_of_sphere = no
 		culture_has_union_tag = yes
 		cultural_union = { exists = no }
@@ -1599,13 +1598,7 @@ take_from_sphere = {
 		}
 		OR = {
 			FROM = {
-				OR = {
-					capital_scope = { continent = africa }
-					capital_scope = { continent = west_africa }
-					capital_scope = { continent = central_africa }
-					capital_scope = { continent = east_africa }
-					capital_scope = { continent = south_africa }
-				}
+				has_country_flag = african_nation
 				civilized = no
 			}
 			FROM = { is_secondary_power = yes }
@@ -2061,8 +2054,6 @@ liberate_country = {
 			has_global_flag = wakhan_treaty
 			has_global_flag = persia_treaty
 		}
-		
-		
 	}
 
 	# THIS - us
@@ -2953,8 +2944,8 @@ gunboat = {
 	always = yes
 
 	can_use = {
-		in_default = THIS
 		THIS = { is_greater_power = yes	}
+		in_default = THIS
 		OR = {
 			has_country_modifier = in_bankrupcy
 			has_country_modifier = generalised_debt_default
@@ -4653,13 +4644,7 @@ establish_protectorate_casus_belli = {
 						}
 						OR = {
 							NOT = { number_of_states = 12 }
-							OR = {
-								capital_scope = { continent = africa }
-								capital_scope = { continent = central_africa }
-								capital_scope = { continent = west_africa }
-								capital_scope = { continent = east_africa }
-								capital_scope = { continent = south_africa }
-							}
+							has_country_flag = african_nation
 						}
 					}
 			}
@@ -7095,11 +7080,7 @@ USS_monroe = {
 		OR = {
 			is_culture_group = american_cultures
 			is_culture_group = neo_european_cultures
-			capital_scope = { continent = europe }
-			capital_scope = { continent = africa }
-			capital_scope = { continent = west_africa }
-			capital_scope = { continent = east_africa }
-			capital_scope = { continent = south_africa }
+			has_country_flag = african_nation
 			capital_scope = { continent = asia }
 			capital_scope = { continent = oceania }
 			capital_scope = { continent = australia_new_zealand }
