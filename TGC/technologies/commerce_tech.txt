@@ -283,7 +283,7 @@
 		year = 1929
 		cost = 40000
 
-		tax_eff = 5
+		tax_eff = 7.5
 		loan_interest = -0.025
 		administrative_efficiency = 0.025
 
@@ -317,7 +317,7 @@
 		year = 1939
 		cost = 50000
 	
-		tax_eff = 5
+		tax_eff = 7.5
 		loan_interest = -0.025
 		administrative_efficiency = 0.025
 
@@ -601,7 +601,7 @@
 		year = 1919
 		cost = 40000
 	
-		administrative_efficiency = 0.05
+		administrative_efficiency = 0.1
 
 		ai_chance = {
 			factor = 1.2
@@ -633,7 +633,7 @@
 		year = 1936
 		cost = 50000
 	
-		administrative_efficiency = 0.05
+		administrative_efficiency = 0.1
 
 		ai_chance = {
 			factor = 1.2
