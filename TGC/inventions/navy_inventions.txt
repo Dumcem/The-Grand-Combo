@@ -1421,10 +1421,15 @@
 					factor = 3
 					invention = protected_cruisers
 				}
+			        modifier = {
+			            	factor = 3
+			            	invention = submarines
+			        }
 			}
 
 			effect = {
 				cruiser = { torpedo_attack = 8 }
+				submarine = { torpedo_attack = 8 }
 			}
 		}
 
@@ -1584,6 +1589,10 @@
 					gun_power = 2
 					torpedo_attack = 4
 				}
+			        submarine = {
+			            	gun_power = 2
+			            	torpedo_attack = 4
+			        }
 			}
 		}
 
