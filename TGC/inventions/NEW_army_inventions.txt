@@ -1,0 +1,1066 @@
+#great_war_entrenchment
+land_mines_tactics = {
+    limit = { great_war_entrenchment = 1 }
+    chance = {
+        base = 2
+    }
+    effect = {
+        infantry = {
+            defence = 1
+        }
+        guard = {
+            defence = 1
+        }
+        engineer = {
+            defence = 1
+        }
+        cuirassier = {
+            defence = 1
+        }
+        dragoon = {
+            defence = 1
+        }
+        hussar = {
+            defence = 1
+        }
+        cavalry = {
+            defence = 1
+        }
+        irregular = {
+            defence = 1
+        }
+        tank = {
+            defence = 1
+        }
+        army_base = {
+            supply_consumption = 0.05
+        }
+    }
+}
+
+anti_tank_mines = {
+    limit = { great_war_entrenchment = 1 }
+    chance = {
+        base = 0
+        modifier = {
+            factor = -1
+            not = { invention = land_mines_tactics }
+        }
+        modifier = {
+            factor = 4
+            war = yes
+            war_countries = { invention = tank_experiments }
+        }
+        modifier = {
+            factor = 2
+            any_neighbor_country = { invention = tank_experiments }
+        }
+    }
+    effect = {
+        infantry = {
+            attack = 1
+        }
+        guard = {
+            attack = 1
+        }
+        engineer = {
+            attack = 1
+        }
+        irregular = {
+            attack = 1
+        }
+        army_base = {
+            supply_consumption = 0.05
+        }
+    }
+}
+
+#cold_war_era_doctrine
+land_mines_defence = {
+    limit = { cold_war_era_doctrine = 1 }
+    chance = {
+        base = 0
+        modifier = {
+            factor = 1
+            invention = land_mines_tactics
+        }
+        modifier = {
+            factor = 1
+            invention = anti_tank_mines
+        }
+    }
+    effect = {
+        infantry = {
+            defence = 1
+        }
+        guard = {
+            defence = 1
+        }
+        engineer = {
+            defence = 1
+        }
+        cuirassier = {
+            defence = 1
+        }
+        dragoon = {
+            defence = 1
+        }
+        hussar = {
+            defence = 1
+        }
+        cavalry = {
+            defence = 1
+        }
+        irregular = {
+            defence = 1
+        }
+        tank = {
+            defence = 1
+        }
+        army_base = {
+            supply_consumption = 0.05
+        }
+    }
+}
+
+dragons_teeth = {
+    limit = { cold_war_era_doctrine = 1 }
+    chance = {
+        base = 0
+        modifier = {
+            factor = -1
+            not = { invention = land_mines_defence }
+        }
+        modifier = {
+            factor = 4
+            war = yes
+            war_countries = { invention = tank_experiments }
+        }
+        modifier = {
+            factor = 2
+            any_neighbor_country = { invention = tank_experiments }
+        }
+    }
+    effect = {
+        infantry = {
+            defence = 1
+        }
+        guard = {
+            defence = 1
+        }
+        engineer = {
+            defence = 1
+        }
+        cuirassier = {
+            defence = 1
+        }
+        dragoon = {
+            defence = 1
+        }
+        hussar = {
+            defence = 1
+        }
+        cavalry = {
+            defence = 1
+        }
+        irregular = {
+            defence = 1
+        }
+        tank = {
+            defence = 1
+        }
+        army_base = {
+            supply_consumption = 0.05
+        }
+    }
+}
+
+#combined_arms
+partially_motorized_units = {
+    limit = { combined_arms = 1 }
+    chance = {
+        base = 2
+        modifier = {
+            factor = 3
+            invention = tank_experiments
+        }
+        modifier = {
+            factor = 3
+            war = yes
+            war_countries = { invention = partially_motorized_units }
+        }
+        modifier = {
+            factor = 2
+            any_neighbor_country = { invention = partially_motorized_units }
+        }
+    }
+    effect = {
+        mobilisation_size = 0.01
+        infantry = {
+            defence = 1
+            maximum_speed = 1
+            supply_cost = {
+                automobiles = 0.05
+                fuel = 0.10
+            }
+        }
+        guard = {
+            defence = 1
+            maximum_speed = 1
+            supply_cost = {
+                automobiles = 0.05
+                fuel = 0.10
+            }
+        }
+        engineer = {
+            defence = 1
+            maximum_speed = 1
+            supply_cost = {
+                automobiles = 0.05
+                fuel = 0.10
+            }
+        }
+        irregular = {
+            defence = 1
+            maximum_speed = 1
+            supply_cost = {
+                automobiles = 0.05
+                fuel = 0.10
+            }
+        }
+    }
+}
+
+partially_mechanized_units = {
+    limit = { combined_arms = 1 }
+    chance = {
+        base = 1
+        modifier = {
+            factor = -6
+            not = { invention = partially_motorized_units }
+        }
+        modifier = {
+            factor = 3
+            war = yes
+            war_countries = { invention = partially_mechanized_units }
+        }
+        modifier = {
+            factor = 2
+            any_neighbor_country = { invention = partially_mechanized_units }
+        }
+    }
+    effect = {
+        infantry = {
+            attack = 1
+            maneuver = 1
+            supply_consumption = 0.2
+        }
+        guard = {
+            attack = 1
+            maneuver = 1
+            supply_consumption = 0.2
+        }
+        engineer = {
+            attack = 0.5
+            supply_consumption = 0.2
+        }
+        irregular = {
+            attack = 0.5
+            supply_consumption = 0.2
+        }
+    }
+}
+
+combined_arms_firepower = {
+    limit = { combined_arms = 1 }
+    chance = {
+        base = 2
+            modifier = {
+            factor = 3
+            invention = tank_modernization
+        }
+        modifier = {
+            factor = 3
+            war = yes
+            war_countries = { invention = partially_mechanized_units }
+        }
+    }
+    effect = {
+        infantry = {
+            attack = 1
+            defence = 2
+            supply_consumption = 1			
+        }
+        guard = {
+            attack = 1
+            defence = 2
+            supply_consumption = 0.5
+        }
+        engineer = {
+            attack = 0.5
+            defence = 1
+            supply_consumption = 0.5
+        }
+        irregular = {
+            attack = 0.5
+            defence = 1
+            supply_consumption = 0.5
+        }	
+        tank = {
+            attack = 4
+            defence = 4
+            supply_consumption = 1	
+            maneuver = 1
+            siege = 1
+        }
+    }
+}
+
+anti_tank_rifle = {
+    limit = { combined_arms = 1 }
+    chance = {
+        base = 1
+        modifier = {
+            factor = 3
+            war = yes
+            war_countries = { invention = tank_experiments }
+        }
+        modifier = {
+            factor = 3
+            war = yes
+            war_countries = { invention = tank_modernization }
+        }
+        modifier = {
+            factor = 2
+            any_neighbor_country = { invention = tank_experiments }
+        }
+        modifier = {
+            factor = 2
+            any_neighbor_country = { invention = tank_modernization }
+        }
+    }
+    effect = {
+        infantry = {
+            attack = 2
+            supply_consumption = 0.2			
+        }
+        guard = {
+            attack = 2
+            supply_consumption = 0.2
+        }
+        engineer = {
+            attack = 1
+            supply_consumption = 0.2
+        }
+        irregular = {
+            attack = 1
+            supply_consumption = 0.2
+        }	
+    }
+}
+
+#divisional_armament
+largely_motorized_units = {
+    limit = { divisional_armament = 1 }
+    chance = {
+        base = 1
+        modifier = {
+            factor = -8
+            not = { invention = partially_motorized_units }
+        }
+        modifier = {
+            factor = 3
+            invention = tank_experiments
+        }
+        modifier = {
+            factor = 3
+            war = yes
+            war_countries = { invention = largely_motorized_units }
+        }
+        modifier = {
+            factor = 2
+            any_neighbor_country = { invention = largely_motorized_units }
+        }
+    }
+    effect = {
+        mobilisation_size = 0.01
+        infantry = {
+            defence = 2
+            maximum_speed = 3
+            supply_consumption = 0.5
+        }
+        guard = {
+            defence = 2
+            maximum_speed = 3
+            supply_consumption = 0.5
+        }
+        engineer = {
+            defence = 2
+            maximum_speed = 3
+            supply_consumption = 0.5
+        }
+        irregular = {
+            defence = 2
+            maximum_speed = 3
+            supply_consumption = 0.5
+        }
+    }
+}
+
+largely_mechanized_units = {
+    limit = { divisional_armament = 1 }
+    chance = {
+        base = 1
+        modifier = {
+            factor = -6
+            not = { invention = partially_mechanized_units }
+        }
+        modifier = {
+            factor = -6
+            not = { invention = largely_motorized_units }
+        }
+        modifier = {
+            factor = 3
+            war = yes
+            war_countries = { invention = largely_mechanized_units }
+        }
+        modifier = {
+            factor = 2
+            any_neighbor_country = { invention = largely_mechanized_units }
+        }
+    }
+    effect = {
+        infantry = {
+            attack = 2
+            maneuver = 1
+            supply_consumption = 0.3
+        }
+        guard = {
+            attack = 2
+            maneuver = 1
+            supply_consumption = 0.3
+        }
+        engineer = {
+            attack = 1
+            supply_consumption = 0.3
+        }
+        irregular = {
+            attack = 1
+            supply_consumption = 0.3
+        }
+    }
+}
+
+combined_assault = {
+    limit = { divisional_armament = 1 }
+    chance = {
+        base = 4
+        modifier = {
+            factor = 3
+            great_war_entrenchment = 1
+        }
+        modifier = {
+            factor = 2
+            heavy_explosive_ordnance = 1
+        }
+    }
+    effect = {
+        infantry = {
+            attack = 1
+            defence = 1
+        }
+        guard = {
+            attack = 1
+            defence = 1
+        }
+        engineer = {
+            attack = 1
+            defence = 1
+            siege = 1
+        }
+        tank = {
+            attack = 3
+            defence = 3
+        }
+        artillery = {
+            defence = 2
+        }
+        army_base = {
+            maximum_speed = 1
+        }
+    }
+}
+
+combined_arms_regiments = {
+    limit = { divisional_armament = 1 }
+    chance = {
+        base = 2
+        modifier = {
+            factor = 3
+            invention = tank_modernization
+        }
+        modifier = {
+            factor = 1
+            war = yes
+            war_countries = { invention = partially_mechanized_units }
+        }
+        modifier = {
+            factor = 2
+            war = yes
+            war_countries = { invention = completely_mechanized_units }
+        }
+    }
+    effect = {
+        infantry = {
+            attack = 2
+            defence = 2
+            supply_consumption = 1	
+        }
+        guard = {
+            attack = 2
+            defence = 2
+            supply_consumption = 1
+        }	
+        tank = {
+            attack = 3
+            defence = 2
+            supply_consumption = 1	
+        }
+    }
+}
+
+combined_arms_regiments = {
+    limit = { divisional_armament = 1 }
+    chance = {
+        base = 2
+        modifier = {
+            factor = 3
+            invention = tank_modernization
+        }
+        modifier = {
+            factor = 1
+            war = yes
+            war_countries = { invention = partially_mechanized_units }
+        }
+        modifier = {
+            factor = 2
+            war = yes
+            war_countries = { invention = completely_mechanized_units }
+        }
+    }
+    effect = {
+        infantry = {
+            attack = 2
+            defence = 2
+            supply_consumption = 1	
+        }
+        guard = {
+            attack = 2
+            defence = 2
+            supply_consumption = 1
+        }	
+        tank = {
+            attack = 3
+            defence = 2
+            supply_consumption = 1	
+        }
+    }
+}
+
+#heavy_explosive_ordnance
+tank_modernization = {
+    limit = {
+        heavy_explosive_ordnance = 1
+        has_country_flag = existing_country
+    }
+    chance = {
+        base = 1
+        modifier = {
+            factor = -6
+            not = { invention = light_tank }
+        }
+        modifier = {
+            factor = 3
+            war = yes
+            war_countries = { invention = tank_modernization }
+        }
+        modifier = {
+            factor = 2
+            any_neighbor_country = { invention = tank_modernization }
+        }
+    }
+    effect = {
+        tank = {
+            attack = 4
+            defence = 6
+            maneuver = 1
+            siege = 1
+            supply_consumption = 1
+        }
+    }
+}
+
+#rocket_propelled_artillery
+rocket_anti_tank_weapons = {
+    limit = { rocket_propelled_artillery = 1 }
+    chance = {
+        base = 1
+        modifier = {
+            factor = 3
+            war = yes
+            war_countries = { invention = tank_modernization }
+        }
+        modifier = {
+            factor = 2
+            any_neighbor_country = { invention = tank_modernization }
+        }
+    }
+    effect = {
+        infantry = {
+            attack = 3
+            supply_consumption = 0.2			
+        }
+        guard = {
+            attack = 3
+            supply_consumption = 0.2
+        }
+        engineer = {
+            attack = 1.5
+            supply_consumption = 0.2
+        }
+        irregular = {
+            attack = 1.5
+            supply_consumption = 0.2
+        }	
+    }
+}
+
+sperimental_multiple_rocket_launcher = {
+    limit = { rocket_propelled_artillery = 1 }
+    chance = {
+        base = 2
+        modifier = {
+            factor = 4
+            great_war_entrenchment = 1
+        }
+    }
+    effect = {
+        artillery = {
+            attack = 0.1
+            support = 0.1
+            supply_consumption = 0.25
+        }
+    }
+}
+
+early_multiple_rocket_launcher = {
+    limit = { rocket_propelled_artillery = 1 }
+    chance = {
+        base = 2
+        modifier = {
+            factor = 4
+            great_war_entrenchment = 1
+        }
+        modifier = {
+            factor = -6
+            not = { invention = sperimental_multiple_rocket_launcher }
+        }
+    }
+    effect = {
+        artillery = {
+            attack = 0.1
+            support = 0.1
+            supply_consumption = 0.25
+        }
+    }
+}
+
+advanced_multiple_rocket_launcher = {
+    limit = { rocket_propelled_artillery = 1 }
+    chance = {
+        base = 2
+        modifier = {
+            factor = 4
+            combined_arms = 1
+        }
+        modifier = {
+            factor = -6
+            not = { invention = early_multiple_rocket_launcher }
+        }
+    }
+    effect = {
+        artillery = {
+            attack = 0.1
+            support = 0.1
+            supply_consumption = 0.25
+        }
+    }
+}
+
+#experimental_radar
+early_radar_warning_system = {
+    limit = { experimental_radar = 1 }
+    chance = {
+        base = 0
+        modifier = {
+            factor = 2
+            great_war_entrenchment = 1
+        }
+        modifier = {
+            factor = -7
+            not = { invention = military_aviation }
+        }
+        modifier = {
+            factor = 3
+            war = yes
+            war_countries = { invention = military_aviation }
+        }
+        modifier = {
+            factor = 2
+            any_neighbor_country = { invention = military_aviation }
+        }
+    }
+    effect = {
+        plane = {
+            attack = 0.25
+            defence = 3
+            default_organisation = 5
+        }
+    }
+}
+
+army_air_support = {
+    limit = { experimental_radar = 1 }
+    chance = {
+        base = 0
+        modifier = {
+            factor = 2
+            combined_arms = 1
+        }
+        modifier = {
+            factor = -2
+            not = { invention = military_aviation }
+        }
+    }
+    effect = {
+        plane = {
+            support = 1
+        }
+    }
+}
+
+#advanced_radar_applications
+advanced_radar_warning_system = {
+    limit = { advanced_radar_applications = 1 }
+    chance = {
+        base = 2
+        modifier = {
+            factor = -4
+            not = { invention = early_radar_warning_system }
+        }
+        modifier = {
+            factor = 2
+            nuclear_doctrine = 1
+        }
+    }
+    effect = {
+        plane = {
+            attack = 0.25
+            defence = 3
+            default_organisation = 5
+        }
+    }
+}
+
+rocket_armed_airplanes = {
+    limit = { advanced_radar_applications = 1 }
+    chance = {
+        base = 0
+        modifier = {
+            factor = 2
+            rocket_propelled_artillery = 1
+        }
+        modifier = {
+            factor = -2
+            not = { invention = military_aviation }
+        }
+    }
+    effect = {
+        plane = {
+            attack = 0.25
+            support = 0.5
+        }
+    }
+}
+
+long_range_heavy_bombers = {
+    limit = { advanced_radar_applications = 1 }
+    chance = {
+        base = 0
+        modifier = {
+            factor = 2
+            nuclear_doctrine = 1
+        }
+        modifier = {
+            factor = -2
+            not = { invention = military_aviation }
+        }
+    }
+    effect = {
+        plane = {
+            attack = 0.5
+            support = 0.5
+        }
+    }
+}
+
+experimental_jet_fighters = {
+    limit = { advanced_radar_applications = 1 }
+    chance = {
+        base = 0
+        modifier = {
+            factor = 2
+            automated_assemblyline = 1
+        }
+        modifier = {
+            factor = -2
+            not = { invention = military_aviation }
+        }
+    }
+    effect = {
+        plane = {
+            attack = 0.25
+            defence = 2
+            maximum_speed = 1
+        }
+    }
+}
+
+first_generation_jet_fighters = {
+    limit = { advanced_radar_applications = 1 }
+    chance = {
+        base = 2
+        modifier = {
+            factor = -2
+            not = { invention = experimental_jet_fighters }
+        }
+    }
+    effect = {
+        plane = {
+            attack = 0.25
+            defence = 2
+            maximum_speed = 1
+        }
+    }
+}
+
+second_generation_jet_fighters = {
+    limit = { advanced_radar_applications = 1 }
+    chance = {
+        base = 2
+        modifier = {
+            factor = -2
+            not = { invention = first_generation_jet_fighters }
+        }
+    }
+    effect = {
+        plane = {
+            attack = 0.25
+            defence = 2
+            maximum_speed = 1
+        }
+    }
+}
+
+third_generation_jet_fighters = {
+    limit = { advanced_radar_applications = 1 }
+    chance = {
+        base = 2
+        modifier = {
+            factor = -2
+            not = { invention = second_generation_jet_fighters }
+        }
+    }
+    effect = {
+        plane = {
+            attack = 0.25
+            defence = 2
+            maximum_speed = 1
+        }
+    }
+}
+
+#combined_arms_maneuver
+speculative_fire = {
+    limit = { combined_arms_maneuver = 1 }
+    chance = {
+        base = 2
+    }
+    effect = {
+        army_base = {
+            default_organisation = 2.5
+            maximum_speed = 1
+            supply_consumption = 0.05
+        }
+    }
+}
+
+blitzkrieg = {
+    limit = { combined_arms_maneuver = 1 }
+    chance = {
+        base = 0
+        modifier = {
+            factor = 1
+            invention = partially_mechanized_units
+        }
+        modifier = {
+            factor = 1
+            invention = largely_mechanized_units
+        }
+        modifier = {
+            factor = 2
+            invention = military_aviation
+        }
+        modifier = {
+            factor = 2
+            invention = tank_modernization
+        }
+    }
+    effect = {
+        infantry = {
+            attack = 1
+            supply_consumption = 0.1			
+        }
+        guard = {
+            attack = 1
+            supply_consumption = 0.1
+        }
+        tank = {
+            attack = 2
+            supply_consumption = 0.1
+        }
+        plane = {
+            attack = 0.25
+            support = 0.5
+            supply_consumption = 0.1
+        }
+        army_base = {
+            default_organisation = 2.5
+            supply_consumption = 0.05
+        }
+    }
+}
+
+#global_military_tactics
+modern_marines = {
+    limit = {
+        global_military_tactics = 1
+        has_country_flag = existing_country
+    }
+    chance = {
+        base = 2
+        modifier = {
+            factor = 2
+            war = yes
+            war_countries = { invention = modern_marines }
+        }
+        modifier = {
+            factor = 1
+            any_neighbor_country = { invention = modern_marines }
+        }
+    }
+    effect = {
+        guard = {
+            attack = 1
+            defence = 1
+            supply_consumption = 0.1
+        }
+        army_base = {
+            default_organisation = 2.5
+            supply_consumption = 0.05
+        }
+    }
+}
+
+paratroopers = {
+    limit = { global_military_tactics = 1 }
+    chance = {
+        base = -3
+        modifier = {
+            factor = 5
+            invention = military_aviation
+        }
+        modifier = {
+            factor = 2
+            war = yes
+            war_countries = { invention = paratroopers }
+        }
+        modifier = {
+            factor = 1
+            any_neighbor_country = { invention = paratroopers }
+        }
+    }
+    effect = {
+        guard = {
+            attack = 1
+            defence = 1
+            supply_consumption = 0.1
+        }
+        army_base = {
+            default_organisation = 2.5
+            supply_consumption = 0.05
+        }
+    }
+}
+
+helicopter_support = {
+    limit = { global_military_tactics = 1 }
+    chance = {
+        base = -3
+        modifier = {
+            factor = 5
+            invention = military_aviation
+        }
+        modifier = {
+            factor = 2
+            war = yes
+            war_countries = { invention = helicopter_support }
+        }
+        modifier = {
+            factor = 1
+            any_neighbor_country = { invention = helicopter_support }
+        }
+    }
+    effect = {
+        plane = {
+            support = 0.5
+            supply_consumption = 0.1
+        }
+        army_base = {
+            default_organisation = 2.5
+            morale = 0.5
+            supply_consumption = 0.05
+        }
+    }
+}
+
+aerial_envelopment = {
+    limit = { global_military_tactics = 1 }
+    chance = {
+        base = 2
+        modifier = {
+            factor = -2
+            not = { invention = helicopter_support }
+        }
+    }
+    effect = {
+        plane = {
+            support = 0.5
+            supply_consumption = 0.1
+        }
+        army_base = {
+            default_organisation = 2.5
+            supply_consumption = 0.05
+        }
+    }
+}

@@ -1,0 +1,429 @@
+#sealift_doctrine
+supertankers = {
+    limit = { sealift_doctrine = 1 }
+    chance = {
+        base = 2
+    }
+    effect = {
+        navy_base = {
+            default_organisation = 2
+            naval_attrition = -0.05
+        }
+    }
+}
+
+#global_fleet_doctrine
+global_fleet_coordination = {
+    limit = { global_fleet_doctrine = 1 }
+    chance = {
+        base = 2
+    }
+    effect = {
+        navy_base = {
+            gun_power = 1
+        }
+        clipper_transport = {
+            gun_power = -1
+        }
+        steam_transport = {
+            gun_power = -1
+        }
+    }
+}
+
+#mobile_capital_ships
+aircraft_carriers = {
+    limit = {
+        mobile_capital_ships = 1
+        has_country_flag = existing_country
+    }
+    chance = {
+        base = 2
+        modifier = {
+            factor = 3
+            sealift_doctrine = 1
+        }
+        modifier = {
+            factor = 1
+            any_neighbor_country = { invention = aircraft_carriers }
+        }
+        modifier = {
+            factor = 2
+            war = yes
+            war_countries = { invention = aircraft_carriers }
+        }
+    }
+    effect = {
+        activate_unit = aircraftcarrier
+    }
+}
+
+#supercarrier_ships
+supercarriers = {
+    limit = { supercarrier_ships = 1 }
+    chance = {
+        base = 2
+        modifier = {
+            factor = -8
+            NOT = { invention = aircraft_carriers }
+        }
+        modifier = {
+            factor = 3
+            global_fleet_doctrine = 1
+        }
+        modifier = {
+            factor = 1
+            any_neighbor_country = { invention = supercarriers }
+        }
+        modifier = {
+            factor = 2
+            war = yes
+            war_countries = { invention = supercarriers }
+        }
+    }
+    effect = {
+        aircraftcarrier = {
+            gun_power = 10
+            hull = 20
+            supply_consumption = 0.10
+        }
+    }
+}
+
+advanced_supercarriers = {
+    limit = { supercarrier_ships = 1 }
+    chance = {
+        base = 2
+        modifier = {
+            factor = -8
+            NOT = { invention = supercarriers }
+        }
+        modifier = {
+            factor = 3
+            global_fleet_doctrine = 1
+        }
+        modifier = {
+            factor = 1
+            any_neighbor_country = { invention = advanced_supercarriers }
+        }
+        modifier = {
+            factor = 2
+            war = yes
+            war_countries = { invention = advanced_supercarriers }
+        }
+    }
+    effect = {
+        aircraftcarrier = {
+            gun_power = 10
+            hull = 20
+            supply_consumption = 0.10
+        }
+    }
+}
+
+monstrous_supercarriers = {
+    limit = { supercarrier_ships = 1 }
+    chance = {
+        base = 2
+        modifier = {
+            factor = -8
+            NOT = { invention = advanced_supercarriers }
+        }
+        modifier = {
+            factor = 3
+            global_fleet_doctrine = 1
+        }
+        modifier = {
+            factor = 1
+            any_neighbor_country = { invention = monstrous_supercarriers }
+        }
+        modifier = {
+            factor = 2
+            war = yes
+            war_countries = { invention = monstrous_supercarriers }
+        }
+    }
+    effect = {
+        aircraftcarrier = {
+            gun_power = 10
+            hull = 20
+            supply_consumption = 0.10
+        }
+    }
+}
+
+#mechanized_naval_production
+welded_hulls = {
+    limit = { mechanized_naval_production = 1 }
+    chance = {
+        base = 2
+        modifier = {
+            factor = 1
+            advanced_metallurgy = 1
+        }
+        modifier = {
+            factor = 2
+            invention = bessemer_steel
+        }
+    }
+    effect = {
+        cruiser = {
+            hull = 5
+        }
+        battleship = {
+            hull = 5
+        }
+        dreadnought = {
+            hull = 5
+        }
+        aircraftcarrier = {
+            hull = 5
+        }
+    }
+}
+
+#automated_naval_design
+rocket_launching_ships = {
+    limit = { automated_naval_design = 1 }
+    chance = {
+        base = 0
+        modifier = {
+            factor = 2
+            rocket_propelled_artillery = 1
+        }
+    }
+    effect = {
+        cruiser = {
+            gun_power = 1
+        }
+        battleship = {
+            gun_power = 2
+        }
+        dreadnought = {
+            gun_power = 3
+        }
+    }
+}
+
+advanced_rocket_launching_ships = {
+    limit = { automated_naval_design = 1 }
+    chance = {
+        base = 2
+        modifier = {
+            factor = -4
+            NOT = { invention = rocket_launching_ships }
+        }
+        modifier = {
+            factor = 2
+            invention = sperimental_multiple_rocket_launcher
+        }
+    }
+    effect = {
+        cruiser = {
+            gun_power = 1
+        }
+        battleship = {
+            gun_power = 2
+        }
+        dreadnought = {
+            gun_power = 3
+        }
+    }
+}
+
+nuclear_powered_ships = {
+    limit = { automated_naval_design = 1 }
+    chance = {
+        base = 0
+        modifier = {
+            factor = 2
+            nuclear_reactor = 1
+        }
+    }
+    effect = {
+        naval_attrition = -0.1
+        cruiser = {
+            maximum_speed = 1
+        }
+        battleship = {
+            maximum_speed = 1
+        }
+        dreadnought = {
+            maximum_speed = 1
+        }
+        aircraftcarrier = {
+            maximum_speed = 1
+        }
+        submarine = {
+            maximum_speed = 3
+        }
+    }
+}
+
+#experimental_sonar_applications
+widespread_sonar_use = {
+    limit = { experimental_sonar_applications = 1 }
+    chance = {
+        base = 0
+        modifier = {
+            factor = 1
+            invention = submarines
+        }
+        modifier = {
+            factor = 1
+            invention = advanced_submarines
+        }
+        modifier = {
+            factor = 1
+            any_neighbor_country = { invention = submarines }
+        }
+        modifier = {
+            factor = 2
+            war = yes
+            war_countries = { invention = submarines }
+        }
+        modifier = {
+            factor = 1
+            any_neighbor_country = { invention = advanced_submarines }
+        }
+        modifier = {
+            factor = 2
+            war = yes
+            war_countries = { invention = advanced_submarines }
+        }
+    }
+    effect = {
+        navy_base = {
+            default_organisation = 2
+        }
+    }
+}
+
+#advanced_sonar_integration
+advanced_widespread_sonar_use = {
+    limit = { advanced_sonar_integration = 1 }
+    chance = {
+        base = 1
+        modifier = {
+            factor = -9
+            NOT = { invention = widespread_sonar_use }
+        }
+        modifier = {
+            factor = 1
+            invention = submarines
+        }
+        modifier = {
+            factor = 1
+            invention = advanced_submarines
+        }
+        modifier = {
+            factor = 1
+            any_neighbor_country = { invention = submarines }
+        }
+        modifier = {
+            factor = 2
+            war = yes
+            war_countries = { invention = submarines }
+        }
+        modifier = {
+            factor = 1
+            any_neighbor_country = { invention = advanced_submarines }
+        }
+        modifier = {
+            factor = 2
+            war = yes
+            war_countries = { invention = advanced_submarines }
+        }
+    }
+    effect = {
+        navy_base = {
+            default_organisation = 3
+        }
+    }
+}
+
+#fleetwide_coordination
+early_naval_radar_use = {
+    limit = { fleetwide_coordination = 1 }
+    chance = {
+        base = 0
+        modifier = {
+            factor = 2
+            experimental_radar = 1
+        }
+        modifier = {
+            factor = 2
+            invention = early_radar_warning_system
+        }
+    }
+    effect = {
+        navy_base = {
+            default_organisation = 2
+        }
+    }
+}
+
+widespread_radio_use = {
+    limit = { fleetwide_coordination = 1 }
+    chance = {
+        base = 0
+        modifier = {
+            factor = 2
+            invention = wireless
+        }
+    }
+    effect = {
+        navy_base = {
+            default_organisation = 5
+        }
+    }
+}
+
+#globalized_fleet_command
+advanced_naval_radar_use = {
+    limit = { globalized_fleet_command = 1 }
+    chance = {
+        base = 2
+        modifier = {
+            factor = -4
+            NOT = { invention = early_radar_warning_system }
+        }
+        modifier = {
+            factor = 2
+            invention = advanced_radar_warning_system
+        }
+    }
+    effect = {
+        navy_base = {
+            default_organisation = 3
+        }
+    }
+}
+
+wolfpack_tactic = {
+    limit = { globalized_fleet_command = 1 }
+    chance = {
+        base = 0
+        modifier = {
+            factor = -6
+            NOT = { invention = wireless }
+        }
+        modifier = {
+            factor = 2
+            invention = submarines
+        }
+        modifier = {
+            factor = 2
+            invention = advanced_submarines
+        }
+        modifier = {
+            factor = 2
+            invention = ocean_going_submarines
+        }
+    }
+    effect = {
+        submarine = {
+            torpedo_attack = 4
+        } 
+    }
+}

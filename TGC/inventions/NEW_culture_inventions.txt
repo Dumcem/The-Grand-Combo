@@ -1,0 +1,358 @@
+#roaring_twenties (1921)
+abstract_expressionism = {
+    limit = { roaring_twenties = 1 }
+    news = no
+    chance = {
+        base = 2
+        modifier = {
+            factor = -2
+            NOT = { invention = surrealism }
+        }
+    }
+    effect = {
+        shared_prestige = 25
+    }
+}
+post_surrealism = {
+    limit = { roaring_twenties = 1 }
+    news = no
+    chance = {
+        base = 2
+        modifier = {
+            factor = -2
+            NOT = { invention = surrealism }
+        }
+    }
+    effect = {
+        shared_prestige = 25
+    }
+}
+
+#depression_expression (1935)
+op_art = {
+    limit = { depression_expression = 1 }
+    news = no
+    chance = {
+        base = 2
+    }
+    effect = {
+        shared_prestige = 25
+    }
+}
+pop_art = {
+    limit = { depression_expression = 1 }
+    news = no
+    chance = {
+        base = 2
+    }
+    effect = {
+        shared_prestige = 25
+    }
+}
+
+#scientific_philosophy (1921)
+carnaps_semantics = {
+    limit = { scientific_philosophy = 1 }
+    news = no
+    chance = {
+        base = 2
+    }
+    effect = {
+        shared_prestige = 25
+    }
+}
+logical_atomism = {
+    limit = { scientific_philosophy = 1 }
+    news = no
+    chance = {
+        base = 2
+    }
+    effect = {
+        shared_prestige = 25
+    }
+}
+theory_of_descriptions = {
+    limit = { scientific_philosophy = 1 }
+    news = no
+    chance = {
+        base = 2
+    }
+    effect = {
+        shared_prestige = 25
+    }
+}
+uncertainty_principle = {
+    limit = { scientific_philosophy = 1 }
+    news = no
+    chance = {
+        base = 2
+        modifier = {
+            factor = -4
+            NOT = { invention = quantum_theory }
+        }
+        modifier = {
+            factor = 2
+            average_consciousness = 5
+        }
+    }
+    effect = {
+        shared_prestige = 25
+    }
+}
+
+#reformative_movements (1935)
+critical_rationalism = {
+    limit = { reformative_movements = 1 }
+    news = no
+    chance = {
+        base = 2
+    }
+    effect = {
+        shared_prestige = 25
+    }
+}
+pure_theory_of_law = {
+    limit = { reformative_movements = 1 }
+    news = no
+    chance = {
+        base = 2
+    }
+    effect = {
+        shared_prestige = 25
+    }
+}
+
+#urban_sociology (1919)
+chicago_school = {
+    limit = { urban_sociology = 1 }
+    news = no
+    chance = {
+        base = 2
+        modifier = {
+            factor = 2
+            social_psychology = 1
+        }
+        modifier = {
+            factor = 1
+            tech_school = culture_tech_school
+        }
+        modifier = {
+            factor = 1
+            ruling_party_ideology = liberal
+        }
+    }
+    effect = {
+        plurality = 0.05
+    }
+}
+
+#universal_education (1936)
+modern_primary_education = {
+    limit = { universal_education = 1 }
+    news = no
+    chance = {
+        base = 2
+        modifier = {
+            factor = 1
+            tech_school = culture_tech_school
+        }
+        modifier = {
+            factor = 1
+            ruling_party_ideology = liberal
+        }
+    }
+    effect = {
+        education_efficiency = 0.20
+        plurality = 0.05
+    }
+}
+modern_secondary_education = {
+    limit = { universal_education = 1 }
+    news = no
+    chance = {
+        base = 2
+        modifier = {
+            factor = 1
+            tech_school = culture_tech_school
+        }
+        modifier = {
+            factor = 1
+            ruling_party_ideology = liberal
+        }
+    }
+    effect = {
+        education_efficiency = 0.30
+        plurality = 0.05
+    }
+}
+professional_educators = {
+    limit = { universal_education = 1 }
+    news = no
+    chance = {
+        base = 2
+        modifier = {
+            factor = 1
+            tech_school = culture_tech_school
+        }
+        modifier = {
+            factor = 1
+            ruling_party_ideology = liberal
+        }
+    }
+    effect = {
+        education_efficiency = 0.50
+    }
+}
+
+#mass_state_media (1919)
+fascist_corporativism = {
+    limit = { mass_state_media = 1 }
+    news = no
+    chance = {
+        base = 2
+        modifier = {
+            factor = 3
+            ruling_party_ideology = fascist
+        }
+        modifier = {
+            factor = 2
+            nationalvalue = nv_order
+        }
+    }
+    effect = {
+        rebel_org_gain = {
+            faction = all
+            value = -0.10
+        }
+
+        suppression_points_modifier = 0.10
+    }
+}
+resistance = {
+    limit = { mass_state_media = 1 }
+    news = no
+    chance = {
+        base = 0
+        modifier = {
+            factor = 5
+            war = yes
+        }
+    }
+    effect = {
+        rebel_org_gain = {
+            faction = partisan_rebels
+            value = 0.33
+        }
+    }
+}
+
+#international_protocol (1939)
+human_rights_movements = {
+    limit = { international_protocol = 1 }
+    news = no
+    chance = {
+        base = 2
+        modifier = {
+            factor = 1
+            average_consciousness = 3
+        }
+        modifier = {
+            factor = 1
+            average_consciousness = 5
+        }
+        modifier = {
+            factor = 1
+            average_consciousness = 7
+        }
+        modifier = {
+            factor = 1
+            ruling_party_ideology = liberal
+        }
+    }
+    political_reform_desire = 0.1
+}
+human_rights_organizations = {
+    limit = { international_protocol = 1 }
+    news = no
+    chance = {
+        base = 2
+        modifier = {
+            factor = -6
+            NOT = { invention = human_rights_movements }
+        }
+        modifier = {
+            factor = 1
+            average_consciousness = 3
+        }
+        modifier = {
+            factor = 1
+            average_consciousness = 5
+        }
+        modifier = {
+            factor = 1
+            average_consciousness = 7
+        }
+        modifier = {
+            factor = 1
+            ruling_party_ideology = liberal
+        }
+    }
+    political_reform_desire = 0.1
+}
+
+#media_psychology (1919)
+national_tv_networks = {
+    limit = { media_psychology = 1 }
+    news = no
+    chance = {
+        base = 3
+        modifier = {
+            factor = 5
+            year = 1925
+        }
+        modifier = {
+            factor = -1
+            NOT = { press_rights = free_press }
+        }
+        modifier = {
+            factor = -3
+            NOT = { invention = vacuum_tube }
+        }
+    }
+    effect = {
+        #activate_building = tv_factory
+        suppression_points_modifier = -0.05
+    }
+    core_pop_consciousness_modifier = 0.01
+}
+
+radio_tv_propaganda = {
+    limit = { media_psychology = 1 }
+    news = no
+    chance = {
+        base = 0
+        modifier = {
+            factor = -5
+            NOT = {
+                invention = radio_tv_networks
+                invention = national_tv_networks
+            }
+        }
+        modifier = {
+            factor = 3
+            OR = {
+                ruling_party_ideology = fascist
+                ruling_party_ideology = communist
+            }
+        }
+        modifier = {
+            factor = 2
+            NOT = { press_rights = free_press }
+        }
+    }
+    effect = {
+        suppression_points_modifier = 0.10
+    }
+}
+
+#social_psychology (1939)

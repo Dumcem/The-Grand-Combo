@@ -1,0 +1,250 @@
+#hydropower
+urban_electric_light = {
+    limit = { hydropower = 1 }
+    chance = {
+        base = 2
+        modifier = {
+            factor = -4
+            NOT = { invention = electrical_lighting }
+        }
+        modifier = {
+            factor = 2
+            average_consciousness = 3
+        }
+    }
+    effect = {
+        rgo_output = 0.05
+        factory_throughput = 0.02
+    }
+}
+
+#nuclear_reactor
+commercial_nuclear_plants = {
+    limit = { nuclear_reactor = 1 }
+    chance = {
+        base = 2
+        modifier = {
+            factor = 2
+            average_consciousness = 3
+        }
+    }
+    effect = {
+        rgo_output = 0.05
+        factory_throughput = 0.02
+    }
+}
+
+#automated_assemblyline
+conveyor_belt_diffusion = {
+    limit = { automated_assemblyline = 1 }
+    chance = {
+        base = 2
+        modifier = {
+            factor = 2
+            invention = fordism
+        }
+    }
+    effect = {
+        factory_throughput = 0.05
+        factory_goods_output = {
+            automobiles = 0.02
+        }
+        factory_goods_output = {
+            aeroplanes = 0.02
+        }
+        rgo_goods_output = {
+            coal = 0.2
+        }
+    }
+}
+
+perfected_power_loom = {
+    limit = { automated_assemblyline = 1 }
+    chance = {
+        base = 2
+        modifier = {
+            factor = -2
+            NOT = { invention = jacquard_power_loom }
+        }
+    }
+    effect = {
+        factory_goods_output = {
+            regular_textile = 0.05
+        }
+        factory_goods_output = {
+            luxury_textile = 0.05
+        }
+    }
+}
+
+mechanized_tufting_machine = {
+    limit = { automated_assemblyline = 1 }
+    chance = {
+        base = 2
+    }
+    effect = {
+        factory_goods_output = {
+            regular_textile = 0.05
+        }
+        factory_goods_output = {
+            luxury_textile = 0.05
+        }
+    }
+}
+
+#optimized_assembly
+experimental_robotic_production = {
+    limit = { optimized_assembly = 1 }
+    chance = {
+        base = 2
+        modifier = {
+            factor = 2
+            invention = conveyor_belt_diffusion
+        }
+    }
+    effect = {
+        factory_throughput = 0.02
+        factory_goods_output = {
+            automobiles = 0.01
+        }
+        factory_goods_output = {
+            aeroplanes = 0.01
+        }
+    }
+}
+
+early_robotic_production = {
+    limit = { optimized_assembly = 1 }
+    chance = {
+        base = 2
+        modifier = {
+            factor = -2
+            NOT = { invention = conveyor_belt_diffusion }
+        }
+    }
+    effect = {
+        factory_throughput = 0.03
+        factory_goods_output = {
+            automobiles = 0.02
+        }
+        factory_goods_output = {
+            aeroplanes = 0.02
+        }
+    }
+}
+
+#borosilicate_glass
+laboratory_glass = {
+    limit = { borosilicate_glass = 1 }
+    chance = {
+        base = 2
+        modifier = {
+            factor = 2
+            invention = pharmaceuticals
+        }
+    }
+    effect = {
+        factory_goods_output = {
+            pharmaceuticals = 0.02
+        }
+    }
+}
+
+#advanced_subsurface_mining
+methanometer = {
+    limit = { advanced_subsurface_mining = 1 }
+    chance = {
+        base = 2
+    }
+    effect = {
+        rgo_goods_output = {
+            iron = 0.2
+        }
+        rgo_goods_output = {
+            coal = 0.2
+        }
+        rgo_goods_output = {
+            sulphur = 0.2
+        }
+    }
+}
+
+#interstate_roads
+#national_highway_system
+
+#electrochemical_cell
+polarography = {
+    limit = { electrochemical_cell = 1 }
+    chance = {
+        base = 2
+        modifier = {
+            factor = -2
+            NOT = { invention = pharmaceuticals }
+        }
+    }
+    effect = {
+        factory_goods_output = {
+            pharmaceuticals = 0.02
+        }
+    }
+}
+
+#electronic_circuit
+point_contact_transistor = {
+    limit = {
+        electronic_circuit = 1
+    }
+    chance = {
+        base = 2
+    }
+    effect = {
+        factory_goods_output = {
+            radio = 0.01
+        }
+        factory_goods_output = {
+            telephones = 0.01
+        }
+    }
+}
+
+bipolar_junction_transistor = {
+    limit = {
+        electronic_circuit = 1
+    }
+    chance = {
+        base = 2
+        modifier = {
+            factor = -2
+            NOT = { invention = point_contact_transistor }
+        }
+    }
+    effect = {
+        factory_goods_output = {
+            radio = 0.02
+        }
+        factory_goods_output = {
+            telephones = 0.02
+        }
+    }
+}
+
+mosfet = {
+    limit = {
+        electronic_circuit = 1
+    }
+    chance = {
+        base = 2
+        modifier = {
+            factor = -2
+            NOT = { invention = bipolar_junction_transistor }
+        }
+    }
+    effect = {
+        factory_goods_output = {
+            radio = 0.03
+        }
+        factory_goods_output = {
+            telephones = 0.03
+        }
+    }
+}

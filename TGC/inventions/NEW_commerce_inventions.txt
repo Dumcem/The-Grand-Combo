@@ -1,0 +1,559 @@
+#international_stock_exchange
+the_imf = {
+	limit = { international_stock_exchange = 1 }
+	news = no
+	chance = {
+		base = 2
+		modifier = {
+			factor = 2
+			nationalvalue = nv_liberty
+		}
+		modifier = {
+			factor = 2
+			trade_policy = free_trade
+		}
+		modifier = {
+			factor = -6
+			government = proletarian_dictatorship
+		}
+	}
+	effect = {
+		loan_interest = -0.01 
+	}
+}
+the_comecon = {
+	limit = { international_stock_exchange = 1 }
+	news = no
+	chance = {
+		base = 0
+		modifier = {
+			factor = 5
+			government = proletarian_dictatorship 
+		}
+	}
+	effect = {
+		factory_cost = -0.01
+	}
+}
+world_bank = {
+	limit = { international_stock_exchange = 1 }
+	news = no
+	chance = {
+		base = 2
+		modifier = {
+			factor = 2
+			nationalvalue = nv_liberty
+		}
+		modifier = {
+			factor = 2
+			trade_policy = free_trade
+		}
+	}
+	effect = {
+		tax_eff = 1 
+	}
+}
+IBRD = {
+	limit = { international_stock_exchange = 1 }
+	news = no
+	chance = { 
+		base = 1
+		modifier = {
+			factor = -7
+			NOT = { year = 1948 }
+		}
+		modifier = {
+			factor = 6
+			NOT = { money = 10000 }
+		}
+	}
+	effect = {
+		tax_eff = 1
+	}
+}
+IDA = {
+	limit = { international_stock_exchange = 1 }
+	news = no
+	chance = {
+		base = 0
+		modifier = {
+			factor = 2
+			NOT = { rank = 60 }
+		}
+	}
+	effect = {
+		rgo_output = 0.05
+	}
+}
+
+#bond_markets
+reserve_transparency = {
+	limit = { bond_markets = 1 }
+	news = no
+	chance = {
+		base = 2
+		modifier = {
+			factor = 2
+			nationalvalue = nv_liberty
+		}
+		modifier = {
+			factor = 2
+			trade_policy = free_trade
+		}
+	}
+	effect = {
+		loan_interest = -0.01
+	}
+}
+banking_&_commerce_separation = {
+	limit = { bond_markets = 1 }
+	news = no
+	chance = {
+		base = 2
+		modifier = {
+			factor = 2
+			economic_policy = interventionism
+		}
+		modifier = {
+			factor = 2
+			fractional_reserve_banking = 1
+		}
+	}
+	effect ={
+		tax_eff = 1 
+	}
+}
+insurance_companies = {
+	limit = { central_clearing = 1 }
+	news = no
+	chance = {
+		base = 2
+		modifier = {
+			factor = 2
+			economic_policy = laissez_faire
+		}
+	}
+	effect = {
+		factory_cost = -0.01 
+	}
+}
+
+#fractional_reserve_banking
+end_of_pound_sterling = {
+	limit = { fractional_reserve_banking = 1 }
+	news = no
+	chance = {
+		base = 2
+		modifier = {
+			factor = 1
+			nationalvalue = nv_equality
+		}
+		modifier = {
+			factor = 1
+			economic_policy = interventionism
+		}
+	}
+	effect = {
+		tax_eff = 1 
+	}
+}
+interwar_experience = {
+	limit = { fractional_reserve_banking = 1 }
+	news = no
+	chance = {
+		base = 2
+	}
+	effect = {
+		tax_eff = 1 
+	}
+}
+#modern_cheque
+anchored_dollar_standard = {
+	limit = { modern_cheque = 1 }
+	news = no
+	chance = {
+		base = 2
+		modifier = {
+			factor = 1
+			nationalvalue = nv_equality
+		}
+		modifier = {
+			factor = 1
+			economic_policy = interventionism
+		}
+	}
+	effect = {
+		tax_eff = 1 
+	}
+}
+decimal_monetary_system = {
+	limit = { modern_cheque = 1 }
+	news = no
+	chance = {
+		base = 2
+		modifier = {
+			factor = 2
+			nationalvalue = nv_order
+		}
+		modifier = {
+			factor = 1
+			economic_policy = interventionism
+		}
+	}
+	effect = {
+		tax_eff = 1
+	}
+}
+bancor = {
+	limit = { modern_cheque = 1 }
+	news = no
+	chance = {
+		base = 1
+		modifier = {
+			factor = 2 
+			nationalvalue = nv_equality
+		}
+	}
+	effect = {
+		tax_eff = 1
+	}
+}
+monetary_interdependance = {
+	limit = { modern_cheque = 1 }
+	news = no
+	chance = {
+		base = 2 
+		modifier = {
+			factor = 2 
+			nationalvalue = nv_liberty
+		}
+		modifier = { 
+			factor = 4 
+			invention = anchored_dollar_standard
+		}
+	}
+	effect = {
+		tax_eff = 1
+	}
+}
+
+#global_market_economics
+hirofumi_uzawa = {
+	limit = { global_market_economics = 1 }
+	news = no
+	chance = {
+		base = 2
+		modifier = {
+			factor = 2
+			economic_policy = laissez_faire
+		}
+	}
+	effect = {
+		permanent_prestige = 1 
+	}
+}
+robert_solow = {
+	limit = { global_market_economics = 1 }
+	news = no
+	chance = {
+		base = 2 
+		modifier = { 
+			factor = 2 
+			economic_policy = interventionism
+		}
+	}
+	effect = {
+		permanent_prestige = 1
+	}
+}
+nicholas_kaldor = {
+	limit = { global_market_economics = 1 }
+	news = no
+	chance = {
+		base = 2
+		modifier = {
+			factor = 2
+			ruling_party_ideology = socialist
+		}
+	}
+	effect = {
+		permanent_prestige = 1
+	}
+}
+piero_sraffa = {
+	limit = { global_market_economics = 1 }
+	news = no
+	chance = {
+		base = 2
+		modifier = {
+			factor = 2
+			economic_policy = state_capitalism
+		}
+	}
+	effect = {
+		permanent_prestige = 1
+	}
+}
+
+harrod_domar_model = {
+	limit = { global_market_economics = 1 }
+	news = no
+	chance = { 
+		base = 0 
+		modifier = {
+			factor = 2
+			invention = nicholas_kaldor
+		}
+	}
+	effect = {
+		factory_input = -0.01
+	}
+}
+#institutional_economics
+kenneth_arrow = {
+	limit = { institutional_economics = 1 }
+	news = no
+	chance = {
+		base = 2
+		modifier = {
+			factor = 2
+			economic_policy = state_capitalism
+		}
+	}
+	effect = {
+		permanent_prestige = 1
+	}
+}
+joan_robinson = {
+	limit = { institutional_economics = 1 }
+	news = no
+	chance = {
+		base = 2
+		modifier = {
+			ruling_party_ideology = communist
+		}
+	}
+	effect = {
+		permanent_prestige = 1
+	}
+}
+solow_swan_model = {
+	limit = { institutional_economics = 1 }
+	news = no
+	chance = {
+		base = 0
+		modifier = {
+			factor = 2
+			invention = robert_solow
+		}
+	}
+	effect = {
+		factory_input = -0.01
+	}
+}
+cambrigde_controversy = {
+	limit = { institutional_economics = 1 }
+	news = no
+	chance = {
+		base = -2
+		modifier = {
+			factor = 2
+			invention = solow_swan_model
+		}
+		modifier = { 
+			factor = 2
+			invention = harrod_domar_model
+		}
+	}
+	effect = {
+		shared_prestige = 25
+	}
+}
+
+#market_socialism
+post_war_consensus = {
+	limit = { market_socialism = 1 }
+	news = no
+	chance = {
+		base = 2
+		modifier = {
+			factor = 2
+			ruling_party_ideology = liberal
+		}
+		modifier = {
+			factor = 2
+			nationalvalue = nv_liberty
+		}
+	}
+	effect = {
+		factory_cost = -0.01
+	}
+}
+socialist_emulation = { 
+	limit = { market_socialism = 1 }
+	news = no
+	chance = {
+		base = 2
+		modifier = {
+			factor = 2
+			economic_policy = planned_economy
+		}
+		modifier = {
+			factor = 2
+			ruling_party_ideology = communist
+		}
+	}
+	effect = { 
+		factory_output = 0.01
+	}
+}
+
+#labour_laws
+anti_trust_laws = {
+	limit = { labour_laws = 1 }
+	news = no
+	chance = {
+		base = 2
+		modifier = {
+			factor = 2
+			economic_policy = state_capitalism
+		}
+		modifier = {
+			factor = 2
+			ruling_party_ideology = socialist
+		}
+		modifier = {
+			factor = 2
+			nationalvalue = nv_equality
+		}
+	}
+	effect = {
+		factory_output = 0.01
+	}
+}
+price_fixing = {
+	limit = { labour_laws = 1 }
+	news = no
+	chance = {
+		base = 0
+		modifier = {
+			factor = 2
+			economic_policy = laissez_faire
+		}
+		modifier = { 
+			factor = 2
+			global_market_economics = 1
+		}
+	}
+	effect = { 
+		factory_cost = 0.02
+	}
+}
+
+#human_resource_management
+taylorism = {
+	limit = { human_resource_management = 1 }
+	news = no
+	chance = {
+		base = 2
+		modifier = {
+			factor = 2
+			economic_policy = laissez_faire
+		}
+		modifier = {
+			factor = 2
+			ruling_party_ideology = liberal
+		}
+	}
+	effect = {
+		factory_output = 0.01
+	}
+}
+managment_science = {
+	limit = { human_resource_management = 1 }
+	news = no
+	chance = {
+		base = 2
+		modifier = {
+			factor = 2
+			nationalvalue = nv_order
+		}
+		modifier = {
+			factor = 2
+			industry_score = 500
+		}
+	}
+	effect = {
+		factory_output = 0.01
+	}
+}
+theory_x_theory_y = {
+	limit = { human_resource_management = 1 }
+	news = no
+	chance = {
+		base = 2
+		modifier = {
+			factor = 2
+			nationalvalue = nv_equality
+		}
+	}
+	effect = {
+		factory_output = 0.01
+	}
+}
+
+#benchmarking
+toyota_system = {
+	limit = { benchmarking = 1 }
+	news = no
+	chance = {
+		base = 2
+		modifier = {
+			factor = 2
+			economic_policy = state_capitalism
+		}
+		modifier = {
+			factor = 2
+			ruling_party_ideology = conservative
+		}
+	}
+	effect = {
+		factory_output = 0.01
+	}
+}
+stakhanovite = {
+	limit = { benchmarking = 1 }
+	news = no
+	chance = {
+		base = 2
+		modifier = {
+			factor = 2
+			economic_policy = planned_economy
+		}
+		modifier = {
+			factor = 2
+			ruling_party_ideology = communist
+		}
+		modifier = {
+			factor = 2
+			invention = socialist_emulation
+		}
+	}
+	effect = {
+		factory_throughput = 0.01
+	}
+}
+udarnik = {
+	limit = { benchmarking = 1 }
+	news = no
+	chance = {
+		base = 2
+		modifier = {
+			factor = 2
+			invention = stakhanovite
+		}
+	}
+	effect = {
+		factory_throughput = 0.01
+	}
+}
