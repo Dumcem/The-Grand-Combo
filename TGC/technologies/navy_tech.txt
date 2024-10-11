@@ -2693,6 +2693,128 @@
 		}
 	}
 
+	experimental_sonar_applications = {
+		area = naval_science
+		year = 1929
+		cost = 40000
+		unciv_military = yes
+
+		supply_range = 1.0
+
+			ai_chance = {
+			factor = 0.25
+			modifier = {
+				factor = 0
+				NOT = { total_num_of_ports = 1 }
+			}
+			modifier = {
+				factor = 0.5
+				NOT = { rank = 18 }
+			}
+			modifier = {
+				factor = 1.02
+				total_num_of_ports = 30
+			}
+			modifier = {
+				factor = 1.02
+				total_amount_of_ships = 30
+			}
+			modifier = {
+				factor = 1.05
+				war = yes
+			}
+			modifier = {
+				factor = 1.02
+				OR = { has_country_modifier = ts_naval has_country_modifier = ts_japanese }
+			}
+			modifier = {
+				factor = 0
+				NOT = { total_amount_of_ships = 1 }
+			}
+			modifier = {
+				factor = 1.05
+				rank = 16
+			}
+			modifier = {
+				factor = 1.02
+				total_amount_of_ships = 15
+			}
+			modifier = {
+				factor = 1.02
+				total_amount_of_ships = 50
+			}
+			modifier = {
+				factor = 0
+				NOT = { mobile_capital_ships = 1 }
+			}
+			modifier = {
+				factor = 0.25
+				NOT = { literacy = 0.4 }
+			}
+		}
+	}
+
+	advanced_sonar_integration = {
+		area = naval_science
+		year = 1939
+		cost = 50000
+		unciv_military = yes
+
+		supply_range = 1.0
+
+			ai_chance = {
+			factor = 0.25
+			modifier = {
+				factor = 0
+				NOT = { total_num_of_ports = 1 }
+			}
+			modifier = {
+				factor = 0.5
+				NOT = { rank = 18 }
+			}
+			modifier = {
+				factor = 1.02
+				total_num_of_ports = 30
+			}
+			modifier = {
+				factor = 1.02
+				total_amount_of_ships = 30
+			}
+			modifier = {
+				factor = 1.05
+				war = yes
+			}
+			modifier = {
+				factor = 1.02
+				OR = { has_country_modifier = ts_naval has_country_modifier = ts_japanese }
+			}
+			modifier = {
+				factor = 0
+				NOT = { total_amount_of_ships = 1 }
+			}
+			modifier = {
+				factor = 1.05
+				rank = 16
+			}
+			modifier = {
+				factor = 1.02
+				total_amount_of_ships = 15
+			}
+			modifier = {
+				factor = 1.02
+				total_amount_of_ships = 50
+			}
+			modifier = {
+				factor = 0
+				NOT = { supercarrier_ships = 1 }
+			}
+			modifier = {
+				factor = 0.25
+				NOT = { literacy = 0.4 }
+			}
+		}
+	}
+
 ## Naval Leadership ##
 
 	the_command_principle = {
@@ -3205,4 +3327,146 @@
 		}
 	}
 
-	
+	fleetwide_coordination = {
+		area = naval_leadership
+		year = 1929
+		cost = 36000
+		unciv_military = yes
+
+		navy_base = { default_organisation = 5 }
+
+		ai_chance = {
+			factor = 0.25
+			# Land-locked countries don't research this
+			modifier = {
+				factor = 0
+				NOT = { total_num_of_ports = 1 }
+			}
+			# Low LIT countries should pay less attention here (0.2 = Craftsmen ceiling)
+			modifier = {
+				factor = 0.8
+				NOT = { literacy = 0.2 }
+			}
+			# Valuable to naval tech school countries (UK)
+			modifier = {
+				factor = 1.15
+				OR = { has_country_modifier = ts_naval has_country_modifier = ts_japanese }
+			}
+			# More popular when at war
+			modifier = {
+				factor = 1.05
+				war = yes
+			}
+			# GPs with 9 or more coastal provinces (Prussia+)
+			modifier = {
+				factor = 1.05
+				total_num_of_ports = 9
+				is_greater_power = yes
+				clipper_design = 1
+			}
+			# GPs and SPs with more than 12 ports
+			modifier = {
+				factor = 1.05
+				total_num_of_ports = 12
+				rank = 16
+				clipper_design = 1
+			}
+			# Bigger navy, more weight
+			modifier = {
+				factor = 1.1
+				total_amount_of_ships = 20
+			}
+			modifier = {
+				factor = 1.1
+				total_amount_of_ships = 40
+			}
+			modifier = {
+				factor = 1.1
+				total_amount_of_ships = 60
+			}
+			modifier = {
+				factor = 1.1
+				total_amount_of_ships = 80
+			}
+			modifier = {
+				factor = 0
+				NOT = { mobile_capital_ships = 1 }
+			}
+			modifier = {
+				factor = 0.25
+				NOT = { literacy = 0.4 }
+			}
+		}
+	}
+
+	globalized_fleet_command = {
+		area = naval_leadership
+		year = 1939
+		cost = 43600
+		unciv_military = yes
+
+		navy_base = { default_organisation = 5 }
+
+		ai_chance = {
+			factor = 0.25
+			# Land-locked countries don't research this
+			modifier = {
+				factor = 0
+				NOT = { total_num_of_ports = 1 }
+			}
+			# Low LIT countries should pay less attention here (0.2 = Craftsmen ceiling)
+			modifier = {
+				factor = 0.8
+				NOT = { literacy = 0.2 }
+			}
+			# Valuable to naval tech school countries (UK)
+			modifier = {
+				factor = 1.15
+				OR = { has_country_modifier = ts_naval has_country_modifier = ts_japanese }
+			}
+			# More popular when at war
+			modifier = {
+				factor = 1.05
+				war = yes
+			}
+			# GPs with 9 or more coastal provinces (Prussia+)
+			modifier = {
+				factor = 1.05
+				total_num_of_ports = 9
+				is_greater_power = yes
+				clipper_design = 1
+			}
+			# GPs and SPs with more than 12 ports
+			modifier = {
+				factor = 1.05
+				total_num_of_ports = 12
+				rank = 16
+				clipper_design = 1
+			}
+			# Bigger navy, more weight
+			modifier = {
+				factor = 1.1
+				total_amount_of_ships = 20
+			}
+			modifier = {
+				factor = 1.1
+				total_amount_of_ships = 40
+			}
+			modifier = {
+				factor = 1.1
+				total_amount_of_ships = 60
+			}
+			modifier = {
+				factor = 1.1
+				total_amount_of_ships = 80
+			}
+			modifier = {
+				factor = 0
+				NOT = { supercarrier_ships = 1 }
+			}
+			modifier = {
+				factor = 0.25
+				NOT = { literacy = 0.4 }
+			}
+		}
+	}
