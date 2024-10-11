@@ -1,3 +1,123 @@
+		submarines = {
+			limit = {
+		        	steam_turbine_ships = 1
+		        	has_country_flag = existing_country
+		    	}
+		    	chance = {
+		        	base = 5
+		        	modifier = {
+		            		factor = 2
+		            		invention = torpedo_boats
+		        	}
+		        	modifier = {
+		            		factor = 2
+		            		naval_logistics = 1
+		        	}
+		        	modifier = {
+		            		factor = 1
+		            		any_neighbor_country = { invention = submarines }
+		        	}
+		        	modifier = {
+		            		factor = 2
+		            		war = yes
+		            		war_countries = { invention = submarines }
+		        	}
+		    	}
+		    	effect = {
+		        	activate_unit = submarine
+		    	}
+		}
+
+		advanced_submarines = {
+		    	limit = { oil_driven_ships = 1 }
+		    	chance = {
+		        	base = 2
+		        	modifier = {
+		            		factor = -6
+		            		NOT = { invention = submarines }
+		        	}
+		        	modifier = {
+		            		factor = 2
+		            		naval_directionism = 1
+		        	}
+		        	modifier = {
+		            		factor = 2
+		            		advanced_naval_design = 1
+		        	}
+		    	}
+		    	effect = {
+		        	submarine = {
+		            	hull = 1
+		            	gun_power = 1
+		        	}
+		    	}
+		}
+
+		ocean_going_submarines = {
+		    	limit = { oil_driven_ships = 1 }
+		    	chance = {
+		        	base = 2
+		        	modifier = {
+		            		factor = -4
+		            		NOT = { invention = submarines }
+		        	}
+		        	modifier = {
+		            		factor = 2
+		            		invention = advanced_submarines
+		        	}
+		        	modifier = {
+		            		factor = 2
+		            		combustion_engine = 1
+		        	}
+		   	 }
+		    	effect = {
+		        	submarine = {
+		            		maximum_speed = 4
+		        	} 		
+		    	}
+		}
+
+        self_propelled_torpedoes = {
+                limit = { advanced_naval_design = 1 }
+                chance = {
+                    base = 0
+                    modifier = {
+                        factor = -2
+                        NOT = { invention = submarines }
+                    }
+                    modifier = {
+                        factor = 2
+                        invention = torpedo_attacks
+                    }
+                }
+                effect = {
+                    submarine = { torpedo_attack = 4 }
+                }
+        }
+        
+        torpedo_gyroscope = {
+                limit = { advanced_naval_design = 1 }
+                chance = {
+                    base = 2
+                    modifier = {
+                        factor = -4
+                        NOT = { invention = torpedo_attacks }
+                    }
+                    modifier = {
+                        factor = 2
+                        invention = self_propelled_torpedoes
+                    }
+                    modifier = {
+                        factor = 2
+                        naval_risk_management = 1
+                    }
+                }
+                effect = {
+                    submarine = { torpedo_attack = 8 }
+                }
+        }
+
+
 #sealift_doctrine
 supertankers = {
     limit = { sealift_doctrine = 1 }
