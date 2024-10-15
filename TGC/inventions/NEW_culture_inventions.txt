@@ -228,23 +228,23 @@ fascist_corporativism = {
         suppression_points_modifier = 0.10
     }
 }
-resistance = {
-    limit = { mass_state_media = 1 }
-    news = no
-    chance = {
-        base = 0
-        modifier = {
-            factor = 5
-            war = yes
-        }
-    }
-    effect = {
-        rebel_org_gain = {
-            faction = partisan_rebels
-            value = 0.33
-        }
-    }
-}
+#resistance = {
+#    limit = { mass_state_media = 1 }
+#    news = no
+#    chance = {
+#        base = 0
+#        modifier = {
+#            factor = 5
+#            war = yes
+#        }
+#    }
+#    effect = {
+#        rebel_org_gain = {
+#            faction = partisan_rebels
+#            value = 0.33
+#        }
+#    }
+#}
 
 #international_protocol (1939)
 human_rights_movements = {
