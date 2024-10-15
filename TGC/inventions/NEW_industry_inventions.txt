@@ -140,7 +140,7 @@ laboratory_glass = {
         base = 2
         modifier = {
             factor = 2
-            invention = pharmaceuticals
+            invention = vitamins
         }
     }
     effect = {
@@ -179,7 +179,7 @@ polarography = {
         base = 2
         modifier = {
             factor = -2
-            NOT = { invention = pharmaceuticals }
+            NOT = { invention = vitamins }
         }
     }
     effect = {
