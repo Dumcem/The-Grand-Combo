@@ -346,6 +346,40 @@
 		}
 	}
 
+	global_capital_markets = {
+		area = financial_institutions
+		year = 1956
+		cost = 60000
+	
+		tax_eff = 7.5
+		loan_interest = -0.025
+		administrative_efficiency = 0.025
+
+		ai_chance = {
+			factor = 1.5
+			modifier = {
+				factor = 10
+				NOT = { money = 1000 }
+			}
+			modifier = {
+				factor = 5
+				NOT = { money = 10000 }
+			}
+			modifier = {
+				factor = 1.5
+				rank = 16
+			}
+			modifier = {
+				factor = 8
+				economic_policy = laissez_faire
+			}
+			modifier = {
+				factor = 1.02
+				has_country_modifier = ts_commerce
+			}
+		}
+	}
+
 ## Monetary System ##
 
 	no_standard = {
@@ -632,6 +666,38 @@
 		area = monetary_system
 		year = 1936
 		cost = 50000
+	
+		administrative_efficiency = 0.1
+
+		ai_chance = {
+			factor = 1.2
+			modifier = {
+				factor = 10
+				NOT = { money = 1000 }
+			}
+			modifier = {
+				factor = 5
+				NOT = { money = 10000 }
+			}
+			modifier = {
+				factor = 5
+				economic_policy = laissez_faire
+			}
+			modifier = {
+				factor = 1.1
+				rank = 16
+			}
+			modifier = {
+				factor = 1.02
+				has_country_modifier = ts_commerce
+			}
+		}
+	}
+
+	electronic_fund_transfers = {
+		area = monetary_system
+		year = 1956
+		cost = 60000
 	
 		administrative_efficiency = 0.1
 
@@ -988,6 +1054,49 @@
 		area = economic_thought_and_critique
 		year = 1936
 		cost = 60000
+	
+		factory_input = -0.03
+		factory_cost = -0.05
+		rgo_goods_output = { precious_goods = 0.1 }
+		rgo_size = { precious_goods = 0.05 }
+
+		ai_chance = {
+			factor = 1.01
+			modifier = {
+				factor = 1.2
+				industrial_score = 3200 #1000
+			}
+			modifier = {
+				factor = 1.2
+				industrial_score = 4000 #1500
+			}
+			modifier = {
+				factor = 1.04
+				any_owned_province = { trade_goods = precious_goods }
+			}
+			modifier = {
+				factor = 3
+				has_country_modifier = ts_commerce
+			}
+			modifier = {
+				factor = 1.05
+				literacy = 0.3 
+			}
+			modifier = {
+				factor = 1.05
+				literacy = 0.6
+			}
+			modifier = {
+				factor = 0.25
+				NOT = { literacy = 0.4 }
+			}
+		}
+	}
+
+	development_economics = {
+		area = economic_thought_and_critique
+		year = 1956
+		cost = 70000
 	
 		factory_input = -0.03
 		factory_cost = -0.05
@@ -1420,7 +1529,6 @@
 				NOT = { literacy = 0.4 }
 			}
 		}	
-		
 	}
 	
 	labour_laws = {
@@ -1460,7 +1568,45 @@
 				NOT = { literacy = 0.4 }
 			}
 		}	
-		
+	}
+
+	consumer_protection_laws = {
+		area = market_functionality
+		year = 1956
+		cost = 28000
+	
+		influence = 0.2
+		rgo_goods_output = { precious_goods = 0.20 }
+		farm_rgo_eff = 0.10
+		mine_rgo_eff = 0.10
+
+		ai_chance = {
+			factor = 1.01
+			modifier = {
+				factor = 1.2
+				is_greater_power = yes
+			}
+			modifier = {
+				factor = 1.2
+				industrial_score = 1000
+			}
+			modifier = {
+				factor = 1.2
+				industrial_score = 1500
+			}
+			modifier = {
+				factor = 1.04
+				any_owned_province = { trade_goods = precious_goods }
+			}
+			modifier = {
+				factor = 3
+				has_country_modifier = ts_commerce
+			}
+			modifier = {
+				factor = 0.25
+				NOT = { literacy = 0.4 }
+			}
+		}	
 	}
 
 ## Tech Organization ##
@@ -1808,6 +1954,45 @@
 		area = tech_organization
 		year = 1936
 		cost = 50000
+	
+		factory_output = 0.01
+		factory_cost = -0.01
+		rgo_goods_output = { precious_goods = 0.1 }
+		rgo_size = { precious_goods = 0.05 }
+
+		ai_chance = {
+			factor = 1.03
+			modifier = {
+				factor = 1.2
+				is_greater_power = yes
+			}
+			modifier = {
+				factor = 1.2
+				industrial_score = 2000
+			}
+			modifier = {
+				factor = 1.2
+				industrial_score = 3750
+			}
+			modifier = {
+				factor = 1.04
+				any_owned_province = { trade_goods = precious_goods }
+			}
+			modifier = {
+				factor = 3
+				has_country_modifier = ts_commerce
+			}
+			modifier = {
+				factor = 0.25
+				NOT = { literacy = 0.4 }
+			}
+		}	
+	}
+
+	operational_research = {
+		area = tech_organization
+		year = 1956
+		cost = 60000
 	
 		factory_output = 0.01
 		factory_cost = -0.01
