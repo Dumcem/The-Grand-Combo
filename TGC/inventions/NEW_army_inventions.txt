@@ -569,10 +569,7 @@ combined_arms_regiments = {
 
 #heavy_explosive_ordnance
 tank_modernization = {
-    limit = {
-        heavy_explosive_ordnance = 1
-        has_country_flag = existing_country
-    }
+    limit = { heavy_explosive_ordnance = 1 }
     chance = {
         base = 1
         modifier = {
@@ -953,10 +950,7 @@ blitzkrieg = {
 
 #global_military_tactics
 modern_marines = {
-    limit = {
-        global_military_tactics = 1
-        has_country_flag = existing_country
-    }
+    limit = { global_military_tactics = 1 }
     chance = {
         base = 2
         modifier = {
