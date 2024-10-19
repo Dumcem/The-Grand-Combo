@@ -1,8 +1,5 @@
 		submarines = {
-			limit = {
-		        	steam_turbine_ships = 1
-		        	has_country_flag = existing_country
-		    	}
+			limit = { steam_turbine_ships = 1 }
 		    	chance = {
 		        	base = 5
 		        	modifier = {
