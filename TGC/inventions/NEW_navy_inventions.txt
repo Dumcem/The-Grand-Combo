@@ -150,10 +150,7 @@ global_fleet_coordination = {
 
 #mobile_capital_ships
 aircraft_carriers = {
-    limit = {
-        mobile_capital_ships = 1
-        has_country_flag = existing_country
-    }
+    limit = { mobile_capital_ships = 1 }
     chance = {
         base = 2
         modifier = {
