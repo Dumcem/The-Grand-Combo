@@ -987,7 +987,7 @@ FIN_hms_government;Kingdom of Finland;;;;;;;;;;;;;x
 FIN_proletarian_dictatorship;Red Finland;;;;;;;;;;;;;x
 FIN_prussian_constitutionalism;Kingdom of Finland;;;;;;;;;;;;;x
 FIU_bourgeois_dictatorship;Carnaro;;;;;;;;;;;;;x
-FIU_democracy;Free State of Fiume;ùtat libre de Fiume;Freistaat Fiume;;;;;;;;;;;x
+FIU_democracy;Free State of Fiume;…tat libre de Fiume;Freistaat Fiume;;;;;;;;;;;x
 FIU_fascist_dictatorship;Carnaro;;;;;;;;;;;;;x
 FIU_presidential_dictatorship;Carnaro;;;;;;;;;;;;;x
 FJN_fascist_dictatorship;Min Republic;;;;;;;;;;;;;x
@@ -1281,6 +1281,14 @@ JBJ_proletarian_dictatorship;Zakatal DR;;;;;;;;;;;;;x
 JBJ_prussian_constitutionalism;Djamaats of Djaro-Belokani;;;;;;;;;;;;;x
 JBJ_rus_colonial_company;Zakataly Okrug;;;;;;;;;;;;;x
 JBJ_rus_dominion;Zakataly Okrug;;;;;;;;;;;;;x
+TBS_absolute_monarchy;Jalisco;;;;;;;;;;;;;x
+TBS_democracy;Jalisco;;;;;;;;;;;;;x
+TBS_fascist_dictatorship;Jalisco State;;;;;;;;;;;;;x
+TBS_federal_democracy;Jalisco;;;;;;;;;;;;;x
+TBS_hms_government;Jalisco;;;;;;;;;;;;;x
+TBS_presidential_dictatorship;Jalisco;;;;;;;;;;;;;x
+TBS_proletarian_dictatorship;Peopleís Republic of Jalisco;;;;;;;;;;;;;x
+TBS_prussian_constitutionalism;Jalisco;;;;;;;;;;;;;x
 KAG_absolute_monarchy;Kaga;;;;;;;;;;;;;x
 KAG_hms_government;Kaga;;;;;;;;;;;;;x
 KAG_prussian_constitutionalism;Kaga;;;;;;;;;;;;;x
@@ -1535,6 +1543,14 @@ MAF_democracy;Central African Federation;;;;;;;;;;;;;x
 MAF_dominion;Freistaat Mittelafrika;;;;;;;;;;;;;x
 MAF_hms_government;Freistaat Mittelafrika;;;;;;;;;;;;;x
 MAF_prussian_constitutionalism;Freistaat Mittelafrika;;;;;;;;;;;;;x
+MAI_absolute_monarchy;Idar State;;;;;;;;;;;;;x
+MAI_bourgeois_dictatorship;Idar;;;;;;;;;;;;;x
+MAI_democracy;Idar;;;;;;;;;;;;;x
+MAI_fascist_dictatorship;Idar State;;;;;;;;;;;;;x
+MAI_hms_government;Idar State;;;;;;;;;;;;;x
+MAI_presidential_dictatorship;Idar State;;;;;;;;;;;;;x
+MAI_proletarian_dictatorship;Idar;;;;;;;;;;;;;x
+MAI_prussian_constitutionalism;Idar State;;;;;;;;;;;;;x
 MAL_absolute_monarchy;Tidore Sultanate;;;;;;;;;;;;;x
 MAL_hms_government;Tidore Sultanate;;;;;;;;;;;;;x
 MAL_prussian_constitutionalism;Tidore Sultanate;;;;;;;;;;;;;x
@@ -1783,7 +1799,7 @@ PBC_hms_government;Peru-Bolivia;;;;;;;;;;;;;x
 PBC_presidential_dictatorship;Peru-Bolivia;;;;;;;;;;;;;x
 PBC_proletarian_dictatorship;Peopleís Andine Republic;;;;;;;;;;;;;x
 PBC_prussian_constitutionalism;Great Peru;;;;;;;;;;;;;x
-PBC_colonial_company;Virreinato del Peru;;;;;;;;;;;;;x
+PBC_colonial_company;Viceroyalty of Peru;;;;;;;;;;;;;x
 PEI_colonial_company;Prince Edward Island Colony;;;;;;;;;;;;;x
 PEI_dominion;Dominion of Prince Edward Island;;;;;;;;;;;;;x
 PEI_hms_governmenr;Prince Edward Island;;;;;;;;;;;;;x
@@ -2141,7 +2157,7 @@ TBS_prussian_constitutionalism;Tabasco;;;;;;;;;;;;;x
 TCA_colonial_company;Caucasus Viceroyalty;;;;;;;;;;;;;x
 TEX_colonial_company;New Kingdom of the Philippines;;;;;;;;;;;;;x
 TEX_democracy;Republic of Texas;;;;;;;;;;;;;x
-TEX_federal_democracy;Republic of Texas;;;;;;;;;;;;;x
+TEX_democracy2;Republic of Texas;;;;;;;;;;;;;x
 TEX_presidential_dictatorship;Republic of Texas;;;;;;;;;;;;;x
 TKM_absolute_monarchy;Akhal-Tekke;;;;;;;;;;;;;x
 TKM_hms_government;Salor Confederation;;;;;;;;;;;;;x

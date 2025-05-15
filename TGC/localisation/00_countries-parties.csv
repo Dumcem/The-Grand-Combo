@@ -2547,6 +2547,29 @@ JAV_liberal;The Liberal Faction;Faction libÈrale;Die liberale Fraktion;;;;;;;;;;
 JAV_reactionary;The Nationalist Faction;Faction nationaliste;Die nationalistische Fraktion;;;;;;;;;;;x
 JAV_social_liberal;Social-Liberals;Social-Liberals;Social-Liberals;;;;;;;;;;;x
 JAV_socialist;The Socialist Faction;Faction socialiste;Die sozialistische Fraktion;;;;;;;;;;;x
+JLS_anarcho_liberal;FacciÛn Radical;Partido Federalista;Partido Federalista;;;;;;;;;;;x
+JLS_anarcho_liberal_1;Convencionistas;Partido Federalista;Partido Federalista;;;;;;;;;;;x
+JLS_anarcho_liberal_2;FacciÛn Radical;Partido Federalista;Partido Federalista;;;;;;;;;;;x
+JLS_communist;FacciÛn Comunista;;;;;;;;;;;;;x
+JLS_communist_1;Partido Comunista TabasqueÒo;;;;;;;;;;;;;x
+JLS_conservative;Partido Conservador;Partido Conservador;Partido Conservador;;;;;;;;;;;x
+JLS_conservative_1;Santanistas;Partido Moderado Liberal;Partido Moderado Liberal;;;;;;;;;;;x
+JLS_conservative_2;Circuito Nacional Porfirista;Partido Moderado Liberal;Partido Moderado Liberal;;;;;;;;;;;x
+JLS_conservative_3;Porfiristas;Partido Constitucionalista;Partido Constitucionalista;;;;;;;;;;;x
+JLS_conservative_4;Centristas;Partido Constitucionalista;Partido Constitucionalista;;;;;;;;;;;x
+JLS_fascist;FacciÛn Fascista;;;;;;;;;;;;;x
+JLS_fascist_1;Partido Fascista TabasqueÒo;;;;;;;;;;;;;x
+JLS_fascist_2;AcciÛn Revolucionaria TabasqueÒista;;;;;;;;;;;;;x
+JLS_liberal;Partido Liberal;Partido Liberal;Partido Liberal;;;;;;;;;;;x
+JLS_liberal_1;Partido Constitucional Progresista;Partido Radical Liberal;Partido Radical Liberal;;;;;;;;;;;x
+JLS_liberal_2;Constitucionalistas;Partido Progresista;Partido Progresista;;;;;;;;;;;x
+JLS_liberal_3;Partido Nacional Antirreeleccionista;;;;;;;;;;;;;x
+JLS_reactionary;Imperialistas;Partido Imperialista;Partido Imperialista;;;;;;;;;;;x
+JLS_socialist;FacciÛn Socialista;Partido Imperialista;Partido Imperialista;;;;;;;;;;;x
+JLS_socialist_1;Partido Liberal TabasqueÒo;;;;;;;;;;;;;x
+JLS_socialist_2;Partido Liberal Constitucionalista;;;;;;;;;;;;;x
+JLS_socialist_3;Partido Laborista TabasqueÒo;;;;;;;;;;;;;x
+JLS_socialist_4;Partido Nacional Revolucionario;;;;;;;;;;;;;x
 JNG_anarcho_liberal;Radical Faction;Anarchist Faction;Anarchist Faction;;;;;;;;;;;x
 JNG_communist;Communist Faction;Communist Faction;Communist Faction;;;;;;;;;;;x
 JNG_conservative;Conservative Faction;Conservative Faction;;;;;;;;;;;;x
@@ -4564,7 +4587,7 @@ SIO_communist;Communist Party;Parti communiste;Communist Party;;;;;;;;;;;x
 SIO_conservative;Traditional Party;Parti traditionnel;Traditional Party;;;;;;;;;;;x
 SIO_conservative_2;National Party;Parti national;National Party;;;;;;;;;;;x
 SIO_fascist;Fascist Party;Parti fasciste;Fascist Party;;;;;;;;;;;x
-SIO_liberal;Keetoowah Society;SociÈtùEKeetoowah;Keetoowah Society;;;;;;;;;;;x
+SIO_liberal;Keetoowah Society;SociÈtÈ Keetoowah;Keetoowah Society;;;;;;;;;;;x
 SIO_reactionary;Nationalist Party;Parti nationaliste;Nationalist Party;;;;;;;;;;;x
 SIO_socialist;Social Party;Parti social;Social Party;;;;;;;;;;;x
 SLE_anarcho_liberal;National Unity Movement;;;;;;;;;;;;;x
