@@ -991,7 +991,7 @@
 		}
 	}
 		
-	cold_war_era_doctrine = {
+	nuclear_doctrine = {
 		    area = army_doctrine
 		    year = 1941
 		    cost = 50000
