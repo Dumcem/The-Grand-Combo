@@ -7,32 +7,22 @@ land_mines_tactics = {
     effect = {
         infantry = {
             defence = 1
+            supply_consumption = 0.05
         }
         guard = {
             defence = 1
+            supply_consumption = 0.05
         }
         engineer = {
             defence = 1
-        }
-        cuirassier = {
-            defence = 1
-        }
-        dragoon = {
-            defence = 1
-        }
-        hussar = {
-            defence = 1
-        }
-        cavalry = {
-            defence = 1
+            supply_consumption = 0.05
         }
         irregular = {
             defence = 1
+            supply_consumption = 0.05
         }
         tank = {
             defence = 1
-        }
-        army_base = {
             supply_consumption = 0.05
         }
     }
@@ -59,17 +49,18 @@ anti_tank_mines = {
     effect = {
         infantry = {
             attack = 1
+            supply_consumption = 0.05
         }
         guard = {
             attack = 1
+            supply_consumption = 0.05
         }
         engineer = {
             attack = 1
+            supply_consumption = 0.05
         }
         irregular = {
             attack = 1
-        }
-        army_base = {
             supply_consumption = 0.05
         }
     }
@@ -92,32 +83,22 @@ land_mines_defence = {
     effect = {
         infantry = {
             defence = 1
+            supply_consumption = 0.05
         }
         guard = {
             defence = 1
+            supply_consumption = 0.05
         }
         engineer = {
             defence = 1
-        }
-        cuirassier = {
-            defence = 1
-        }
-        dragoon = {
-            defence = 1
-        }
-        hussar = {
-            defence = 1
-        }
-        cavalry = {
-            defence = 1
+            supply_consumption = 0.05
         }
         irregular = {
             defence = 1
+            supply_consumption = 0.05
         }
         tank = {
             defence = 1
-        }
-        army_base = {
             supply_consumption = 0.05
         }
     }
@@ -144,36 +125,69 @@ dragons_teeth = {
     effect = {
         infantry = {
             defence = 1
+            supply_consumption = 0.05
         }
         guard = {
             defence = 1
+            supply_consumption = 0.05
         }
         engineer = {
             defence = 1
-        }
-        cuirassier = {
-            defence = 1
-        }
-        dragoon = {
-            defence = 1
-        }
-        hussar = {
-            defence = 1
-        }
-        cavalry = {
-            defence = 1
+            supply_consumption = 0.05
         }
         irregular = {
             defence = 1
+            supply_consumption = 0.05
         }
         tank = {
             defence = 1
-        }
-        army_base = {
             supply_consumption = 0.05
         }
     }
 }
+
+#asymmetric_warfare_doctrine
+guerrilla_tactics = {
+    limit = { asymmetric_warfare_doctrine = 1 }
+    chance = {
+        base = 2
+    }
+    effect = {
+        irregular = {
+            defence = 2
+            attack = 1
+            supply_consumption = 0.05
+        }
+    }
+}
+
+urban_resistance = {
+    limit = { asymmetric_warfare_doctrine = 1 }
+    chance = {
+        base = 1
+        modifier = {
+            factor = 2
+            war = yes
+            war_countries = { invention = guerrilla_tactics }
+        }
+        modifier = {
+            factor = 2
+            any_neighbor_country = { invention = guerrilla_tactics }
+        }
+    }
+    effect = {
+        irregular = {
+            defence = 1
+            attack = 1
+            supply_consumption = 0.05
+        }
+        engineer = {
+            defence = 1
+            supply_consumption = 0.05
+        }
+    }
+}
+
 
 #combined_arms
 partially_motorized_units = {
