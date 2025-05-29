@@ -77,7 +77,7 @@ anti_tank_mines = {
 
 #cold_war_era_doctrine
 land_mines_defence = {
-    limit = { cold_war_era_doctrine = 1 }
+    limit = { nuclear_doctrine = 1 }
     chance = {
         base = 0
         modifier = {
@@ -124,7 +124,7 @@ land_mines_defence = {
 }
 
 dragons_teeth = {
-    limit = { cold_war_era_doctrine = 1 }
+    limit = { nuclear_doctrine = 1 }
     chance = {
         base = 0
         modifier = {
