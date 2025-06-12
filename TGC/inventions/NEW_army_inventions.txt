@@ -689,6 +689,60 @@ tank_modernization = {
     }
 }
 
+advanced_anti_fortification_shells = {
+    limit = { heavy_explosive_ordnance = 1 }
+    chance = {
+        base = 1
+        modifier = {
+            factor = 2
+            war = yes
+        }
+        modifier = {
+            factor = 2
+            invention = tank_modernization
+        }
+    }
+    effect = {
+        artillery = {
+            attack = 1
+            siege = 1
+            supply_consumption = 0.2
+        }
+        engineer = {
+            attack = 1
+            siege = 1
+            supply_consumption = 0.1
+        }
+    }
+}
+
+coordinated_armour_artillery = {
+    limit = { 
+        heavy_explosive_ordnance = 1
+        tank_modernization = 1
+    }
+    chance = {
+        base = 1
+        modifier = {
+            factor = 2
+            war = yes
+        }
+    }
+    effect = {
+        tank = {
+            attack = 2
+            defence = 1
+            supply_consumption = 0.5
+        }
+        artillery = {
+            attack = 1
+            support = 1
+            supply_consumption = 0.2
+        }
+    }
+}
+
+
 #rocket_propelled_artillery
 rocket_anti_tank_weapons = {
     limit = { rocket_propelled_artillery = 1 }
@@ -785,6 +839,194 @@ advanced_multiple_rocket_launcher = {
         }
     }
 }
+
+rocket_barrage_tactics = {
+    limit = { rocket_propelled_artillery = 1 }
+    chance = {
+        base = 1
+        modifier = {
+            factor = 2
+            war = yes
+        }
+        modifier = {
+            factor = 2
+            invention = rocket_anti_tank_weapons
+        }
+    }
+    effect = {
+        artillery = {
+            attack = 2
+            defence = 1
+            supply_consumption = 0.3
+        }
+        engineer = {
+            attack = 1
+            supply_consumption = 0.2
+        }
+    }
+}
+
+mobile_rocket_launchers = {
+    limit = { rocket_propelled_artillery = 1 }
+    chance = {
+        base = 1
+        modifier = {
+            factor = 2
+            war = yes
+        }
+        modifier = {
+            factor = 2
+            invention = rocket_barrage_tactics
+        }
+    }
+    effect = {
+        artillery = {
+            attack = 1
+            maximum_speed = 1
+            supply_consumption = 0.3
+        }
+        tank = {
+            attack = 1
+            supply_consumption = 0.3
+        }
+    }
+}
+
+thermobaric_rockets = {
+    limit = { rocket_propelled_artillery = 1 }
+    chance = {
+        base = 1
+        modifier = {
+            factor = 2
+            war = yes
+        }
+        modifier = {
+            factor = 2
+            invention = mobile_rocket_launchers
+        }
+    }
+    effect = {
+        artillery = {
+            attack = 1
+            siege = 1
+            supply_consumption = 0.3
+        }
+        engineer = {
+            attack = 1
+            siege = 1
+            supply_consumption = 0.2
+        }
+    }
+}
+
+
+#guided_missile_systems
+anti_tank_guided_missiles = {
+    limit = { guided_missile_systems = 1 }
+    chance = {
+        base = 2
+        modifier = {
+            factor = 2
+            war = yes
+        }
+    }
+    effect = {
+        infantry = {
+            attack = 2
+            supply_consumption = 0.2
+        }
+        guard = {
+            attack = 2
+            supply_consumption = 0.2
+        }
+        engineer = {
+            attack = 1
+            supply_consumption = 0.2
+        }
+        tank = {
+            defence = 1
+            supply_consumption = 0.2
+        }
+    }
+}
+
+surface_to_surface_missiles = {
+    limit = { guided_missile_systems = 1 }
+    chance = {
+        base = 1
+        modifier = {
+            factor = 2
+            war = yes
+        }
+        modifier = {
+            factor = 2
+            invention = anti_tank_guided_missiles
+        }
+    }
+    effect = {
+        artillery = {
+            attack = 2
+            siege = 1
+            supply_consumption = 0.3
+        }
+        tank = {
+            attack = 1
+            supply_consumption = 0.2
+        }
+        engineer = {
+            siege = 1
+            supply_consumption = 0.1
+        }
+    }
+}
+
+mobile_missile_battalions = {
+    limit = { guided_missile_systems = 1 }
+    chance = {
+        base = 1
+        modifier = {
+            factor = 2
+            invention = surface_to_surface_missiles
+        }
+    }
+    effect = {
+        artillery = {
+            maximum_speed = 1
+            attack = 1
+            supply_consumption = 0.2
+        }
+        tank = {
+            maximum_speed = 1
+            supply_consumption = 0.2
+        }
+    }
+}
+
+precision_guided_munitions = {
+    limit = { guided_missile_systems = 1 }
+    chance = {
+        base = 1
+        modifier = {
+            factor = 2
+            invention = mobile_missile_battalions
+        }
+    }
+    effect = {
+        artillery = {
+            attack = 1
+            supply_consumption = 0.1
+        }
+        tank = {
+            attack = 1
+            supply_consumption = 0.1
+        }
+        infantry = {
+            attack = 1
+            supply_consumption = 0.1
+        }
+    }
+}
+
 
 #experimental_radar
 early_radar_warning_system = {
