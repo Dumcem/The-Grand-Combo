@@ -581,6 +581,84 @@ combined_arms_regiments = {
     }
 }
 
+#divisional_armament
+assault_rifle_development = {
+    limit = { automatic_infantry_weapons = 1 }
+    chance = {
+        base = 2
+        modifier = {
+            factor = 2
+            war = yes
+        }
+        modifier = {
+            factor = 2
+            invention = combined_arms_firepower
+        }
+    }
+    effect = {
+        infantry = {
+            attack = 2
+            defence = 1
+            supply_consumption = 0.2
+        }
+        guard = {
+            attack = 2
+            defence = 1
+            supply_consumption = 0.2
+        }
+        engineer = {
+            attack = 1
+            defence = 1
+            supply_consumption = 0.1
+        }
+    }
+}
+
+squad_automatic_weapons = {
+    limit = { automatic_infantry_weapons = 1 }
+    chance = {
+        base = 2
+        modifier = {
+            factor = 2
+            war = yes
+        }
+    }
+    effect = {
+        infantry = {
+            attack = 1
+            defence = 1
+            supply_consumption = 0.1
+        }
+        guard = {
+            attack = 1
+            defence = 1
+            supply_consumption = 0.1
+        }
+    }
+}
+
+personal_defense_weapons = {
+    limit = { automatic_infantry_weapons = 1 }
+    chance = {
+        base = 1
+        modifier = {
+            factor = 2
+            war = yes
+        }
+    }
+    effect = {
+        engineer = {
+            defence = 1
+            supply_consumption = 0.05
+        }
+        irregular = {
+            defence = 1
+            supply_consumption = 0.05
+        }
+    }
+}
+
+
 #heavy_explosive_ordnance
 tank_modernization = {
     limit = { heavy_explosive_ordnance = 1 }
