@@ -2642,7 +2642,7 @@ state_visit_to_argentina_title;State Visit to Argentina;;;;;;;;;;;;;x
 state_visit_to_argentina_desc;President Campos Sales has been invited to Buenos Aires on an official visit to help promote closer relations between the two nations. The Chilean press, due to currently strained relations between Chile and Argentina, are speculating that we are about to form an alliance with Argentina against Chile. Should we accept the invitation?;;;;;;;;;;;;;x
 statuto_albertino_desc;The Statuto Albertino was the constitution that Charles Albert conceded to the Kingdom of Sardinia-Piedmont, in response to concerning revolutionary activity in the country, on March 4th, 1848. The Statute remained the basis of the kingdom’s legal system even after Italian unification and would be used, although in modified forms, all the way up until 1948.;;;;;;;;;;;;;x
 statuto_albertino_title;The Statuto Albertino;Le Statut albertin;Die Statuto Albertino;;;;;;;;;;;x
-stop_accepting_the_slovaks_desc;Without control of Slovakia it’s pointless to control;;;;;;;;;;;;;x
+stop_accepting_the_slovaks_desc;With our loss of control of Slovakia, we have similarly lost any claim of accepting the Slovak people.;;;;;;;;;;;;;x
 stop_accepting_the_slovaks_title;Rejecting the Slovaks;;;;;;;;;;;;;x
 stop_poland_lithuania_desc;The Poland-Lithuanian union is at an end. We must put aside our dreams of greatness and return to our roots as Poland itself.;;;;;;;;;;;;;x
 stop_poland_lithuania_title;End the Commonwealth;;;;;;;;;;;;;x
@@ -3601,3 +3601,11 @@ dismantle_german_confederation_desc;Our armies triumphantly march through Berlin
 dismantle_german_confederation_title;Dismantle the German Confederation;;;;;;;;;;;;;x
 press_schleswig_issue_title;Press the Schleswig Issue;;;;;;;;;;;;;x
 press_schleswig_issue_desc;;;;;;;;;;;;;;x
+forced_yinxu_excavations_desc;Yinxu, the last capital of the Shang Dynasty, holds great promise for archaeological discovery. We've moved beyond the old methods of treasure hunting and amateur digging, now is the time for a modern expedition, equipped with the latest techniques. Oracle bones, bronze artifacts, and forgotten tombs await beneath the earth. And since we control the region, we can begin directly.;;;;;;;;;;;;;x
+forced_yinxu_excavations_title;The Ruins of Yin;;;;;;;;;;;;;x
+yinxu_excavations_desc;Yinxu, the ancient capital of the Shang Dynasty, remains one of the most significant archaeological sites in China. Instead of treasure hunting or unstructured digs, we should deploy a modern expedition, bringing scientific methods to uncover the secrets of this lost civilization.;;;;;;;;;;;;;x
+yinxu_excavations_title;The Ruins of Yin;;;;;;;;;;;;;x
+forced_indus_excavations_desc;The Indus Valley, home to Harappa and Mohenjo-Daro, holds great promise for archaeological discovery. We'e moved beyond the old methods of plundering ruins and untrained digging, now is the time for a modern expedition. Advanced techniques will allow us to uncover the mysteries of this lost civilization, and with direct control over the region, we can begin at once.;;;;;;;;;;;;;x
+forced_indus_excavations_title;The Lost Cities of the Indus;;;;;;;;;;;;;x
+indus_excavations_desc;The ruins of Harappa and Mohenjo-Daro remain some of the most important archaeological sites in history. Rather than relying on crude methods of the past, we should launch a modern excavation, applying scientific techniques to reveal the secrets of the Indus Valley Civilization.;;;;;;;;;;;;;x
+indus_excavations_title;The Lost Cities of the Indus;;;;;;;;;;;;;x
