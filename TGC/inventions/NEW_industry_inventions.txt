@@ -169,8 +169,61 @@ methanometer = {
     }
 }
 
+deep_shaft_ventilation = {
+    limit = { advanced_subsurface_mining = 1 }
+    chance = {
+        base = 2
+        modifier = {
+            factor = 2
+            invention = methanometer
+        }
+    }
+    effect = {
+        mine_rgo_eff = 0.05
+        rgo_goods_output = {
+            coal = 0.1
+        }
+        rgo_goods_output = {
+            sulphur = 0.1
+        }
+    }
+}
+
 #interstate_roads
 #national_highway_system
+highway_logistics_corridors = {
+    limit = { national_highway_system = 1 }
+    chance = {
+        base = 2
+        modifier = {
+            factor = 2
+            invention = autobahn
+        }
+    }
+    effect = {
+        supply_limit = 0.05
+        land_attrition = -0.01
+    }
+}
+
+intermodal_freight_terminals = {
+    limit = { national_highway_system = 1 }
+    chance = {
+        base = 2
+        modifier = {
+            factor = 2
+            invention = highway_logistics_corridors
+        }
+        modifier = {
+            factor = 2
+            average_consciousness = 4
+        }
+    }
+    effect = {
+        factory_input = -0.005
+        rgo_throughput = 0.02
+    }
+}
 
 #electrochemical_cell
 polarography = {

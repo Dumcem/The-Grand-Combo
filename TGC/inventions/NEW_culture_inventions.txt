@@ -334,7 +334,6 @@ radio_tv_propaganda = {
         modifier = {
             factor = -5
             NOT = {
-                invention = radio_tv_networks
                 invention = national_tv_networks
             }
         }
@@ -356,6 +355,45 @@ radio_tv_propaganda = {
 }
 
 #social_psychology (1939)
+mass_opinion_research = {
+    limit = { social_psychology_advanced = 1 }
+    news = no
+    chance = {
+        base = 2
+        modifier = {
+            factor = 2
+            invention = chicago_school
+        }
+        modifier = {
+            factor = 1
+            average_consciousness = 4
+        }
+    }
+    effect = {
+        plurality = 0.01
+        research_points_modifier = 0.01
+    }
+}
+
+applied_social_psychology = {
+    limit = { social_psychology_advanced = 1 }
+    news = no
+    chance = {
+        base = 2
+        modifier = {
+            factor = 2
+            invention = mass_opinion_research
+        }
+        modifier = {
+            factor = 1
+            average_consciousness = 5
+        }
+    }
+    effect = {
+        education_efficiency = 0.01
+        core_pop_consciousness_modifier = 0.005
+    }
+}
 
 #cognitive_science
 cognitive_behavioral_therapy = {

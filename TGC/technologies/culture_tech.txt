@@ -1577,7 +1577,7 @@
 		}
 	}
 
-	social_psychology = {
+	social_psychology_advanced = {
 		area = psychology
 		year = 1939
 		cost = 50000
@@ -1635,7 +1635,7 @@
 			}
 			modifier = {
 				factor = 0
-				NOT = { social_psychology = 1 }
+				NOT = { social_psychology_advanced = 1 }
 			}
 			modifier = {
 				factor = 0.25
