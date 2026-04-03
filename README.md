@@ -227,3 +227,17 @@ Honorable mentions and ex-Developers:
 * Fraggy
 * LouisTheFly
 * anzu-3278
+
+## 1966 campaign extension — progress snapshot (fork workflow)
+
+If you are extending the campaign end date to **01/01/1966**, current data in this branch indicates:
+
+- Campaign end date is already configured to `1966.1.1` in `TGC/common/defines.lua`.
+- Technology progression is partially extended: army/commerce reach 1956, culture reaches 1950, industry 1945, and navy still tops out at 1939.
+- Additional post-1936 invention packs (`NEW_*_inventions.txt`) exist, but still need a full balancing and localization validation pass.
+
+Recommended order of work to finish the extension cleanly:
+1. Extend navy, industry, and culture tech branches to a coherent late-game timeline (up to 1964–1966 tiers).
+2. Attach invention sets to each new late tech tier, with conservative bonuses and explicit gating.
+3. Run a full localization sweep (`key` + `_desc`) for every newly added tech/invention.
+4. Perform at least three long smoke-test campaigns (major industrial GP, naval GP, medium nation) to validate balance and AI behavior in the 1936–1966 window.

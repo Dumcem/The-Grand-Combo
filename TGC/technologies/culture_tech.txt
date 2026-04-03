@@ -1609,3 +1609,101 @@
 			}
 		}
 	}
+
+	cognitive_science = {
+		area = psychology
+		year = 1956
+		cost = 60000
+
+		regular_experience_level = 10
+		reinforce_rate = 0.1
+		education_efficiency = 0.02
+
+		ai_chance = {
+			factor = 1.2
+			modifier = {
+				factor = 1.25
+				is_greater_power = yes
+			}
+			modifier = {
+				factor = 1.02
+				has_country_modifier = ts_culture
+			}
+			modifier = {
+				factor = 1.1
+				year = 1958
+			}
+			modifier = {
+				factor = 0
+				NOT = { social_psychology = 1 }
+			}
+			modifier = {
+				factor = 0.25
+				NOT = { literacy = 0.4 }
+			}
+		}
+	}
+
+	applied_cognitive_policy = {
+		area = psychology
+		year = 1964
+		cost = 70000
+
+		education_efficiency = 0.02
+		research_points_modifier = 0.02
+		regular_experience_level = 10
+
+		ai_chance = {
+			factor = 1.2
+			modifier = {
+				factor = 1.25
+				is_greater_power = yes
+			}
+			modifier = {
+				factor = 1.05
+				has_country_modifier = ts_culture
+			}
+			modifier = {
+				factor = 1.1
+				year = 1966
+			}
+			modifier = {
+				factor = 0
+				NOT = { cognitive_science = 1 }
+			}
+			modifier = {
+				factor = 0.25
+				NOT = { literacy = 0.4 }
+			}
+		}
+	}
+
+	behavioral_systems_analysis = {
+		area = psychology
+		year = 1966
+		cost = 76000
+
+		education_efficiency = 0.02
+		research_points_modifier = 0.02
+		plurality = 0.01
+
+		ai_chance = {
+			factor = 1.2
+			modifier = {
+				factor = 1.25
+				is_greater_power = yes
+			}
+			modifier = {
+				factor = 1.05
+				has_country_modifier = ts_culture
+			}
+			modifier = {
+				factor = 0
+				NOT = { applied_cognitive_policy = 1 }
+			}
+			modifier = {
+				factor = 0.25
+				NOT = { literacy = 0.4 }
+			}
+		}
+	}

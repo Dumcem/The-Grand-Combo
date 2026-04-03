@@ -557,3 +557,167 @@ udarnik = {
 		factory_throughput = 0.01
 	}
 }
+#global_capital_markets
+sovereign_wealth_funds = {
+	limit = { global_capital_markets = 1 }
+	news = no
+	chance = {
+		base = 2
+		modifier = {
+			factor = 2
+			nationalvalue = nv_order
+		}
+	}
+	effect = {
+		factory_cost = -0.01
+		tax_eff = 0.5
+	}
+}
+
+syndicated_credit_lines = {
+	limit = { global_capital_markets = 1 }
+	news = no
+	chance = {
+		base = 2
+		modifier = {
+			factor = 2
+			trade_policy = free_trade
+		}
+	}
+	effect = {
+		loan_interest = -0.005
+		factory_input = -0.01
+	}
+}
+
+#electronic_fund_transfers
+interbank_clearing_networks = {
+	limit = { electronic_fund_transfers = 1 }
+	news = no
+	chance = {
+		base = 2
+		modifier = {
+			factor = 2
+			invention = sovereign_wealth_funds
+		}
+	}
+	effect = {
+		administrative_efficiency = 0.01
+		factory_throughput = 0.01
+	}
+}
+
+retail_card_networks = {
+	limit = { electronic_fund_transfers = 1 }
+	news = no
+	chance = {
+		base = 2
+		modifier = {
+			factor = 2
+			nationalvalue = nv_liberty
+		}
+	}
+	effect = {
+		tax_eff = 0.5
+		factory_output = 0.01
+	}
+}
+
+#development_economics
+human_capital_investment = {
+	limit = { development_economics = 1 }
+	news = no
+	chance = {
+		base = 2
+		modifier = {
+			factor = 2
+			nationalvalue = nv_equality
+		}
+	}
+	effect = {
+		education_efficiency = 0.02
+		factory_output = 0.01
+	}
+}
+
+targeted_industrial_policy = {
+	limit = { development_economics = 1 }
+	news = no
+	chance = {
+		base = 2
+		modifier = {
+			factor = 2
+			economic_policy = state_capitalism
+		}
+	}
+	effect = {
+		factory_throughput = 0.01
+		rgo_throughput = 0.02
+	}
+}
+
+#operational_research
+operations_research_labs = {
+	limit = { operational_research = 1 }
+	news = no
+	chance = {
+		base = 2
+		modifier = {
+			factor = 2
+			industry_score = 1000
+		}
+	}
+	effect = {
+		factory_throughput = 0.01
+		factory_input = -0.01
+	}
+}
+
+algorithmic_supply_planning = {
+	limit = { operational_research = 1 }
+	news = no
+	chance = {
+		base = 2
+		modifier = {
+			factor = 2
+			invention = operations_research_labs
+		}
+	}
+	effect = {
+		supply_limit = 0.1
+		land_attrition = -0.01
+	}
+}
+
+#consumer_protection_laws
+product_safety_agencies = {
+	limit = { consumer_protection_laws = 1 }
+	news = no
+	chance = {
+		base = 2
+		modifier = {
+			factor = 2
+			nationalvalue = nv_equality
+		}
+	}
+	effect = {
+		administrative_efficiency = 0.01
+		plurality = 0.01
+	}
+}
+
+antitrust_enforcement = {
+	limit = { consumer_protection_laws = 1 }
+	news = no
+	chance = {
+		base = 2
+		modifier = {
+			factor = 2
+			economic_policy = interventionism
+		}
+	}
+	effect = {
+		factory_output = 0.01
+		factory_cost = -0.01
+	}
+}

@@ -3470,3 +3470,131 @@
 			}
 		}
 	}
+
+	integrated_naval_command = {
+		area = naval_leadership
+		year = 1956
+		cost = 60000
+		unciv_military = yes
+
+		navy_base = {
+			default_organisation = 5
+			naval_organisation = 0.05
+			blockade_efficiency = 0.05
+		}
+
+		ai_chance = {
+			factor = 0.25
+			modifier = {
+				factor = 0
+				NOT = { total_num_of_ports = 1 }
+			}
+			modifier = {
+				factor = 1.15
+				OR = { has_country_modifier = ts_naval has_country_modifier = ts_japanese }
+			}
+			modifier = {
+				factor = 1.1
+				war = yes
+			}
+			modifier = {
+				factor = 1.1
+				total_num_of_ports = 12
+				rank = 16
+			}
+			modifier = {
+				factor = 1.1
+				total_amount_of_ships = 80
+			}
+			modifier = {
+				factor = 0
+				NOT = { globalized_fleet_command = 1 }
+			}
+			modifier = {
+				factor = 0.25
+				NOT = { literacy = 0.4 }
+			}
+		}
+	}
+
+	satellite_naval_coordination = {
+		area = naval_leadership
+		year = 1964
+		cost = 70000
+		unciv_military = yes
+
+		navy_base = {
+			default_organisation = 5
+			naval_organisation = 0.05
+			maximum_speed = 0.5
+		}
+
+		ai_chance = {
+			factor = 0.25
+			modifier = {
+				factor = 0
+				NOT = { total_num_of_ports = 1 }
+			}
+			modifier = {
+				factor = 1.2
+				OR = { has_country_modifier = ts_naval has_country_modifier = ts_japanese }
+			}
+			modifier = {
+				factor = 1.15
+				war = yes
+			}
+			modifier = {
+				factor = 1.1
+				total_amount_of_ships = 100
+			}
+			modifier = {
+				factor = 0
+				NOT = { integrated_naval_command = 1 }
+			}
+			modifier = {
+				factor = 0.25
+				NOT = { literacy = 0.4 }
+			}
+		}
+	}
+
+	autonomous_fleet_doctrine = {
+		area = naval_leadership
+		year = 1966
+		cost = 76000
+		unciv_military = yes
+
+		navy_base = {
+			default_organisation = 5
+			naval_organisation = 0.05
+			blockade_efficiency = 0.05
+		}
+
+		ai_chance = {
+			factor = 0.25
+			modifier = {
+				factor = 0
+				NOT = { total_num_of_ports = 1 }
+			}
+			modifier = {
+				factor = 1.2
+				OR = { has_country_modifier = ts_naval has_country_modifier = ts_japanese }
+			}
+			modifier = {
+				factor = 1.15
+				war = yes
+			}
+			modifier = {
+				factor = 1.1
+				total_amount_of_ships = 120
+			}
+			modifier = {
+				factor = 0
+				NOT = { satellite_naval_coordination = 1 }
+			}
+			modifier = {
+				factor = 0.25
+				NOT = { literacy = 0.4 }
+			}
+		}
+	}

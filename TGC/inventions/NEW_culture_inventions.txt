@@ -356,3 +356,102 @@ radio_tv_propaganda = {
 }
 
 #social_psychology (1939)
+
+#cognitive_science
+cognitive_behavioral_therapy = {
+    limit = { cognitive_science = 1 }
+    news = no
+    chance = {
+        base = 2
+        modifier = {
+            factor = 2
+            average_consciousness = 4
+        }
+    }
+    effect = {
+        plurality = 0.01
+        shared_prestige = 25
+    }
+}
+
+mass_psychometrics = {
+    limit = { cognitive_science = 1 }
+    news = no
+    chance = {
+        base = 2
+        modifier = {
+            factor = 2
+            invention = post_surrealism
+        }
+    }
+    effect = {
+        education_efficiency = 0.02
+        plurality = 0.01
+    }
+}
+
+#applied_cognitive_policy
+evidence_based_education = {
+    limit = { applied_cognitive_policy = 1 }
+    news = no
+    chance = {
+        base = 2
+        modifier = {
+            factor = 2
+            invention = mass_psychometrics
+        }
+    }
+    effect = {
+        education_efficiency = 0.02
+        plurality = 0.01
+    }
+}
+
+mass_media_literacy = {
+    limit = { applied_cognitive_policy = 1 }
+    news = no
+    chance = {
+        base = 2
+        modifier = {
+            factor = 2
+            average_consciousness = 5
+        }
+    }
+    effect = {
+        suppression_points_modifier = 0.05
+        shared_prestige = 25
+    }
+}
+
+#behavioral_systems_analysis
+policy_feedback_institutes = {
+    limit = { behavioral_systems_analysis = 1 }
+    news = no
+    chance = {
+        base = 2
+        modifier = {
+            factor = 2
+            invention = evidence_based_education
+        }
+    }
+    effect = {
+        research_points_modifier = 0.01
+        education_efficiency = 0.02
+    }
+}
+
+social_impact_modeling = {
+    limit = { behavioral_systems_analysis = 1 }
+    news = no
+    chance = {
+        base = 2
+        modifier = {
+            factor = 2
+            average_consciousness = 5
+        }
+    }
+    effect = {
+        plurality = 0.01
+        suppression_points_modifier = 0.05
+    }
+}
