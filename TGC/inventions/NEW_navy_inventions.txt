@@ -148,6 +148,47 @@ global_fleet_coordination = {
     }
 }
 
+fleet_signal_standardization = {
+    limit = { global_fleet_doctrine = 1 }
+    chance = {
+        base = 2
+        modifier = {
+            factor = 2
+            invention = global_fleet_coordination
+        }
+        modifier = {
+            factor = 1
+            war = yes
+        }
+    }
+    effect = {
+        navy_base = {
+            default_organisation = 1
+            blockade_efficiency = 0.02
+        }
+    }
+}
+
+layered_screening_doctrine = {
+    limit = { global_fleet_doctrine = 1 }
+    chance = {
+        base = 1
+        modifier = {
+            factor = 2
+            invention = fleet_signal_standardization
+        }
+        modifier = {
+            factor = 1
+            invention = advanced_submarines
+        }
+    }
+    effect = {
+        cruiser = { reconnaissance = 1 }
+        commerce_raider = { reconnaissance = 1 }
+        navy_base = { default_organisation = 1 }
+    }
+}
+
 #mobile_capital_ships
 aircraft_carriers = {
     limit = { mobile_capital_ships = 1 }
@@ -453,6 +494,26 @@ advanced_widespread_sonar_use = {
         navy_base = {
             default_organisation = 3
         }
+    }
+}
+
+anti_submarine_patrol_grids = {
+    limit = { advanced_sonar_integration = 1 }
+    chance = {
+        base = 1
+        modifier = {
+            factor = 2
+            invention = advanced_widespread_sonar_use
+        }
+        modifier = {
+            factor = 2
+            war = yes
+        }
+    }
+    effect = {
+        cruiser = { reconnaissance = 1 }
+        submarine = { evasion = -0.05 }
+        navy_base = { default_organisation = 1 }
     }
 }
 

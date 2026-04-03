@@ -518,49 +518,6 @@ combined_arms_regiments = {
             war = yes
             war_countries = { invention = partially_mechanized_units }
         }
-        modifier = {
-            factor = 2
-            war = yes
-            war_countries = { invention = completely_mechanized_units }
-        }
-    }
-    effect = {
-        infantry = {
-            attack = 2
-            defence = 2
-            supply_consumption = 1	
-        }
-        guard = {
-            attack = 2
-            defence = 2
-            supply_consumption = 1
-        }	
-        tank = {
-            attack = 3
-            defence = 2
-            supply_consumption = 1	
-        }
-    }
-}
-
-combined_arms_regiments = {
-    limit = { divisional_armament = 1 }
-    chance = {
-        base = 2
-        modifier = {
-            factor = 3
-            invention = tank_modernization
-        }
-        modifier = {
-            factor = 1
-            war = yes
-            war_countries = { invention = partially_mechanized_units }
-        }
-        modifier = {
-            factor = 2
-            war = yes
-            war_countries = { invention = completely_mechanized_units }
-        }
     }
     effect = {
         infantry = {

@@ -2226,7 +2226,7 @@
 		}
 	}
 
-	automated_naval_design = {
+		automated_naval_design = {
 		area = naval_engineering
 		year = 1939
 		cost = 37600
@@ -2234,8 +2234,8 @@
 
 		navy_base = { build_time = -10 }
 
-		ai_chance = {
-			factor = 0.25
+			ai_chance = {
+				factor = 0.6
 			# Land-locked countries don't research this
 			modifier = {
 				factor = 0
@@ -2754,7 +2754,7 @@
 		}
 	}
 
-	advanced_sonar_integration = {
+		advanced_sonar_integration = {
 		area = naval_science
 		year = 1939
 		cost = 50000
@@ -2762,8 +2762,8 @@
 
 		supply_range = 1.0
 
-			ai_chance = {
-			factor = 0.25
+				ai_chance = {
+				factor = 0.6
 			modifier = {
 				factor = 0
 				NOT = { total_num_of_ports = 1 }
@@ -3399,7 +3399,7 @@
 		}
 	}
 
-	globalized_fleet_command = {
+		globalized_fleet_command = {
 		area = naval_leadership
 		year = 1939
 		cost = 43600
@@ -3407,8 +3407,8 @@
 
 		navy_base = { default_organisation = 5 }
 
-		ai_chance = {
-			factor = 0.25
+			ai_chance = {
+				factor = 0.6
 			# Land-locked countries don't research this
 			modifier = {
 				factor = 0
@@ -3471,7 +3471,7 @@
 		}
 	}
 
-	integrated_naval_command = {
+		integrated_naval_command = {
 		area = naval_leadership
 		year = 1956
 		cost = 60000
@@ -3483,8 +3483,8 @@
 			blockade_efficiency = 0.05
 		}
 
-		ai_chance = {
-			factor = 0.25
+			ai_chance = {
+				factor = 0.6
 			modifier = {
 				factor = 0
 				NOT = { total_num_of_ports = 1 }
@@ -3517,7 +3517,7 @@
 		}
 	}
 
-	satellite_naval_coordination = {
+		satellite_naval_coordination = {
 		area = naval_leadership
 		year = 1964
 		cost = 70000
@@ -3529,8 +3529,8 @@
 			maximum_speed = 0.5
 		}
 
-		ai_chance = {
-			factor = 0.25
+			ai_chance = {
+				factor = 0.6
 			modifier = {
 				factor = 0
 				NOT = { total_num_of_ports = 1 }
@@ -3558,7 +3558,7 @@
 		}
 	}
 
-	autonomous_fleet_doctrine = {
+		autonomous_fleet_doctrine = {
 		area = naval_leadership
 		year = 1966
 		cost = 76000
@@ -3570,8 +3570,8 @@
 			blockade_efficiency = 0.05
 		}
 
-		ai_chance = {
-			factor = 0.25
+			ai_chance = {
+				factor = 0.6
 			modifier = {
 				factor = 0
 				NOT = { total_num_of_ports = 1 }

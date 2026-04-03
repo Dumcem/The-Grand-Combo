@@ -123,20 +123,26 @@ banking_&_commerce_separation = {
 		tax_eff = 1 
 	}
 }
-insurance_companies = {
-	limit = { central_clearing = 1 }
+sovereign_bond_auctions = {
+	limit = { bond_markets = 1 }
 	news = no
 	chance = {
-		base = 2
+		base = 1
 		modifier = {
 			factor = 2
-			economic_policy = laissez_faire
+			nationalvalue = nv_order
+		}
+		modifier = {
+			factor = 1
+			economic_policy = interventionism
 		}
 	}
 	effect = {
-		factory_cost = -0.01 
+		administrative_efficiency = 0.005
+		factory_cost = -0.005
 	}
 }
+# insurance_companies intentionally defined in commerce_inventions.txt
 
 #fractional_reserve_banking
 end_of_pound_sterling = {
@@ -186,24 +192,7 @@ anchored_dollar_standard = {
 		tax_eff = 1 
 	}
 }
-decimal_monetary_system = {
-	limit = { modern_cheque = 1 }
-	news = no
-	chance = {
-		base = 2
-		modifier = {
-			factor = 2
-			nationalvalue = nv_order
-		}
-		modifier = {
-			factor = 1
-			economic_policy = interventionism
-		}
-	}
-	effect = {
-		tax_eff = 1
-	}
-}
+# decimal_monetary_system intentionally defined in commerce_inventions.txt
 bancor = {
 	limit = { modern_cheque = 1 }
 	news = no
@@ -409,28 +398,7 @@ socialist_emulation = {
 }
 
 #labour_laws
-anti_trust_laws = {
-	limit = { labour_laws = 1 }
-	news = no
-	chance = {
-		base = 2
-		modifier = {
-			factor = 2
-			economic_policy = state_capitalism
-		}
-		modifier = {
-			factor = 2
-			ruling_party_ideology = socialist
-		}
-		modifier = {
-			factor = 2
-			nationalvalue = nv_equality
-		}
-	}
-	effect = {
-		factory_output = 0.01
-	}
-}
+# anti_trust_laws intentionally defined in commerce_inventions.txt
 price_fixing = {
 	limit = { labour_laws = 1 }
 	news = no
