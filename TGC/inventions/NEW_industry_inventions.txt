@@ -248,3 +248,99 @@ mosfet = {
         }
     }
 }
+
+#integrated_microelectronics
+solid_state_control_systems = {
+    limit = { integrated_microelectronics = 1 }
+    chance = {
+        base = 2
+        modifier = {
+            factor = 2
+            invention = experimental_robotic_production
+        }
+    }
+    effect = {
+        factory_throughput = 0.03
+        factory_output = 0.02
+    }
+}
+
+computerized_logistics = {
+    limit = { integrated_microelectronics = 1 }
+    chance = {
+        base = 2
+        modifier = {
+            factor = 2
+            average_consciousness = 4
+        }
+    }
+    effect = {
+        supply_limit = 0.1
+        factory_output = 0.02
+        rgo_throughput = 0.03
+    }
+}
+
+#industrial_automation_networks
+distributed_factory_control = {
+    limit = { industrial_automation_networks = 1 }
+    chance = {
+        base = 2
+        modifier = {
+            factor = 2
+            invention = computerized_logistics
+        }
+    }
+    effect = {
+        factory_throughput = 0.03
+        factory_output = 0.02
+    }
+}
+
+adaptive_supply_chains = {
+    limit = { industrial_automation_networks = 1 }
+    chance = {
+        base = 2
+        modifier = {
+            factor = 2
+            average_consciousness = 5
+        }
+    }
+    effect = {
+        rgo_throughput = 0.03
+        supply_limit = 0.1
+        factory_input = -0.01
+    }
+}
+
+#cybernetic_industrial_planning
+predictive_maintenance_systems = {
+    limit = { cybernetic_industrial_planning = 1 }
+    chance = {
+        base = 2
+        modifier = {
+            factor = 2
+            invention = distributed_factory_control
+        }
+    }
+    effect = {
+        factory_throughput = 0.03
+        factory_input = -0.01
+    }
+}
+
+national_industrial_data_grid = {
+    limit = { cybernetic_industrial_planning = 1 }
+    chance = {
+        base = 2
+        modifier = {
+            factor = 2
+            industry_score = 1500
+        }
+    }
+    effect = {
+        factory_output = 0.02
+        rgo_throughput = 0.03
+        supply_limit = 0.1
+    }
+}

@@ -2200,3 +2200,115 @@
 			}
 		}
 	}
+
+	integrated_microelectronics = {
+		area = chemistry_and_electricity
+		year = 1956
+		cost = 60000
+
+		soldier_to_pop_loss = 0.02
+		land_attrition = -0.025
+		rgo_throughput = 0.05
+		factory_output = 0.02
+
+		ai_chance = {
+			factor = 1.1
+			modifier = {
+				factor = 2
+				has_country_modifier = ts_industrial
+			}
+			modifier = {
+				factor = 2
+				is_greater_power = yes
+			}
+			modifier = {
+				factor = 1.2
+				industrial_score = 600
+			}
+			modifier = {
+				factor = 2
+				year = 1958
+			}
+			modifier = {
+				factor = 0
+				NOT = { electronic_circuit = 1 }
+			}
+			modifier = {
+				factor = 0.25
+				NOT = { literacy = 0.4 }
+			}
+		}
+	}
+
+	industrial_automation_networks = {
+		area = chemistry_and_electricity
+		year = 1964
+		cost = 70000
+
+		rgo_throughput = 0.05
+		factory_output = 0.03
+		factory_throughput = 0.02
+
+		ai_chance = {
+			factor = 1.1
+			modifier = {
+				factor = 2
+				has_country_modifier = ts_industrial
+			}
+			modifier = {
+				factor = 2
+				is_greater_power = yes
+			}
+			modifier = {
+				factor = 1.2
+				industrial_score = 800
+			}
+			modifier = {
+				factor = 2
+				year = 1966
+			}
+			modifier = {
+				factor = 0
+				NOT = { integrated_microelectronics = 1 }
+			}
+			modifier = {
+				factor = 0.25
+				NOT = { literacy = 0.4 }
+			}
+		}
+	}
+
+	cybernetic_industrial_planning = {
+		area = chemistry_and_electricity
+		year = 1966
+		cost = 76000
+
+		rgo_throughput = 0.05
+		factory_output = 0.03
+		factory_throughput = 0.02
+		supply_limit = 0.1
+
+		ai_chance = {
+			factor = 1.1
+			modifier = {
+				factor = 2
+				has_country_modifier = ts_industrial
+			}
+			modifier = {
+				factor = 2
+				is_greater_power = yes
+			}
+			modifier = {
+				factor = 1.2
+				industrial_score = 1000
+			}
+			modifier = {
+				factor = 0
+				NOT = { industrial_automation_networks = 1 }
+			}
+			modifier = {
+				factor = 0.25
+				NOT = { literacy = 0.4 }
+			}
+		}
+	}

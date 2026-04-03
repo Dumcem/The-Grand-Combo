@@ -1392,3 +1392,86 @@ aerial_envelopment = {
         }
     }
 }
+
+#decentralized_command_systems
+distributed_command_posts = {
+    limit = { decentralized_command_systems = 1 }
+    chance = {
+        base = 2
+        modifier = {
+            factor = 2
+            war = yes
+        }
+    }
+    effect = {
+        army_base = {
+            default_organisation = 2.5
+            reinforce_rate = 0.02
+        }
+    }
+}
+
+tactical_data_links = {
+    limit = { decentralized_command_systems = 1 }
+    chance = {
+        base = 2
+        modifier = {
+            factor = 2
+            invention = distributed_command_posts
+        }
+    }
+    effect = {
+        infantry = {
+            attack = 1
+        }
+        guard = {
+            attack = 1
+        }
+        tank = {
+            support = 0.5
+        }
+    }
+}
+
+#electronic_warfare_systems
+battlefield_signal_jamming = {
+    limit = { electronic_warfare_systems = 1 }
+    chance = {
+        base = 2
+        modifier = {
+            factor = 2
+            war = yes
+        }
+    }
+    effect = {
+        infantry = {
+            defence = 1
+        }
+        guard = {
+            defence = 1
+        }
+        plane = {
+            support = 0.5
+        }
+    }
+}
+
+hardened_communications = {
+    limit = { electronic_warfare_systems = 1 }
+    chance = {
+        base = 2
+        modifier = {
+            factor = 2
+            invention = battlefield_signal_jamming
+        }
+    }
+    effect = {
+        army_base = {
+            default_organisation = 2.5
+            morale = 0.5
+        }
+        tank = {
+            support = 0.5
+        }
+    }
+}

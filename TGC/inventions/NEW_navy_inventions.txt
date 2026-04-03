@@ -541,3 +541,109 @@ wolfpack_tactic = {
         } 
     }
 }
+
+integrated_task_forces = {
+	limit = { integrated_naval_command = 1 }
+	chance = {
+		base = 2
+		modifier = {
+			factor = 2
+			war = yes
+		}
+		modifier = {
+			factor = 2
+			invention = ocean_going_submarines
+		}
+	}
+	effect = {
+		cruiser = { hull = 1 }
+		battleship = { gun_power = 1 }
+		submarine = { maximum_speed = 2 }
+	}
+}
+
+maritime_aerial_coordination = {
+	limit = { integrated_naval_command = 1 }
+	chance = {
+		base = 2
+		modifier = {
+			factor = 2
+			invention = supercarriers
+		}
+		modifier = {
+			factor = 1.5
+			war = yes
+		}
+	}
+	effect = {
+		carrier = { gun_power = 1 }
+		commerce_raider = { hull = 1 }
+		blockade_efficiency = 0.05
+	}
+}
+
+#satellite_naval_coordination
+real_time_fleet_tracking = {
+	limit = { satellite_naval_coordination = 1 }
+	chance = {
+		base = 2
+		modifier = {
+			factor = 2
+			invention = maritime_aerial_coordination
+		}
+	}
+	effect = {
+		carrier = { reconnaissance = 1 }
+		cruiser = { maximum_speed = 1 }
+		blockade_efficiency = 0.05
+	}
+}
+
+coordinated_missile_screening = {
+	limit = { satellite_naval_coordination = 1 }
+	chance = {
+		base = 2
+		modifier = {
+			factor = 2
+			war = yes
+		}
+	}
+	effect = {
+		carrier = { defence = 1 }
+		battleship = { defence = 1 }
+		submarine = { torpedo_attack = 2 }
+	}
+}
+
+#autonomous_fleet_doctrine
+automated_convoy_routing = {
+	limit = { autonomous_fleet_doctrine = 1 }
+	chance = {
+		base = 2
+		modifier = {
+			factor = 2
+			invention = real_time_fleet_tracking
+		}
+	}
+	effect = {
+		blockade_efficiency = 0.05
+		cruiser = { maximum_speed = 1 }
+		submarine = { reconnaissance = 1 }
+	}
+}
+
+integrated_fleet_air_defense = {
+	limit = { autonomous_fleet_doctrine = 1 }
+	chance = {
+		base = 2
+		modifier = {
+			factor = 2
+			war = yes
+		}
+	}
+	effect = {
+		carrier = { defence = 1 }
+		battleship = { defence = 1 }
+		commerce_raider = { hull = 1 }
+	}
+}
