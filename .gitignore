@@ -40,6 +40,9 @@
 !/TGC/
 !.gitattributes
 !.gitignore
+!/.github/
+!/.github/workflows/
+!/.github/workflows/*.yml
 !README.md
 !TGC.mod
 
@@ -61,3 +64,4 @@
 !TGCCountriesEndonymicLocalization
 !TGCCountriesEndonymicLocalization.mod
 *.py
+!TGC/tools/*.py

@@ -1,0 +1,205 @@
+{
+  "tech_targets": [
+    {
+      "file": "TGC/technologies/army_tech.txt",
+      "keys": [
+        "nuclear_doctrine",
+        "asymmetric_warfare_doctrine",
+        "automatic_infantry_weapons",
+        "guided_missile_systems",
+        "electronic_warfare_systems",
+        "decentralized_command_systems"
+      ]
+    },
+    {
+      "file": "TGC/technologies/navy_tech.txt",
+      "keys": [
+        "global_fleet_doctrine",
+        "supercarrier_ships",
+        "automated_naval_design",
+        "advanced_sonar_integration",
+        "globalized_fleet_command",
+        "integrated_naval_command",
+        "satellite_naval_coordination",
+        "autonomous_fleet_doctrine"
+      ]
+    },
+    {
+      "file": "TGC/technologies/industry_tech.txt",
+      "keys": [
+        "nuclear_reactor",
+        "optimized_assembly",
+        "advanced_subsurface_mining",
+        "national_highway_system",
+        "electronic_circuit",
+        "integrated_microelectronics",
+        "industrial_automation_networks",
+        "cybernetic_industrial_planning"
+      ]
+    },
+    {
+      "file": "TGC/technologies/culture_tech.txt",
+      "keys": [
+        "universal_education",
+        "international_protocol",
+        "social_psychology_advanced",
+        "cognitive_science",
+        "applied_cognitive_policy",
+        "behavioral_systems_analysis"
+      ]
+    },
+    {
+      "file": "TGC/technologies/commerce_tech.txt",
+      "keys": [
+        "bond_markets",
+        "global_capital_markets",
+        "modern_cheque",
+        "electronic_fund_transfers",
+        "institutional_economics",
+        "development_economics",
+        "consumer_protection_laws",
+        "benchmarking",
+        "operational_research"
+      ]
+    }
+  ],
+  "invention_targets": [
+    {
+      "file": "TGC/inventions/NEW_army_inventions.txt",
+      "keys": [
+        "guerrilla_tactics",
+        "urban_resistance",
+        "assault_rifle_development",
+        "squad_automatic_weapons",
+        "anti_tank_guided_missiles",
+        "precision_guided_munitions",
+        "distributed_command_posts",
+        "battlefield_signal_jamming",
+        "hardened_communications"
+      ]
+    },
+    {
+      "file": "TGC/inventions/NEW_navy_inventions.txt",
+      "keys": [
+        "supercarriers",
+        "advanced_supercarriers",
+        "monstrous_supercarriers",
+        "integrated_task_forces",
+        "maritime_aerial_coordination",
+        "real_time_fleet_tracking",
+        "automated_convoy_routing",
+        "integrated_fleet_air_defense",
+        "anti_submarine_patrol_grids"
+      ]
+    },
+    {
+      "file": "TGC/inventions/NEW_industry_inventions.txt",
+      "keys": [
+        "commercial_nuclear_plants",
+        "nuclear_grid_management",
+        "experimental_robotic_production",
+        "early_robotic_production",
+        "solid_state_control_systems",
+        "computerized_logistics",
+        "distributed_factory_control",
+        "predictive_maintenance_systems"
+      ]
+    },
+    {
+      "file": "TGC/inventions/NEW_culture_inventions.txt",
+      "keys": [
+        "mass_opinion_research",
+        "applied_social_psychology",
+        "cognitive_behavioral_therapy",
+        "mass_psychometrics",
+        "evidence_based_education",
+        "policy_feedback_institutes",
+        "social_impact_modeling"
+      ]
+    },
+    {
+      "file": "TGC/inventions/NEW_commerce_inventions.txt",
+      "keys": [
+        "sovereign_wealth_funds",
+        "syndicated_credit_lines",
+        "interbank_clearing_networks",
+        "retail_card_networks",
+        "human_capital_investment",
+        "targeted_industrial_policy",
+        "operations_research_labs",
+        "algorithmic_supply_planning",
+        "product_safety_agencies",
+        "antitrust_enforcement"
+      ]
+    }
+  ],
+  "localisation_files": [
+    "TGC/localisation/00_SUP_technology.csv",
+    "TGC/localisation/00_other_tech.csv"
+  ],
+  "structural": {
+    "decision_alignment": {
+      "file": "TGC/decisions/00_Setup.txt",
+      "decision_key": "option_end_game",
+      "potential_year": 1966,
+      "allow_year": 1966
+    },
+    "required_patterns": [
+      {
+        "file": "TGC/common/defines.lua",
+        "pattern": "end_date\\s*=\\s*'1966\\.1\\.1'",
+        "message": "defines.lua must keep end_date = '1966.1.1'"
+      },
+      {
+        "file": "TGC/interface/backend.gui",
+        "pattern": "text\\s*=\\s*\"The World in 1966\"",
+        "message": "backend.gui must keep text = \"The World in 1966\""
+      },
+      {
+        "file": "README.md",
+        "pattern": "`TGC/docs/1966_extension_audit\\.md`",
+        "message": "README.md must include canonical pointer to TGC/docs/1966_extension_audit.md"
+      }
+    ],
+    "forbidden_patterns": [
+      {
+        "file": "README.md",
+        "pattern": "navy still tops out at 1939",
+        "message": "README.md still contains stale claim: navy still tops out at 1939"
+      },
+      {
+        "file": "README.md",
+        "pattern": "culture reaches 1950",
+        "message": "README.md still contains stale claim: culture reaches 1950"
+      },
+      {
+        "file": "README.md",
+        "pattern": "industry 1945",
+        "message": "README.md still contains stale claim: industry 1945"
+      }
+    ],
+    "required_files": [
+      "TGC/docs/1966_extension_audit.md"
+    ]
+  },
+  "stale_reference_rules": [
+    {
+      "old_key": "mechanizedinfantry",
+      "new_key": "mechanized_units",
+      "files": [
+        "TGC/technologies/army_tech.txt",
+        "TGC/inventions/NEW_army_inventions.txt",
+        "TGC/inventions/army_inventions.txt"
+      ]
+    },
+    {
+      "old_key": "heavytank",
+      "new_key": "tank",
+      "files": [
+        "TGC/technologies/army_tech.txt",
+        "TGC/inventions/NEW_army_inventions.txt",
+        "TGC/inventions/army_inventions.txt"
+      ]
+    }
+  ]
+}
