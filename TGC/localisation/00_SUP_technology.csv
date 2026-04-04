@@ -39,6 +39,7 @@ experimental_sonar_applications;Experimental Sonar Applications;;;;;;;;;;;;x;
 advanced_sonar_integration;Advanced Sonar Integration;;;;;;;;;;;;x;
 fleetwide_coordination;Fleet-wide Coordination;;;;;;;;;;;;x;
 globalized_fleet_command;Globalized Fleet Command;;;;;;;;;;;;x;
+# legacy unit-label keys kept for compatibility; heavy/mechanized UI chain is currently disabled
 mechanizedinfantry;Mechanized Infantry;;;;;;;;;;;x;;
 heavytank;Heavy Armor;;;;;;;;;;;x;;
 mechanized_units;Mechanized Units;;;;;;;;;;;;x;

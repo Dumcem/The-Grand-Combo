@@ -599,6 +599,8 @@ guiTypes = {
 			position = { x= 255 y =31}
 			quadTextureSprite ="GFX_unit_folder_army_8_hussar"
 		}
+		# Legacy placeholders (stormtrooper/heavy tank/mechanized infantry) kept disabled:
+		# no active unit definitions/sprites are wired for these folders in current branch.
 		#guiButtonType = {
 		#	name = "unit_folder_23"
 		#	position = { x= 288 y =31}

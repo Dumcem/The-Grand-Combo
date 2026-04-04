@@ -128,6 +128,8 @@ spriteTypes = {
 		texturefile = "gfx\\interface\\unit_folder_army_10_plane.dds"
 		noOfFrames = 2
 	}
+	# Legacy placeholders (stormtrooper/heavy tank/mechanized infantry) kept disabled:
+	# no active unit definitions/sprites are wired for these folders in current branch.
 	#spriteType = {
 	#	name = "GFX_unit_folder_army_11_stormtrooper"
 	#	texturefile = "gfx\\interface\\unit_folder_army_11_stormtrooper.dds"

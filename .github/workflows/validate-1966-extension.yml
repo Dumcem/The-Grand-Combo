@@ -1,0 +1,48 @@
+name: Validate 1966 extension
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/validate-1966-extension.yml"
+      - "TGC/tools/validate_1966_extension.py"
+      - "TGC/tools/1966_extension_scope.json"
+      - "TGC/technologies/*_tech.txt"
+      - "TGC/inventions/*.txt"
+      - "TGC/localisation/00_SUP_technology.csv"
+      - "TGC/localisation/00_other_tech.csv"
+      - "TGC/common/defines.lua"
+      - "TGC/decisions/00_Setup.txt"
+      - "TGC/interface/backend.gui"
+      - "README.md"
+      - "TGC/docs/1966_extension_audit.md"
+      - "TGC/docs/1966_extension_validator.md"
+  push:
+    paths:
+      - ".github/workflows/validate-1966-extension.yml"
+      - "TGC/tools/validate_1966_extension.py"
+      - "TGC/tools/1966_extension_scope.json"
+      - "TGC/technologies/*_tech.txt"
+      - "TGC/inventions/*.txt"
+      - "TGC/localisation/00_SUP_technology.csv"
+      - "TGC/localisation/00_other_tech.csv"
+      - "TGC/common/defines.lua"
+      - "TGC/decisions/00_Setup.txt"
+      - "TGC/interface/backend.gui"
+      - "README.md"
+      - "TGC/docs/1966_extension_audit.md"
+      - "TGC/docs/1966_extension_validator.md"
+
+jobs:
+  validate-1966-extension:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Run 1966 extension validator
+        run: python TGC/tools/validate_1966_extension.py

@@ -1,45 +1,41 @@
-# 1966 Extension Audit (updated: 2026-04-03)
+# 1966 Extension Audit (updated: 2026-04-04)
 
-## Stato attuale (rivalutazione)
+## Current static status
 
-- `end_date` confermata a **1966.1.1**.
-- Copertura tech top-level:
-  - Army: max 1956 (5 tech con anno >=1950)
-  - Commerce: max 1956 (5 tech con anno >=1950)
-  - Navy: max 1966 (3 tech con anno >=1950)
-  - Industry: max 1966 (3 tech con anno >=1950)
-  - Culture: max 1966 (3 tech con anno >=1950)
-- Copertura invenzioni: nessuna tech `>=1950` risulta senza invention-link.
-- Localizzazione late-tech: `key` + `key_desc` ora completa per tutte le tech `>=1950`.
+- Campaign endpoint alignment is present and statically checked:
+  - `TGC/common/defines.lua` keeps `end_date = '1966.1.1'`.
+  - `TGC/decisions/00_Setup.txt` keeps `option_end_game` aligned to `year = 1966` in both `potential` and `allow`.
+  - `TGC/interface/backend.gui` keeps `text = "The World in 1966"`.
+- Late-extension content tracked by the validator is present in the expected scope:
+  - late tech targets (post-1936 extension scope),
+  - linked late inventions,
+  - localisation coverage (`key` + `key_desc`) in the declared extension localisation files.
+- Static hardening tooling is now in place:
+  - validator script: `TGC/tools/validate_1966_extension.py`,
+  - canonical manifest-driven scope: `TGC/tools/1966_extension_scope.json`,
+  - CI automation: `.github/workflows/validate-1966-extension.yml` on relevant `push`/`pull_request` paths.
+- Late-unit presentation remnants are clarified as maintenance placeholders:
+  - heavy/mechanized UI button/sprite chains remain disabled/commented,
+  - legacy localisation note is present to reduce maintenance confusion.
 
-## Stato obiettivi
+## What is now automatically enforced
 
-### Obiettivo A — Estendere la campagna al 01/01/1966
-- **Raggiunto**.
+- No missing/duplicate/unexpected-file drift for targeted late tech and invention keys.
+- No missing/duplicate localisation drift for targeted late tech/invention `key` and `_desc` keys.
+- No reintroduction of known stale README snapshot claims (`navy ... 1939`, `industry 1945`, `culture 1950`) in canonical status text.
+- Required structural files/patterns for 1966 alignment remain in place, including presence of this audit file.
 
-### Obiettivo B — Aggiungere tecnologie/invenzioni per il periodo esteso
-- **Raggiunto (baseline contenutistica)**.
-- Nota: la parità quantitativa tra alberi è migliorata, ma army/commerce restano più densi.
+## Known limitations of static validation
 
-### Obiettivo C — Stabilizzazione per rilascio
-- **Non ancora completato**.
-- Blocco principale residuo: validazione gameplay (bilanciamento/AI/economia) con run lunghi.
+Static validation does **not** certify gameplay quality or release balance. In particular, it cannot validate:
 
-## Piano finale verso completamento
+- AI research behavior and pacing in long campaigns,
+- late-war combat feel/lethality/attrition quality,
+- macroeconomic stability and market behavior through late decades,
+- final balancing quality of late modifiers/costs under real campaign conditions.
 
-## Fase 4 — Test funzionali (obbligatoria)
-Eseguire almeno 3 campagne smoke-test fino al 1960+:
-1. GP industriale
-2. GP navale
-3. Nazione media
+## Final status judgment
 
-Metriche da registrare:
-- ritmo ricerca e accesso AI alle tech tarde,
-- letalità/attrito nel late-war,
-- stabilità economica (produzione, domanda, prezzi, liquidità).
-
-## Fase 5 — Tuning finale (se necessario)
-Solo dopo i test, intervenire su:
-- valori numerici (bonus/costi/AI chance),
-- eventuali micro-gap di progressione osservati in partita,
-- rifiniture localizzazione testuale.
+- **Static hardening for the 1966 extension is complete** for the declared tracked scope (validator + manifest + CI + structural checks).
+- **Release-readiness is not fully certified** by static checks alone.
+- Remaining uncertainty is gameplay validation and post-test tuning only (if observed in campaign runs).
