@@ -689,3 +689,69 @@ antitrust_enforcement = {
 		factory_cost = -0.01
 	}
 }
+
+#digital_market_coordination
+integrated_trade_platforms = {
+	limit = { digital_market_coordination = 1 }
+	news = no
+	chance = {
+		base = 2
+		modifier = {
+			factor = 2
+			industry_score = 1200
+		}
+	}
+	effect = {
+		factory_input = -0.01
+		factory_throughput = 0.01
+	}
+}
+
+national_logistics_exchanges = {
+	limit = { digital_market_coordination = 1 }
+	news = no
+	chance = {
+		base = 2
+		modifier = {
+			factor = 2
+			invention = integrated_trade_platforms
+		}
+	}
+	effect = {
+		supply_limit = 0.1
+		land_attrition = -0.01
+	}
+}
+
+#systems_economics
+macroeconomic_modeling_bureaus = {
+	limit = { systems_economics = 1 }
+	news = no
+	chance = {
+		base = 2
+		modifier = {
+			factor = 2
+			nationalvalue = nv_equality
+		}
+	}
+	effect = {
+		administrative_efficiency = 0.01
+		tax_eff = 0.01
+	}
+}
+
+resilient_credit_frameworks = {
+	limit = { systems_economics = 1 }
+	news = no
+	chance = {
+		base = 2
+		modifier = {
+			factor = 2
+			invention = macroeconomic_modeling_bureaus
+		}
+	}
+	effect = {
+		factory_output = 0.01
+		factory_cost = -0.01
+	}
+}

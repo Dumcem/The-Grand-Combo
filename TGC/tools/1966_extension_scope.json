@@ -8,7 +8,9 @@
         "automatic_infantry_weapons",
         "guided_missile_systems",
         "electronic_warfare_systems",
-        "decentralized_command_systems"
+        "decentralized_command_systems",
+        "adaptive_battle_networks",
+        "integrated_battlefield_systems"
       ]
     },
     {
@@ -59,7 +61,9 @@
         "development_economics",
         "consumer_protection_laws",
         "benchmarking",
-        "operational_research"
+        "operational_research",
+        "digital_market_coordination",
+        "systems_economics"
       ]
     }
   ],
@@ -75,7 +79,11 @@
         "precision_guided_munitions",
         "distributed_command_posts",
         "battlefield_signal_jamming",
-        "hardened_communications"
+        "hardened_communications",
+        "joint_operations_coordination",
+        "secure_battle_networks",
+        "integrated_command_uplinks",
+        "combined_theater_doctrine"
       ]
     },
     {
@@ -129,7 +137,11 @@
         "operations_research_labs",
         "algorithmic_supply_planning",
         "product_safety_agencies",
-        "antitrust_enforcement"
+        "antitrust_enforcement",
+        "integrated_trade_platforms",
+        "national_logistics_exchanges",
+        "macroeconomic_modeling_bureaus",
+        "resilient_credit_frameworks"
       ]
     }
   ],

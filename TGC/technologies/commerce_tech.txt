@@ -2027,3 +2027,89 @@
 			}
 		}	
 	}
+
+	digital_market_coordination = {
+		area = tech_organization
+		year = 1964
+		cost = 70000
+	
+		factory_output = 0.01
+		factory_cost = -0.01
+		rgo_goods_output = { precious_goods = 0.1 }
+		rgo_size = { precious_goods = 0.05 }
+	
+		ai_chance = {
+			factor = 1.03
+			modifier = {
+				factor = 1.2
+				is_greater_power = yes
+			}
+			modifier = {
+				factor = 1.2
+				industrial_score = 2500
+			}
+			modifier = {
+				factor = 1.2
+				industrial_score = 4000
+			}
+			modifier = {
+				factor = 1.04
+				any_owned_province = { trade_goods = precious_goods }
+			}
+			modifier = {
+				factor = 3
+				has_country_modifier = ts_commerce
+			}
+			modifier = {
+				factor = 0
+				NOT = { operational_research = 1 }
+			}
+			modifier = {
+				factor = 0.25
+				NOT = { literacy = 0.4 }
+			}
+		}
+	}
+
+	systems_economics = {
+		area = tech_organization
+		year = 1966
+		cost = 76000
+	
+		factory_output = 0.01
+		factory_cost = -0.01
+		rgo_goods_output = { precious_goods = 0.1 }
+		rgo_size = { precious_goods = 0.05 }
+	
+		ai_chance = {
+			factor = 1.03
+			modifier = {
+				factor = 1.2
+				is_greater_power = yes
+			}
+			modifier = {
+				factor = 1.2
+				industrial_score = 3000
+			}
+			modifier = {
+				factor = 1.2
+				industrial_score = 4500
+			}
+			modifier = {
+				factor = 1.04
+				any_owned_province = { trade_goods = precious_goods }
+			}
+			modifier = {
+				factor = 3
+				has_country_modifier = ts_commerce
+			}
+			modifier = {
+				factor = 0
+				NOT = { digital_market_coordination = 1 }
+			}
+			modifier = {
+				factor = 0.25
+				NOT = { literacy = 0.4 }
+			}
+		}
+	}

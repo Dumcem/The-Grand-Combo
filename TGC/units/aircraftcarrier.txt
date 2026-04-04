@@ -17,23 +17,23 @@ aircraftcarrier = {
 	
 	#Core Abilities
 	priority = 100
-	max_strength = 175
+	max_strength = 150
 	default_organisation = 50
 	maximum_speed = 10
-	weighted_value = 200.0
+	weighted_value = 140.0
 
 
 	#Building Costs
 	build_time = 360
 	build_cost = {
 		steamer_convoy = 150
-		artillery = 20
-		aeroplanes = 15
-		fuel = 30
-		telephones = 12
-		canned_food = 12
+		artillery = 40
+		aeroplanes = 30
+		fuel = 40
+		telephones = 20
+		canned_food = 20
 	}
-	min_port_level = 6
+	min_port_level = 7
 	limit_per_port = 1
 	supply_consumption_score = 120
 	
@@ -47,8 +47,8 @@ aircraftcarrier = {
 	}
 	
 	#Naval Abilties
-	hull = 100	# Was 120
-	gun_power = 40	# Was 50
+	hull = 90	# Was 120
+	gun_power = 35	# Was 50
 	fire_range = 3.5
 	evasion = 0
 }

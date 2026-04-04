@@ -217,13 +217,13 @@ aircraft_carriers = {
 supercarriers = {
     limit = { supercarrier_ships = 1 }
     chance = {
-        base = 2
+        base = 1
         modifier = {
             factor = -8
             NOT = { invention = aircraft_carriers }
         }
         modifier = {
-            factor = 3
+            factor = 2
             global_fleet_doctrine = 1
         }
         modifier = {
@@ -238,9 +238,9 @@ supercarriers = {
     }
     effect = {
         aircraftcarrier = {
-            gun_power = 10
-            hull = 20
-            supply_consumption = 0.10
+            gun_power = 5
+            hull = 10
+            supply_consumption = 0.05
         }
     }
 }
@@ -248,13 +248,13 @@ supercarriers = {
 advanced_supercarriers = {
     limit = { supercarrier_ships = 1 }
     chance = {
-        base = 2
+        base = 1
         modifier = {
             factor = -8
             NOT = { invention = supercarriers }
         }
         modifier = {
-            factor = 3
+            factor = 2
             global_fleet_doctrine = 1
         }
         modifier = {
@@ -269,9 +269,9 @@ advanced_supercarriers = {
     }
     effect = {
         aircraftcarrier = {
-            gun_power = 10
-            hull = 20
-            supply_consumption = 0.10
+            gun_power = 3
+            hull = 8
+            supply_consumption = 0.05
         }
     }
 }
@@ -279,13 +279,13 @@ advanced_supercarriers = {
 monstrous_supercarriers = {
     limit = { supercarrier_ships = 1 }
     chance = {
-        base = 2
+        base = 1
         modifier = {
             factor = -8
             NOT = { invention = advanced_supercarriers }
         }
         modifier = {
-            factor = 3
+            factor = 2
             global_fleet_doctrine = 1
         }
         modifier = {
@@ -300,9 +300,9 @@ monstrous_supercarriers = {
     }
     effect = {
         aircraftcarrier = {
-            gun_power = 10
-            hull = 20
-            supply_consumption = 0.10
+            gun_power = 2
+            hull = 6
+            supply_consumption = 0.05
         }
     }
 }

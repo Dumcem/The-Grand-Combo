@@ -1518,7 +1518,7 @@
 	
 	supercarrier_ships = {
 		area = ship_construction
-		year = 1939
+		year = 1950
 		cost = 50000
 		unciv_military = yes
 		navy_base = {
