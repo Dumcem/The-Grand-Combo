@@ -34,6 +34,25 @@ commercial_nuclear_plants = {
     }
 }
 
+nuclear_grid_management = {
+    limit = { nuclear_reactor = 1 }
+    chance = {
+        base = 1
+        modifier = {
+            factor = 2
+            invention = commercial_nuclear_plants
+        }
+        modifier = {
+            factor = 1
+            average_consciousness = 4
+        }
+    }
+    effect = {
+        factory_input = -0.005
+        factory_throughput = 0.01
+    }
+}
+
 #automated_assemblyline
 conveyor_belt_diffusion = {
     limit = { automated_assemblyline = 1 }
