@@ -1432,3 +1432,94 @@ hardened_communications = {
         }
     }
 }
+
+#adaptive_battle_networks
+joint_operations_coordination = {
+    limit = { adaptive_battle_networks = 1 }
+    chance = {
+        base = 2
+        modifier = {
+            factor = 2
+            war = yes
+        }
+    }
+    effect = {
+        army_base = {
+            default_organisation = 2.5
+            supply_consumption = -0.02
+        }
+        tank = {
+            support = 0.5
+        }
+        plane = {
+            support = 0.5
+        }
+    }
+}
+
+secure_battle_networks = {
+    limit = { adaptive_battle_networks = 1 }
+    chance = {
+        base = 2
+        modifier = {
+            factor = 2
+            invention = joint_operations_coordination
+        }
+    }
+    effect = {
+        army_base = {
+            morale = 0.5
+            reinforce_rate = 0.02
+        }
+        infantry = {
+            defence = 1
+        }
+        guard = {
+            defence = 1
+        }
+    }
+}
+
+#integrated_battlefield_systems
+integrated_command_uplinks = {
+    limit = { integrated_battlefield_systems = 1 }
+    chance = {
+        base = 2
+        modifier = {
+            factor = 2
+            invention = secure_battle_networks
+        }
+    }
+    effect = {
+        infantry = {
+            attack = 1
+        }
+        guard = {
+            attack = 1
+        }
+        tank = {
+            support = 0.5
+        }
+    }
+}
+
+combined_theater_doctrine = {
+    limit = { integrated_battlefield_systems = 1 }
+    chance = {
+        base = 2
+        modifier = {
+            factor = 2
+            war = yes
+        }
+    }
+    effect = {
+        army_base = {
+            default_organisation = 2.5
+            morale = 0.5
+            supply_consumption = -0.02
+        }
+        plane = {
+            support = 0.5
+        }
+    }
+}

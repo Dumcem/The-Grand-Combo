@@ -57,7 +57,7 @@ objectTypes = {
 		
 		idle   = "gfx\anims\CarrierMove.xsm"
 		move   = "gfx\anims\CarrierMove.xsm"
-		attack = "gfx\anims\CarrierAttack.xsm"
+		attack = "gfx\anims\CarrrierAttack.xsm"
 		scale = 2.10
 	}
 	
