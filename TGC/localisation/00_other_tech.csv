@@ -206,6 +206,8 @@ urban_electric_light;Urban Electric Light;;;;;;;;;;;;x,,,,,,,;;;;;;;;;;;;;;;;
 urban_electric_light_desc;Electric light diffusion in urban contexts begins.;;;;;;;;;;;;x,,,,,;;;;;;;;;;;;;;;;
 commercial_nuclear_plants;Comercial Nuclear Plants;;;;;;;;;;;;x,,,,,,,;;;;;;;;;;;;;;;;
 commercial_nuclear_plants_desc;The first commercial nuclear plants are built.;;;;;;;;;;;;x,,,,,;;;;;;;;;;;;;;;;
+nuclear_grid_management;Nuclear Grid Management;;;;;;;;;;;;x,,,,,,,;;;;;;;;;;;;;;;;
+nuclear_grid_management_desc;Civilian reactor oversight and grid integration improve efficiency and reduce industrial waste.;;;;;;;;;;;;x,,,,,;;;;;;;;;;;;;;;;
 conveyor_belt_diffusion;Conveyor Belt Diffusion;;;;;;;;;;;;x,,,,,,,;;;;;;;;;;;;;;;;
 conveyor_belt_diffusion_desc;Conveyors are durable and reliable components used in automated distribution and warehousing, as well as manufacturing and production facilities.;;;;;;;;;;;;x,,,,,;;;;;;;;;;;;;;;;
 perfected_power_loom;Perfected Power Loom;;;;;;;;;;;;x,,,,,,,;;;;;;;;;;;;;;;;
