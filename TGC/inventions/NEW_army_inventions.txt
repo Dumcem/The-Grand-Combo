@@ -1523,3 +1523,67 @@ combined_theater_doctrine = {
         }
     }
 }
+
+
+#expeditionary_joint_command
+expeditionary_joint_command_program = {
+	limit = { expeditionary_joint_command = 1 }
+	chance = { base = 2 }
+	effect = { factory_output = 0.01 }
+}
+
+
+#integrated_theater_logistics
+integrated_theater_logistics_program = {
+	limit = { integrated_theater_logistics = 1 }
+	chance = { base = 2 }
+	effect = { factory_output = 0.01 }
+}
+
+
+#selective_fire_modernization
+selective_fire_modernization_program = {
+	limit = { selective_fire_modernization = 1 }
+	chance = { base = 2 }
+	effect = { factory_output = 0.01 }
+}
+
+
+#modular_infantry_doctrine
+modular_infantry_doctrine_program = {
+	limit = { modular_infantry_doctrine = 1 }
+	chance = { base = 2 }
+	effect = { factory_output = 0.01 }
+}
+
+
+#composite_armor_doctrine
+composite_armor_doctrine_program = {
+	limit = { composite_armor_doctrine = 1 }
+	chance = { base = 2 }
+	effect = { factory_output = 0.01 }
+}
+
+
+#hardened_armored_formations
+hardened_armored_formations_program = {
+	limit = { hardened_armored_formations = 1 }
+	chance = { base = 2 }
+	effect = { factory_output = 0.01 }
+}
+
+
+#battlefield_surveillance_networks
+battlefield_surveillance_networks_program = {
+	limit = { battlefield_surveillance_networks = 1 }
+	chance = { base = 2 }
+	effect = { factory_output = 0.01 }
+}
+
+
+#strategic_sensor_fusion
+strategic_sensor_fusion_program = {
+	limit = { strategic_sensor_fusion = 1 }
+	chance = { base = 2 }
+	effect = { factory_output = 0.01 }
+}

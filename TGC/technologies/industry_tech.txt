@@ -2312,3 +2312,219 @@
 			}
 		}
 	}
+
+
+	civilian_nuclear_grid = {
+		area = tech_power
+		year = 1950
+		cost = 56000
+
+		factory_throughput = 0.03
+		factory_output = 0.02
+
+		ai_chance = {
+			factor = 1.1
+			modifier = {
+				factor = 0
+				NOT = { nuclear_reactor = 1 }
+			}
+		}
+	}
+
+
+	grid_interconnection_standards = {
+		area = tech_power
+		year = 1962
+		cost = 68000
+
+		factory_throughput = 0.03
+		factory_output = 0.02
+
+		ai_chance = {
+			factor = 1.1
+			modifier = {
+				factor = 0
+				NOT = { civilian_nuclear_grid = 1 }
+			}
+		}
+	}
+
+
+	resilient_baseload_planning = {
+		area = tech_power
+		year = 1966
+		cost = 76000
+
+		factory_throughput = 0.03
+		factory_output = 0.02
+
+		ai_chance = {
+			factor = 1.1
+			modifier = {
+				factor = 0
+				NOT = { grid_interconnection_standards = 1 }
+			}
+		}
+	}
+
+
+	precision_tooling = {
+		area = mechanization
+		year = 1950
+		cost = 56000
+
+		factory_throughput = 0.03
+		factory_output = 0.02
+
+		ai_chance = {
+			factor = 1.1
+			modifier = {
+				factor = 0
+				NOT = { optimized_assembly = 1 }
+			}
+		}
+	}
+
+
+	numerically_controlled_machining = {
+		area = mechanization
+		year = 1962
+		cost = 68000
+
+		factory_throughput = 0.03
+		factory_output = 0.02
+
+		ai_chance = {
+			factor = 1.1
+			modifier = {
+				factor = 0
+				NOT = { precision_tooling = 1 }
+			}
+		}
+	}
+
+
+	adaptive_precision_manufacturing = {
+		area = mechanization
+		year = 1966
+		cost = 76000
+
+		factory_throughput = 0.03
+		factory_output = 0.02
+
+		ai_chance = {
+			factor = 1.1
+			modifier = {
+				factor = 0
+				NOT = { numerically_controlled_machining = 1 }
+			}
+		}
+	}
+
+
+	geophysical_prospecting = {
+		area = metallurgy
+		year = 1950
+		cost = 56000
+
+		rgo_goods_output = { iron = 0.10 }
+		rgo_goods_output = { coal = 0.08 }
+
+		ai_chance = {
+			factor = 1.1
+			modifier = {
+				factor = 0
+				NOT = { advanced_subsurface_mining = 1 }
+			}
+		}
+	}
+
+
+	high_temperature_alloys = {
+		area = metallurgy
+		year = 1962
+		cost = 68000
+
+		rgo_goods_output = { iron = 0.10 }
+		rgo_goods_output = { coal = 0.08 }
+
+		ai_chance = {
+			factor = 1.1
+			modifier = {
+				factor = 0
+				NOT = { geophysical_prospecting = 1 }
+			}
+		}
+	}
+
+
+	strategic_materials_engineering = {
+		area = metallurgy
+		year = 1966
+		cost = 76000
+
+		rgo_goods_output = { iron = 0.10 }
+		rgo_goods_output = { coal = 0.08 }
+
+		ai_chance = {
+			factor = 1.1
+			modifier = {
+				factor = 0
+				NOT = { high_temperature_alloys = 1 }
+			}
+		}
+	}
+
+
+	arterial_logistics_planning = {
+		area = tech_infrastructure
+		year = 1950
+		cost = 56000
+
+		supply_limit = 0.1
+		max_railroad = 1
+
+		ai_chance = {
+			factor = 1.1
+			modifier = {
+				factor = 0
+				NOT = { national_highway_system = 1 }
+			}
+		}
+	}
+
+
+	containerized_freight_networks = {
+		area = tech_infrastructure
+		year = 1962
+		cost = 68000
+
+		supply_limit = 0.1
+		max_railroad = 1
+
+		ai_chance = {
+			factor = 1.1
+			modifier = {
+				factor = 0
+				NOT = { arterial_logistics_planning = 1 }
+			}
+		}
+	}
+
+
+	integrated_freight_corridors = {
+		area = tech_infrastructure
+		year = 1966
+		cost = 76000
+
+		supply_limit = 0.1
+		max_railroad = 1
+
+		ai_chance = {
+			factor = 1.1
+			modifier = {
+				factor = 0
+				NOT = { containerized_freight_networks = 1 }
+			}
+		}
+	}

@@ -493,3 +493,111 @@ social_impact_modeling = {
         suppression_points_modifier = 0.05
     }
 }
+
+
+#documentary_realism
+documentary_realism_program = {
+	limit = { documentary_realism = 1 }
+	news = no
+	chance = { base = 2 }
+	effect = { factory_output = 0.01 }
+}
+
+
+#new_wave_realism
+new_wave_realism_program = {
+	limit = { new_wave_realism = 1 }
+	news = no
+	chance = { base = 2 }
+	effect = { factory_output = 0.01 }
+}
+
+
+#civic_media_institutions
+civic_media_institutions_program = {
+	limit = { civic_media_institutions = 1 }
+	news = no
+	chance = { base = 2 }
+	effect = { factory_output = 0.01 }
+}
+
+
+#applied_epistemology
+applied_epistemology_program = {
+	limit = { applied_epistemology = 1 }
+	news = no
+	chance = { base = 2 }
+	effect = { factory_output = 0.01 }
+}
+
+
+#systems_philosophy
+systems_philosophy_program = {
+	limit = { systems_philosophy = 1 }
+	news = no
+	chance = { base = 2 }
+	effect = { factory_output = 0.01 }
+}
+
+
+#pragmatic_systems_theory
+pragmatic_systems_theory_program = {
+	limit = { pragmatic_systems_theory = 1 }
+	news = no
+	chance = { base = 2 }
+	effect = { factory_output = 0.01 }
+}
+
+
+#public_school_networks
+public_school_networks_program = {
+	limit = { public_school_networks = 1 }
+	news = no
+	chance = { base = 2 }
+	effect = { factory_output = 0.01 }
+}
+
+
+#comparative_education_systems
+comparative_education_systems_program = {
+	limit = { comparative_education_systems = 1 }
+	news = no
+	chance = { base = 2 }
+	effect = { factory_output = 0.01 }
+}
+
+
+#universal_civic_schooling
+universal_civic_schooling_program = {
+	limit = { universal_civic_schooling = 1 }
+	news = no
+	chance = { base = 2 }
+	effect = { factory_output = 0.01 }
+}
+
+
+#multilateral_diplomatic_forums
+multilateral_diplomatic_forums_program = {
+	limit = { multilateral_diplomatic_forums = 1 }
+	news = no
+	chance = { base = 2 }
+	effect = { factory_output = 0.01 }
+}
+
+
+#treaty_institutionalism
+treaty_institutionalism_program = {
+	limit = { treaty_institutionalism = 1 }
+	news = no
+	chance = { base = 2 }
+	effect = { factory_output = 0.01 }
+}
+
+
+#rules_based_diplomatic_order
+rules_based_diplomatic_order_program = {
+	limit = { rules_based_diplomatic_order = 1 }
+	news = no
+	chance = { base = 2 }
+	effect = { factory_output = 0.01 }
+}

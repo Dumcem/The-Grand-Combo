@@ -6033,3 +6033,143 @@
 	        	}
 	    	}
 	}
+
+
+	expeditionary_joint_command = {
+		area = army_doctrine
+		year = 1962
+		cost = 68000
+		unciv_military = yes
+
+		army_base = { default_organisation = 2 supply_consumption = -0.02 }
+
+		ai_chance = {
+			factor = 1.1
+			modifier = {
+				factor = 0
+				NOT = { asymmetric_warfare_doctrine = 1 }
+			}
+		}
+	}
+
+
+	integrated_theater_logistics = {
+		area = army_doctrine
+		year = 1966
+		cost = 76000
+		unciv_military = yes
+
+		army_base = { default_organisation = 2 supply_consumption = -0.02 }
+
+		ai_chance = {
+			factor = 1.1
+			modifier = {
+				factor = 0
+				NOT = { expeditionary_joint_command = 1 }
+			}
+		}
+	}
+
+
+	selective_fire_modernization = {
+		area = light_armament
+		year = 1962
+		cost = 68000
+
+		infantry = { attack = 1 defence = 1 }
+		guard = { attack = 1 defence = 1 }
+
+		ai_chance = {
+			factor = 1.1
+			modifier = {
+				factor = 0
+				NOT = { automatic_infantry_weapons = 1 }
+			}
+		}
+	}
+
+
+	modular_infantry_doctrine = {
+		area = light_armament
+		year = 1966
+		cost = 76000
+
+		infantry = { attack = 1 defence = 1 }
+		guard = { attack = 1 defence = 1 }
+
+		ai_chance = {
+			factor = 1.1
+			modifier = {
+				factor = 0
+				NOT = { selective_fire_modernization = 1 }
+			}
+		}
+	}
+
+
+	composite_armor_doctrine = {
+		area = heavy_armament
+		year = 1962
+		cost = 68000
+
+		tank = { attack = 1 defence = 1 hull = 4 }
+
+		ai_chance = {
+			factor = 1.1
+			modifier = {
+				factor = 0
+				NOT = { guided_missile_systems = 1 }
+			}
+		}
+	}
+
+
+	hardened_armored_formations = {
+		area = heavy_armament
+		year = 1966
+		cost = 76000
+
+		tank = { attack = 1 defence = 1 hull = 4 }
+
+		ai_chance = {
+			factor = 1.1
+			modifier = {
+				factor = 0
+				NOT = { composite_armor_doctrine = 1 }
+			}
+		}
+	}
+
+
+	battlefield_surveillance_networks = {
+		area = military_science
+		year = 1962
+		cost = 68000
+
+		army_base = { default_organisation = 2 supply_consumption = -0.02 }
+
+		ai_chance = {
+			factor = 1.1
+			modifier = {
+				factor = 0
+				NOT = { electronic_warfare_systems = 1 }
+			}
+		}
+	}
+
+
+	strategic_sensor_fusion = {
+		area = military_science
+		year = 1966
+		cost = 76000
+
+		army_base = { default_organisation = 2 supply_consumption = -0.02 }
+
+		ai_chance = {
+			factor = 1.1
+			modifier = {
+				factor = 0
+				NOT = { battlefield_surveillance_networks = 1 }
+			}
+		}
+	}

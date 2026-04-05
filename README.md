@@ -232,10 +232,9 @@ Honorable mentions and ex-Developers:
 
 Current branch state for the **01/01/1966** extension:
 
-- End date / end-game decision / backend year label alignment is already implemented.
-- All five top-level tech branches now include post-1936 content.
-- Navy, industry, and culture extend to 1964–1966 tiers.
-- Army and commerce remain shorter and currently top out around 1956.
+- End date / end-game decision / backend year label alignment is implemented.
+- Tech tree extension is complete at full-tree scope across **all 25 technology sub-branches**: **5/5 branches**, **25/25 areas**, **12/12 tiers per area**.
+- Late-tier tech and tracked inventions are now enforced by validator-backed localisation coverage checks.
 - Main remaining work is release stabilization: long smoke-test campaigns and post-test tuning.
 
 For canonical, up-to-date status and final validation plan, see:

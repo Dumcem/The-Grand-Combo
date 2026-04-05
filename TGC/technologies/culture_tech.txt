@@ -1707,3 +1707,207 @@
 			}
 		}
 	}
+
+
+	documentary_realism = {
+		area = aesthetics
+		year = 1950
+		cost = 56000
+
+		prestige = 0.10
+
+		ai_chance = {
+			factor = 1.1
+			modifier = {
+				factor = 0
+				NOT = { depression_expression = 1 }
+			}
+		}
+	}
+
+
+	new_wave_realism = {
+		area = aesthetics
+		year = 1962
+		cost = 68000
+
+		prestige = 0.10
+
+		ai_chance = {
+			factor = 1.1
+			modifier = {
+				factor = 0
+				NOT = { documentary_realism = 1 }
+			}
+		}
+	}
+
+
+	civic_media_institutions = {
+		area = aesthetics
+		year = 1966
+		cost = 76000
+
+		prestige = 0.10
+
+		ai_chance = {
+			factor = 1.1
+			modifier = {
+				factor = 0
+				NOT = { new_wave_realism = 1 }
+			}
+		}
+	}
+
+
+	applied_epistemology = {
+		area = philosophy
+		year = 1950
+		cost = 56000
+
+		increase_research = 0.50
+
+		ai_chance = {
+			factor = 1.1
+			modifier = {
+				factor = 0
+				NOT = { reformative_movements = 1 }
+			}
+		}
+	}
+
+
+	systems_philosophy = {
+		area = philosophy
+		year = 1962
+		cost = 68000
+
+		increase_research = 0.50
+
+		ai_chance = {
+			factor = 1.1
+			modifier = {
+				factor = 0
+				NOT = { applied_epistemology = 1 }
+			}
+		}
+	}
+
+
+	pragmatic_systems_theory = {
+		area = philosophy
+		year = 1966
+		cost = 76000
+
+		increase_research = 0.50
+
+		ai_chance = {
+			factor = 1.1
+			modifier = {
+				factor = 0
+				NOT = { systems_philosophy = 1 }
+			}
+		}
+	}
+
+
+	public_school_networks = {
+		area = social_thought
+		year = 1950
+		cost = 56000
+
+		education_efficiency = 0.15
+
+		ai_chance = {
+			factor = 1.1
+			modifier = {
+				factor = 0
+				NOT = { universal_education = 1 }
+			}
+		}
+	}
+
+
+	comparative_education_systems = {
+		area = social_thought
+		year = 1962
+		cost = 68000
+
+		education_efficiency = 0.15
+
+		ai_chance = {
+			factor = 1.1
+			modifier = {
+				factor = 0
+				NOT = { public_school_networks = 1 }
+			}
+		}
+	}
+
+
+	universal_civic_schooling = {
+		area = social_thought
+		year = 1966
+		cost = 76000
+
+		education_efficiency = 0.15
+
+		ai_chance = {
+			factor = 1.1
+			modifier = {
+				factor = 0
+				NOT = { comparative_education_systems = 1 }
+			}
+		}
+	}
+
+
+	multilateral_diplomatic_forums = {
+		area = political_thought
+		year = 1950
+		cost = 56000
+
+		max_national_focus = 1.0
+
+		ai_chance = {
+			factor = 1.1
+			modifier = {
+				factor = 0
+				NOT = { international_protocol = 1 }
+			}
+		}
+	}
+
+
+	treaty_institutionalism = {
+		area = political_thought
+		year = 1962
+		cost = 68000
+
+		max_national_focus = 1.0
+
+		ai_chance = {
+			factor = 1.1
+			modifier = {
+				factor = 0
+				NOT = { multilateral_diplomatic_forums = 1 }
+			}
+		}
+	}
+
+
+	rules_based_diplomatic_order = {
+		area = political_thought
+		year = 1966
+		cost = 76000
+
+		max_national_focus = 1.0
+
+		ai_chance = {
+			factor = 1.1
+			modifier = {
+				factor = 0
+				NOT = { treaty_institutionalism = 1 }
+			}
+		}
+	}

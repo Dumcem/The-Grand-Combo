@@ -708,3 +708,99 @@ integrated_fleet_air_defense = {
 		commerce_raider = { hull = 1 }
 	}
 }
+
+
+#fleet_replenishment_doctrine
+fleet_replenishment_doctrine_program = {
+	limit = { fleet_replenishment_doctrine = 1 }
+	chance = { base = 2 }
+	effect = { factory_output = 0.01 }
+}
+
+
+#integrated_fleet_logistics
+integrated_fleet_logistics_program = {
+	limit = { integrated_fleet_logistics = 1 }
+	chance = { base = 2 }
+	effect = { factory_output = 0.01 }
+}
+
+
+#global_naval_readiness
+global_naval_readiness_program = {
+	limit = { global_naval_readiness = 1 }
+	chance = { base = 2 }
+	effect = { factory_output = 0.01 }
+}
+
+
+#carrier_task_force_screening
+carrier_task_force_screening_program = {
+	limit = { carrier_task_force_screening = 1 }
+	chance = { base = 2 }
+	effect = { factory_output = 0.01 }
+}
+
+
+#carrier_group_air_coordination
+carrier_group_air_coordination_program = {
+	limit = { carrier_group_air_coordination = 1 }
+	chance = { base = 2 }
+	effect = { factory_output = 0.01 }
+}
+
+
+#carrier_battle_group_operations
+carrier_battle_group_operations_program = {
+	limit = { carrier_battle_group_operations = 1 }
+	chance = { base = 2 }
+	effect = { factory_output = 0.01 }
+}
+
+
+#modular_shipyard_layouts
+modular_shipyard_layouts_program = {
+	limit = { modular_shipyard_layouts = 1 }
+	chance = { base = 2 }
+	effect = { factory_output = 0.01 }
+}
+
+
+#automated_damage_control
+automated_damage_control_program = {
+	limit = { automated_damage_control = 1 }
+	chance = { base = 2 }
+	effect = { factory_output = 0.01 }
+}
+
+
+#resilient_naval_systems
+resilient_naval_systems_program = {
+	limit = { resilient_naval_systems = 1 }
+	chance = { base = 2 }
+	effect = { factory_output = 0.01 }
+}
+
+
+#convoy_hunter_killer_groups
+convoy_hunter_killer_groups_program = {
+	limit = { convoy_hunter_killer_groups = 1 }
+	chance = { base = 2 }
+	effect = { factory_output = 0.01 }
+}
+
+
+#long_range_asw_coordination
+long_range_asw_coordination_program = {
+	limit = { long_range_asw_coordination = 1 }
+	chance = { base = 2 }
+	effect = { factory_output = 0.01 }
+}
+
+
+#oceanic_asw_networks
+oceanic_asw_networks_program = {
+	limit = { oceanic_asw_networks = 1 }
+	chance = { base = 2 }
+	effect = { factory_output = 0.01 }
+}
