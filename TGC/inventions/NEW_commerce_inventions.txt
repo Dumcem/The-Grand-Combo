@@ -755,3 +755,75 @@ resilient_credit_frameworks = {
 		factory_cost = -0.01
 	}
 }
+
+
+#transnational_banking_standards
+transnational_banking_standards_program = {
+	limit = { transnational_banking_standards = 1 }
+	news = no
+	chance = { base = 2 }
+	effect = { factory_output = 0.01 }
+}
+
+
+#sovereign_liquidity_backstops
+sovereign_liquidity_backstops_program = {
+	limit = { sovereign_liquidity_backstops = 1 }
+	news = no
+	chance = { base = 2 }
+	effect = { factory_output = 0.01 }
+}
+
+
+#automated_clearing_houses
+automated_clearing_houses_program = {
+	limit = { automated_clearing_houses = 1 }
+	news = no
+	chance = { base = 2 }
+	effect = { factory_output = 0.01 }
+}
+
+
+#national_payment_resilience
+national_payment_resilience_program = {
+	limit = { national_payment_resilience = 1 }
+	news = no
+	chance = { base = 2 }
+	effect = { factory_output = 0.01 }
+}
+
+
+#macro_stabilization_frameworks
+macro_stabilization_frameworks_program = {
+	limit = { macro_stabilization_frameworks = 1 }
+	news = no
+	chance = { base = 2 }
+	effect = { factory_output = 0.01 }
+}
+
+
+#institutional_macro_coordination
+institutional_macro_coordination_program = {
+	limit = { institutional_macro_coordination = 1 }
+	news = no
+	chance = { base = 2 }
+	effect = { factory_output = 0.01 }
+}
+
+
+#national_competition_policy
+national_competition_policy_program = {
+	limit = { national_competition_policy = 1 }
+	news = no
+	chance = { base = 2 }
+	effect = { factory_output = 0.01 }
+}
+
+
+#competitive_market_governance
+competitive_market_governance_program = {
+	limit = { competitive_market_governance = 1 }
+	news = no
+	chance = { base = 2 }
+	effect = { factory_output = 0.01 }
+}

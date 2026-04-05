@@ -2113,3 +2113,147 @@
 			}
 		}
 	}
+
+
+	transnational_banking_standards = {
+		area = financial_institutions
+		year = 1962
+		cost = 68000
+
+		factory_output = 0.01
+		administrative_efficiency = 0.01
+
+		ai_chance = {
+			factor = 1.1
+			modifier = {
+				factor = 0
+				NOT = { global_capital_markets = 1 }
+			}
+		}
+	}
+
+
+	sovereign_liquidity_backstops = {
+		area = financial_institutions
+		year = 1966
+		cost = 76000
+
+		factory_output = 0.01
+		administrative_efficiency = 0.01
+
+		ai_chance = {
+			factor = 1.1
+			modifier = {
+				factor = 0
+				NOT = { transnational_banking_standards = 1 }
+			}
+		}
+	}
+
+
+	automated_clearing_houses = {
+		area = monetary_system
+		year = 1962
+		cost = 68000
+
+		factory_output = 0.01
+		administrative_efficiency = 0.01
+
+		ai_chance = {
+			factor = 1.1
+			modifier = {
+				factor = 0
+				NOT = { electronic_fund_transfers = 1 }
+			}
+		}
+	}
+
+
+	national_payment_resilience = {
+		area = monetary_system
+		year = 1966
+		cost = 76000
+
+		factory_output = 0.01
+		administrative_efficiency = 0.01
+
+		ai_chance = {
+			factor = 1.1
+			modifier = {
+				factor = 0
+				NOT = { automated_clearing_houses = 1 }
+			}
+		}
+	}
+
+
+	macro_stabilization_frameworks = {
+		area = economic_thought_and_critique
+		year = 1962
+		cost = 68000
+
+		factory_output = 0.01
+		administrative_efficiency = 0.01
+
+		ai_chance = {
+			factor = 1.1
+			modifier = {
+				factor = 0
+				NOT = { development_economics = 1 }
+			}
+		}
+	}
+
+
+	institutional_macro_coordination = {
+		area = economic_thought_and_critique
+		year = 1966
+		cost = 76000
+
+		factory_output = 0.01
+		administrative_efficiency = 0.01
+
+		ai_chance = {
+			factor = 1.1
+			modifier = {
+				factor = 0
+				NOT = { macro_stabilization_frameworks = 1 }
+			}
+		}
+	}
+
+
+	national_competition_policy = {
+		area = market_functionality
+		year = 1962
+		cost = 68000
+
+		factory_output = 0.01
+		administrative_efficiency = 0.01
+
+		ai_chance = {
+			factor = 1.1
+			modifier = {
+				factor = 0
+				NOT = { consumer_protection_laws = 1 }
+			}
+		}
+	}
+
+
+	competitive_market_governance = {
+		area = market_functionality
+		year = 1966
+		cost = 76000
+
+		factory_output = 0.01
+		administrative_efficiency = 0.01
+
+		ai_chance = {
+			factor = 1.1
+			modifier = {
+				factor = 0
+				NOT = { national_competition_policy = 1 }
+			}
+		}
+	}

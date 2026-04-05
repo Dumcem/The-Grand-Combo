@@ -416,3 +416,99 @@ national_industrial_data_grid = {
         supply_limit = 0.1
     }
 }
+
+
+#civilian_nuclear_grid
+civilian_nuclear_grid_program = {
+	limit = { civilian_nuclear_grid = 1 }
+	chance = { base = 2 }
+	effect = { factory_output = 0.01 }
+}
+
+
+#grid_interconnection_standards
+grid_interconnection_standards_program = {
+	limit = { grid_interconnection_standards = 1 }
+	chance = { base = 2 }
+	effect = { factory_output = 0.01 }
+}
+
+
+#resilient_baseload_planning
+resilient_baseload_planning_program = {
+	limit = { resilient_baseload_planning = 1 }
+	chance = { base = 2 }
+	effect = { factory_output = 0.01 }
+}
+
+
+#precision_tooling
+precision_tooling_program = {
+	limit = { precision_tooling = 1 }
+	chance = { base = 2 }
+	effect = { factory_output = 0.01 }
+}
+
+
+#numerically_controlled_machining
+numerically_controlled_machining_program = {
+	limit = { numerically_controlled_machining = 1 }
+	chance = { base = 2 }
+	effect = { factory_output = 0.01 }
+}
+
+
+#adaptive_precision_manufacturing
+adaptive_precision_manufacturing_program = {
+	limit = { adaptive_precision_manufacturing = 1 }
+	chance = { base = 2 }
+	effect = { factory_output = 0.01 }
+}
+
+
+#geophysical_prospecting
+geophysical_prospecting_program = {
+	limit = { geophysical_prospecting = 1 }
+	chance = { base = 2 }
+	effect = { factory_output = 0.01 }
+}
+
+
+#high_temperature_alloys
+high_temperature_alloys_program = {
+	limit = { high_temperature_alloys = 1 }
+	chance = { base = 2 }
+	effect = { factory_output = 0.01 }
+}
+
+
+#strategic_materials_engineering
+strategic_materials_engineering_program = {
+	limit = { strategic_materials_engineering = 1 }
+	chance = { base = 2 }
+	effect = { factory_output = 0.01 }
+}
+
+
+#arterial_logistics_planning
+arterial_logistics_planning_program = {
+	limit = { arterial_logistics_planning = 1 }
+	chance = { base = 2 }
+	effect = { factory_output = 0.01 }
+}
+
+
+#containerized_freight_networks
+containerized_freight_networks_program = {
+	limit = { containerized_freight_networks = 1 }
+	chance = { base = 2 }
+	effect = { factory_output = 0.01 }
+}
+
+
+#integrated_freight_corridors
+integrated_freight_corridors_program = {
+	limit = { integrated_freight_corridors = 1 }
+	chance = { base = 2 }
+	effect = { factory_output = 0.01 }
+}

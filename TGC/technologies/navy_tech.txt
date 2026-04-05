@@ -3598,3 +3598,219 @@
 			}
 		}
 	}
+
+
+	fleet_replenishment_doctrine = {
+		area = naval_doctrine
+		year = 1950
+		cost = 56000
+		unciv_military = yes
+
+		navy_base = { naval_organisation = 0.02 }
+
+		ai_chance = {
+			factor = 1.1
+			modifier = {
+				factor = 0
+				NOT = { global_fleet_doctrine = 1 }
+			}
+		}
+	}
+
+
+	integrated_fleet_logistics = {
+		area = naval_doctrine
+		year = 1962
+		cost = 68000
+		unciv_military = yes
+
+		navy_base = { naval_organisation = 0.02 }
+
+		ai_chance = {
+			factor = 1.1
+			modifier = {
+				factor = 0
+				NOT = { fleet_replenishment_doctrine = 1 }
+			}
+		}
+	}
+
+
+	global_naval_readiness = {
+		area = naval_doctrine
+		year = 1966
+		cost = 76000
+		unciv_military = yes
+
+		navy_base = { naval_organisation = 0.02 }
+
+		ai_chance = {
+			factor = 1.1
+			modifier = {
+				factor = 0
+				NOT = { integrated_fleet_logistics = 1 }
+			}
+		}
+	}
+
+
+	carrier_task_force_screening = {
+		area = ship_construction
+		year = 1950
+		cost = 56000
+		unciv_military = yes
+
+		aircraftcarrier = { hull = 4 gun_power = 2 }
+
+		ai_chance = {
+			factor = 1.1
+			modifier = {
+				factor = 0
+				NOT = { supercarrier_ships = 1 }
+			}
+		}
+	}
+
+
+	carrier_group_air_coordination = {
+		area = ship_construction
+		year = 1962
+		cost = 68000
+		unciv_military = yes
+
+		aircraftcarrier = { hull = 4 gun_power = 2 }
+
+		ai_chance = {
+			factor = 1.1
+			modifier = {
+				factor = 0
+				NOT = { carrier_task_force_screening = 1 }
+			}
+		}
+	}
+
+
+	carrier_battle_group_operations = {
+		area = ship_construction
+		year = 1966
+		cost = 76000
+		unciv_military = yes
+
+		aircraftcarrier = { hull = 4 gun_power = 2 }
+
+		ai_chance = {
+			factor = 1.1
+			modifier = {
+				factor = 0
+				NOT = { carrier_group_air_coordination = 1 }
+			}
+		}
+	}
+
+
+	modular_shipyard_layouts = {
+		area = naval_engineering
+		year = 1950
+		cost = 56000
+		unciv_military = yes
+
+		navy_base = { naval_organisation = 0.02 }
+
+		ai_chance = {
+			factor = 1.1
+			modifier = {
+				factor = 0
+				NOT = { automated_naval_design = 1 }
+			}
+		}
+	}
+
+
+	automated_damage_control = {
+		area = naval_engineering
+		year = 1962
+		cost = 68000
+		unciv_military = yes
+
+		navy_base = { naval_organisation = 0.02 }
+
+		ai_chance = {
+			factor = 1.1
+			modifier = {
+				factor = 0
+				NOT = { modular_shipyard_layouts = 1 }
+			}
+		}
+	}
+
+
+	resilient_naval_systems = {
+		area = naval_engineering
+		year = 1966
+		cost = 76000
+		unciv_military = yes
+
+		navy_base = { naval_organisation = 0.02 }
+
+		ai_chance = {
+			factor = 1.1
+			modifier = {
+				factor = 0
+				NOT = { automated_damage_control = 1 }
+			}
+		}
+	}
+
+
+	convoy_hunter_killer_groups = {
+		area = naval_science
+		year = 1950
+		cost = 56000
+		unciv_military = yes
+
+		submarine = { torpedo_attack = 2 reconnaissance = 1 }
+
+		ai_chance = {
+			factor = 1.1
+			modifier = {
+				factor = 0
+				NOT = { advanced_sonar_integration = 1 }
+			}
+		}
+	}
+
+
+	long_range_asw_coordination = {
+		area = naval_science
+		year = 1962
+		cost = 68000
+		unciv_military = yes
+
+		submarine = { torpedo_attack = 2 reconnaissance = 1 }
+
+		ai_chance = {
+			factor = 1.1
+			modifier = {
+				factor = 0
+				NOT = { convoy_hunter_killer_groups = 1 }
+			}
+		}
+	}
+
+
+	oceanic_asw_networks = {
+		area = naval_science
+		year = 1966
+		cost = 76000
+		unciv_military = yes
+
+		submarine = { torpedo_attack = 2 reconnaissance = 1 }
+
+		ai_chance = {
+			factor = 1.1
+			modifier = {
+				factor = 0
+				NOT = { long_range_asw_coordination = 1 }
+			}
+		}
+	}
