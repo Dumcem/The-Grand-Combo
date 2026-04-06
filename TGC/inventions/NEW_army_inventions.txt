@@ -23,7 +23,7 @@ land_mines_tactics = {
         }
         tank = {
             defence = 1
-            supply_consumption = 0.05
+            supply_consumption = 0.1
         }
     }
 }
@@ -99,7 +99,7 @@ land_mines_defence = {
         }
         tank = {
             defence = 1
-            supply_consumption = 0.05
+            supply_consumption = 0.1
         }
     }
 }
@@ -141,7 +141,7 @@ dragons_teeth = {
         }
         tank = {
             defence = 1
-            supply_consumption = 0.05
+            supply_consumption = 0.1
         }
     }
 }
@@ -323,7 +323,7 @@ combined_arms_firepower = {
         tank = {
             attack = 4
             defence = 4
-            supply_consumption = 1	
+            supply_consumption = 0.2	
             maneuver = 1
             siege = 1
         }
@@ -493,8 +493,8 @@ combined_assault = {
             siege = 1
         }
         tank = {
-            attack = 3
-            defence = 3
+            attack = 2
+            defence = 2
         }
         artillery = {
             defence = 2
@@ -531,9 +531,9 @@ combined_arms_regiments = {
             supply_consumption = 1
         }	
         tank = {
-            attack = 3
+            attack = 1
             defence = 2
-            supply_consumption = 1	
+            supply_consumption = 0.1	
         }
     }
 }
@@ -641,7 +641,7 @@ tank_modernization = {
             defence = 6
             maneuver = 1
             siege = 1
-            supply_consumption = 1
+            supply_consumption = 0.1
         }
     }
 }
@@ -689,7 +689,7 @@ coordinated_armour_artillery = {
         tank = {
             attack = 2
             defence = 1
-            supply_consumption = 0.5
+            supply_consumption = 0.3
         }
         artillery = {
             attack = 1

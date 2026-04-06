@@ -33,6 +33,11 @@ Additional drift checks for the same targeted scope:
    - `README.md` keeps the canonical pointer to `TGC/docs/1966_extension_audit.md`,
    - stale legacy README snapshot claims (`navy ... 1939`, `industry 1945`, `culture 1950`) are not reintroduced,
    - `TGC/docs/1966_extension_audit.md` is present.
+13. unit effect-target sanity checks for tracked tech/invention files:
+   - checks `effect` targets that look like unit stat blocks against real unit keys from `TGC/units/*.txt`,
+   - flags unknown unit keys,
+   - flags known legacy aliases (e.g. `carrier`) with the expected canonical key (`aircraftcarrier`),
+   - validates `activate_unit = <key>` targets against existing unit keys.
 
 Localisation scan is intentionally limited to:
 

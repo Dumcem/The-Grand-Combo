@@ -65,6 +65,87 @@ def build_localisation_index(localisation_files: list[str]) -> dict[str, list[st
     return idx
 
 
+UNIT_STAT_HINTS = {
+    "attack",
+    "defence",
+    "hull",
+    "gun_power",
+    "torpedo_attack",
+    "reconnaissance",
+    "support",
+    "maneuver",
+    "siege",
+    "maximum_speed",
+    "evasion",
+    "fire_range",
+    "discipline",
+    "supply_consumption",
+}
+
+NON_UNIT_EFFECT_KEYS = {"army_base", "navy_base"}
+LEGACY_UNIT_ALIASES = {"carrier": "aircraftcarrier"}
+
+
+def discover_unit_keys() -> set[str]:
+    unit_dir = ROOT / "TGC/units"
+    return {p.stem for p in unit_dir.glob("*.txt")}
+
+
+def validate_effect_unit_targets(rel_path: str, unit_keys: set[str]) -> list[str]:
+    failures: list[str] = []
+    lines = read_text(rel_path).splitlines()
+    i = 0
+    while i < len(lines):
+        if re.match(r"\s*effect\s*=\s*\{\s*(?:#.*)?$", lines[i]):
+            depth = 1
+            i += 1
+            effect_lines: list[tuple[int, str, int]] = []
+            while i < len(lines) and depth > 0:
+                cur = lines[i]
+                effect_lines.append((i + 1, cur, depth))
+                depth += cur.count("{") - cur.count("}")
+                i += 1
+
+            j = 0
+            while j < len(effect_lines):
+                lineno, txt, local_depth = effect_lines[j]
+                if local_depth == 1:
+                    ma = re.match(r"\s*activate_unit\s*=\s*([a-z0-9_]+)", txt)
+                    if ma:
+                        unit_key = ma.group(1)
+                        if unit_key not in unit_keys:
+                            failures.append(f"UNIT target unknown key '{unit_key}' in {rel_path}:{lineno} (activate_unit)")
+
+                    mb = re.match(r"\s*([a-z0-9_]+)\s*=\s*\{\s*(?:#.*)?$", txt)
+                    if mb:
+                        key = mb.group(1)
+                        sub_depth = 1
+                        k = j + 1
+                        sub: list[tuple[int, str]] = []
+                        while k < len(effect_lines) and sub_depth > 0:
+                            ln2, t2, _ = effect_lines[k]
+                            sub.append((ln2, t2))
+                            sub_depth += t2.count("{") - t2.count("}")
+                            k += 1
+
+                        if key not in NON_UNIT_EFFECT_KEYS:
+                            joined = "\n".join(x[1] for x in sub)
+                            looks_like_unit_target = any(re.search(rf"\b{re.escape(stat)}\b", joined) for stat in UNIT_STAT_HINTS)
+                            if looks_like_unit_target and key not in unit_keys:
+                                if key in LEGACY_UNIT_ALIASES and LEGACY_UNIT_ALIASES[key] in unit_keys:
+                                    failures.append(
+                                        f"UNIT target legacy key '{key}' in {rel_path}:{lineno} (use '{LEGACY_UNIT_ALIASES[key]}')"
+                                    )
+                                else:
+                                    failures.append(f"UNIT target unknown key '{key}' in {rel_path}:{lineno}")
+                        j = k
+                        continue
+                j += 1
+            continue
+        i += 1
+    return failures
+
+
 def main() -> int:
     m = read_manifest()
     branches = m["tech_tree"]["branches"]
@@ -73,6 +154,7 @@ def main() -> int:
     loc_files = m["localisation_files"]
     structural = m["structural"]
     stale_rules = m.get("stale_reference_rules", [])
+    unit_keys = discover_unit_keys()
 
     failures: list[str] = []
     loc_index = build_localisation_index(loc_files)
@@ -124,6 +206,10 @@ def main() -> int:
         if f"{k}_desc" not in loc_keys:
             failures.append(f"INVENTION missing localisation desc: {k}_desc")
 
+    unit_target_files = sorted({b["file"] for b in branches} | set(invention_files))
+    for rel in unit_target_files:
+        failures.extend(validate_effect_unit_targets(rel, unit_keys))
+
     for rule in stale_rules:
         pat = re.compile(rf"\b{re.escape(rule['old_key'])}\b")
         for rel in rule["files"]:
@@ -157,6 +243,7 @@ def main() -> int:
     print(f" - late-tech localisation perimeter (year >= {late_min_year}): {len(late_keys)} keys")
     print(f" - tracked invention files: {len(invention_files)}")
     print(f" - parsed inventions in tracked files: {len(all_inv)}")
+    print(f" - discovered unit keys: {len(unit_keys)}")
     print(" - structural checks: defines/decision/backend/readme/audit/docs")
 
     if failures:
