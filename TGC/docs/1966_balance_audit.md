@@ -64,6 +64,7 @@ The model uses a **single unified timeline**:
 - milestones remain configurable and reusable, but are no longer tied to a special 1936 logic branch
 - tiered coverage/watchlists are used to keep the final report practical (core-first)
 - v4 expands toward full per-unit stat coverage for all relevant stats detected in unit files
+- current milestone grid spans the full campaign arc: `1836, 1850, 1870, 1900, 1910, 1919, 1929, 1936, 1945, 1955, 1966`
 
 ## Conceptual model (v4)
 
@@ -81,6 +82,19 @@ v4 distinguishes:
 
 A stat can be covered but still low-signal; this is expected in broad full-coverage mode.
 When no readable deltas exist for a covered stat in scanned files, coverage is reported as formal-only (not as high-confidence timeline data).
+
+## Evidence basis of milestone ranges (v4.1 refinement)
+
+To avoid treating all ranges as equally strong, rules should be interpreted with two classes:
+
+- **Evidence-based ranges**: stats with readable and reasonably dated deltas in scanned tech/invention files (especially core combat stats).
+- **Heuristic scaffolding ranges**: stats with weak/no timed signal (common in structural stats) where ranges are intentionally diagnostic guardrails, not historical truth.
+
+Practical guidance:
+
+- pre-1936 milestones should **not** be auto-interpolated uniformly when observed progression is step-like;
+- use anchor-style ranges around known jumps for core stats (`attack`, `defence`, `supply_consumption`, selected naval combat stats);
+- keep structural low-signal stats (`build_time`, `default_organisation`, `max_strength`, `min_port_level`, etc.) broad/prudent to avoid false precision.
 
 Economic checks per unit can define:
 
@@ -122,7 +136,7 @@ Coverage metrics:
 
 Unified stat summary example:
 
-`tank attack: baseline_raw 16.000, first_known_year 1929, last_known_year 1966, cumulative +20.000, cumulative -0.000, milestones[1936:26.000, 1945:32.000, 1955:32.000, 1966:36.000], estimated_final 36.000, time_direct 2.000, time_inferred_strong 11.000, time_inferred_weak 7.000, time_unknown 0.000, time_coverage 100.0%, high_conf_coverage 65.0%`
+`tank attack: baseline_raw 16.000, first_known_year 1929, last_known_year 1966, cumulative +20.000, cumulative -0.000, milestones[1836:16.000, 1850:16.000, 1870:16.000, 1900:16.000, 1910:16.000, 1919:16.000, 1929:18.000, 1936:28.000, 1945:32.000, 1955:32.000, 1966:36.000], estimated_final 36.000, time_direct 2.000, time_inferred_strong 11.000, time_inferred_weak 7.000, time_unknown 0.000, time_coverage 100.0%, high_conf_coverage 65.0%`
 
 Economic summary example:
 
