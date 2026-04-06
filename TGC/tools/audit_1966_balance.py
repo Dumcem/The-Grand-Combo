@@ -513,7 +513,9 @@ def main() -> int:
                 f"{unit}: none of expected key goods found in unit costs ({', '.join(sorted(expected_goods))})",
             )
 
-    milestone_years: list[int] = sorted(int(y) for y in rules.get("milestone_years", [1936, 1945, 1955, 1966]))
+    milestone_years: list[int] = sorted(
+        int(y) for y in rules.get("milestone_years", [1836, 1850, 1870, 1900, 1910, 1919, 1929, 1936, 1945, 1955, 1966])
+    )
     inferred_years, year_reason = build_year_inference(rules["scan_files"])
     direct_blocks = sum(1 for _, reason in year_reason.items() if reason == "direct")
     strong_blocks = sum(1 for _, reason in year_reason.items() if reason == "inferred_strong")
