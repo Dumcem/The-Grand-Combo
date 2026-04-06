@@ -240,7 +240,7 @@ supercarriers = {
         aircraftcarrier = {
             gun_power = 5
             hull = 10
-            supply_consumption = 0.05
+            supply_consumption = 0.4
         }
     }
 }
@@ -271,7 +271,7 @@ advanced_supercarriers = {
         aircraftcarrier = {
             gun_power = 3
             hull = 8
-            supply_consumption = 0.05
+            supply_consumption = 0.4
         }
     }
 }
@@ -302,7 +302,7 @@ monstrous_supercarriers = {
         aircraftcarrier = {
             gun_power = 2
             hull = 6
-            supply_consumption = 0.05
+            supply_consumption = 0.4
         }
     }
 }
@@ -637,7 +637,7 @@ maritime_aerial_coordination = {
 		}
 	}
 	effect = {
-		carrier = { gun_power = 1 }
+			aircraftcarrier = { gun_power = 1 }
 		commerce_raider = { hull = 1 }
 		blockade_efficiency = 0.05
 	}
@@ -654,7 +654,7 @@ real_time_fleet_tracking = {
 		}
 	}
 	effect = {
-		carrier = { reconnaissance = 1 }
+			aircraftcarrier = { reconnaissance = 1 }
 		cruiser = { maximum_speed = 1 }
 		blockade_efficiency = 0.05
 	}
@@ -670,7 +670,7 @@ coordinated_missile_screening = {
 		}
 	}
 	effect = {
-		carrier = { defence = 1 }
+			aircraftcarrier = { defence = 1 }
 		battleship = { defence = 1 }
 		submarine = { torpedo_attack = 2 }
 	}
@@ -703,7 +703,7 @@ integrated_fleet_air_defense = {
 		}
 	}
 	effect = {
-		carrier = { defence = 1 }
+			aircraftcarrier = { defence = 1 }
 		battleship = { defence = 1 }
 		commerce_raider = { hull = 1 }
 	}
