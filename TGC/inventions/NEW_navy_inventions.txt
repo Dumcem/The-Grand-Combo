@@ -190,8 +190,11 @@ layered_screening_doctrine = {
 }
 
 #mobile_capital_ships
-aircraft_carriers = {
-    limit = { mobile_capital_ships = 1 }
+converted_carriers = {
+    limit = {
+        oil_driven_ships = 1
+        military_aviation = 1
+    }
     chance = {
         base = 2
         modifier = {
@@ -200,16 +203,53 @@ aircraft_carriers = {
         }
         modifier = {
             factor = 1
-            any_neighbor_country = { invention = aircraft_carriers }
+            any_neighbor_country = { invention = converted_carriers }
         }
         modifier = {
             factor = 2
             war = yes
-            war_countries = { invention = aircraft_carriers }
+            war_countries = { invention = converted_carriers }
         }
     }
     effect = {
         activate_unit = aircraftcarrier
+    }
+}
+
+fleet_aircraft_carriers = {
+    limit = {
+        mobile_capital_ships = 1
+        invention = converted_carriers
+    }
+    chance = {
+        base = 2
+        modifier = {
+            factor = 2
+            invention = converted_carriers
+        }
+        modifier = {
+            factor = 2
+            sealift_doctrine = 1
+        }
+        modifier = {
+            factor = 1
+            any_neighbor_country = { invention = fleet_aircraft_carriers }
+        }
+        modifier = {
+            factor = 2
+            war = yes
+            war_countries = { invention = fleet_aircraft_carriers }
+        }
+    }
+    effect = {
+        aircraftcarrier = {
+            gun_power = 3
+            hull = 7
+            supply_consumption = 0.1
+            default_organisation = 3
+            max_strength = 7
+            weighted_value = 7.0
+        }
     }
 }
 
@@ -220,7 +260,7 @@ supercarriers = {
         base = 1
         modifier = {
             factor = -8
-            NOT = { invention = aircraft_carriers }
+            NOT = { invention = fleet_aircraft_carriers }
         }
         modifier = {
             factor = 2
@@ -238,9 +278,12 @@ supercarriers = {
     }
     effect = {
         aircraftcarrier = {
-            gun_power = 5
+            gun_power = 4
             hull = 10
-            supply_consumption = 0.4
+            supply_consumption = 0.2
+            default_organisation = 4
+            max_strength = 10
+            weighted_value = 10.0
         }
     }
 }
@@ -270,8 +313,11 @@ advanced_supercarriers = {
     effect = {
         aircraftcarrier = {
             gun_power = 3
-            hull = 8
-            supply_consumption = 0.4
+            hull = 7
+            supply_consumption = 0.2
+            default_organisation = 4
+            max_strength = 8
+            weighted_value = 8.0
         }
     }
 }
@@ -300,9 +346,12 @@ monstrous_supercarriers = {
     }
     effect = {
         aircraftcarrier = {
-            gun_power = 2
+            gun_power = 3
             hull = 6
-            supply_consumption = 0.4
+            supply_consumption = 0.2
+            default_organisation = 3
+            max_strength = 8
+            weighted_value = 7.0
         }
     }
 }
@@ -332,7 +381,7 @@ welded_hulls = {
             hull = 5
         }
         aircraftcarrier = {
-            hull = 5
+            hull = 6
         }
     }
 }
