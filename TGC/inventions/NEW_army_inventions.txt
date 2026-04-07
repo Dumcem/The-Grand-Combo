@@ -15,7 +15,7 @@ land_mines_tactics = {
         }
         engineer = {
             defence = 1
-            supply_consumption = 0.05
+            supply_consumption = 0.02
         }
         irregular = {
             defence = 1
@@ -56,8 +56,8 @@ anti_tank_mines = {
             supply_consumption = 0.05
         }
         engineer = {
-            attack = 1
-            supply_consumption = 0.05
+            attack = 0.5
+            supply_consumption = 0.01
         }
         irregular = {
             attack = 1
@@ -91,7 +91,7 @@ land_mines_defence = {
         }
         engineer = {
             defence = 1
-            supply_consumption = 0.05
+            supply_consumption = 0.02
         }
         irregular = {
             defence = 1
@@ -133,7 +133,7 @@ dragons_teeth = {
         }
         engineer = {
             defence = 1
-            supply_consumption = 0.05
+            supply_consumption = 0.02
         }
         irregular = {
             defence = 1
@@ -183,7 +183,7 @@ urban_resistance = {
         }
         engineer = {
             defence = 1
-            supply_consumption = 0.05
+            supply_consumption = 0.02
         }
     }
 }
@@ -275,8 +275,8 @@ partially_mechanized_units = {
             supply_consumption = 0.2
         }
         engineer = {
-            attack = 0.5
-            supply_consumption = 0.2
+            attack = 0.25
+            supply_consumption = 0.014
         }
         irregular = {
             attack = 0.5
@@ -311,9 +311,9 @@ combined_arms_firepower = {
             supply_consumption = 0.5
         }
         engineer = {
-            attack = 0.5
+            attack = 0.25
             defence = 1
-            supply_consumption = 0.5
+            supply_consumption = 0.015
         }
         irregular = {
             attack = 0.5
@@ -363,8 +363,8 @@ anti_tank_rifle = {
             supply_consumption = 0.2
         }
         engineer = {
-            attack = 1
-            supply_consumption = 0.2
+            attack = 0.5
+            supply_consumption = 0.015
         }
         irregular = {
             attack = 1
@@ -411,7 +411,7 @@ largely_motorized_units = {
         engineer = {
             defence = 2
             maximum_speed = 3
-            supply_consumption = 0.5
+            supply_consumption = 0.03
         }
         irregular = {
             defence = 2
@@ -455,8 +455,9 @@ largely_mechanized_units = {
             supply_consumption = 0.3
         }
         engineer = {
-            attack = 1
-            supply_consumption = 0.3
+            attack = 0.5
+            maximum_speed = 1
+            supply_consumption = 0.015
         }
         irregular = {
             attack = 1
@@ -488,7 +489,7 @@ combined_assault = {
             defence = 1
         }
         engineer = {
-            attack = 1
+            attack = 0.5
             defence = 1
             siege = 1
         }
@@ -564,9 +565,9 @@ assault_rifle_development = {
             supply_consumption = 0.2
         }
         engineer = {
-            attack = 1
+            attack = 0.5
             defence = 1
-            supply_consumption = 0.1
+            supply_consumption = 0.03
         }
     }
 }
@@ -606,7 +607,7 @@ personal_defense_weapons = {
     effect = {
         engineer = {
             defence = 1
-            supply_consumption = 0.05
+            supply_consumption = 0.03
         }
         irregular = {
             defence = 1
@@ -666,9 +667,9 @@ advanced_anti_fortification_shells = {
             supply_consumption = 0.2
         }
         engineer = {
-            attack = 1
+            attack = 0.5
             siege = 1
-            supply_consumption = 0.1
+            supply_consumption = 0.02
         }
     }
 }
@@ -725,8 +726,8 @@ rocket_anti_tank_weapons = {
             supply_consumption = 0.2
         }
         engineer = {
-            attack = 1.5
-            supply_consumption = 0.2
+            attack = 0.75
+            supply_consumption = 0.03
         }
         irregular = {
             attack = 1.5
@@ -817,8 +818,8 @@ rocket_barrage_tactics = {
             supply_consumption = 0.3
         }
         engineer = {
-            attack = 1
-            supply_consumption = 0.2
+            attack = 0.5
+            supply_consumption = 0.03
         }
     }
 }
@@ -869,9 +870,9 @@ thermobaric_rockets = {
             supply_consumption = 0.3
         }
         engineer = {
-            attack = 1
+            attack = 0.5
             siege = 1
-            supply_consumption = 0.2
+            supply_consumption = 0.03
         }
     }
 }
@@ -897,8 +898,8 @@ anti_tank_guided_missiles = {
             supply_consumption = 0.2
         }
         engineer = {
-            attack = 1
-            supply_consumption = 0.2
+            attack = 0.5
+            supply_consumption = 0.03
         }
         tank = {
             defence = 1
@@ -932,7 +933,7 @@ surface_to_surface_missiles = {
         }
         engineer = {
             siege = 1
-            supply_consumption = 0.1
+            supply_consumption = 0.03
         }
     }
 }
