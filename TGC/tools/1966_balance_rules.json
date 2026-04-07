@@ -131,12 +131,12 @@
     "aircraftcarrier": {
       "unit_file": "TGC/units/aircraftcarrier.txt",
       "estimated_build_cost_range": {
-        "min": 11000,
-        "max": 22000
+        "min": 8000,
+        "max": 18000
       },
       "estimated_upkeep_cost_range": {
-        "min": 180,
-        "max": 420
+        "min": 120,
+        "max": 320
       },
       "key_goods_expectations": [
         "steamer_convoy",
@@ -160,48 +160,48 @@
           "max_cumulative_negative_delta": 25,
           "milestone_ranges": {
             "1836": {
-              "min": 90.0,
-              "max": 90.0
+              "min": 62.0,
+              "max": 62.0
             },
             "1850": {
-              "min": 85.8,
-              "max": 94.2
+              "min": 59.0,
+              "max": 65.0
             },
             "1870": {
-              "min": 79.8,
-              "max": 100.2
+              "min": 56.0,
+              "max": 70.0
             },
             "1900": {
-              "min": 70.8,
-              "max": 109.2
+              "min": 54.0,
+              "max": 73.0
             },
             "1910": {
-              "min": 67.8,
-              "max": 112.2
+              "min": 54.0,
+              "max": 74.0
             },
             "1919": {
-              "min": 65.1,
-              "max": 114.9
+              "min": 55.0,
+              "max": 75.0
             },
             "1929": {
-              "min": 62.1,
-              "max": 117.9
+              "min": 62.0,
+              "max": 85.0
             },
             "1936": {
-              "min": 60,
-              "max": 120
+              "min": 66.0,
+              "max": 95.0
             },
             "1945": {
-              "min": 70,
-              "max": 150
+              "min": 75.0,
+              "max": 112.0
             },
             "1955": {
-              "min": 80,
-              "max": 180
+              "min": 84.0,
+              "max": 128.0
             },
             "1966": {
-              "min": 90,
-              "max": 200
+              "min": 92.0,
+              "max": 145.0
             }
           }
         },
@@ -211,107 +211,107 @@
             "max": 100
           },
           "max_single_delta": 8,
-          "max_cumulative_positive_delta": 30,
+          "max_cumulative_positive_delta": 35,
           "max_cumulative_negative_delta": 12,
           "milestone_ranges": {
             "1836": {
-              "min": 35.0,
-              "max": 35.0
+              "min": 20.0,
+              "max": 20.0
             },
             "1850": {
-              "min": 32.9,
-              "max": 36.4
+              "min": 18.5,
+              "max": 21.0
             },
             "1870": {
-              "min": 29.9,
-              "max": 38.4
+              "min": 17.5,
+              "max": 22.5
             },
             "1900": {
-              "min": 25.4,
-              "max": 41.4
+              "min": 16.5,
+              "max": 24.0
             },
             "1910": {
-              "min": 23.9,
-              "max": 42.4
+              "min": 16.0,
+              "max": 25.0
             },
             "1919": {
-              "min": 22.55,
-              "max": 43.3
+              "min": 16.0,
+              "max": 26.0
             },
             "1929": {
-              "min": 21.05,
-              "max": 44.3
+              "min": 20.0,
+              "max": 32.0
             },
             "1936": {
-              "min": 20,
-              "max": 45
+              "min": 22.0,
+              "max": 36.0
             },
             "1945": {
-              "min": 25,
-              "max": 60
+              "min": 24.0,
+              "max": 42.0
             },
             "1955": {
-              "min": 30,
-              "max": 80
+              "min": 28.0,
+              "max": 52.0
             },
             "1966": {
-              "min": 35,
-              "max": 100
+              "min": 30.0,
+              "max": 65.0
             }
           }
         },
         "supply_consumption": {
           "final_range": {
             "min": 0.3,
-            "max": 3.0
+            "max": 2.4
           },
           "max_single_delta": 0.7,
           "max_cumulative_positive_delta": 2.0,
           "max_cumulative_negative_delta": 0.8,
           "milestone_ranges": {
             "1836": {
-              "min": 1.0,
-              "max": 1.0
+              "min": 0.65,
+              "max": 0.65
             },
             "1850": {
-              "min": 0.902,
-              "max": 1.084
+              "min": 0.58,
+              "max": 0.72
             },
             "1870": {
-              "min": 0.762,
-              "max": 1.204
+              "min": 0.53,
+              "max": 0.78
             },
             "1900": {
-              "min": 0.552,
-              "max": 1.384
+              "min": 0.48,
+              "max": 0.85
             },
             "1910": {
-              "min": 0.482,
-              "max": 1.444
+              "min": 0.47,
+              "max": 0.88
             },
             "1919": {
-              "min": 0.419,
-              "max": 1.498
+              "min": 0.5,
+              "max": 0.85
             },
             "1929": {
-              "min": 0.349,
-              "max": 1.558
+              "min": 0.6,
+              "max": 1.0
             },
             "1936": {
-              "min": 0.3,
-              "max": 1.6
+              "min": 0.65,
+              "max": 1.15
             },
             "1945": {
-              "min": 0.3,
-              "max": 2.1
+              "min": 0.75,
+              "max": 1.5
             },
             "1955": {
-              "min": 0.3,
-              "max": 2.6
+              "min": 0.85,
+              "max": 1.9
             },
             "1966": {
-              "min": 0.3,
-              "max": 3.0
+              "min": 0.95,
+              "max": 2.4
             }
           }
         },
@@ -380,48 +380,48 @@
           "max_cumulative_negative_delta": 303.0,
           "milestone_ranges": {
             "1836": {
-              "min": 127.5,
-              "max": 172.5
+              "min": 120.0,
+              "max": 120.0
             },
             "1850": {
-              "min": 127.5,
-              "max": 172.5
+              "min": 114.0,
+              "max": 126.0
             },
             "1870": {
-              "min": 127.5,
-              "max": 172.5
+              "min": 108.0,
+              "max": 132.0
             },
             "1900": {
-              "min": 127.5,
-              "max": 172.5
+              "min": 102.0,
+              "max": 138.0
             },
             "1910": {
-              "min": 127.5,
-              "max": 172.5
+              "min": 100.0,
+              "max": 140.0
             },
             "1919": {
-              "min": 127.5,
-              "max": 172.5
+              "min": 102.0,
+              "max": 145.0
             },
             "1929": {
-              "min": 127.5,
-              "max": 172.5
+              "min": 106.0,
+              "max": 154.0
             },
             "1936": {
-              "min": 75.0,
-              "max": 345.0
+              "min": 112.0,
+              "max": 180.0
             },
             "1945": {
-              "min": 75.0,
-              "max": 391.0
+              "min": 120.0,
+              "max": 220.0
             },
             "1955": {
-              "min": 75.0,
-              "max": 427.8
+              "min": 128.0,
+              "max": 260.0
             },
             "1966": {
-              "min": 75.0,
-              "max": 460.0
+              "min": 136.0,
+              "max": 300.0
             }
           }
         },
@@ -435,48 +435,48 @@
           "max_cumulative_negative_delta": 103.0,
           "milestone_ranges": {
             "1836": {
-              "min": 42.5,
-              "max": 57.5
+              "min": 36.0,
+              "max": 36.0
             },
             "1850": {
-              "min": 42.5,
-              "max": 57.5
+              "min": 34.5,
+              "max": 38.5
             },
             "1870": {
-              "min": 42.5,
-              "max": 57.5
+              "min": 33.0,
+              "max": 41.0
             },
             "1900": {
-              "min": 42.5,
-              "max": 57.5
+              "min": 31.0,
+              "max": 44.0
             },
             "1910": {
-              "min": 42.5,
-              "max": 57.5
+              "min": 30.0,
+              "max": 45.0
             },
             "1919": {
-              "min": 42.5,
-              "max": 57.5
+              "min": 31.0,
+              "max": 46.0
             },
             "1929": {
-              "min": 42.5,
-              "max": 57.5
+              "min": 32.0,
+              "max": 50.0
             },
             "1936": {
-              "min": 25.0,
-              "max": 120.0
+              "min": 33.0,
+              "max": 60.0
             },
             "1945": {
-              "min": 25.0,
-              "max": 136.0
+              "min": 35.0,
+              "max": 75.0
             },
             "1955": {
-              "min": 25.0,
-              "max": 148.8
+              "min": 37.0,
+              "max": 90.0
             },
             "1966": {
-              "min": 25.0,
-              "max": 160.0
+              "min": 40.0,
+              "max": 110.0
             }
           }
         },
@@ -865,7 +865,8 @@
             }
           }
         }
-      }
+      },
+      "historical_relevance_start_year": 1919
     },
     "artillery": {
       "unit_file": "TGC/units/artillery.txt",
@@ -891,165 +892,165 @@
         "attack": {
           "final_range": {
             "min": 1,
-            "max": 26
+            "max": 20
           },
           "max_single_delta": 4,
-          "max_cumulative_positive_delta": 14,
+          "max_cumulative_positive_delta": 18,
           "max_cumulative_negative_delta": 5,
           "milestone_ranges": {
             "1836": {
-              "min": 1.5,
+              "min": 1.6,
               "max": 2.0
             },
             "1850": {
-              "min": 1.7,
-              "max": 2.4
+              "min": 1.8,
+              "max": 2.3
             },
             "1870": {
-              "min": 2.0,
-              "max": 3.2
+              "min": 2.2,
+              "max": 2.9
             },
             "1900": {
-              "min": 2.4,
-              "max": 4.2
+              "min": 2.7,
+              "max": 3.5
             },
             "1910": {
-              "min": 2.8,
-              "max": 4.8
+              "min": 3.1,
+              "max": 4.1
             },
             "1919": {
-              "min": 3.2,
-              "max": 5.4
+              "min": 3.6,
+              "max": 4.8
             },
             "1929": {
-              "min": 5.0,
-              "max": 7.5
+              "min": 5.8,
+              "max": 7.4
             },
             "1936": {
-              "min": 5.0,
-              "max": 8.0
+              "min": 6.0,
+              "max": 7.8
             },
             "1945": {
-              "min": 2,
-              "max": 14
+              "min": 10.5,
+              "max": 12.8
             },
             "1955": {
-              "min": 3,
-              "max": 19
+              "min": 10.8,
+              "max": 13.5
             },
             "1966": {
-              "min": 4,
-              "max": 26
+              "min": 15.0,
+              "max": 18.5
             }
           }
         },
         "defence": {
           "final_range": {
             "min": 1,
-            "max": 18
+            "max": 20
           },
           "max_single_delta": 3,
-          "max_cumulative_positive_delta": 9,
+          "max_cumulative_positive_delta": 17,
           "max_cumulative_negative_delta": 4,
           "milestone_ranges": {
             "1836": {
-              "min": 2.5,
+              "min": 2.7,
               "max": 3.5
             },
             "1850": {
-              "min": 2.5,
-              "max": 3.8
+              "min": 2.7,
+              "max": 3.6
             },
             "1870": {
-              "min": 2.5,
-              "max": 4.2
+              "min": 2.7,
+              "max": 3.7
             },
             "1900": {
-              "min": 4.0,
-              "max": 6.0
+              "min": 4.5,
+              "max": 5.8
             },
             "1910": {
-              "min": 5.5,
-              "max": 8.0
+              "min": 6.3,
+              "max": 7.8
             },
             "1919": {
-              "min": 7.0,
-              "max": 10.0
+              "min": 8.0,
+              "max": 9.8
             },
             "1929": {
-              "min": 9.0,
-              "max": 12.5
+              "min": 10.0,
+              "max": 12.2
             },
             "1936": {
-              "min": 9.0,
-              "max": 13.0
+              "min": 10.2,
+              "max": 12.6
             },
             "1945": {
-              "min": 2,
-              "max": 10
+              "min": 14.8,
+              "max": 17.5
             },
             "1955": {
-              "min": 2,
-              "max": 13
+              "min": 15.0,
+              "max": 17.8
             },
             "1966": {
-              "min": 3,
-              "max": 18
+              "min": 16.8,
+              "max": 19.5
             }
           }
         },
         "supply_consumption": {
           "final_range": {
-            "min": 0.05,
-            "max": 1.8
+            "min": 0.1,
+            "max": 11.0
           },
-          "max_single_delta": 0.5,
-          "max_cumulative_positive_delta": 1.2,
+          "max_single_delta": 1.1,
+          "max_cumulative_positive_delta": 11.0,
           "max_cumulative_negative_delta": 0.4,
           "milestone_ranges": {
             "1836": {
-              "min": 0.2,
-              "max": 0.6
+              "min": 0.35,
+              "max": 0.55
             },
             "1850": {
-              "min": 0.4,
-              "max": 1.0
+              "min": 0.6,
+              "max": 0.9
             },
             "1870": {
-              "min": 1.0,
-              "max": 2.0
+              "min": 1.3,
+              "max": 1.9
             },
             "1900": {
-              "min": 1.5,
-              "max": 2.8
+              "min": 1.8,
+              "max": 2.5
             },
             "1910": {
-              "min": 2.2,
-              "max": 3.8
+              "min": 2.7,
+              "max": 3.6
             },
             "1919": {
-              "min": 2.8,
+              "min": 3.6,
               "max": 4.8
             },
             "1929": {
-              "min": 4.0,
-              "max": 6.4
+              "min": 4.8,
+              "max": 6.3
             },
             "1936": {
-              "min": 4.0,
+              "min": 5.0,
               "max": 6.6
             },
             "1945": {
-              "min": 0.05,
-              "max": 1.0
+              "min": 7.2,
+              "max": 8.8
             },
             "1955": {
-              "min": 0.05,
-              "max": 1.4
+              "min": 7.4,
+              "max": 9.0
             },
             "1966": {
-              "min": 0.05,
-              "max": 1.8
+              "min": 8.8,
+              "max": 10.8
             }
           }
         },
@@ -1386,19 +1387,19 @@
         "support": {
           "final_range": {
             "min": 0.6,
-            "max": 11.0
+            "max": 11.5
           },
           "max_single_delta": 2.1,
-          "max_cumulative_positive_delta": 8.0,
+          "max_cumulative_positive_delta": 9.2,
           "max_cumulative_negative_delta": 4.0,
           "milestone_ranges": {
             "1836": {
               "min": 2.0,
-              "max": 2.0
+              "max": 2.6
             },
             "1850": {
               "min": 1.804,
-              "max": 2.875
+              "max": 3.2
             },
             "1870": {
               "min": 1.524,
@@ -1418,23 +1419,23 @@
             },
             "1929": {
               "min": 0.698,
-              "max": 7.812
+              "max": 8.7
             },
             "1936": {
               "min": 0.6,
-              "max": 8.25
+              "max": 8.9
             },
             "1945": {
               "min": 0.6,
-              "max": 9.35
+              "max": 10.1
             },
             "1955": {
               "min": 0.6,
-              "max": 10.23
+              "max": 10.5
             },
             "1966": {
               "min": 0.6,
-              "max": 11.0
+              "max": 11.5
             }
           }
         },
@@ -1493,7 +1494,8 @@
             }
           }
         }
-      }
+      },
+      "historical_relevance_start_year": 1836
     },
     "battleship": {
       "unit_file": "TGC/units/battleship.txt",
@@ -2233,7 +2235,8 @@
             }
           }
         }
-      }
+      },
+      "historical_relevance_start_year": 1900
     },
     "cavalry": {
       "unit_file": "TGC/units/cavalry.txt",
@@ -2859,7 +2862,8 @@
             }
           }
         }
-      }
+      },
+      "historical_relevance_start_year": 1836
     },
     "clipper_transport": {
       "unit_file": "TGC/units/clipper_transport.txt",
@@ -3540,7 +3544,8 @@
             }
           }
         }
-      }
+      },
+      "historical_relevance_start_year": 1836
     },
     "commerce_raider": {
       "unit_file": "TGC/units/commerce_raider.txt",
@@ -4333,7 +4338,8 @@
             }
           }
         }
-      }
+      },
+      "historical_relevance_start_year": 1850
     },
     "cruiser": {
       "unit_file": "TGC/units/cruiser.txt",
@@ -5127,7 +5133,8 @@
             }
           }
         }
-      }
+      },
+      "historical_relevance_start_year": 1870
     },
     "cuirassier": {
       "unit_file": "TGC/units/cuirassier.txt",
@@ -5755,7 +5762,8 @@
             }
           }
         }
-      }
+      },
+      "historical_relevance_start_year": 1836
     },
     "dragoon": {
       "unit_file": "TGC/units/dragoon.txt",
@@ -6383,7 +6391,8 @@
             }
           }
         }
-      }
+      },
+      "historical_relevance_start_year": 1836
     },
     "dreadnought": {
       "unit_file": "TGC/units/dreadnought.txt",
@@ -7121,7 +7130,8 @@
             }
           }
         }
-      }
+      },
+      "historical_relevance_start_year": 1910
     },
     "engineer": {
       "unit_file": "TGC/units/engineer.txt",
@@ -7804,7 +7814,8 @@
             }
           }
         }
-      }
+      },
+      "historical_relevance_start_year": 1836
     },
     "frigate": {
       "unit_file": "TGC/units/frigate.txt",
@@ -8596,7 +8607,8 @@
             }
           }
         }
-      }
+      },
+      "historical_relevance_start_year": 1836
     },
     "guard": {
       "unit_file": "TGC/units/guard.txt",
@@ -9225,7 +9237,8 @@
             }
           }
         }
-      }
+      },
+      "historical_relevance_start_year": 1836
     },
     "hussar": {
       "unit_file": "TGC/units/hussar.txt",
@@ -9853,7 +9866,8 @@
             }
           }
         }
-      }
+      },
+      "historical_relevance_start_year": 1836
     },
     "infantry": {
       "unit_file": "TGC/units/infantry.txt",
@@ -10481,7 +10495,8 @@
             }
           }
         }
-      }
+      },
+      "historical_relevance_start_year": 1836
     },
     "ironclad": {
       "unit_file": "TGC/units/ironclad.txt",
@@ -11219,7 +11234,8 @@
             }
           }
         }
-      }
+      },
+      "historical_relevance_start_year": 1870
     },
     "irregular": {
       "unit_file": "TGC/units/irregular.txt",
@@ -11845,7 +11861,8 @@
             }
           }
         }
-      }
+      },
+      "historical_relevance_start_year": 1836
     },
     "manowar": {
       "unit_file": "TGC/units/manowar.txt",
@@ -12583,7 +12600,8 @@
             }
           }
         }
-      }
+      },
+      "historical_relevance_start_year": 1836
     },
     "monitor": {
       "unit_file": "TGC/units/monitor.txt",
@@ -13376,7 +13394,8 @@
             }
           }
         }
-      }
+      },
+      "historical_relevance_start_year": 1870
     },
     "plane": {
       "unit_file": "TGC/units/plane.txt",
@@ -14004,7 +14023,8 @@
             }
           }
         }
-      }
+      },
+      "historical_relevance_start_year": 1910
     },
     "steam_transport": {
       "unit_file": "TGC/units/steam_transport.txt",
@@ -14742,7 +14762,8 @@
             }
           }
         }
-      }
+      },
+      "historical_relevance_start_year": 1850
     },
     "submarine": {
       "unit_file": "TGC/units/submarine.txt",
@@ -15535,7 +15556,8 @@
             }
           }
         }
-      }
+      },
+      "historical_relevance_start_year": 1900
     },
     "tank": {
       "unit_file": "TGC/units/tank.txt",
@@ -16219,7 +16241,8 @@
             }
           }
         }
-      }
+      },
+      "historical_relevance_start_year": 1919
     }
   },
   "economic": {

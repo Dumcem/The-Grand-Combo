@@ -157,6 +157,15 @@ def get_final_range(stat_cfg: dict[str, Any]) -> tuple[float | None, float | Non
     return final_cfg.get("min"), final_cfg.get("max")
 
 
+def get_historical_relevance_start_year(unit_cfg: dict[str, Any], default_year: int) -> int:
+    value = unit_cfg.get("historical_relevance_start_year", default_year)
+    try:
+        year = int(value)
+    except (TypeError, ValueError):
+        return default_year
+    return max(year, default_year)
+
+
 def parse_goods_costs(rel_path: str) -> dict[str, float]:
     text = read_text(rel_path)
     costs: dict[str, float] = {}
@@ -273,6 +282,29 @@ def extract_year_refs(block_lines: list[tuple[int, str]]) -> set[str]:
     return refs
 
 
+def extract_limit_year_refs(block_lines: list[tuple[int, str]]) -> set[str]:
+    refs: set[str] = set()
+    in_limit = False
+    depth = 0
+    for _, line in block_lines:
+        if not in_limit and re.match(r"\s*limit\s*=\s*\{\s*$", line):
+            in_limit = True
+            depth = 1
+            continue
+        if not in_limit:
+            continue
+
+        depth += line.count("{") - line.count("}")
+        if "NOT" not in line:
+            m_inv = re.findall(r"\binvention\s*=\s*([a-z0-9_]+)\b", line)
+            refs.update(m_inv)
+            m_flag = re.findall(r"\b([a-z0-9_]+)\s*=\s*1\b", line)
+            refs.update(m_flag)
+        if depth <= 0:
+            in_limit = False
+    return refs
+
+
 def build_year_inference(scan_files: list[str]) -> tuple[dict[str, int], dict[str, str]]:
     all_blocks: dict[str, list[tuple[int, str]]] = {}
     for rel in scan_files:
@@ -293,14 +325,23 @@ def build_year_inference(scan_files: list[str]) -> tuple[dict[str, int], dict[st
     while changed:
         changed = False
         for key in list(unresolved):
-            refs = extract_year_refs(all_blocks[key])
-            candidate_refs = [r for r in refs if r in year_by_key]
-            candidates = [year_by_key[r] for r in candidate_refs]
-            if candidates:
-                inferred = max(candidates)
-                year_by_key[key] = inferred
+            refs_all = extract_year_refs(all_blocks[key])
+            refs_limit = extract_limit_year_refs(all_blocks[key])
+            candidate_refs = [r for r in refs_all if r in year_by_key]
+            if not candidate_refs:
+                continue
+
+            limit_candidate_refs = [r for r in refs_limit if r in year_by_key]
+            if limit_candidate_refs:
+                inferred = max(year_by_key[r] for r in limit_candidate_refs)
+                ref_reasons = [year_reason.get(r, "unknown") for r in limit_candidate_refs]
+            else:
+                inferred = max(year_by_key[r] for r in candidate_refs)
                 ref_reasons = [year_reason.get(r, "unknown") for r in candidate_refs]
-                if len(candidate_refs) == 1 and all(x in ("direct", "inferred_strong") for x in ref_reasons):
+
+            if inferred:
+                year_by_key[key] = inferred
+                if all(x in ("direct", "inferred_strong") for x in ref_reasons):
                     year_reason[key] = "inferred_strong"
                 else:
                     year_reason[key] = "inferred_weak"
@@ -516,6 +557,7 @@ def main() -> int:
     milestone_years: list[int] = sorted(
         int(y) for y in rules.get("milestone_years", [1836, 1850, 1870, 1900, 1910, 1919, 1929, 1936, 1945, 1955, 1966])
     )
+    default_milestone_year = milestone_years[0] if milestone_years else 1836
     inferred_years, year_reason = build_year_inference(rules["scan_files"])
     direct_blocks = sum(1 for _, reason in year_reason.items() if reason == "direct")
     strong_blocks = sum(1 for _, reason in year_reason.items() if reason == "inferred_strong")
@@ -643,6 +685,7 @@ def main() -> int:
                 )
 
     for unit, cfg in units_cfg.items():
+        historical_start_year = get_historical_relevance_start_year(cfg, default_milestone_year)
         for stat, s_cfg in cfg["monitored_stats"].items():
             baseline = baselines.get(unit, {}).get(stat)
             if baseline is None:
@@ -733,7 +776,12 @@ def main() -> int:
                     f"{unit} {stat} estimated final outside final_range (baseline {baseline:.3f} + delta {total_delta:+.3f} = {estimated_final:.3f}, expected {min_final}..{max_final})",
                 )
             milestone_ranges = s_cfg.get("milestone_ranges", {})
+            skipped_milestone_years: list[int] = []
             for year in milestone_years:
+                if year < historical_start_year:
+                    if milestone_ranges.get(str(year)) or milestone_ranges.get(year):
+                        skipped_milestone_years.append(year)
+                    continue
                 cfg_y = milestone_ranges.get(str(year)) or milestone_ranges.get(year)
                 if not cfg_y:
                     continue
@@ -747,6 +795,13 @@ def main() -> int:
                         "WARN",
                         f"{unit} {stat} milestone {year} outside configured range ({m_est:.3f}, expected {m_min}..{m_max})",
                     )
+            if skipped_milestone_years:
+                years_txt = ", ".join(str(y) for y in skipped_milestone_years)
+                rep.add(
+                    "INFO",
+                    f"{unit} {stat}: skipped milestone range checks for pre-applicability years [{years_txt}] "
+                    f"(historical_relevance_start_year={historical_start_year})",
+                )
 
     check_key_goods_availability(files_cfg["production_types"], rules["economic"]["key_goods"], rep)
 

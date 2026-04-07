@@ -75,6 +75,10 @@ Per monitored unit stat, rules can define:
 - `max_cumulative_positive_delta` / `max_cumulative_negative_delta`
 - `milestone_ranges`: per-year guardrails at configured milestone years
 
+Per monitored unit, rules can also define:
+
+- `historical_relevance_start_year`: first milestone year where historical milestone-range checks are meaningful for that unit
+
 v4 distinguishes:
 
 - **covered stat**: stat exists in the unit file and is present in that unit's `monitored_stats` rules
@@ -96,6 +100,62 @@ Practical guidance:
 - use anchor-style ranges around known jumps for core stats (`attack`, `defence`, `supply_consumption`, selected naval combat stats);
 - keep structural low-signal stats (`build_time`, `default_organisation`, `max_strength`, `min_port_level`, etc.) broad/prudent to avoid false precision.
 
+### Artillery stepped-envelope philosophy (v4.3)
+
+Artillery is intentionally treated as a **step-escalation** profile rather than a smooth curve:
+
+- **1836–1900**: conservative baseline band with modest improvement (`attack`/`defence`) and manageable supply growth.
+- **1910–1939**: major modernization discontinuity (industrialized heavy guns, doctrine/logistics uplift).
+- **1939–1956**: second major jump (self-propelled systems, heavy explosive/rocket/guided layers), especially visible in supply burden and late combat output.
+- **1966 endpoint**: high late-era cap, but still bounded so warnings remain meaningful when progression overshoots expected late-step bands.
+
+Because of this profile, artillery milestone envelopes are tuned as **piecewise stepped bands** instead of linear trend bands.
+This keeps the audit diagnostic: it accepts historically plausible jumps but still flags implausible spikes or runaway cumulative growth.
+
+#### Artillery `support` interpretation note
+
+`support` is an abstract gameplay stat (not a direct historical metric), so ranges are calibrated by inference from doctrine/material progression:
+
+- pre-1900: limited but real uplift from early industrial artillery integration; growth should stay modest.
+- 1910–1939: larger jump is plausible due to indirect fire doctrine, coordination, and heavier field integration.
+- 1939–1955: another jump is plausible (self-propelled artillery, improved fire direction, rocket artillery integration).
+- post-1945: support can keep rising, but typically less explosively than wartime discontinuities; late gains should remain bounded so warnings still surface if support inflation becomes runaway.
+
+In short, support envelopes should be **step-shaped and bounded**, not flat and not permissively linearized.
+
+## Historical applicability for milestone checks (v4.2)
+
+Milestone diagnostics are most useful when evaluated only in years where the unit is historically meaningful/available.
+
+Why this matters:
+
+- late-era units (for example `tank`, `submarine`, `plane`, `aircraftcarrier`) can look "wrong" in early milestones simply because they are being compared before they are historically applicable;
+- that creates noisy false warnings and reduces the signal quality of the audit output.
+
+v4.2 behavior:
+
+- if a milestone year is **before** a unit's `historical_relevance_start_year`, milestone-range pass/fail evaluation for that unit/stat/year is skipped;
+- the script emits an `INFO` diagnostic showing which pre-applicability milestone years were skipped;
+- `final_range`, economic checks, timeline coverage diagnostics, and non-blocking behavior remain unchanged.
+
+Carrier-specific note:
+
+- `aircraftcarrier` is now intentionally modeled as a two-stage pre-supercarrier arc:
+  - **1919 early stage** via `converted_carriers` (`oil_driven_ships`): weak converted/interwar carrier entry point with activation.
+  - **1929 maturation stage** via `fleet_aircraft_carriers` (`mobile_capital_ships`): main fleet-carrier maturation bump.
+- the existing late layer remains on top (`welded_hulls`, then `supercarriers`, `advanced_supercarriers`, `monstrous_supercarriers`).
+- milestone interpretation for carrier stats should therefore expect a low 1919 converted-carrier baseline, stronger 1929 fleet-carrier maturation, then 1939+ supercarrier escalation.
+
+Late carrier calibration note (hull vs gun_power):
+
+- `hull`: post-1945 growth is historically plausible to remain strong for carriers (size/aviation facilities/operational endurance), but should gradually flatten by late endpoint rather than rise endlessly.
+- `gun_power`: this stat is an abstract combat proxy, not literal main-battery gunnery for carriers. Late increases can be partially justified as air-group lethality / integrated strike capability, but should generally be treated more cautiously than hull growth.
+- therefore, carrier gun-power envelopes are calibrated with slightly tighter historical scrutiny around mid-century transitions, while hull envelopes allow clearer late-era expansion.
+
+Interpretation rule:
+
+- `milestone_ranges` are intended as historical guardrails only for years at or after `historical_relevance_start_year`.
+
 Economic checks per unit can define:
 
 - `estimated_build_cost_range`
@@ -109,8 +169,13 @@ The auditor scans configured tech and invention files and reads unit stat deltas
 Year placement:
 
 - `direct`: `year = XXXX` found directly in a block
-- `inferred_strong`: inferred from one clear dated prerequisite
+- `inferred_strong`: inferred from clear dated prerequisites (especially hard `limit = { ... }` anchors tied to direct-year tech/invention gates)
 - `inferred_weak`: inferred from multiple/weaker propagated references
+
+Confidence refinement note:
+
+- when an invention has multiple mixed references (for example chance modifiers, neighbor checks, war context), the auditor now prioritizes hard `limit` anchors for confidence classification;
+- this improves attribution for clearly tech-anchored chains (such as late carrier progression) without globally relabeling all inferred years as strong-confidence.
 
 Coverage metrics:
 
@@ -233,3 +298,13 @@ Each line includes:
 - signal quality label
 - score
 - top issue example
+
+## Current residual hotspots (post carrier-confidence fix)
+
+Current practical WARN triage is:
+
+1. Core land progression pressure (`engineer`, `guard`, `infantry`; mainly `attack` / `defence` / `supply_consumption` cumulative and late milestones).
+2. Low-signal coverage-only units (`cavalry`, `cuirassier`, `dragoon`, `hussar`, `ironclad`, `monitor`) with no readable timed deltas.
+3. Residual naval progression anomalies (`clipper_transport`/`frigate` speed milestones, `steam_transport` speed single-step jumps, `submarine` torpedo step size).
+
+Recommended single next procedure target: **engineer progression audit/gameplay alignment** (highest concentration of core-stat pressure with strong practical playtest impact).
