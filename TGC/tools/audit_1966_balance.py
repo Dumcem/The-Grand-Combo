@@ -513,12 +513,6 @@ def main() -> int:
                 baseline = stats[stat]
                 baselines[unit][stat] = baseline
                 rep.add("INFO", f"{unit}: baseline {stat}={baseline}")
-                min_final, max_final = get_final_range(stat_cfg)
-                if (min_final is not None and baseline < min_final) or (max_final is not None and baseline > max_final):
-                    rep.add(
-                        "WARN",
-                        f"{unit} {stat} baseline outside final_range ({baseline}, expected {min_final}..{max_final})",
-                    )
 
         est_build, miss_build, top_build = estimate_costs(unit_data["build_cost"], goods_costs)
         est_upkeep, miss_upkeep, top_upkeep = estimate_costs(unit_data["supply_cost"], goods_costs)

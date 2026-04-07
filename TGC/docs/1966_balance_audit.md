@@ -59,6 +59,7 @@ How tiers interact:
 The model uses a **single unified timeline**:
 
 - `baseline_raw` is always the technical starting point (value read from unit file)
+- `baseline_raw` is input evidence and is **not** checked against `final_range`
 - all known-year deltas are applied cumulatively up to each milestone year (`year <= milestone`)
 - unknown-year deltas stay out of milestone sums and are reported separately
 - milestones remain configurable and reusable, but are no longer tied to a special 1936 logic branch
@@ -70,7 +71,7 @@ The model uses a **single unified timeline**:
 
 Per monitored unit stat, rules can define:
 
-- `final_range`: plausible range for final estimated value
+- `final_range`: normative envelope for the final estimated value (`estimated_final`)
 - `max_single_delta`: largest acceptable single effect delta
 - `max_cumulative_positive_delta` / `max_cumulative_negative_delta`
 - `milestone_ranges`: per-year guardrails at configured milestone years
@@ -122,6 +123,43 @@ This keeps the audit diagnostic: it accepts historically plausible jumps but sti
 - post-1945: support can keep rising, but typically less explosively than wartime discontinuities; late gains should remain bounded so warnings still surface if support inflation becomes runaway.
 
 In short, support envelopes should be **step-shaped and bounded**, not flat and not permissively linearized.
+
+### Infantry / Guard / Engineer normative doctrine note (v4.4)
+
+This trio should be interpreted as distinct but interacting archetypes:
+
+- `infantry`: backbone, general-purpose line unit; reference envelope for sustained mass combat.
+- `guard`: elite/heavier assault-capable line infantry; can exceed infantry combat output, but only within bounded doctrine-era limits.
+- `engineer`: specialist support/fortification/siege/combat-engineering unit; may improve mobility/survivability/operational capability, but must not converge into quasi-standard offensive line infantry.
+
+Normative implication: envelope design should be **step-shaped and bounded**, not mechanically linear from 1836 to 1966.
+
+#### Infantry (backbone line unit)
+
+- **1836–1900**: stable baseline doctrine; modest `attack`/`defence` growth, low-to-moderate `supply_consumption`, limited `support`/`siege`, and conservative mobility (`maximum_speed` mostly structural, not breakthrough-oriented).
+- **1910–1939**: first major modernization step (industrial firepower, command/logistics improvements); meaningful uplift in `attack` and `defence`, with corresponding non-trivial supply burden.
+- **1939–1955**: large wartime discontinuity; envelopes should tolerate stronger combat capability but avoid permissive post-step collapses in floors (especially for `attack`, `defence`, `supply_consumption`).
+- **1955–1966**: consolidation and bounded late modernization; maintain high but capped line-combat profile, with no unlimited escalation.
+
+#### Guard (elite/heavier line infantry)
+
+- **1836–1900**: elite premium over infantry can exist, but should remain controlled (quality differential, not a separate super-unit class).
+- **1910–1939**: doctrine/training/equipment premium can widen somewhat; `attack`/`defence` envelopes may sit above infantry, while `supply_consumption` should reflect heavier operational burden.
+- **1939–1955**: strongest period for elite assault role; guard can exceed infantry in combat output, but bounded ceilings are required to prevent runaway divergence.
+- **1955–1966**: late-era premium persists but should flatten; guard must remain superior in role focus without becoming unbounded relative to infantry baselines.
+
+#### Engineer (specialist support/combat-engineering unit)
+
+- **1836–1900**: specialist identity dominates; `attack` should stay secondary, while `defence`, `support`, and `siege` are the primary normative signals.
+- **1910–1939**: operational relevance rises (fortifications, bridging, mobility support); `defence` and operational stats can step upward, with moderate mobility gains.
+- **1939–1955**: major capability expansion in combat engineering; `support`/`siege` can rise sharply and `maximum_speed` can improve, but offensive `attack` must remain bounded as non-primary.
+- **1955–1966**: mature specialist role; better survivability and operational throughput are plausible, yet envelopes must prevent drift toward quasi-infantry offensive parity.
+
+Interpretation guardrails for warnings:
+
+- warnings on guard vs infantry should be read as **relative-boundedness checks** (elite premium allowed, unlimited separation not allowed);
+- warnings on engineer combat stats should be read as **role-integrity checks** (specialist evolution allowed, offensive convergence to standard line infantry not allowed);
+- where historical jumps are expected, milestone floors/ceilings should move in discrete steps rather than smooth linear ramps.
 
 ## Historical applicability for milestone checks (v4.2)
 
@@ -187,7 +225,6 @@ Coverage metrics:
 
 - Unknown monitored unit targets in rules (`FAIL`)
 - Missing/unreadable monitored baseline stats in unit files (`FAIL`)
-- Baseline stat outside configured `final_range` (`WARN`)
 - Single stat delta beyond `max_single_delta` (`WARN`)
 - Cumulative positive/negative delta beyond configured caps (`WARN`)
 - Estimated final (`baseline_raw + cumulative delta`) outside `final_range` (`WARN`)
