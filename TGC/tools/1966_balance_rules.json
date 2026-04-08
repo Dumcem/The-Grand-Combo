@@ -1166,56 +1166,56 @@
         },
         "maximum_speed": {
           "final_range": {
-            "min": 1.2,
-            "max": 17.0
+            "min": 3.0,
+            "max": 9.0
           },
-          "max_single_delta": 3.7,
-          "max_cumulative_positive_delta": 14.0,
-          "max_cumulative_negative_delta": 7.0,
+          "max_single_delta": 1.4,
+          "max_cumulative_positive_delta": 5.0,
+          "max_cumulative_negative_delta": 2.0,
           "milestone_ranges": {
             "1836": {
               "min": 4.0,
               "max": 4.0
             },
             "1850": {
-              "min": 3.608,
-              "max": 5.225
+              "min": 3.8,
+              "max": 4.2
             },
             "1870": {
-              "min": 3.048,
-              "max": 6.975
+              "min": 3.7,
+              "max": 4.5
             },
             "1900": {
-              "min": 2.208,
-              "max": 9.6
+              "min": 3.6,
+              "max": 4.9
             },
             "1910": {
-              "min": 1.928,
-              "max": 10.475
+              "min": 3.5,
+              "max": 5.2
             },
             "1919": {
-              "min": 1.676,
-              "max": 11.262
+              "min": 3.4,
+              "max": 5.4
             },
             "1929": {
-              "min": 1.396,
-              "max": 12.138
+              "min": 3.6,
+              "max": 6.1
             },
             "1936": {
-              "min": 1.2,
-              "max": 12.75
+              "min": 3.8,
+              "max": 6.6
             },
             "1945": {
-              "min": 1.2,
-              "max": 14.45
+              "min": 4.1,
+              "max": 7.4
             },
             "1955": {
-              "min": 1.2,
-              "max": 15.81
+              "min": 4.3,
+              "max": 8.0
             },
             "1966": {
-              "min": 1.2,
-              "max": 17.0
+              "min": 4.5,
+              "max": 8.6
             }
           }
         },
@@ -7321,56 +7321,56 @@
         },
         "maximum_speed": {
           "final_range": {
-            "min": 1.5,
-            "max": 20.0
+            "min": 4.5,
+            "max": 10.0
           },
-          "max_single_delta": 3.0,
-          "max_cumulative_positive_delta": 10.0,
-          "max_cumulative_negative_delta": 5.0,
+          "max_single_delta": 1.6,
+          "max_cumulative_positive_delta": 5.5,
+          "max_cumulative_negative_delta": 2.0,
           "milestone_ranges": {
             "1836": {
               "min": 5.0,
               "max": 5.0
             },
             "1850": {
-              "min": 4.72,
-              "max": 5.84
+              "min": 4.9,
+              "max": 5.3
             },
             "1870": {
-              "min": 4.32,
-              "max": 7.04
+              "min": 4.8,
+              "max": 5.7
             },
             "1900": {
-              "min": 3.72,
-              "max": 8.84
+              "min": 4.8,
+              "max": 6.3
             },
             "1910": {
-              "min": 3.52,
-              "max": 9.44
+              "min": 4.8,
+              "max": 6.7
             },
             "1919": {
-              "min": 3.34,
-              "max": 9.98
+              "min": 4.8,
+              "max": 6.9
             },
             "1929": {
-              "min": 3.14,
-              "max": 10.58
+              "min": 5.0,
+              "max": 7.5
             },
             "1936": {
-              "min": 3.0,
-              "max": 11.0
+              "min": 5.2,
+              "max": 8.0
             },
             "1945": {
-              "min": 3.5,
-              "max": 14.0
+              "min": 5.5,
+              "max": 8.9
             },
             "1955": {
-              "min": 4.0,
-              "max": 17.0
+              "min": 5.8,
+              "max": 9.5
             },
             "1966": {
-              "min": 4.5,
-              "max": 20.0
+              "min": 6.0,
+              "max": 10.0
             }
           }
         },
@@ -8909,56 +8909,56 @@
         },
         "maximum_speed": {
           "final_range": {
-            "min": 1.2,
-            "max": 17.0
+            "min": 3.7,
+            "max": 9.8
           },
-          "max_single_delta": 3.7,
-          "max_cumulative_positive_delta": 14.0,
-          "max_cumulative_negative_delta": 7.0,
+          "max_single_delta": 1.4,
+          "max_cumulative_positive_delta": 5.8,
+          "max_cumulative_negative_delta": 2.0,
           "milestone_ranges": {
             "1836": {
               "min": 4.0,
               "max": 4.0
             },
             "1850": {
-              "min": 3.608,
-              "max": 5.225
+              "min": 4.0,
+              "max": 4.4
             },
             "1870": {
-              "min": 3.048,
-              "max": 6.975
+              "min": 4.1,
+              "max": 4.9
             },
             "1900": {
-              "min": 2.208,
-              "max": 9.6
+              "min": 4.2,
+              "max": 5.6
             },
             "1910": {
-              "min": 1.928,
-              "max": 10.475
+              "min": 4.2,
+              "max": 6.0
             },
             "1919": {
-              "min": 1.676,
-              "max": 11.262
+              "min": 4.2,
+              "max": 6.2
             },
             "1929": {
-              "min": 1.396,
-              "max": 12.138
+              "min": 4.4,
+              "max": 6.8
             },
             "1936": {
-              "min": 1.2,
-              "max": 12.75
+              "min": 4.6,
+              "max": 7.2
             },
             "1945": {
-              "min": 1.2,
-              "max": 14.45
+              "min": 4.9,
+              "max": 8.1
             },
             "1955": {
-              "min": 1.2,
-              "max": 15.81
+              "min": 5.1,
+              "max": 8.8
             },
             "1966": {
-              "min": 1.2,
-              "max": 17.0
+              "min": 5.3,
+              "max": 9.4
             }
           }
         },
@@ -10167,56 +10167,56 @@
         },
         "maximum_speed": {
           "final_range": {
-            "min": 1.2,
-            "max": 17.0
+            "min": 3.5,
+            "max": 9.0
           },
-          "max_single_delta": 3.7,
-          "max_cumulative_positive_delta": 14.0,
-          "max_cumulative_negative_delta": 7.0,
+          "max_single_delta": 1.2,
+          "max_cumulative_positive_delta": 5.0,
+          "max_cumulative_negative_delta": 2.0,
           "milestone_ranges": {
             "1836": {
               "min": 4.0,
               "max": 4.0
             },
             "1850": {
-              "min": 3.608,
-              "max": 5.225
+              "min": 3.9,
+              "max": 4.3
             },
             "1870": {
-              "min": 3.048,
-              "max": 6.975
+              "min": 3.9,
+              "max": 4.7
             },
             "1900": {
-              "min": 2.208,
-              "max": 9.6
+              "min": 4.0,
+              "max": 5.3
             },
             "1910": {
-              "min": 1.928,
-              "max": 10.475
+              "min": 4.0,
+              "max": 5.7
             },
             "1919": {
-              "min": 1.676,
-              "max": 11.262
+              "min": 4.0,
+              "max": 5.9
             },
             "1929": {
-              "min": 1.396,
-              "max": 12.138
+              "min": 4.2,
+              "max": 6.4
             },
             "1936": {
-              "min": 1.2,
-              "max": 12.75
+              "min": 4.3,
+              "max": 6.7
             },
             "1945": {
-              "min": 1.2,
-              "max": 14.45
+              "min": 4.6,
+              "max": 7.5
             },
             "1955": {
-              "min": 1.2,
-              "max": 15.81
+              "min": 4.8,
+              "max": 8.1
             },
             "1966": {
-              "min": 1.2,
-              "max": 17.0
+              "min": 5.0,
+              "max": 8.8
             }
           }
         },
@@ -15858,56 +15858,56 @@
         },
         "maximum_speed": {
           "final_range": {
-            "min": 1.2,
-            "max": 17.0
+            "min": 4.0,
+            "max": 16.0
           },
-          "max_single_delta": 3.7,
-          "max_cumulative_positive_delta": 14.0,
-          "max_cumulative_negative_delta": 7.0,
+          "max_single_delta": 2.8,
+          "max_cumulative_positive_delta": 10.5,
+          "max_cumulative_negative_delta": 3.0,
           "milestone_ranges": {
             "1836": {
               "min": 4.0,
               "max": 4.0
             },
             "1850": {
-              "min": 3.608,
-              "max": 5.225
+              "min": 4.0,
+              "max": 4.3
             },
             "1870": {
-              "min": 3.048,
-              "max": 6.975
+              "min": 4.0,
+              "max": 4.8
             },
             "1900": {
-              "min": 2.208,
-              "max": 9.6
+              "min": 4.0,
+              "max": 5.5
             },
             "1910": {
-              "min": 1.928,
-              "max": 10.475
+              "min": 4.0,
+              "max": 6.2
             },
             "1919": {
-              "min": 1.676,
-              "max": 11.262
+              "min": 4.8,
+              "max": 7.2
             },
             "1929": {
-              "min": 1.396,
-              "max": 12.138
+              "min": 6.2,
+              "max": 9.6
             },
             "1936": {
-              "min": 1.2,
-              "max": 12.75
+              "min": 6.8,
+              "max": 10.8
             },
             "1945": {
-              "min": 1.2,
-              "max": 14.45
+              "min": 8.5,
+              "max": 13.2
             },
             "1955": {
-              "min": 1.2,
-              "max": 15.81
+              "min": 9.0,
+              "max": 14.6
             },
             "1966": {
-              "min": 1.2,
-              "max": 17.0
+              "min": 9.5,
+              "max": 15.8
             }
           }
         },
