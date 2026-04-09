@@ -3542,9 +3542,7 @@ country_event = {
 		
 		
 		ai_chance = {
-			factor = 
-			modifier = {}
-				factor = 83
+			factor = 83
 		}
 	}
 	
