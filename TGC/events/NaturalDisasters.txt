@@ -58,10 +58,10 @@ country_event = {
 				early_railroad = 1
 				invention = telegraph_coordination
 			}
-		}
-		add_country_modifier = {
-			name = magnetic_interference
-			duration = 60
+			add_country_modifier = {
+				name = magnetic_interference
+				duration = 60
+			}
 		}
 	}
 }
@@ -417,5 +417,4 @@ country_event = {
 #		random = { chance = 25 fort = -1 }
 #	}
 #}
-
 
