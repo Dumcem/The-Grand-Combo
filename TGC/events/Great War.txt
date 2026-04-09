@@ -447,23 +447,25 @@
 				colonial_nation = yes
 			}
 			NOT = {
-				tag = GCF
-				tag = GER
-				tag = NGF
-				tag = SGF
-				tag = PRU
-				tag = RUS
-				tag = USA
-				tag = ENG
-				tag = FRA
-				tag = AUS
-				tag = KUK
-				tag = DNB
-				tag = TUR
-				tag = JAP
-				tag = TKG
-				tag = BRZ
-				tag = KPB
+				OR = {
+					tag = GCF
+					tag = GER
+					tag = NGF
+					tag = SGF
+					tag = PRU
+					tag = RUS
+					tag = USA
+					tag = ENG
+					tag = FRA
+					tag = AUS
+					tag = KUK
+					tag = DNB
+					tag = TUR
+					tag = JAP
+					tag = TKG
+					tag = BRZ
+					tag = KPB
+				}
 			}
 			OR = {
 				has_country_flag = ultimatum_accepted
