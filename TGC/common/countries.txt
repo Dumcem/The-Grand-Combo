@@ -763,9 +763,8 @@
 	VTU		= "countries/Vanuatu.txt"
 
 ### Company and Treaty Countries ###
-	EIC		= "countries/East India Company.txt"
-	LEG		= "countries/Legation Cities.txt"
-	D01		= "countries/D01.txt"
+		EIC		= "countries/East India Company.txt"
+		LEG		= "countries/Legation Cities.txt"
 
 ### HoD Dominions ###
 dynamic_tags = yes
