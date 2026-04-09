@@ -1,0 +1,2 @@
+# Placeholder OOB to satisfy history/countries reference.
+# Intentionally empty: no starting units defined.
