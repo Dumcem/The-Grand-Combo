@@ -565,11 +565,11 @@ country_event = {
 			}
 			modifier = { 
 				factor = 0.7
-				NOT = { owner = { administration_spending = 0.3 } }
+				NOT = { owner = { exists = yes administration_spending = 0.3 } }
 			}
 			modifier = { 
 				factor = 1.5
-				owner = { administration_spending = 0.7 }
+				owner = { exists = yes administration_spending = 0.7 }
 			}
 		}
 
