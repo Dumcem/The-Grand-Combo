@@ -259,7 +259,7 @@ def parse_top_level_blocks(rel_path: str) -> dict[str, list[tuple[int, str]]]:
     blocks: dict[str, list[tuple[int, str]]] = {}
     i = 0
     while i < len(lines):
-        m_open = re.match(r"\s*([a-z0-9_]+)\s*=\s*\{\s*$", lines[i])
+        m_open = re.match(r"\s*([a-z0-9_]+)\s*=\s*\{\s*(?:#.*)?$", lines[i])
         if not m_open:
             i += 1
             continue
@@ -400,7 +400,7 @@ def parse_effect_unit_assignments(
 
     i = 0
     while i < len(lines):
-        inv_match = re.match(r"\s*([a-z0-9_]+)\s*=\s*\{\s*$", lines[i])
+        inv_match = re.match(r"\s*([a-z0-9_]+)\s*=\s*\{\s*(?:#.*)?$", lines[i])
         if not inv_match:
             i += 1
             continue
@@ -447,7 +447,7 @@ def parse_effect_unit_assignments(
                 j += 1
                 continue
 
-            m_scope = re.match(r"\s*([a-z0-9_]+)\s*=\s*\{\s*$", t3)
+            m_scope = re.match(r"\s*([a-z0-9_]+)\s*=\s*\{\s*(?:#.*)?$", t3)
             if m_scope:
                 scope_key = m_scope.group(1)
                 resolved = resolve_targets(scope_key)
