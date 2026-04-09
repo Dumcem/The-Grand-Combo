@@ -5095,7 +5095,7 @@ country_event = {
 
 country_event = {
 
-    id = 800060
+    id = 800166
 
     is_triggered_only = yes
 
@@ -5519,7 +5519,7 @@ country_event = {
 
 country_event = {
 
-    id = 800061
+    id = 800167
 
     is_triggered_only = yes
 
@@ -5943,7 +5943,7 @@ country_event = {
 
 country_event = {
 
-    id = 800062
+    id = 800168
 
     is_triggered_only = yes
 
@@ -6367,7 +6367,7 @@ country_event = {
 
 country_event = {
 
-    id = 800063
+    id = 800169
 
     is_triggered_only = yes
 
@@ -6791,7 +6791,7 @@ country_event = {
 
 country_event = {
 
-    id = 800064
+    id = 800170
 
     is_triggered_only = yes
 
@@ -7215,7 +7215,7 @@ country_event = {
 
 country_event = {
 
-    id = 800065
+    id = 800171
 
     is_triggered_only = yes
 
