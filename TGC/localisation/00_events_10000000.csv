@@ -36,14 +36,14 @@ EVTOPTD10000104;$COUNTRY$ must have the best, no matter what.;;;;;;;;;;;;;x
 EVTOPTE10000104;Our present generals are enough for now.;;;;;;;;;;;;;x
 EVTDESC10000105;It is time to whale and spend your entire treasury desperately trying to get a 5 star.;;;;;;;;;;;;;x
 EVTNAME10000105;TGGacha - Generals;;;;;;;;;;;;;x
-EVTOPTA10000105;Pull—Our new general will show up in 5 days.;;;;;;;;;;;;;x
+EVTOPTA10000105;Pullâ€”Our new general will show up in 5 days.;;;;;;;;;;;;;x
 EVTOPTB10000105;Exit.;;;;;;;;;;;;;x
-EVTDESC11380022;In a surprise election win, the communists have taken power in the government-despite the fact that their party opposes the monarchy and has been banned. Regardless, the $COUNTRY_ADJ$ people have spoken, and thus a political showdown has resulted: the communists cannot be permitted to win, but even if they’re refused the next election might simply have the same crisis occur all over again. Perhaps the time has come to reconsider electoral reforms and put the power back where it belongs?;;;;;;;;;;;;;x
+EVTDESC11380022;In a surprise election win, the communists have taken power in the government-despite the fact that their party opposes the monarchy and has been banned. Regardless, the $COUNTRY_ADJ$ people have spoken, and thus a political showdown has resulted: the communists cannot be permitted to win, but even if theyâ€™re refused the next election might simply have the same crisis occur all over again. Perhaps the time has come to reconsider electoral reforms and put the power back where it belongs?;;;;;;;;;;;;;x
 EVTOPTA11380022;This cannot be allowed. The Liberals shall rule instead.;;;;;;;;;;;;;x
 EVTOPTB11380022;This cannot be allowed. The Conservatives shall rule instead.;;;;;;;;;;;;;x
 EVTOPTC11380022;This cannot be allowed. The Socialists shall rule instead.;;;;;;;;;;;;;x
 EVTOPTD11380022;Enough is enough. The people clearly cannot be trusted to do what is best for $COUNTRY$.;;;;;;;;;;;;;x
-EVTDESC11380023;In a surprise election win, the radicals have taken power in the government-despite the fact that their party opposes the monarchy and has been banned. Regardless, the $COUNTRY_ADJ$ people have spoken, and thus a political showdown has resulted: these radical republicans cannot be permitted to win, but even if they’re refused the next election might simply have the same crisis occur all over again. Perhaps the time has come to reconsider electoral reforms and put the power back where it belongs?;;;;;;;;;;;;;x
+EVTDESC11380023;In a surprise election win, the radicals have taken power in the government-despite the fact that their party opposes the monarchy and has been banned. Regardless, the $COUNTRY_ADJ$ people have spoken, and thus a political showdown has resulted: these radical republicans cannot be permitted to win, but even if theyâ€™re refused the next election might simply have the same crisis occur all over again. Perhaps the time has come to reconsider electoral reforms and put the power back where it belongs?;;;;;;;;;;;;;x
 EVTDESC16050214;With our holdings on the mainland lost, all we have left is our stronghold on the island of Taiwan. The suggestion among what little remains of the Kuomintang government is that we abandon $CAPITAL$ and move the capital to Taipei. This does not guarantee our safety by any means, but it may be the only means of survival we possess. We shall however never relinquish our rightful claim to the mainland.;;;;;;;;;;;;;x
 EVTNAME16050214;Retreat to Taiwan;;;;;;;;;;;;;x
 EVTOPTA16050214;It seems we have little choice.;;;;;;;;;;;;;x
@@ -68,15 +68,15 @@ EVTOPTB31500001;The Union will continue with Estonian rule.;;;;;;;;;;;;;x
 EVTOPTC31500001;The Union will continue with the status quo.;;;;;;;;;;;;;x
 EVTOPTD31500001;Latvia will be released and we will declare Estonia free.;;;;;;;;;;;;;x
 EVTOPTE31500001;Estonia will be released and we will declare Latvia free.;;;;;;;;;;;;;x
-EVTDESC4395438;This event ensures that Petén is getting colonized.;;;;;;;;;;;x
-EVTNAME4395438;Colonization of Petén.;;;;;;;;;;;x
+EVTDESC4395438;This event ensures that PetÃ©n is getting colonized.;;;;;;;;;;;x
+EVTNAME4395438;Colonization of PetÃ©n.;;;;;;;;;;;x
 EVTOPTA4395438;Ok.;;;;;;;;;;;x
 EVTDESC44132189;The next step in the formation of the New African autonomous region is establishing its borders. There are three possibilities of varying sizes, each larger than the last.;;;;;;;;;;;;;x
 EVTNAME44132189;The Size of New Africa?;;;;;;;;;;;;;x
 EVTOPTA44132189;Louisiana and Mississippi;;;;;;;;;;;;;x
 EVTOPTB44132189;Louisiana, Mississippi, Alabama, and Western Florida;;;;;;;;;;;;;x
 EVTOPTC44132189;New Africa shall encompass the Lower South!;;;;;;;;;;;;;x
-EVTDESC44132218;Several candidate cities would serve as suitable locations for the new capital of New Africa. Located in the along the Louisiana coast, New Orleans has long been the cultural capital of the country. Montgomery’s central location would make it an appropriate city for the capital to be seated, and its small size allows for some room to develop. Lastly, Atlanta is one of the largest cities in New Africa and is the economic heart of the country.;;;;;;;;;;;;;x
+EVTDESC44132218;Several candidate cities would serve as suitable locations for the new capital of New Africa. Located in the along the Louisiana coast, New Orleans has long been the cultural capital of the country. Montgomeryâ€™s central location would make it an appropriate city for the capital to be seated, and its small size allows for some room to develop. Lastly, Atlanta is one of the largest cities in New Africa and is the economic heart of the country.;;;;;;;;;;;;;x
 EVTNAME44132218;The Capital of New Africa;;;;;;;;;;;;;x
 EVTOPTA44132218;New Orleans;;;;;;;;;;;;;x
 EVTOPTB44132218;Montgomery;;;;;;;;;;;;;x
@@ -108,15 +108,15 @@ EVTOPTA44132227;Peace at last.;;;;;;;;;;;;;x
 EVTDESC44132228;A man of both African and Indian heritage, John Horse fought alongside Seminole tribes against the United States Army during the Second Seminole War. He garnered a reputation as a skilled scout and talented negotiator, and Horse soon became a prominent leader among the Seminole people. After New Africa passed the Seminole Act, which integrated Indian tribes in Florida, John Horse offered his service and expertise to the army of New Africa.;;;;;;;;;;;;;x
 EVTNAME44132228;John Horse;;;;;;;;;;;;;x
 EVTOPTA44132228;We welcome his help.;;;;;;;;;;;;;x
-EVTDESC44132229;In $YEAR$ onboard the brig Creole, Madison Washington, an enslaved cook, led his fellow slaves in a revolt against their captors who were transporting them to an American slave market. After killing the ship’s captain, they seized control of the vessel. Although they were initially planning to sail for Nassau, they have instead arrived at a New African port. The most apparent course of action is to welcome Washington and the other slaves as heroes. However, doing so will undoubtedly enrage the United States, which would accuse New Africa of harbouring criminals.;;;;;;;;;;;;;x
+EVTDESC44132229;In $YEAR$ onboard the brig Creole, Madison Washington, an enslaved cook, led his fellow slaves in a revolt against their captors who were transporting them to an American slave market. After killing the shipâ€™s captain, they seized control of the vessel. Although they were initially planning to sail for Nassau, they have instead arrived at a New African port. The most apparent course of action is to welcome Washington and the other slaves as heroes. However, doing so will undoubtedly enrage the United States, which would accuse New Africa of harbouring criminals.;;;;;;;;;;;;;x
 EVTNAME44132229;Creole Case;;;;;;;;;;;;;x
 EVTOPTA44132229;Welcome the men ashore.;;;;;;;;;;;;;x
 EVTOPTB44132229;We can't risk angering the United States.;;;;;;;;;;;;;x
-EVTDESC44132230;Uncle Remus: His Songs and His Sayings is a collection of African American folktales that author Joel Chandler Harris recalled from his childhood on his family’s plantation in Georgia. Although New Africa has since liberated Georgia, many Southern whites, like Harris, still hold on dearly to their memories during the time of slavery, and as such, Harris’s book has quickly become a best-seller and favourite among the white community in New Africa. However, the character of Uncle Remus has received a very mixed reaction from black New Africans. While it is impossible to ignore the rich collection of folklore Harris has been able to compile, there are many, especially among the intellectual class, who are critical of what they believe to be a romanticizing of slavery and accuse Harris of cultural theft. The New African government can either curtail the distribution of Harris’s work or allow it circulate openly.;;;;;;;;;;;;;x
+EVTDESC44132230;Uncle Remus: His Songs and His Sayings is a collection of African American folktales that author Joel Chandler Harris recalled from his childhood on his familyâ€™s plantation in Georgia. Although New Africa has since liberated Georgia, many Southern whites, like Harris, still hold on dearly to their memories during the time of slavery, and as such, Harrisâ€™s book has quickly become a best-seller and favourite among the white community in New Africa. However, the character of Uncle Remus has received a very mixed reaction from black New Africans. While it is impossible to ignore the rich collection of folklore Harris has been able to compile, there are many, especially among the intellectual class, who are critical of what they believe to be a romanticizing of slavery and accuse Harris of cultural theft. The New African government can either curtail the distribution of Harrisâ€™s work or allow it circulate openly.;;;;;;;;;;;;;x
 EVTNAME44132230;Publication of Uncle Remus;;;;;;;;;;;;;x
 EVTOPTA44132230;Allow the book to circulate.;;;;;;;;;;;;;x
 EVTOPTB44132230;Curtail distribution.;;;;;;;;;;;;;x
-EVTDESC44132231;Born into bondage in 1818, Fredrick Douglass escaped slavery at a young age and fled from Maryland to New Africa. He has quickly gained notoriety for his skill as an orator and controversy for his staunch support of racial and gender equality. While most in New Africa view him as the country’s most important statesman, few entirely embrace his radical proposal for the greater social and political integration of whites in New Africa. However, his most recent publication, A Narrative of New Africa, has enticed many New Africans into his Equality Party and led to an increased acceptance of the notion for greater equality among the races.;;;;;;;;;;;;;x
+EVTDESC44132231;Born into bondage in 1818, Fredrick Douglass escaped slavery at a young age and fled from Maryland to New Africa. He has quickly gained notoriety for his skill as an orator and controversy for his staunch support of racial and gender equality. While most in New Africa view him as the countryâ€™s most important statesman, few entirely embrace his radical proposal for the greater social and political integration of whites in New Africa. However, his most recent publication, A Narrative of New Africa, has enticed many New Africans into his Equality Party and led to an increased acceptance of the notion for greater equality among the races.;;;;;;;;;;;;;x
 EVTNAME44132231;Fredrick Douglass;;;;;;;;;;;;;x
 EVTOPTA44132231;A man of great ideas...;;;;;;;;;;;;;x
 EVTOPTB44132231;...but let's not go to far.;;;;;;;;;;;;;x
@@ -169,18 +169,18 @@ EVTOPTA44132216;Supplies for the revolutionaries!;;;;;;;;;;;;;;;;;;;;;;;x
 EVTDESC44132217;We have received our supplies from the Free States of America. We will immediately begin distributing weapons and mobilizing our forces into a proper fighting force.;;;;;;;;;;;;;;;;;;;;;;;x
 EVTNAME44132217;Supplies from the North;;;;;;;;;;;;;;;;;;;;;;;x
 EVTOPTA44132217;Supplies for the revolutionaries!;;;;;;;;;;;;;;;;;;;;;;;x
-EVTNAME46610100;The García Ortiz-Mangabeira Treaty;;;;;;;;;;;;;x
+EVTNAME46610100;The GarcÃ­a Ortiz-Mangabeira Treaty;;;;;;;;;;;;;x
 EVTOPTA46610100;Let this be a sign of friendship and cooperation between our countries.;;;;;;;;;;;;;x
 EVTOPTB46610100;We will never cede an inch of $COUNTRY_ADJ$ territory.;;;;;;;;;;;;;x
-EVTDESC46610102;In the aftermath of the War of the Pacific, Peru was defeated and forced to sign the Treaty of Ancón. In this Treaty, Tarapacá was annexed to Chile. However, the fate of both Tacna and Arica was to be decided by a plebiscite to be held in 1893. Due to different points of view, both countries were not able to agree on the conditions of this plebiscite and so it was not held. Chile began then to colonize the two territories and Peru answered with a break of diplomatic relations. In $YEAR$, Chile and Peru agreed to arbitrate the dispute with the $MONARCHTITLE$ of $COUNTRY$. The commission on the issue of who Tacna belongs to was formed and now the only thing that remains is their final decision.;;;;;;;;;;;;;x
+EVTDESC46610102;In the aftermath of the War of the Pacific, Peru was defeated and forced to sign the Treaty of AncÃ³n. In this Treaty, TarapacÃ¡ was annexed to Chile. However, the fate of both Tacna and Arica was to be decided by a plebiscite to be held in 1893. Due to different points of view, both countries were not able to agree on the conditions of this plebiscite and so it was not held. Chile began then to colonize the two territories and Peru answered with a break of diplomatic relations. In $YEAR$, Chile and Peru agreed to arbitrate the dispute with the $MONARCHTITLE$ of $COUNTRY$. The commission on the issue of who Tacna belongs to was formed and now the only thing that remains is their final decision.;;;;;;;;;;;;;x
 EVTNAME46610102;The Tacna-Arica Arbitration;;;;;;;;;;;;;x
 EVTOPTA46610102;Tacna belongs to Peru.;;;;;;;;;;;;;x
 EVTOPTB46610102;Tacna belongs to Chile.;;;;;;;;;;;;;x
-EVTDESC46610103;In the aftermath of the War of the Pacific, Peru was defeated and forced to sign the Treaty of Ancón. In this Treaty, Tarapacá was annexed to Chile. However, the fate of both Tacna and Arica was to be decided by a plebiscite to be held in 1893. Due to different points of view, both countries were not able to agree on the conditions of this plebiscite and so it was not held. Chile began then to colonize the two territories and Peru answered with a break of diplomatic relations. In $YEAR$, Chile and Peru agreed to arbitrate the dispute with the $MONARCHTITLE$ of $COUNTRY$. The commission on the issue of who Tacna belongs to was formed and now the only thing that remains is their final decision.;;;;;;;;;;;;;x
+EVTDESC46610103;In the aftermath of the War of the Pacific, Peru was defeated and forced to sign the Treaty of AncÃ³n. In this Treaty, TarapacÃ¡ was annexed to Chile. However, the fate of both Tacna and Arica was to be decided by a plebiscite to be held in 1893. Due to different points of view, both countries were not able to agree on the conditions of this plebiscite and so it was not held. Chile began then to colonize the two territories and Peru answered with a break of diplomatic relations. In $YEAR$, Chile and Peru agreed to arbitrate the dispute with the $MONARCHTITLE$ of $COUNTRY$. The commission on the issue of who Tacna belongs to was formed and now the only thing that remains is their final decision.;;;;;;;;;;;;;x
 EVTNAME46610103;The Tacna-Arica Arbitration;;;;;;;;;;;;;x
 EVTOPTA46610103;Tacna belongs to Peru.;;;;;;;;;;;;;x
 EVTOPTB46610103;Tacna belongs to Chile.;;;;;;;;;;;;;x
-EVTDESC60055557;One of the main reasons that led to the Kraków Uprising spreading to our polish lands is the serfdom question. Modern nations already abolished this medieval institution that persists in our country, and many in our country advise that it’s now the time to modernize $COUNTRY$, and the first step is the abolition of serfdom. The question remains, however, to who belongs the lands the serfs worked on. The aristocracy claims the land is theirs and the serfs should find their own lands, while the serfs argue that the land is theirs by the right of use.;;;;;;;;;;;;;x
+EVTDESC60055557;One of the main reasons that led to the KrakÃ³w Uprising spreading to our polish lands is the serfdom question. Modern nations already abolished this medieval institution that persists in our country, and many in our country advise that itâ€™s now the time to modernize $COUNTRY$, and the first step is the abolition of serfdom. The question remains, however, to who belongs the lands the serfs worked on. The aristocracy claims the land is theirs and the serfs should find their own lands, while the serfs argue that the land is theirs by the right of use.;;;;;;;;;;;;;x
 EVTNAME60055557;The Serfdom Question;;;;;;;;;;;;;x
 EVTOPTA60055557;Give the lands to the freed serfs.;;;;;;;;;;;;;x
 EVTOPTB60055557;The land belongs to the aristocracy.;;;;;;;;;;;;;x
@@ -190,10 +190,10 @@ EVTDESC60055558;The Austro-Hungarian Compromise brought other consequences regar
 EVTNAME60055558;The Croatian-Hungarian Settlement;;;;;;;;;;;;;x
 EVTOPTA60055558;At least this issue is settled.;;;;;;;;;;;;;x
 EVTDESC60055559;Diplomats of $FROMCOUNTRY$ approached us with a friendship and border treaty to settle outstanding issues between the perceived territory of our two countries. The treaty would include population exchanges, border delimitation and a treaty of friendship. If we sign this deal it will also show the world our will to settle issues diplomatically and our government respect of the will of the people.;;;;;;;;;;;;;x
-EVTNAME60055559;The $COUNTRY_ADJ$—$FROMCOUNTRY_ADJ$ Border Treaty;;;;;;;;;;;;;x
+EVTNAME60055559;The $COUNTRY_ADJ$â€”$FROMCOUNTRY_ADJ$ Border Treaty;;;;;;;;;;;;;x
 EVTOPTA60055559;This sounds like a good idea.;;;;;;;;;;;;;x
 EVTOPTB60055559;No deal.;;;;;;;;;;;;;x
-EVTDESC60168004;Bullets whistled as the morning came in $PROVINCENAME$. Enemy soldiers engaged our troops in the roads, their drums roaring in the distance. Our local fort was spearheading the defence, soldiers taking turns crouching to reload and standing up to fire at the enemies. A group of enemy saboteurs snuck in one of the fort walls and managed to blew it up with explosives, severely damaging the fort’s structure.;;;;;;;;;;;;;x
+EVTDESC60168004;Bullets whistled as the morning came in $PROVINCENAME$. Enemy soldiers engaged our troops in the roads, their drums roaring in the distance. Our local fort was spearheading the defence, soldiers taking turns crouching to reload and standing up to fire at the enemies. A group of enemy saboteurs snuck in one of the fort walls and managed to blew it up with explosives, severely damaging the fortâ€™s structure.;;;;;;;;;;;;;x
 EVTNAME60168004;Fort Sabotage!;;;;;;;;;;;;;x
 EVTOPTA60168004;We shall rebuild.;;;;;;;;;;;;;x
 EVTDESC60168005;A locomotive hurriedly passed by the $PROVINCENAME$ railroad during dusk while human silhouettes snuck out of the railroad. They hit the wooden keys used to hold the rails in chairs with a hammer, diverting the train to a more sinuous track while forward other figures moved objects in the rail. The train was wrecked by putting objects on the high rail at a curve, and contained tons of supplies for our troops fighting in the province. Later that night, one of our railroad bridges in $PROVINCENAME$ was burned to the ground, with no culprits found. These actions are believed to be the work of the enemy and severely crippled our railroad network.;;;;;;;;;;;;;x
@@ -206,23 +206,23 @@ EVTDESC81002212;We have been pulled into an outside war, despite our dedication 
 EVTNAME81002212;$COUNTRY_ADJ$ Neutrality;;;;;;;;;;;;;x
 EVTOPTA81002212;We must remain Neutral!;;;;;;;;;;;;;x
 EVTOPTB81002212;We must discard our Neutrality.;;;;;;;;;;;;;x
-EVTDESC81002213;At 11:40 p.m. an iceberg was spotted immediately ahead of the Titanic and the bridge was alerted. The First Officer ordered the ship to be steered around the obstacle and the engines to be put in reverse, but it was too late: the starboard side struck the iceberg, creating a series of holes below the waterline. Five of the ship’s watertight compartments were breached. It soon became clear that the ship was doomed, as it could not survive more than four compartments being flooded. It began sinking bow-first, with water spilling from compartment to compartment as its angle in the water became steeper. Ships in $YEAR$ were seen as largely unsinkable and lifeboats were intended to transfer passengers to nearby rescue vessels so Titanic only had enough lifeboats to carry about half of those on board. More than 1500 people died, the biggest toll in history. The disaster was greeted with worldwide shock and outrage at the huge loss of life and the regulatory and operational failures that had led to it.;;;;;;;;;;;;;x
+EVTDESC81002213;At 11:40 p.m. an iceberg was spotted immediately ahead of the Titanic and the bridge was alerted. The First Officer ordered the ship to be steered around the obstacle and the engines to be put in reverse, but it was too late: the starboard side struck the iceberg, creating a series of holes below the waterline. Five of the shipâ€™s watertight compartments were breached. It soon became clear that the ship was doomed, as it could not survive more than four compartments being flooded. It began sinking bow-first, with water spilling from compartment to compartment as its angle in the water became steeper. Ships in $YEAR$ were seen as largely unsinkable and lifeboats were intended to transfer passengers to nearby rescue vessels so Titanic only had enough lifeboats to carry about half of those on board. More than 1500 people died, the biggest toll in history. The disaster was greeted with worldwide shock and outrage at the huge loss of life and the regulatory and operational failures that had led to it.;;;;;;;;;;;;;x
 EVTNAME81002213;Titanic Sinks!;;;;;;;;;;;;;x
 EVTOPTA81002213;Our nation mourns those who died.;;;;;;;;;;;;;x
-EVTDESC81002214;The Titanic—the biggest ocean liner ever built—has successfully reached its destination, where a crowd gathers to watch the massive ship anchor. Thousands of happy passengers pour down from the ship and in a new land as tales of the ship luxury and quality spread throughout the world. Undoubtedly, $COUNTRY_ADJ$ name will be forever remembered in history for this feat.;;;;;;;;;;;;;x
+EVTDESC81002214;The Titanicâ€”the biggest ocean liner ever builtâ€”has successfully reached its destination, where a crowd gathers to watch the massive ship anchor. Thousands of happy passengers pour down from the ship and in a new land as tales of the ship luxury and quality spread throughout the world. Undoubtedly, $COUNTRY_ADJ$ name will be forever remembered in history for this feat.;;;;;;;;;;;;;x
 EVTNAME81002214;Titanic Maiden Voyage a Success;;;;;;;;;;;;;x
 EVTOPTA81002214;A glorious day to our nation.;;;;;;;;;;;;;x
 EVTDESC81002215;The Tangier Protocol, formally known as the Convention regarding the Organization of the Statute of the Tangier Zone, is a diplomatic proposal over the fate of Sultan of Morocco and Tangier brought forward by the $FROMCOUNTRY_ADJ$ government. The proposal is to create a 373-square-kilometre international zone centred on the city of Tangier, North Africa under the joint administration of the signatory countries, with the Sultan of Morocco retaining sovereignty over the zone and jurisdiction over the native population. Tangier is to be made a neutral demilitarized zone so it will solve disagreements between the great powers on who should control it.;;;;;;;;;;;;;x
 EVTNAME81002215;The Tangier Protocol;;;;;;;;;;;;;x
 EVTOPTA81002215;We agree to the proposal.;;;;;;;;;;;;;x
-EVTOPTB81002215;It doesn’t suit our interests.;;;;;;;;;;;;;x
+EVTOPTB81002215;It doesnâ€™t suit our interests.;;;;;;;;;;;;;x
 EVTDESC81002216;In $YEAR$, the great powers of Europe assembled together on the initiative of $COUNTRY$ and decided the fate of Morocco and its sultan with the Tangier Protocol. It was decided that a 373-square-kilometre international, neutral and demilitarized zone centred on the city of Tangier was to be created. The sultan of Morocco was given sovereignty and jurisdiction over the native population. Thus, the great powers hoped that the current conflicts over Morocco would end.;;;;;;;;;;;;;x
 EVTNAME81002216;The Tangier International Zone;;;;;;;;;;;;;x
 EVTOPTA81002216;The Sultan shall reign once more.;;;;;;;;;;;;;x
-EVTDESC81002217;In $YEAR$, the great powers of Europe assembled together to decide the fate of Morocco and its sultan with the Tangier Protocol. The $COUNTRY_ADJ$ government proposed the creation of a 373-square-kilometre international, neutral and demilitarized zone centred on the city of Tangier and temporal powers and jurisdiction of the natives to the Moroccan sultan. However, negotiations broke down and no consensus could be reached. There are doubts if the proposal was outright reject, if it couldn’t find enough supporters or if it was shelved but the fact remains that the Tangier Protocol is dead in the water, a great blow to $COUNTRY_ADJ$ diplomacy.;;;;;;;;;;;;;x
+EVTDESC81002217;In $YEAR$, the great powers of Europe assembled together to decide the fate of Morocco and its sultan with the Tangier Protocol. The $COUNTRY_ADJ$ government proposed the creation of a 373-square-kilometre international, neutral and demilitarized zone centred on the city of Tangier and temporal powers and jurisdiction of the natives to the Moroccan sultan. However, negotiations broke down and no consensus could be reached. There are doubts if the proposal was outright reject, if it couldnâ€™t find enough supporters or if it was shelved but the fact remains that the Tangier Protocol is dead in the water, a great blow to $COUNTRY_ADJ$ diplomacy.;;;;;;;;;;;;;x
 EVTNAME81002217;The Tangier Protocol Fails;;;;;;;;;;;;;x
 EVTOPTA81002217;A waste of diplomatic effort.;;;;;;;;;;;;;x
-EVTDESC81002218;The Convention regarding the Organization of the Statute of the Tangier Zone has decided that Tangier shall be made an international zone, ruled by the sultan of Morocco as a neutral and demilitarized zone. We, however, currently hold Tangier and the great powers are urging us to abide to the Convention’s decision.;;;;;;;;;;;;;x
+EVTDESC81002218;The Convention regarding the Organization of the Statute of the Tangier Zone has decided that Tangier shall be made an international zone, ruled by the sultan of Morocco as a neutral and demilitarized zone. We, however, currently hold Tangier and the great powers are urging us to abide to the Conventionâ€™s decision.;;;;;;;;;;;;;x
 EVTOPTA81002218;We will abide.;;;;;;;;;;;;;x
 EVTOPTB81002218;They will have to take it from our cold, dead hands.;;;;;;;;;;;;;x
 EVTDESC200136;Although initial negotiations over a treaty on Transylvania failed, the $FROMCOUNTRY_ADJ$ government has successfully forced Romania and Hungary abide by the treaty. Transylvania will be partitioned between the two as originally proposed.;;;;;;;;;;;;;x
@@ -347,7 +347,49 @@ EVT666666122OPTA;Hurray!;;;;;;;;;x
 EVTNAME666666123;Uprising in $FROMCOUNTRY$;;;;;;;;;x
 EVTDESC666666123;Our fellow Poles in $FROMCOUNTRY$ have risen up in arms against their oppressors!;;;;;;;;;x
 EVT666666123OPTA;Interesting...;;;;;;;;;x
-EVT666666123OPTB;Kurwa, what are we waiting for?! TO ARMS!!!! §R-War will start in 30 days-;;;;;;;;;x
+EVTNAME500007;The Future of Poland;;;;;;;;;;;;;x
+EVTDESC500007;Our struggle has reached a turning point. We must now decide the future course of Poland.;;;;;;;;;;;;;x
+EVTNAME203903;Polish Uprising;;;;;;;;;;;;;x
+EVTDESC203903;The uprising gains momentum. We must decide how to respond before events spiral out of control.;;;;;;;;;;;;;x
+EVTNAME10000106;A New General Arrives;;;;;;;;;;;;;x
+EVTDESC10000106;A foreign officer has accepted our offer and joined our armed forces.;;;;;;;;;;;;;x
+EVTNAME10000107;A New General Arrives;;;;;;;;;;;;;x
+EVTDESC10000107;A foreign officer has accepted our offer and joined our armed forces.;;;;;;;;;;;;;x
+EVTNAME10000108;A New General Arrives;;;;;;;;;;;;;x
+EVTDESC10000108;A foreign officer has accepted our offer and joined our armed forces.;;;;;;;;;;;;;x
+EVTNAME10000109;A New General Arrives;;;;;;;;;;;;;x
+EVTDESC10000109;A foreign officer has accepted our offer and joined our armed forces.;;;;;;;;;;;;;x
+EVTNAME10000110;A New General Arrives;;;;;;;;;;;;;x
+EVTDESC10000110;A foreign officer has accepted our offer and joined our armed forces.;;;;;;;;;;;;;x
+EVTNAME10000111;A New General Arrives;;;;;;;;;;;;;x
+EVTDESC10000111;A foreign officer has accepted our offer and joined our armed forces.;;;;;;;;;;;;;x
+EVTNAME10000112;A New General Arrives;;;;;;;;;;;;;x
+EVTDESC10000112;A foreign officer has accepted our offer and joined our armed forces.;;;;;;;;;;;;;x
+EVTNAME10000113;A New General Arrives;;;;;;;;;;;;;x
+EVTDESC10000113;A foreign officer has accepted our offer and joined our armed forces.;;;;;;;;;;;;;x
+EVTNAME10000114;A New General Arrives;;;;;;;;;;;;;x
+EVTDESC10000114;A foreign officer has accepted our offer and joined our armed forces.;;;;;;;;;;;;;x
+EVTNAME10000115;A New General Arrives;;;;;;;;;;;;;x
+EVTDESC10000115;A foreign officer has accepted our offer and joined our armed forces.;;;;;;;;;;;;;x
+EVTNAME10000116;A New General Arrives;;;;;;;;;;;;;x
+EVTDESC10000116;A foreign officer has accepted our offer and joined our armed forces.;;;;;;;;;;;;;x
+EVTNAME10000117;A New General Arrives;;;;;;;;;;;;;x
+EVTDESC10000117;A foreign officer has accepted our offer and joined our armed forces.;;;;;;;;;;;;;x
+EVTNAME10000118;A New General Arrives;;;;;;;;;;;;;x
+EVTDESC10000118;A foreign officer has accepted our offer and joined our armed forces.;;;;;;;;;;;;;x
+EVTNAME10000119;A New General Arrives;;;;;;;;;;;;;x
+EVTDESC10000119;A foreign officer has accepted our offer and joined our armed forces.;;;;;;;;;;;;;x
+EVTNAME10000120;A New General Arrives;;;;;;;;;;;;;x
+EVTDESC10000120;A foreign officer has accepted our offer and joined our armed forces.;;;;;;;;;;;;;x
+EVTNAME993528;The Thorbecke Constitution;;;;;;;;;;;;;x
+EVTDESC993528;Political reformers push for constitutional changes in the Netherlands.;;;;;;;;;;;;;x
+EVTNAME993529;The Negenmannen;;;;;;;;;;;;;x
+EVTDESC993529;Political reformers push for constitutional changes in the Netherlands.;;;;;;;;;;;;;x
+EVTNAME993530;Constitutional Reform Debates;;;;;;;;;;;;;x
+EVTDESC993530;Political reformers push for constitutional changes in the Netherlands.;;;;;;;;;;;;;x
+EVTNAME993531;A New Dutch Constitutional Order;;;;;;;;;;;;;x
+EVTDESC993531;Political reformers push for constitutional changes in the Netherlands.;;;;;;;;;;;;;x
+EVT666666123OPTB;Kurwa, what are we waiting for?! TO ARMS!!!! Â§R-War will start in 30 days-;;;;;;;;;x
 EVTNAME666666124;Uprising in $FROMCOUNTRY$;;;;;;;;;x
 EVTDESC666666124;There is trouble brewing in $FROMCOUNTRY$! $FROMCOUNTRY$ is ready to dispatch additional police and military units to clamp down on the disorder. We should monitor what goes on with our Polish brethren here closely!;;;;;;;;;x
 EVTDESC666666126;The $YEAR$ Polish Rebellion was a major uprising against imperial rule in Poland. The rebellion was largely led by members of the szlachta, the Polish nobility, and was supported by other members of the Polish population. It was triggered by a series of edicts that sought to limit the privileges and autonomy of the Polish people. The uprising was largely unsuccessful and led to an increased presence of Russian troops in Poland. In the end, the rebellion solidified Russia's control of Poland, with Tsar Alexander II enforcing a series of reforms that limited the autonomy of the Polish people even further. However, the rebellion served as a reminder of the Polish people's resilience and refusal to accept imperial rule.;;;;;;;;;x
