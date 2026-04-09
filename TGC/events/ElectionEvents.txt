@@ -25,7 +25,6 @@ country_event = {
 
 	option = {
 		name = "EVTOPTB14005"
-		clr_country_flag = election_suffled
 		add_country_modifier = { name = let_the_chips_fall duration = 213 }
 		election_tool_tip_muted = {}
 		ai_chance = { factor = 1 }
