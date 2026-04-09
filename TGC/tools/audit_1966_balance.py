@@ -771,6 +771,16 @@ def main() -> int:
                     f"{unit} {stat} delta too large from {format_assignment_origin(item)} ({delta}, max_single_delta {max_delta})",
                 )
 
+    assignments_by_unit_stat: dict[str, dict[str, list[dict[str, Any]]]] = {}
+    for unit, unit_items in relevant_assignments_by_unit.items():
+        grouped: dict[str, list[dict[str, Any]]] = defaultdict(list)
+        for item in unit_items:
+            stat_name = item.get("stat")
+            if not stat_name:
+                continue
+            grouped[stat_name].append(item)
+        assignments_by_unit_stat[unit] = grouped
+
     for unit, cfg in units_cfg.items():
         historical_start_year = get_historical_relevance_start_year(cfg, default_milestone_year)
         for stat, s_cfg in cfg["monitored_stats"].items():
@@ -782,13 +792,29 @@ def main() -> int:
             total_delta = pos_delta + neg_delta
             estimated_final = baseline + total_delta
 
-            stat_assignments = [a for a in relevant_assignments_by_unit.get(unit, []) if a["stat"] == stat]
+            stat_assignments = assignments_by_unit_stat.get(unit, {}).get(stat, [])
             unknown_year_delta = sum(a["value"] for a in stat_assignments if a.get("year") is None)
             unknown_year_count = sum(1 for a in stat_assignments if a.get("year") is None)
             known_year_count = len(stat_assignments) - unknown_year_count
             known_years = sorted({a["year"] for a in stat_assignments if a.get("year") is not None})
             first_known_year = known_years[0] if known_years else None
             last_known_year = known_years[-1] if known_years else None
+            known_year_deltas: dict[int, float] = defaultdict(float)
+            for assignment in stat_assignments:
+                assignment_year = assignment.get("year")
+                if assignment_year is None:
+                    continue
+                known_year_deltas[assignment_year] += assignment["value"]
+
+            milestone_values_by_year: dict[int, float] = {}
+            running_total = baseline
+            sorted_known_years = sorted(known_year_deltas)
+            known_year_index = 0
+            for year in milestone_years:
+                while known_year_index < len(sorted_known_years) and sorted_known_years[known_year_index] <= year:
+                    running_total += known_year_deltas[sorted_known_years[known_year_index]]
+                    known_year_index += 1
+                milestone_values_by_year[year] = running_total
 
             total_abs_delta = sum(abs(a["value"]) for a in stat_assignments)
             unit_scope_abs_delta = sum(abs(a["value"]) for a in stat_assignments if a.get("scope_kind") == "unit")
@@ -804,9 +830,7 @@ def main() -> int:
 
             milestone_estimates: list[str] = []
             for year in milestone_years:
-                est = baseline + sum(
-                    a["value"] for a in stat_assignments if a.get("year") is not None and a["year"] <= year
-                )
+                est = milestone_values_by_year[year]
                 milestone_estimates.append(f"{year}:{est:.3f}")
 
             rep.add(
@@ -877,9 +901,7 @@ def main() -> int:
                     continue
                 m_min = cfg_y.get("min")
                 m_max = cfg_y.get("max")
-                m_est = baseline + sum(
-                    a["value"] for a in stat_assignments if a.get("year") is not None and a["year"] <= year
-                )
+                m_est = milestone_values_by_year[year]
                 if (m_min is not None and m_est < m_min) or (m_max is not None and m_est > m_max):
                     rep.add(
                         "WARN",
