@@ -9,7 +9,8 @@ country_event = {
 		any_neighbor_country = {
 			has_country_flag = zombie_outbreak
 		}
-		NOT = { tag = ZOM tag = WAS }
+		NOT = { tag = ZOM }
+		NOT = { tag = WAS }
 	}
 
 	mean_time_to_happen = {
@@ -42,12 +43,10 @@ country_event = {
 		any_owned_province = {
 			has_province_modifier = zombie_outbreak
 		}
-		NOT = {
-			has_country_flag = zombie_outbreak
-			has_country_flag = zombie_outbreak_defeat
-			tag = ZOM
-			tag = WAS
-		}
+		NOT = { has_country_flag = zombie_outbreak }
+		NOT = { has_country_flag = zombie_outbreak_defeat }
+		NOT = { tag = ZOM }
+		NOT = { tag = WAS }
 	}
 
 	mean_time_to_happen = {
@@ -440,7 +439,8 @@ country_event = {
 		POR = { has_country_modifier = zombie_outbreak }
 		SPA = { has_country_modifier = zombie_outbreak }
 		ENG = { has_country_modifier = zombie_outbreak }
-		NOT = { tag = ZOM tag = WAS }
+		NOT = { tag = ZOM }
+		NOT = { tag = WAS }
 	}
 	mean_time_to_happen = {
 		months = 6
