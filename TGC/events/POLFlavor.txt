@@ -6068,8 +6068,8 @@ country_event = {
 
 country_event = {
 	id = 500007 #todolocalization
-	title = "EVTNAME203903"
-	desc = "EVTDESC203903"
+	title = "EVTNAME500007"
+	desc = "EVTDESC500007"
 	picture = "ferdinand"
 
 	is_triggered_only = yes
