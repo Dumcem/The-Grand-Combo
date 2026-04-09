@@ -278,12 +278,14 @@
 				has_country_modifier = coup_risk
 			}
 			NOT = {
-				has_country_modifier = national_confusion
-				has_country_modifier = military_strife
-				capital_scope = { continent = europe }
-				is_culture_group = american_cultures
-				is_culture_group = neo_european_cultures
-				literacy = 0.50
+				OR = {
+					has_country_modifier = national_confusion
+					has_country_modifier = military_strife
+					capital_scope = { continent = europe }
+					is_culture_group = american_cultures
+					is_culture_group = neo_european_cultures
+					literacy = 0.50
+				}
 			}
 		}
 
@@ -1756,7 +1758,7 @@ country_event = { # Napoleon 6/6
 		name = "EVTOPTA10000112"
 		
 		define_general = {
-			name = "Empereur Napoleon I des Français"
+			name = "Empereur Napoleon I des FranÃ§ais"
 			personality = implacable
 			background = old_revolutionary
 		}
