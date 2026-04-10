@@ -159,26 +159,6 @@
           "max_cumulative_positive_delta": 60,
           "max_cumulative_negative_delta": 25,
           "milestone_ranges": {
-            "1836": {
-              "min": 62.0,
-              "max": 62.0
-            },
-            "1850": {
-              "min": 59.0,
-              "max": 65.0
-            },
-            "1870": {
-              "min": 56.0,
-              "max": 70.0
-            },
-            "1900": {
-              "min": 54.0,
-              "max": 73.0
-            },
-            "1910": {
-              "min": 54.0,
-              "max": 74.0
-            },
             "1919": {
               "min": 55.0,
               "max": 75.0
@@ -214,26 +194,6 @@
           "max_cumulative_positive_delta": 28.0,
           "max_cumulative_negative_delta": 8.0,
           "milestone_ranges": {
-            "1836": {
-              "min": 20.0,
-              "max": 20.0
-            },
-            "1850": {
-              "min": 19.0,
-              "max": 21.0
-            },
-            "1870": {
-              "min": 18.0,
-              "max": 22.0
-            },
-            "1900": {
-              "min": 17.0,
-              "max": 23.0
-            },
-            "1910": {
-              "min": 16.5,
-              "max": 24.0
-            },
             "1919": {
               "min": 16.0,
               "max": 25.0
@@ -269,26 +229,6 @@
           "max_cumulative_positive_delta": 1.5,
           "max_cumulative_negative_delta": 0.3,
           "milestone_ranges": {
-            "1836": {
-              "min": 0.65,
-              "max": 0.65
-            },
-            "1850": {
-              "min": 0.65,
-              "max": 0.65
-            },
-            "1870": {
-              "min": 0.65,
-              "max": 0.7
-            },
-            "1900": {
-              "min": 0.65,
-              "max": 0.75
-            },
-            "1910": {
-              "min": 0.65,
-              "max": 0.8
-            },
             "1919": {
               "min": 0.65,
               "max": 0.85
@@ -324,26 +264,6 @@
           "max_cumulative_positive_delta": 35.0,
           "max_cumulative_negative_delta": 10.0,
           "milestone_ranges": {
-            "1836": {
-              "min": 50.0,
-              "max": 50.0
-            },
-            "1850": {
-              "min": 50.0,
-              "max": 50.0
-            },
-            "1870": {
-              "min": 50.0,
-              "max": 50.0
-            },
-            "1900": {
-              "min": 50.0,
-              "max": 50.0
-            },
-            "1910": {
-              "min": 48.0,
-              "max": 52.0
-            },
             "1919": {
               "min": 45.0,
               "max": 60.0
@@ -379,26 +299,6 @@
           "max_cumulative_positive_delta": 60.0,
           "max_cumulative_negative_delta": 10.0,
           "milestone_ranges": {
-            "1836": {
-              "min": 123.0,
-              "max": 123.0
-            },
-            "1850": {
-              "min": 123.0,
-              "max": 123.0
-            },
-            "1870": {
-              "min": 123.0,
-              "max": 123.0
-            },
-            "1900": {
-              "min": 123.0,
-              "max": 123.0
-            },
-            "1910": {
-              "min": 120.0,
-              "max": 126.0
-            },
             "1919": {
               "min": 115.0,
               "max": 135.0
@@ -434,26 +334,6 @@
           "max_cumulative_positive_delta": 45.0,
           "max_cumulative_negative_delta": 5.0,
           "milestone_ranges": {
-            "1836": {
-              "min": 37.0,
-              "max": 37.0
-            },
-            "1850": {
-              "min": 37.0,
-              "max": 37.0
-            },
-            "1870": {
-              "min": 37.0,
-              "max": 37.0
-            },
-            "1900": {
-              "min": 37.0,
-              "max": 37.0
-            },
-            "1910": {
-              "min": 36.0,
-              "max": 38.0
-            },
             "1919": {
               "min": 35.0,
               "max": 45.0
@@ -489,26 +369,6 @@
           "max_cumulative_positive_delta": 6.0,
           "max_cumulative_negative_delta": 2.0,
           "milestone_ranges": {
-            "1836": {
-              "min": 9.0,
-              "max": 9.0
-            },
-            "1850": {
-              "min": 9.0,
-              "max": 9.0
-            },
-            "1870": {
-              "min": 9.0,
-              "max": 9.0
-            },
-            "1900": {
-              "min": 9.0,
-              "max": 9.0
-            },
-            "1910": {
-              "min": 8.8,
-              "max": 9.5
-            },
             "1919": {
               "min": 8.5,
               "max": 10.0
@@ -544,26 +404,6 @@
           "max_cumulative_positive_delta": 140.0,
           "max_cumulative_negative_delta": 40.0,
           "milestone_ranges": {
-            "1836": {
-              "min": 320.0,
-              "max": 320.0
-            },
-            "1850": {
-              "min": 320.0,
-              "max": 320.0
-            },
-            "1870": {
-              "min": 320.0,
-              "max": 320.0
-            },
-            "1900": {
-              "min": 320.0,
-              "max": 320.0
-            },
-            "1910": {
-              "min": 300.0,
-              "max": 340.0
-            },
             "1919": {
               "min": 280.0,
               "max": 360.0
@@ -599,26 +439,6 @@
           "max_cumulative_positive_delta": 3.0,
           "max_cumulative_negative_delta": 2.0,
           "milestone_ranges": {
-            "1836": {
-              "min": 7.0,
-              "max": 7.0
-            },
-            "1850": {
-              "min": 7.0,
-              "max": 7.0
-            },
-            "1870": {
-              "min": 7.0,
-              "max": 7.0
-            },
-            "1900": {
-              "min": 7.0,
-              "max": 7.0
-            },
-            "1910": {
-              "min": 6.5,
-              "max": 7.5
-            },
             "1919": {
               "min": 6.0,
               "max": 8.0
@@ -654,26 +474,6 @@
           "max_cumulative_positive_delta": 2.0,
           "max_cumulative_negative_delta": 1.0,
           "milestone_ranges": {
-            "1836": {
-              "min": 1.0,
-              "max": 1.0
-            },
-            "1850": {
-              "min": 1.0,
-              "max": 1.0
-            },
-            "1870": {
-              "min": 1.0,
-              "max": 1.0
-            },
-            "1900": {
-              "min": 1.0,
-              "max": 1.0
-            },
-            "1910": {
-              "min": 0.5,
-              "max": 1.5
-            },
             "1919": {
               "min": 0.0,
               "max": 1.5
@@ -709,26 +509,6 @@
           "max_cumulative_positive_delta": 721.0,
           "max_cumulative_negative_delta": 360.5,
           "milestone_ranges": {
-            "1836": {
-              "min": 120.0,
-              "max": 120.0
-            },
-            "1850": {
-              "min": 107.4,
-              "max": 166.252
-            },
-            "1870": {
-              "min": 89.4,
-              "max": 232.328
-            },
-            "1900": {
-              "min": 62.4,
-              "max": 331.44
-            },
-            "1910": {
-              "min": 53.4,
-              "max": 364.477
-            },
             "1919": {
               "min": 45.3,
               "max": 394.211
@@ -764,26 +544,6 @@
           "max_cumulative_positive_delta": 2.5,
           "max_cumulative_negative_delta": 0.5,
           "milestone_ranges": {
-            "1836": {
-              "min": 3.5,
-              "max": 3.5
-            },
-            "1850": {
-              "min": 3.5,
-              "max": 3.5
-            },
-            "1870": {
-              "min": 3.5,
-              "max": 3.5
-            },
-            "1900": {
-              "min": 3.5,
-              "max": 3.5
-            },
-            "1910": {
-              "min": 3.4,
-              "max": 3.6
-            },
             "1919": {
               "min": 3.0,
               "max": 4.0
@@ -819,26 +579,6 @@
           "max_cumulative_positive_delta": 1.5,
           "max_cumulative_negative_delta": 0.0,
           "milestone_ranges": {
-            "1836": {
-              "min": 0.0,
-              "max": 0.0
-            },
-            "1850": {
-              "min": 0.0,
-              "max": 0.067
-            },
-            "1870": {
-              "min": 0.0,
-              "max": 0.164
-            },
-            "1900": {
-              "min": 0.0,
-              "max": 0.308
-            },
-            "1910": {
-              "min": 0.0,
-              "max": 0.357
-            },
             "1919": {
               "min": 0.0,
               "max": 0.4
@@ -866,7 +606,15 @@
           }
         }
       },
-      "historical_relevance_start_year": 1919
+      "historical_relevance_start_year": 1919,
+      "applicable_milestone_years": [
+        1919,
+        1929,
+        1936,
+        1945,
+        1955,
+        1966
+      ]
     },
     "artillery": {
       "unit_file": "TGC/units/artillery.txt",
@@ -1495,7 +1243,20 @@
           }
         }
       },
-      "historical_relevance_start_year": 1836
+      "historical_relevance_start_year": 1836,
+      "applicable_milestone_years": [
+        1836,
+        1850,
+        1870,
+        1900,
+        1910,
+        1919,
+        1929,
+        1936,
+        1945,
+        1955,
+        1966
+      ]
     },
     "battleship": {
       "unit_file": "TGC/units/battleship.txt",
@@ -1529,18 +1290,6 @@
           "max_cumulative_positive_delta": 45,
           "max_cumulative_negative_delta": 20,
           "milestone_ranges": {
-            "1836": {
-              "min": 70.0,
-              "max": 70.0
-            },
-            "1850": {
-              "min": 68.6,
-              "max": 75.6
-            },
-            "1870": {
-              "min": 66.6,
-              "max": 83.6
-            },
             "1900": {
               "min": 63.6,
               "max": 95.6
@@ -1584,18 +1333,6 @@
           "max_cumulative_positive_delta": 35,
           "max_cumulative_negative_delta": 12,
           "milestone_ranges": {
-            "1836": {
-              "min": 50.0,
-              "max": 50.0
-            },
-            "1850": {
-              "min": 47.9,
-              "max": 52.1
-            },
-            "1870": {
-              "min": 44.9,
-              "max": 55.1
-            },
             "1900": {
               "min": 40.4,
               "max": 59.6
@@ -1639,18 +1376,6 @@
           "max_cumulative_positive_delta": 1.6,
           "max_cumulative_negative_delta": 0.6,
           "milestone_ranges": {
-            "1836": {
-              "min": 0.15,
-              "max": 0.15
-            },
-            "1850": {
-              "min": 0.143,
-              "max": 0.297
-            },
-            "1870": {
-              "min": 0.133,
-              "max": 0.507
-            },
             "1900": {
               "min": 0.118,
               "max": 0.822
@@ -1694,18 +1419,6 @@
           "max_cumulative_positive_delta": 205.0,
           "max_cumulative_negative_delta": 103.0,
           "milestone_ranges": {
-            "1836": {
-              "min": 50.0,
-              "max": 50.0
-            },
-            "1850": {
-              "min": 46.5,
-              "max": 59.8
-            },
-            "1870": {
-              "min": 41.5,
-              "max": 73.8
-            },
             "1900": {
               "min": 34.0,
               "max": 94.8
@@ -1749,18 +1462,6 @@
           "max_cumulative_positive_delta": 55.0,
           "max_cumulative_negative_delta": 10.0,
           "milestone_ranges": {
-            "1836": {
-              "min": 100.0,
-              "max": 100.0
-            },
-            "1850": {
-              "min": 98.906,
-              "max": 103.281
-            },
-            "1870": {
-              "min": 97.344,
-              "max": 107.969
-            },
             "1900": {
               "min": 95.0,
               "max": 115.0
@@ -1804,18 +1505,6 @@
           "max_cumulative_positive_delta": 38.0,
           "max_cumulative_negative_delta": 6.0,
           "milestone_ranges": {
-            "1836": {
-              "min": 36.0,
-              "max": 44.0
-            },
-            "1850": {
-              "min": 35.562,
-              "max": 45.312
-            },
-            "1870": {
-              "min": 34.938,
-              "max": 47.188
-            },
             "1900": {
               "min": 34.0,
               "max": 50.0
@@ -1859,18 +1548,6 @@
           "max_cumulative_positive_delta": 29.0,
           "max_cumulative_negative_delta": 14.5,
           "milestone_ranges": {
-            "1836": {
-              "min": 9.0,
-              "max": 9.0
-            },
-            "1850": {
-              "min": 8.118,
-              "max": 11.1
-            },
-            "1870": {
-              "min": 6.858,
-              "max": 14.1
-            },
             "1900": {
               "min": 4.968,
               "max": 18.6
@@ -1914,18 +1591,6 @@
           "max_cumulative_positive_delta": 1445.0,
           "max_cumulative_negative_delta": 723.0,
           "milestone_ranges": {
-            "1836": {
-              "min": 288.0,
-              "max": 432.0
-            },
-            "1850": {
-              "min": 288.0,
-              "max": 432.0
-            },
-            "1870": {
-              "min": 288.0,
-              "max": 432.0
-            },
             "1900": {
               "min": 288.0,
               "max": 432.0
@@ -1969,18 +1634,6 @@
           "max_cumulative_positive_delta": 3.0,
           "max_cumulative_negative_delta": 1.0,
           "milestone_ranges": {
-            "1836": {
-              "min": 4.0,
-              "max": 4.0
-            },
-            "1850": {
-              "min": 3.891,
-              "max": 4.328
-            },
-            "1870": {
-              "min": 3.734,
-              "max": 4.797
-            },
             "1900": {
               "min": 3.5,
               "max": 5.5
@@ -2024,18 +1677,6 @@
           "max_cumulative_positive_delta": 13.0,
           "max_cumulative_negative_delta": 7.0,
           "milestone_ranges": {
-            "1836": {
-              "min": 2.0,
-              "max": 2.0
-            },
-            "1850": {
-              "min": 1.58,
-              "max": 3.4
-            },
-            "1870": {
-              "min": 0.98,
-              "max": 5.4
-            },
             "1900": {
               "min": 0.08,
               "max": 8.4
@@ -2079,18 +1720,6 @@
           "max_cumulative_positive_delta": 301.0,
           "max_cumulative_negative_delta": 150.5,
           "milestone_ranges": {
-            "1836": {
-              "min": 50.0,
-              "max": 50.0
-            },
-            "1850": {
-              "min": 44.75,
-              "max": 69.303
-            },
-            "1870": {
-              "min": 37.25,
-              "max": 96.877
-            },
             "1900": {
               "min": 26.0,
               "max": 138.24
@@ -2134,18 +1763,6 @@
           "max_cumulative_positive_delta": 5.0,
           "max_cumulative_negative_delta": 3.0,
           "milestone_ranges": {
-            "1836": {
-              "min": 0.75,
-              "max": 0.75
-            },
-            "1850": {
-              "min": 0.676,
-              "max": 1.406
-            },
-            "1870": {
-              "min": 0.572,
-              "max": 2.344
-            },
             "1900": {
               "min": 0.414,
               "max": 3.75
@@ -2189,18 +1806,6 @@
           "max_cumulative_positive_delta": 0.8,
           "max_cumulative_negative_delta": 0.0,
           "milestone_ranges": {
-            "1836": {
-              "min": 0.0,
-              "max": 0.0
-            },
-            "1850": {
-              "min": 0.0,
-              "max": 0.044
-            },
-            "1870": {
-              "min": 0.0,
-              "max": 0.106
-            },
             "1900": {
               "min": 0.0,
               "max": 0.2
@@ -2236,7 +1841,17 @@
           }
         }
       },
-      "historical_relevance_start_year": 1900
+      "historical_relevance_start_year": 1900,
+      "applicable_milestone_years": [
+        1900,
+        1910,
+        1919,
+        1929,
+        1936,
+        1945,
+        1955,
+        1966
+      ]
     },
     "cavalry": {
       "unit_file": "TGC/units/cavalry.txt",
@@ -2863,7 +2478,20 @@
           }
         }
       },
-      "historical_relevance_start_year": 1836
+      "historical_relevance_start_year": 1836,
+      "applicable_milestone_years": [
+        1836,
+        1850,
+        1870,
+        1900,
+        1910,
+        1919,
+        1929,
+        1936,
+        1945,
+        1955,
+        1966
+      ]
     },
     "clipper_transport": {
       "unit_file": "TGC/units/clipper_transport.txt",
@@ -3545,7 +3173,20 @@
           }
         }
       },
-      "historical_relevance_start_year": 1836
+      "historical_relevance_start_year": 1836,
+      "applicable_milestone_years": [
+        1836,
+        1850,
+        1870,
+        1900,
+        1910,
+        1919,
+        1929,
+        1936,
+        1945,
+        1955,
+        1966
+      ]
     },
     "commerce_raider": {
       "unit_file": "TGC/units/commerce_raider.txt",
@@ -3577,10 +3218,6 @@
           "max_cumulative_positive_delta": 4.0,
           "max_cumulative_negative_delta": 1.0,
           "milestone_ranges": {
-            "1836": {
-              "min": 6.0,
-              "max": 6.0
-            },
             "1850": {
               "min": 5.956,
               "max": 6.328
@@ -3632,10 +3269,6 @@
           "max_cumulative_positive_delta": 4.0,
           "max_cumulative_negative_delta": 1.0,
           "milestone_ranges": {
-            "1836": {
-              "min": 5.0,
-              "max": 5.0
-            },
             "1850": {
               "min": 4.956,
               "max": 5.328
@@ -3687,10 +3320,6 @@
           "max_cumulative_positive_delta": 0.4,
           "max_cumulative_negative_delta": 0.0,
           "milestone_ranges": {
-            "1836": {
-              "min": 0.0,
-              "max": 0.0
-            },
             "1850": {
               "min": 0.0,
               "max": 0.033
@@ -3742,10 +3371,6 @@
           "max_cumulative_positive_delta": 5.0,
           "max_cumulative_negative_delta": 1.0,
           "milestone_ranges": {
-            "1836": {
-              "min": 10.0,
-              "max": 10.0
-            },
             "1850": {
               "min": 9.956,
               "max": 10.824
@@ -3797,10 +3422,6 @@
           "max_cumulative_positive_delta": 0.45,
           "max_cumulative_negative_delta": 0.08,
           "milestone_ranges": {
-            "1836": {
-              "min": 0.15,
-              "max": 0.15
-            },
             "1850": {
               "min": 0.143,
               "max": 0.183
@@ -3852,10 +3473,6 @@
           "max_cumulative_positive_delta": 6.0,
           "max_cumulative_negative_delta": 2.0,
           "milestone_ranges": {
-            "1836": {
-              "min": 8.0,
-              "max": 8.0
-            },
             "1850": {
               "min": 7.781,
               "max": 8.438
@@ -3907,10 +3524,6 @@
           "max_cumulative_positive_delta": 18.0,
           "max_cumulative_negative_delta": 8.0,
           "milestone_ranges": {
-            "1836": {
-              "min": 100.0,
-              "max": 100.0
-            },
             "1850": {
               "min": 98.765,
               "max": 102.471
@@ -3962,10 +3575,6 @@
           "max_cumulative_positive_delta": 25.0,
           "max_cumulative_negative_delta": 10.0,
           "milestone_ranges": {
-            "1836": {
-              "min": 30.0,
-              "max": 30.0
-            },
             "1850": {
               "min": 29.125,
               "max": 32.188
@@ -4017,10 +3626,6 @@
           "max_cumulative_positive_delta": 30.0,
           "max_cumulative_negative_delta": 140.0,
           "milestone_ranges": {
-            "1836": {
-              "min": 360.0,
-              "max": 360.0
-            },
             "1850": {
               "min": 346.875,
               "max": 364.375
@@ -4072,10 +3677,6 @@
           "max_cumulative_positive_delta": 2.0,
           "max_cumulative_negative_delta": 0.0,
           "milestone_ranges": {
-            "1836": {
-              "min": 1.0,
-              "max": 1.0
-            },
             "1850": {
               "min": 1.0,
               "max": 1.219
@@ -4127,10 +3728,6 @@
           "max_cumulative_positive_delta": 1.0,
           "max_cumulative_negative_delta": 0.0,
           "milestone_ranges": {
-            "1836": {
-              "min": -1.0,
-              "max": -1.0
-            },
             "1850": {
               "min": -1.0,
               "max": -0.892
@@ -4182,10 +3779,6 @@
           "max_cumulative_positive_delta": 3.5,
           "max_cumulative_negative_delta": 1.5,
           "milestone_ranges": {
-            "1836": {
-              "min": 3.0,
-              "max": 3.0
-            },
             "1850": {
               "min": 2.781,
               "max": 3.328
@@ -4237,10 +3830,6 @@
           "max_cumulative_positive_delta": 0.6,
           "max_cumulative_negative_delta": 0.2,
           "milestone_ranges": {
-            "1836": {
-              "min": 0.6,
-              "max": 0.6
-            },
             "1850": {
               "min": 0.589,
               "max": 0.666
@@ -4292,10 +3881,6 @@
           "max_cumulative_positive_delta": 0.6,
           "max_cumulative_negative_delta": 0.1,
           "milestone_ranges": {
-            "1836": {
-              "min": 0.25,
-              "max": 0.25
-            },
             "1850": {
               "min": 0.239,
               "max": 0.305
@@ -4339,7 +3924,19 @@
           }
         }
       },
-      "historical_relevance_start_year": 1850
+      "historical_relevance_start_year": 1850,
+      "applicable_milestone_years": [
+        1850,
+        1870,
+        1900,
+        1910,
+        1919,
+        1929,
+        1936,
+        1945,
+        1955,
+        1966
+      ]
     },
     "cruiser": {
       "unit_file": "TGC/units/cruiser.txt",
@@ -4372,14 +3969,6 @@
           "max_cumulative_positive_delta": 40,
           "max_cumulative_negative_delta": 20,
           "milestone_ranges": {
-            "1836": {
-              "min": 50.0,
-              "max": 50.0
-            },
-            "1850": {
-              "min": 48.6,
-              "max": 54.9
-            },
             "1870": {
               "min": 46.6,
               "max": 61.9
@@ -4427,14 +4016,6 @@
           "max_cumulative_positive_delta": 30,
           "max_cumulative_negative_delta": 12,
           "milestone_ranges": {
-            "1836": {
-              "min": 30.0,
-              "max": 30.0
-            },
-            "1850": {
-              "min": 28.6,
-              "max": 32.1
-            },
             "1870": {
               "min": 26.6,
               "max": 35.1
@@ -4482,14 +4063,6 @@
           "max_cumulative_positive_delta": 1.4,
           "max_cumulative_negative_delta": 0.6,
           "milestone_ranges": {
-            "1836": {
-              "min": 0.15,
-              "max": 0.15
-            },
-            "1850": {
-              "min": 0.143,
-              "max": 0.269
-            },
             "1870": {
               "min": 0.133,
               "max": 0.439
@@ -4537,14 +4110,6 @@
           "max_cumulative_positive_delta": 105.0,
           "max_cumulative_negative_delta": 53.0,
           "milestone_ranges": {
-            "1836": {
-              "min": 25.0,
-              "max": 25.0
-            },
-            "1850": {
-              "min": 23.25,
-              "max": 30.425
-            },
             "1870": {
               "min": 20.75,
               "max": 38.175
@@ -4592,14 +4157,6 @@
           "max_cumulative_positive_delta": 40.0,
           "max_cumulative_negative_delta": 15.0,
           "milestone_ranges": {
-            "1836": {
-              "min": 98.0,
-              "max": 102.0
-            },
-            "1850": {
-              "min": 96.765,
-              "max": 105.294
-            },
             "1870": {
               "min": 95.0,
               "max": 110.0
@@ -4647,14 +4204,6 @@
           "max_cumulative_positive_delta": 145.0,
           "max_cumulative_negative_delta": 73.0,
           "milestone_ranges": {
-            "1836": {
-              "min": 29.75,
-              "max": 40.25
-            },
-            "1850": {
-              "min": 29.75,
-              "max": 40.25
-            },
             "1870": {
               "min": 29.75,
               "max": 40.25
@@ -4702,14 +4251,6 @@
           "max_cumulative_positive_delta": 38.0,
           "max_cumulative_negative_delta": 19.0,
           "milestone_ranges": {
-            "1836": {
-              "min": 12.0,
-              "max": 12.0
-            },
-            "1850": {
-              "min": 10.824,
-              "max": 14.625
-            },
             "1870": {
               "min": 9.144,
               "max": 18.375
@@ -4757,14 +4298,6 @@
           "max_cumulative_positive_delta": 965.0,
           "max_cumulative_negative_delta": 483.0,
           "milestone_ranges": {
-            "1836": {
-              "min": 192.0,
-              "max": 288.0
-            },
-            "1850": {
-              "min": 192.0,
-              "max": 288.0
-            },
             "1870": {
               "min": 192.0,
               "max": 288.0
@@ -4812,14 +4345,6 @@
           "max_cumulative_positive_delta": 2.0,
           "max_cumulative_negative_delta": 1.0,
           "milestone_ranges": {
-            "1836": {
-              "min": 4.0,
-              "max": 4.0
-            },
-            "1850": {
-              "min": 3.588,
-              "max": 4.412
-            },
             "1870": {
               "min": 3.0,
               "max": 5.0
@@ -4867,14 +4392,6 @@
           "max_cumulative_positive_delta": 1.5,
           "max_cumulative_negative_delta": 0.5,
           "milestone_ranges": {
-            "1836": {
-              "min": -1.0,
-              "max": 0.0
-            },
-            "1850": {
-              "min": -1.0,
-              "max": 0.0
-            },
             "1870": {
               "min": -1.0,
               "max": 0.0
@@ -4922,14 +4439,6 @@
           "max_cumulative_positive_delta": 121.0,
           "max_cumulative_negative_delta": 60.5,
           "milestone_ranges": {
-            "1836": {
-              "min": 20.0,
-              "max": 20.0
-            },
-            "1850": {
-              "min": 17.9,
-              "max": 27.753
-            },
             "1870": {
               "min": 14.9,
               "max": 38.828
@@ -4977,14 +4486,6 @@
           "max_cumulative_positive_delta": 5.0,
           "max_cumulative_negative_delta": 3.0,
           "milestone_ranges": {
-            "1836": {
-              "min": 0.65,
-              "max": 0.65
-            },
-            "1850": {
-              "min": 0.586,
-              "max": 1.289
-            },
             "1870": {
               "min": 0.495,
               "max": 2.201
@@ -5032,14 +4533,6 @@
           "max_cumulative_positive_delta": 5.0,
           "max_cumulative_negative_delta": 3.0,
           "milestone_ranges": {
-            "1836": {
-              "min": 0.3,
-              "max": 0.3
-            },
-            "1850": {
-              "min": 0.271,
-              "max": 0.877
-            },
             "1870": {
               "min": 0.229,
               "max": 1.703
@@ -5087,14 +4580,6 @@
           "max_cumulative_positive_delta": 2.8,
           "max_cumulative_negative_delta": 1.0,
           "milestone_ranges": {
-            "1836": {
-              "min": 2.0,
-              "max": 2.0
-            },
-            "1850": {
-              "min": 1.891,
-              "max": 2.219
-            },
             "1870": {
               "min": 1.734,
               "max": 2.531
@@ -5134,7 +4619,18 @@
           }
         }
       },
-      "historical_relevance_start_year": 1870
+      "historical_relevance_start_year": 1870,
+      "applicable_milestone_years": [
+        1870,
+        1900,
+        1910,
+        1919,
+        1929,
+        1936,
+        1945,
+        1955,
+        1966
+      ]
     },
     "cuirassier": {
       "unit_file": "TGC/units/cuirassier.txt",
@@ -5763,7 +5259,20 @@
           }
         }
       },
-      "historical_relevance_start_year": 1836
+      "historical_relevance_start_year": 1836,
+      "applicable_milestone_years": [
+        1836,
+        1850,
+        1870,
+        1900,
+        1910,
+        1919,
+        1929,
+        1936,
+        1945,
+        1955,
+        1966
+      ]
     },
     "dragoon": {
       "unit_file": "TGC/units/dragoon.txt",
@@ -6392,7 +5901,20 @@
           }
         }
       },
-      "historical_relevance_start_year": 1836
+      "historical_relevance_start_year": 1836,
+      "applicable_milestone_years": [
+        1836,
+        1850,
+        1870,
+        1900,
+        1910,
+        1919,
+        1929,
+        1936,
+        1945,
+        1955,
+        1966
+      ]
     },
     "dreadnought": {
       "unit_file": "TGC/units/dreadnought.txt",
@@ -6424,22 +5946,6 @@
           "max_cumulative_positive_delta": 200.0,
           "max_cumulative_negative_delta": 96.0,
           "milestone_ranges": {
-            "1836": {
-              "min": 80.0,
-              "max": 80.0
-            },
-            "1850": {
-              "min": 75.52,
-              "max": 89.24
-            },
-            "1870": {
-              "min": 69.12,
-              "max": 102.44
-            },
-            "1900": {
-              "min": 59.52,
-              "max": 122.24
-            },
             "1910": {
               "min": 56.32,
               "max": 128.84
@@ -6479,22 +5985,6 @@
           "max_cumulative_positive_delta": 150.0,
           "max_cumulative_negative_delta": 72.0,
           "milestone_ranges": {
-            "1836": {
-              "min": 60.0,
-              "max": 60.0
-            },
-            "1850": {
-              "min": 56.64,
-              "max": 67.0
-            },
-            "1870": {
-              "min": 51.84,
-              "max": 77.0
-            },
-            "1900": {
-              "min": 44.64,
-              "max": 92.0
-            },
             "1910": {
               "min": 42.24,
               "max": 97.0
@@ -6534,22 +6024,6 @@
           "max_cumulative_positive_delta": 20.0,
           "max_cumulative_negative_delta": 10.0,
           "milestone_ranges": {
-            "1836": {
-              "min": 10.0,
-              "max": 10.0
-            },
-            "1850": {
-              "min": 9.44,
-              "max": 11.4
-            },
-            "1870": {
-              "min": 8.64,
-              "max": 13.4
-            },
-            "1900": {
-              "min": 7.44,
-              "max": 16.4
-            },
             "1910": {
               "min": 7.04,
               "max": 17.4
@@ -6589,22 +6063,6 @@
           "max_cumulative_positive_delta": 0.55,
           "max_cumulative_negative_delta": 0.04,
           "milestone_ranges": {
-            "1836": {
-              "min": 0.15,
-              "max": 0.15
-            },
-            "1850": {
-              "min": 0.146,
-              "max": 0.175
-            },
-            "1870": {
-              "min": 0.141,
-              "max": 0.21
-            },
-            "1900": {
-              "min": 0.133,
-              "max": 0.262
-            },
             "1910": {
               "min": 0.13,
               "max": 0.28
@@ -6644,22 +6102,6 @@
           "max_cumulative_positive_delta": 305.0,
           "max_cumulative_negative_delta": 153.0,
           "milestone_ranges": {
-            "1836": {
-              "min": 75.0,
-              "max": 75.0
-            },
-            "1850": {
-              "min": 69.75,
-              "max": 89.175
-            },
-            "1870": {
-              "min": 62.25,
-              "max": 109.425
-            },
-            "1900": {
-              "min": 51.0,
-              "max": 139.8
-            },
             "1910": {
               "min": 47.25,
               "max": 149.925
@@ -6699,22 +6141,6 @@
           "max_cumulative_positive_delta": 70.0,
           "max_cumulative_negative_delta": 5.0,
           "milestone_ranges": {
-            "1836": {
-              "min": 100.0,
-              "max": 100.0
-            },
-            "1850": {
-              "min": 99.622,
-              "max": 103.784
-            },
-            "1870": {
-              "min": 99.081,
-              "max": 109.189
-            },
-            "1900": {
-              "min": 98.27,
-              "max": 117.297
-            },
             "1910": {
               "min": 98.0,
               "max": 120.0
@@ -6754,22 +6180,6 @@
           "max_cumulative_positive_delta": 185.0,
           "max_cumulative_negative_delta": 93.0,
           "milestone_ranges": {
-            "1836": {
-              "min": 45.0,
-              "max": 45.0
-            },
-            "1850": {
-              "min": 41.85,
-              "max": 53.925
-            },
-            "1870": {
-              "min": 37.35,
-              "max": 66.675
-            },
-            "1900": {
-              "min": 30.6,
-              "max": 85.8
-            },
             "1910": {
               "min": 28.35,
               "max": 92.175
@@ -6809,22 +6219,6 @@
           "max_cumulative_positive_delta": 60.0,
           "max_cumulative_negative_delta": 40.0,
           "milestone_ranges": {
-            "1836": {
-              "min": 340.0,
-              "max": 380.0
-            },
-            "1850": {
-              "min": 338.108,
-              "max": 381.892
-            },
-            "1870": {
-              "min": 335.405,
-              "max": 384.595
-            },
-            "1900": {
-              "min": 331.351,
-              "max": 388.649
-            },
             "1910": {
               "min": 330.0,
               "max": 390.0
@@ -6864,22 +6258,6 @@
           "max_cumulative_positive_delta": 25.0,
           "max_cumulative_negative_delta": 13.0,
           "milestone_ranges": {
-            "1836": {
-              "min": 5.0,
-              "max": 5.0
-            },
-            "1850": {
-              "min": 4.65,
-              "max": 6.925
-            },
-            "1870": {
-              "min": 4.15,
-              "max": 9.675
-            },
-            "1900": {
-              "min": 3.4,
-              "max": 13.8
-            },
             "1910": {
               "min": 3.15,
               "max": 15.175
@@ -6919,22 +6297,6 @@
           "max_cumulative_positive_delta": 9.0,
           "max_cumulative_negative_delta": 5.0,
           "milestone_ranges": {
-            "1836": {
-              "min": 1.0,
-              "max": 1.0
-            },
-            "1850": {
-              "min": 0.72,
-              "max": 2.225
-            },
-            "1870": {
-              "min": 0.32,
-              "max": 3.975
-            },
-            "1900": {
-              "min": -0.28,
-              "max": 6.6
-            },
             "1910": {
               "min": -0.48,
               "max": 7.475
@@ -6974,22 +6336,6 @@
           "max_cumulative_positive_delta": 361.0,
           "max_cumulative_negative_delta": 180.5,
           "milestone_ranges": {
-            "1836": {
-              "min": 60.0,
-              "max": 60.0
-            },
-            "1850": {
-              "min": 53.7,
-              "max": 83.153
-            },
-            "1870": {
-              "min": 44.7,
-              "max": 116.228
-            },
-            "1900": {
-              "min": 31.2,
-              "max": 165.84
-            },
             "1910": {
               "min": 26.7,
               "max": 182.377
@@ -7029,22 +6375,6 @@
           "max_cumulative_positive_delta": 5.0,
           "max_cumulative_negative_delta": 3.0,
           "milestone_ranges": {
-            "1836": {
-              "min": 0.8,
-              "max": 0.8
-            },
-            "1850": {
-              "min": 0.722,
-              "max": 1.465
-            },
-            "1870": {
-              "min": 0.61,
-              "max": 2.415
-            },
-            "1900": {
-              "min": 0.442,
-              "max": 3.84
-            },
             "1910": {
               "min": 0.386,
               "max": 4.315
@@ -7084,22 +6414,6 @@
           "max_cumulative_positive_delta": 0.7,
           "max_cumulative_negative_delta": 0.0,
           "milestone_ranges": {
-            "1836": {
-              "min": 0.0,
-              "max": 0.0
-            },
-            "1850": {
-              "min": 0.0,
-              "max": 0.034
-            },
-            "1870": {
-              "min": 0.0,
-              "max": 0.083
-            },
-            "1900": {
-              "min": 0.0,
-              "max": 0.156
-            },
             "1910": {
               "min": 0.0,
               "max": 0.18
@@ -7131,7 +6445,16 @@
           }
         }
       },
-      "historical_relevance_start_year": 1910
+      "historical_relevance_start_year": 1910,
+      "applicable_milestone_years": [
+        1910,
+        1919,
+        1929,
+        1936,
+        1945,
+        1955,
+        1966
+      ]
     },
     "engineer": {
       "unit_file": "TGC/units/engineer.txt",
@@ -7815,7 +7138,20 @@
           }
         }
       },
-      "historical_relevance_start_year": 1836
+      "historical_relevance_start_year": 1836,
+      "applicable_milestone_years": [
+        1836,
+        1850,
+        1870,
+        1900,
+        1910,
+        1919,
+        1929,
+        1936,
+        1945,
+        1955,
+        1966
+      ]
     },
     "frigate": {
       "unit_file": "TGC/units/frigate.txt",
@@ -8608,7 +7944,20 @@
           }
         }
       },
-      "historical_relevance_start_year": 1836
+      "historical_relevance_start_year": 1836,
+      "applicable_milestone_years": [
+        1836,
+        1850,
+        1870,
+        1900,
+        1910,
+        1919,
+        1929,
+        1936,
+        1945,
+        1955,
+        1966
+      ]
     },
     "guard": {
       "unit_file": "TGC/units/guard.txt",
@@ -9238,7 +8587,20 @@
           }
         }
       },
-      "historical_relevance_start_year": 1836
+      "historical_relevance_start_year": 1836,
+      "applicable_milestone_years": [
+        1836,
+        1850,
+        1870,
+        1900,
+        1910,
+        1919,
+        1929,
+        1936,
+        1945,
+        1955,
+        1966
+      ]
     },
     "hussar": {
       "unit_file": "TGC/units/hussar.txt",
@@ -9867,7 +9229,20 @@
           }
         }
       },
-      "historical_relevance_start_year": 1836
+      "historical_relevance_start_year": 1836,
+      "applicable_milestone_years": [
+        1836,
+        1850,
+        1870,
+        1900,
+        1910,
+        1919,
+        1929,
+        1936,
+        1945,
+        1955,
+        1966
+      ]
     },
     "infantry": {
       "unit_file": "TGC/units/infantry.txt",
@@ -10496,7 +9871,20 @@
           }
         }
       },
-      "historical_relevance_start_year": 1836
+      "historical_relevance_start_year": 1836,
+      "applicable_milestone_years": [
+        1836,
+        1850,
+        1870,
+        1900,
+        1910,
+        1919,
+        1929,
+        1936,
+        1945,
+        1955,
+        1966
+      ]
     },
     "ironclad": {
       "unit_file": "TGC/units/ironclad.txt",
@@ -10528,14 +9916,6 @@
           "max_cumulative_positive_delta": 37.5,
           "max_cumulative_negative_delta": 18.0,
           "milestone_ranges": {
-            "1836": {
-              "min": 15.0,
-              "max": 15.0
-            },
-            "1850": {
-              "min": 14.16,
-              "max": 16.96
-            },
             "1870": {
               "min": 12.96,
               "max": 19.76
@@ -10583,14 +9963,6 @@
           "max_cumulative_positive_delta": 37.5,
           "max_cumulative_negative_delta": 18.0,
           "milestone_ranges": {
-            "1836": {
-              "min": 15.0,
-              "max": 15.0
-            },
-            "1850": {
-              "min": 14.16,
-              "max": 16.96
-            },
             "1870": {
               "min": 12.96,
               "max": 19.76
@@ -10638,14 +10010,6 @@
           "max_cumulative_positive_delta": 12.0,
           "max_cumulative_negative_delta": 6.0,
           "milestone_ranges": {
-            "1836": {
-              "min": 6.0,
-              "max": 6.0
-            },
-            "1850": {
-              "min": 5.664,
-              "max": 6.952
-            },
             "1870": {
               "min": 5.184,
               "max": 8.312
@@ -10693,14 +10057,6 @@
           "max_cumulative_positive_delta": 0.4,
           "max_cumulative_negative_delta": 0.05,
           "milestone_ranges": {
-            "1836": {
-              "min": 0.15,
-              "max": 0.15
-            },
-            "1850": {
-              "min": 0.142,
-              "max": 0.187
-            },
             "1870": {
               "min": 0.13,
               "max": 0.24
@@ -10748,14 +10104,6 @@
           "max_cumulative_positive_delta": 45.0,
           "max_cumulative_negative_delta": 23.0,
           "milestone_ranges": {
-            "1836": {
-              "min": 10.0,
-              "max": 10.0
-            },
-            "1850": {
-              "min": 9.3,
-              "max": 12.8
-            },
             "1870": {
               "min": 8.3,
               "max": 16.8
@@ -10803,14 +10151,6 @@
           "max_cumulative_positive_delta": 35.0,
           "max_cumulative_negative_delta": 15.0,
           "milestone_ranges": {
-            "1836": {
-              "min": 98.0,
-              "max": 102.0
-            },
-            "1850": {
-              "min": 96.765,
-              "max": 105.294
-            },
             "1870": {
               "min": 95.0,
               "max": 110.0
@@ -10858,14 +10198,6 @@
           "max_cumulative_positive_delta": 145.0,
           "max_cumulative_negative_delta": 73.0,
           "milestone_ranges": {
-            "1836": {
-              "min": 35.0,
-              "max": 35.0
-            },
-            "1850": {
-              "min": 32.55,
-              "max": 42.175
-            },
             "1870": {
               "min": 29.05,
               "max": 52.425
@@ -10913,14 +10245,6 @@
           "max_cumulative_positive_delta": 45.0,
           "max_cumulative_negative_delta": 55.0,
           "milestone_ranges": {
-            "1836": {
-              "min": 330.0,
-              "max": 380.0
-            },
-            "1850": {
-              "min": 325.882,
-              "max": 380.0
-            },
             "1870": {
               "min": 320.0,
               "max": 380.0
@@ -10968,14 +10292,6 @@
           "max_cumulative_positive_delta": 13.0,
           "max_cumulative_negative_delta": 7.0,
           "milestone_ranges": {
-            "1836": {
-              "min": 2.0,
-              "max": 2.0
-            },
-            "1850": {
-              "min": 1.86,
-              "max": 3.4
-            },
             "1870": {
               "min": 1.66,
               "max": 5.4
@@ -11023,14 +10339,6 @@
           "max_cumulative_positive_delta": 45.0,
           "max_cumulative_negative_delta": 23.0,
           "milestone_ranges": {
-            "1836": {
-              "min": 10.0,
-              "max": 10.0
-            },
-            "1850": {
-              "min": 8.46,
-              "max": 12.8
-            },
             "1870": {
               "min": 6.26,
               "max": 16.8
@@ -11078,14 +10386,6 @@
           "max_cumulative_positive_delta": 19.0,
           "max_cumulative_negative_delta": 9.5,
           "milestone_ranges": {
-            "1836": {
-              "min": 3.0,
-              "max": 3.0
-            },
-            "1850": {
-              "min": 2.685,
-              "max": 4.207
-            },
             "1870": {
               "min": 2.235,
               "max": 5.933
@@ -11133,14 +10433,6 @@
           "max_cumulative_positive_delta": 5.0,
           "max_cumulative_negative_delta": 3.0,
           "milestone_ranges": {
-            "1836": {
-              "min": 0.6,
-              "max": 0.6
-            },
-            "1850": {
-              "min": 0.541,
-              "max": 1.23
-            },
             "1870": {
               "min": 0.457,
               "max": 2.13
@@ -11188,14 +10480,6 @@
           "max_cumulative_positive_delta": 0.6,
           "max_cumulative_negative_delta": 0.0,
           "milestone_ranges": {
-            "1836": {
-              "min": 0.0,
-              "max": 0.0
-            },
-            "1850": {
-              "min": 0.0,
-              "max": 0.082
-            },
             "1870": {
               "min": 0.0,
               "max": 0.2
@@ -11235,7 +10519,18 @@
           }
         }
       },
-      "historical_relevance_start_year": 1870
+      "historical_relevance_start_year": 1870,
+      "applicable_milestone_years": [
+        1870,
+        1900,
+        1910,
+        1919,
+        1929,
+        1936,
+        1945,
+        1955,
+        1966
+      ]
     },
     "irregular": {
       "unit_file": "TGC/units/irregular.txt",
@@ -11862,7 +11157,20 @@
           }
         }
       },
-      "historical_relevance_start_year": 1836
+      "historical_relevance_start_year": 1836,
+      "applicable_milestone_years": [
+        1836,
+        1850,
+        1870,
+        1900,
+        1910,
+        1919,
+        1929,
+        1936,
+        1945,
+        1955,
+        1966
+      ]
     },
     "manowar": {
       "unit_file": "TGC/units/manowar.txt",
@@ -12601,7 +11909,20 @@
           }
         }
       },
-      "historical_relevance_start_year": 1836
+      "historical_relevance_start_year": 1836,
+      "applicable_milestone_years": [
+        1836,
+        1850,
+        1870,
+        1900,
+        1910,
+        1919,
+        1929,
+        1936,
+        1945,
+        1955,
+        1966
+      ]
     },
     "monitor": {
       "unit_file": "TGC/units/monitor.txt",
@@ -12633,14 +11954,6 @@
           "max_cumulative_positive_delta": 6.0,
           "max_cumulative_negative_delta": 0.8,
           "milestone_ranges": {
-            "1836": {
-              "min": 10.0,
-              "max": 10.0
-            },
-            "1850": {
-              "min": 9.956,
-              "max": 10.547
-            },
             "1870": {
               "min": 9.894,
               "max": 11.328
@@ -12688,14 +12001,6 @@
           "max_cumulative_positive_delta": 8.0,
           "max_cumulative_negative_delta": 1.0,
           "milestone_ranges": {
-            "1836": {
-              "min": 20.0,
-              "max": 20.0
-            },
-            "1850": {
-              "min": 19.891,
-              "max": 20.875
-            },
             "1870": {
               "min": 19.734,
               "max": 22.125
@@ -12743,14 +12048,6 @@
           "max_cumulative_positive_delta": 0.2,
           "max_cumulative_negative_delta": 0.0,
           "milestone_ranges": {
-            "1836": {
-              "min": 0.0,
-              "max": 0.0
-            },
-            "1850": {
-              "min": 0.0,
-              "max": 0.016
-            },
             "1870": {
               "min": 0.0,
               "max": 0.04
@@ -12798,14 +12095,6 @@
           "max_cumulative_positive_delta": 8.0,
           "max_cumulative_negative_delta": 1.0,
           "milestone_ranges": {
-            "1836": {
-              "min": 8.0,
-              "max": 8.0
-            },
-            "1850": {
-              "min": 7.956,
-              "max": 8.412
-            },
             "1870": {
               "min": 7.894,
               "max": 9.0
@@ -12853,14 +12142,6 @@
           "max_cumulative_positive_delta": 0.55,
           "max_cumulative_negative_delta": 0.08,
           "milestone_ranges": {
-            "1836": {
-              "min": 0.15,
-              "max": 0.15
-            },
-            "1850": {
-              "min": 0.143,
-              "max": 0.194
-            },
             "1870": {
               "min": 0.134,
               "max": 0.256
@@ -12908,14 +12189,6 @@
           "max_cumulative_positive_delta": 4.0,
           "max_cumulative_negative_delta": 5.0,
           "milestone_ranges": {
-            "1836": {
-              "min": 10.0,
-              "max": 10.0
-            },
-            "1850": {
-              "min": 9.344,
-              "max": 9.781
-            },
             "1870": {
               "min": 8.406,
               "max": 9.469
@@ -12963,14 +12236,6 @@
           "max_cumulative_positive_delta": 25.0,
           "max_cumulative_negative_delta": 15.0,
           "milestone_ranges": {
-            "1836": {
-              "min": 100.0,
-              "max": 100.0
-            },
-            "1850": {
-              "min": 99.125,
-              "max": 102.188
-            },
             "1870": {
               "min": 97.875,
               "max": 105.312
@@ -13018,14 +12283,6 @@
           "max_cumulative_positive_delta": 22.0,
           "max_cumulative_negative_delta": 12.0,
           "milestone_ranges": {
-            "1836": {
-              "min": 35.0,
-              "max": 35.0
-            },
-            "1850": {
-              "min": 33.469,
-              "max": 36.531
-            },
             "1870": {
               "min": 31.281,
               "max": 38.719
@@ -13073,14 +12330,6 @@
           "max_cumulative_positive_delta": 30.0,
           "max_cumulative_negative_delta": 140.0,
           "milestone_ranges": {
-            "1836": {
-              "min": 360.0,
-              "max": 360.0
-            },
-            "1850": {
-              "min": 346.875,
-              "max": 364.375
-            },
             "1870": {
               "min": 328.125,
               "max": 370.625
@@ -13128,14 +12377,6 @@
           "max_cumulative_positive_delta": 2.0,
           "max_cumulative_negative_delta": 0.0,
           "milestone_ranges": {
-            "1836": {
-              "min": 3.0,
-              "max": 3.0
-            },
-            "1850": {
-              "min": 3.0,
-              "max": 3.219
-            },
             "1870": {
               "min": 3.0,
               "max": 3.531
@@ -13183,14 +12424,6 @@
           "max_cumulative_positive_delta": 1.0,
           "max_cumulative_negative_delta": 0.0,
           "milestone_ranges": {
-            "1836": {
-              "min": -1.0,
-              "max": -1.0
-            },
-            "1850": {
-              "min": -1.0,
-              "max": -0.892
-            },
             "1870": {
               "min": -1.0,
               "max": -0.738
@@ -13238,14 +12471,6 @@
           "max_cumulative_positive_delta": 4.0,
           "max_cumulative_negative_delta": 1.5,
           "milestone_ranges": {
-            "1836": {
-              "min": 3.0,
-              "max": 3.0
-            },
-            "1850": {
-              "min": 2.891,
-              "max": 3.328
-            },
             "1870": {
               "min": 2.734,
               "max": 3.797
@@ -13293,14 +12518,6 @@
           "max_cumulative_positive_delta": 0.6,
           "max_cumulative_negative_delta": 0.1,
           "milestone_ranges": {
-            "1836": {
-              "min": 0.6,
-              "max": 0.6
-            },
-            "1850": {
-              "min": 0.596,
-              "max": 0.666
-            },
             "1870": {
               "min": 0.589,
               "max": 0.759
@@ -13348,14 +12565,6 @@
           "max_cumulative_positive_delta": 0.35,
           "max_cumulative_negative_delta": 0.0,
           "milestone_ranges": {
-            "1836": {
-              "min": 0.0,
-              "max": 0.0
-            },
-            "1850": {
-              "min": 0.0,
-              "max": 0.041
-            },
             "1870": {
               "min": 0.0,
               "max": 0.1
@@ -13395,7 +12604,18 @@
           }
         }
       },
-      "historical_relevance_start_year": 1870
+      "historical_relevance_start_year": 1870,
+      "applicable_milestone_years": [
+        1870,
+        1900,
+        1910,
+        1919,
+        1929,
+        1936,
+        1945,
+        1955,
+        1966
+      ]
     },
     "plane": {
       "unit_file": "TGC/units/plane.txt",
@@ -13427,22 +12647,6 @@
           "max_cumulative_positive_delta": 4.5,
           "max_cumulative_negative_delta": 1.5,
           "milestone_ranges": {
-            "1836": {
-              "min": 1.0,
-              "max": 1.0
-            },
-            "1850": {
-              "min": 1.0,
-              "max": 1.0
-            },
-            "1870": {
-              "min": 1.0,
-              "max": 1.0
-            },
-            "1900": {
-              "min": 1.0,
-              "max": 1.0
-            },
             "1910": {
               "min": 1.0,
               "max": 1.6
@@ -13482,22 +12686,6 @@
           "max_cumulative_positive_delta": 18.0,
           "max_cumulative_negative_delta": 6.0,
           "milestone_ranges": {
-            "1836": {
-              "min": 10.0,
-              "max": 10.0
-            },
-            "1850": {
-              "min": 10.0,
-              "max": 10.0
-            },
-            "1870": {
-              "min": 10.0,
-              "max": 10.0
-            },
-            "1900": {
-              "min": 10.0,
-              "max": 10.0
-            },
             "1910": {
               "min": 10.0,
               "max": 13.0
@@ -13537,22 +12725,6 @@
           "max_cumulative_positive_delta": 8.0,
           "max_cumulative_negative_delta": 4.0,
           "milestone_ranges": {
-            "1836": {
-              "min": 4.0,
-              "max": 4.0
-            },
-            "1850": {
-              "min": 3.776,
-              "max": 4.728
-            },
-            "1870": {
-              "min": 3.456,
-              "max": 5.768
-            },
-            "1900": {
-              "min": 2.976,
-              "max": 7.328
-            },
             "1910": {
               "min": 2.816,
               "max": 7.848
@@ -13592,22 +12764,6 @@
           "max_cumulative_positive_delta": 7.0,
           "max_cumulative_negative_delta": 2.0,
           "milestone_ranges": {
-            "1836": {
-              "min": 5.0,
-              "max": 5.0
-            },
-            "1850": {
-              "min": 5.0,
-              "max": 5.0
-            },
-            "1870": {
-              "min": 5.0,
-              "max": 5.0
-            },
-            "1900": {
-              "min": 5.0,
-              "max": 5.0
-            },
             "1910": {
               "min": 5.0,
               "max": 6.2
@@ -13647,22 +12803,6 @@
           "max_cumulative_positive_delta": 0.35,
           "max_cumulative_negative_delta": 0.03,
           "milestone_ranges": {
-            "1836": {
-              "min": 0.15,
-              "max": 0.15
-            },
-            "1850": {
-              "min": 0.148,
-              "max": 0.163
-            },
-            "1870": {
-              "min": 0.145,
-              "max": 0.182
-            },
-            "1900": {
-              "min": 0.141,
-              "max": 0.211
-            },
             "1910": {
               "min": 0.14,
               "max": 0.22
@@ -13702,22 +12842,6 @@
           "max_cumulative_positive_delta": 0.6,
           "max_cumulative_negative_delta": 0.6,
           "milestone_ranges": {
-            "1836": {
-              "min": 2.9,
-              "max": 3.1
-            },
-            "1850": {
-              "min": 2.862,
-              "max": 3.138
-            },
-            "1870": {
-              "min": 2.808,
-              "max": 3.192
-            },
-            "1900": {
-              "min": 2.727,
-              "max": 3.273
-            },
             "1910": {
               "min": 2.7,
               "max": 3.3
@@ -13757,22 +12881,6 @@
           "max_cumulative_positive_delta": 35.0,
           "max_cumulative_negative_delta": 7.0,
           "milestone_ranges": {
-            "1836": {
-              "min": 28.0,
-              "max": 32.0
-            },
-            "1850": {
-              "min": 27.432,
-              "max": 33.135
-            },
-            "1870": {
-              "min": 26.622,
-              "max": 34.757
-            },
-            "1900": {
-              "min": 25.405,
-              "max": 37.189
-            },
             "1910": {
               "min": 25.0,
               "max": 38.0
@@ -13812,22 +12920,6 @@
           "max_cumulative_positive_delta": 42.0,
           "max_cumulative_negative_delta": 25.0,
           "milestone_ranges": {
-            "1836": {
-              "min": 115.0,
-              "max": 130.0
-            },
-            "1850": {
-              "min": 113.108,
-              "max": 131.892
-            },
-            "1870": {
-              "min": 110.405,
-              "max": 134.595
-            },
-            "1900": {
-              "min": 106.351,
-              "max": 138.649
-            },
             "1910": {
               "min": 105.0,
               "max": 140.0
@@ -13867,22 +12959,6 @@
           "max_cumulative_positive_delta": 0.8,
           "max_cumulative_negative_delta": 0.08,
           "milestone_ranges": {
-            "1836": {
-              "min": 0.08,
-              "max": 0.12
-            },
-            "1850": {
-              "min": 0.076,
-              "max": 0.135
-            },
-            "1870": {
-              "min": 0.071,
-              "max": 0.157
-            },
-            "1900": {
-              "min": 0.063,
-              "max": 0.189
-            },
             "1910": {
               "min": 0.06,
               "max": 0.2
@@ -13922,22 +12998,6 @@
           "max_cumulative_positive_delta": 5.5,
           "max_cumulative_negative_delta": 2.0,
           "milestone_ranges": {
-            "1836": {
-              "min": 2.0,
-              "max": 2.0
-            },
-            "1850": {
-              "min": 2.0,
-              "max": 2.0
-            },
-            "1870": {
-              "min": 2.0,
-              "max": 2.0
-            },
-            "1900": {
-              "min": 2.0,
-              "max": 2.0
-            },
             "1910": {
               "min": 2.0,
               "max": 3.0
@@ -13977,22 +13037,6 @@
           "max_cumulative_positive_delta": 2.6,
           "max_cumulative_negative_delta": 0.2,
           "milestone_ranges": {
-            "1836": {
-              "min": 1.8,
-              "max": 2.2
-            },
-            "1850": {
-              "min": 1.8,
-              "max": 2.314
-            },
-            "1870": {
-              "min": 1.8,
-              "max": 2.476
-            },
-            "1900": {
-              "min": 1.8,
-              "max": 2.719
-            },
             "1910": {
               "min": 1.8,
               "max": 2.8
@@ -14024,7 +13068,16 @@
           }
         }
       },
-      "historical_relevance_start_year": 1910
+      "historical_relevance_start_year": 1910,
+      "applicable_milestone_years": [
+        1910,
+        1919,
+        1929,
+        1936,
+        1945,
+        1955,
+        1966
+      ]
     },
     "steam_transport": {
       "unit_file": "TGC/units/steam_transport.txt",
@@ -14056,10 +13109,6 @@
           "max_cumulative_positive_delta": 3.0,
           "max_cumulative_negative_delta": 0.8,
           "milestone_ranges": {
-            "1836": {
-              "min": 5.0,
-              "max": 5.0
-            },
             "1850": {
               "min": 4.956,
               "max": 5.328
@@ -14111,10 +13160,6 @@
           "max_cumulative_positive_delta": 0.6,
           "max_cumulative_negative_delta": 0.5,
           "milestone_ranges": {
-            "1836": {
-              "min": 1.0,
-              "max": 1.0
-            },
             "1850": {
               "min": 0.912,
               "max": 1.044
@@ -14166,10 +13211,6 @@
           "max_cumulative_positive_delta": 8.0,
           "max_cumulative_negative_delta": 1.0,
           "milestone_ranges": {
-            "1836": {
-              "min": 8.0,
-              "max": 8.0
-            },
             "1850": {
               "min": 7.956,
               "max": 8.824
@@ -14221,10 +13262,6 @@
           "max_cumulative_positive_delta": 0.35,
           "max_cumulative_negative_delta": 0.08,
           "milestone_ranges": {
-            "1836": {
-              "min": 0.15,
-              "max": 0.15
-            },
             "1850": {
               "min": 0.143,
               "max": 0.172
@@ -14276,10 +13313,6 @@
           "max_cumulative_positive_delta": 4.0,
           "max_cumulative_negative_delta": 2.0,
           "milestone_ranges": {
-            "1836": {
-              "min": 2.0,
-              "max": 2.0
-            },
             "1850": {
               "min": 1.891,
               "max": 2.219
@@ -14331,10 +13364,6 @@
           "max_cumulative_positive_delta": 25.0,
           "max_cumulative_negative_delta": 12.0,
           "milestone_ranges": {
-            "1836": {
-              "min": 100.0,
-              "max": 100.0
-            },
             "1850": {
               "min": 98.0,
               "max": 103.0
@@ -14386,10 +13415,6 @@
           "max_cumulative_positive_delta": 25.0,
           "max_cumulative_negative_delta": 12.0,
           "milestone_ranges": {
-            "1836": {
-              "min": 30.0,
-              "max": 30.0
-            },
             "1850": {
               "min": 28.688,
               "max": 32.188
@@ -14441,10 +13466,6 @@
           "max_cumulative_positive_delta": 20.0,
           "max_cumulative_negative_delta": 80.0,
           "milestone_ranges": {
-            "1836": {
-              "min": 90.0,
-              "max": 90.0
-            },
             "1850": {
               "min": 82.344,
               "max": 91.094
@@ -14496,10 +13517,6 @@
           "max_cumulative_positive_delta": 2.0,
           "max_cumulative_negative_delta": 0.0,
           "milestone_ranges": {
-            "1836": {
-              "min": 1.0,
-              "max": 1.0
-            },
             "1850": {
               "min": 1.0,
               "max": 1.219
@@ -14551,10 +13568,6 @@
           "max_cumulative_positive_delta": 1.0,
           "max_cumulative_negative_delta": 0.0,
           "milestone_ranges": {
-            "1836": {
-              "min": -1.0,
-              "max": -1.0
-            },
             "1850": {
               "min": -1.0,
               "max": -0.892
@@ -14606,10 +13619,6 @@
           "max_cumulative_positive_delta": 3.0,
           "max_cumulative_negative_delta": 1.0,
           "milestone_ranges": {
-            "1836": {
-              "min": 2.0,
-              "max": 2.0
-            },
             "1850": {
               "min": 1.891,
               "max": 2.219
@@ -14661,10 +13670,6 @@
           "max_cumulative_positive_delta": 0.4,
           "max_cumulative_negative_delta": 0.1,
           "milestone_ranges": {
-            "1836": {
-              "min": 0.4,
-              "max": 0.4
-            },
             "1850": {
               "min": 0.389,
               "max": 0.433
@@ -14716,10 +13721,6 @@
           "max_cumulative_positive_delta": 0.4,
           "max_cumulative_negative_delta": 0.0,
           "milestone_ranges": {
-            "1836": {
-              "min": 0.0,
-              "max": 0.0
-            },
             "1850": {
               "min": 0.0,
               "max": 0.039
@@ -14763,7 +13764,19 @@
           }
         }
       },
-      "historical_relevance_start_year": 1850
+      "historical_relevance_start_year": 1850,
+      "applicable_milestone_years": [
+        1850,
+        1870,
+        1900,
+        1910,
+        1919,
+        1929,
+        1936,
+        1945,
+        1955,
+        1966
+      ]
     },
     "submarine": {
       "unit_file": "TGC/units/submarine.txt",
@@ -14795,18 +13808,6 @@
           "max_cumulative_positive_delta": 10,
           "max_cumulative_negative_delta": 4,
           "milestone_ranges": {
-            "1836": {
-              "min": 7.0,
-              "max": 9.5
-            },
-            "1850": {
-              "min": 7.0,
-              "max": 9.5
-            },
-            "1870": {
-              "min": 7.0,
-              "max": 9.5
-            },
             "1900": {
               "min": 8.0,
               "max": 10.0
@@ -14850,18 +13851,6 @@
           "max_cumulative_positive_delta": 10,
           "max_cumulative_negative_delta": 4,
           "milestone_ranges": {
-            "1836": {
-              "min": 5.0,
-              "max": 5.0
-            },
-            "1850": {
-              "min": 4.86,
-              "max": 5.56
-            },
-            "1870": {
-              "min": 4.66,
-              "max": 6.36
-            },
             "1900": {
               "min": 4.36,
               "max": 7.56
@@ -14905,18 +13894,6 @@
           "max_cumulative_positive_delta": 1.5,
           "max_cumulative_negative_delta": 0.8,
           "milestone_ranges": {
-            "1836": {
-              "min": 1.0,
-              "max": 1.0
-            },
-            "1850": {
-              "min": 0.888,
-              "max": 1.07
-            },
-            "1870": {
-              "min": 0.728,
-              "max": 1.17
-            },
             "1900": {
               "min": 0.488,
               "max": 1.32
@@ -14960,18 +13937,6 @@
           "max_cumulative_positive_delta": 12.0,
           "max_cumulative_negative_delta": 4.0,
           "milestone_ranges": {
-            "1836": {
-              "min": 14.0,
-              "max": 14.0
-            },
-            "1850": {
-              "min": 14.0,
-              "max": 14.0
-            },
-            "1870": {
-              "min": 14.0,
-              "max": 14.0
-            },
             "1900": {
               "min": 12.0,
               "max": 16.0
@@ -15015,18 +13980,6 @@
           "max_cumulative_positive_delta": 50.0,
           "max_cumulative_negative_delta": 10.0,
           "milestone_ranges": {
-            "1836": {
-              "min": 100.0,
-              "max": 100.0
-            },
-            "1850": {
-              "min": 100.0,
-              "max": 100.0
-            },
-            "1870": {
-              "min": 100.0,
-              "max": 100.0
-            },
             "1900": {
               "min": 90.0,
               "max": 110.0
@@ -15070,18 +14023,6 @@
           "max_cumulative_positive_delta": 40.0,
           "max_cumulative_negative_delta": 5.0,
           "milestone_ranges": {
-            "1836": {
-              "min": 30.0,
-              "max": 30.0
-            },
-            "1850": {
-              "min": 30.0,
-              "max": 30.0
-            },
-            "1870": {
-              "min": 30.0,
-              "max": 30.0
-            },
             "1900": {
               "min": 28.0,
               "max": 35.0
@@ -15125,18 +14066,6 @@
           "max_cumulative_positive_delta": 80.0,
           "max_cumulative_negative_delta": 20.0,
           "milestone_ranges": {
-            "1836": {
-              "min": 240.0,
-              "max": 240.0
-            },
-            "1850": {
-              "min": 240.0,
-              "max": 240.0
-            },
-            "1870": {
-              "min": 240.0,
-              "max": 240.0
-            },
             "1900": {
               "min": 220.0,
               "max": 260.0
@@ -15180,18 +14109,6 @@
           "max_cumulative_positive_delta": 2.0,
           "max_cumulative_negative_delta": 1.0,
           "milestone_ranges": {
-            "1836": {
-              "min": 5.0,
-              "max": 5.0
-            },
-            "1850": {
-              "min": 5.0,
-              "max": 5.0
-            },
-            "1870": {
-              "min": 5.0,
-              "max": 5.0
-            },
             "1900": {
               "min": 5.0,
               "max": 6.0
@@ -15235,18 +14152,6 @@
           "max_cumulative_positive_delta": 1.0,
           "max_cumulative_negative_delta": 0.0,
           "milestone_ranges": {
-            "1836": {
-              "min": -1.0,
-              "max": -1.0
-            },
-            "1850": {
-              "min": -1.0,
-              "max": -1.0
-            },
-            "1870": {
-              "min": -1.0,
-              "max": -1.0
-            },
             "1900": {
               "min": -1.0,
               "max": 0.0
@@ -15290,18 +14195,6 @@
           "max_cumulative_positive_delta": 181.0,
           "max_cumulative_negative_delta": 90.5,
           "milestone_ranges": {
-            "1836": {
-              "min": 30.0,
-              "max": 30.0
-            },
-            "1850": {
-              "min": 26.85,
-              "max": 41.602
-            },
-            "1870": {
-              "min": 22.35,
-              "max": 58.178
-            },
             "1900": {
               "min": 15.6,
               "max": 83.04
@@ -15345,18 +14238,6 @@
           "max_cumulative_positive_delta": 92.0,
           "max_cumulative_negative_delta": 46.0,
           "milestone_ranges": {
-            "1836": {
-              "min": 30.0,
-              "max": 30.0
-            },
-            "1850": {
-              "min": 27.06,
-              "max": 35.775
-            },
-            "1870": {
-              "min": 22.86,
-              "max": 44.025
-            },
             "1900": {
               "min": 16.56,
               "max": 56.4
@@ -15400,18 +14281,6 @@
           "max_cumulative_positive_delta": 44.0,
           "max_cumulative_negative_delta": 22.0,
           "milestone_ranges": {
-            "1836": {
-              "min": 14.0,
-              "max": 14.0
-            },
-            "1850": {
-              "min": 12.628,
-              "max": 16.975
-            },
-            "1870": {
-              "min": 10.668,
-              "max": 21.225
-            },
             "1900": {
               "min": 7.728,
               "max": 27.6
@@ -15455,18 +14324,6 @@
           "max_cumulative_positive_delta": 5.0,
           "max_cumulative_negative_delta": 3.0,
           "milestone_ranges": {
-            "1836": {
-              "min": 0.7,
-              "max": 0.7
-            },
-            "1850": {
-              "min": 0.631,
-              "max": 1.348
-            },
-            "1870": {
-              "min": 0.533,
-              "max": 2.272
-            },
             "1900": {
               "min": 0.386,
               "max": 3.66
@@ -15510,18 +14367,6 @@
           "max_cumulative_positive_delta": 5.0,
           "max_cumulative_negative_delta": 3.0,
           "milestone_ranges": {
-            "1836": {
-              "min": 0.6,
-              "max": 0.6
-            },
-            "1850": {
-              "min": 0.541,
-              "max": 1.23
-            },
-            "1870": {
-              "min": 0.457,
-              "max": 2.13
-            },
             "1900": {
               "min": 0.331,
               "max": 3.48
@@ -15557,7 +14402,17 @@
           }
         }
       },
-      "historical_relevance_start_year": 1900
+      "historical_relevance_start_year": 1900,
+      "applicable_milestone_years": [
+        1900,
+        1910,
+        1919,
+        1929,
+        1936,
+        1945,
+        1955,
+        1966
+      ]
     },
     "tank": {
       "unit_file": "TGC/units/tank.txt",
@@ -15590,26 +14445,6 @@
           "max_cumulative_positive_delta": 24,
           "max_cumulative_negative_delta": 8,
           "milestone_ranges": {
-            "1836": {
-              "min": 15.0,
-              "max": 17.5
-            },
-            "1850": {
-              "min": 15.0,
-              "max": 17.5
-            },
-            "1870": {
-              "min": 15.0,
-              "max": 17.5
-            },
-            "1900": {
-              "min": 15.0,
-              "max": 17.5
-            },
-            "1910": {
-              "min": 15.0,
-              "max": 17.5
-            },
             "1919": {
               "min": 15.0,
               "max": 17.5
@@ -15645,26 +14480,6 @@
           "max_cumulative_positive_delta": 24,
           "max_cumulative_negative_delta": 8,
           "milestone_ranges": {
-            "1836": {
-              "min": 7.0,
-              "max": 9.0
-            },
-            "1850": {
-              "min": 7.0,
-              "max": 9.0
-            },
-            "1870": {
-              "min": 7.0,
-              "max": 9.0
-            },
-            "1900": {
-              "min": 7.0,
-              "max": 9.0
-            },
-            "1910": {
-              "min": 7.0,
-              "max": 9.0
-            },
             "1919": {
               "min": 7.0,
               "max": 9.0
@@ -15700,26 +14515,6 @@
           "max_cumulative_positive_delta": 2.2,
           "max_cumulative_negative_delta": 0.3,
           "milestone_ranges": {
-            "1836": {
-              "min": 0.15,
-              "max": 0.15
-            },
-            "1850": {
-              "min": 0.15,
-              "max": 0.15
-            },
-            "1870": {
-              "min": 0.15,
-              "max": 0.15
-            },
-            "1900": {
-              "min": 0.15,
-              "max": 0.15
-            },
-            "1910": {
-              "min": 0.15,
-              "max": 0.15
-            },
             "1919": {
               "min": 0.15,
               "max": 0.35
@@ -15755,26 +14550,6 @@
           "max_cumulative_positive_delta": 0.5,
           "max_cumulative_negative_delta": 0.5,
           "milestone_ranges": {
-            "1836": {
-              "min": 2.8,
-              "max": 3.2
-            },
-            "1850": {
-              "min": 2.781,
-              "max": 3.219
-            },
-            "1870": {
-              "min": 2.754,
-              "max": 3.246
-            },
-            "1900": {
-              "min": 2.714,
-              "max": 3.286
-            },
-            "1910": {
-              "min": 2.7,
-              "max": 3.3
-            },
             "1919": {
               "min": 2.665,
               "max": 3.335
@@ -15810,26 +14585,6 @@
           "max_cumulative_positive_delta": 165.0,
           "max_cumulative_negative_delta": 83.0,
           "milestone_ranges": {
-            "1836": {
-              "min": 34.0,
-              "max": 46.0
-            },
-            "1850": {
-              "min": 34.0,
-              "max": 46.0
-            },
-            "1870": {
-              "min": 34.0,
-              "max": 46.0
-            },
-            "1900": {
-              "min": 34.0,
-              "max": 46.0
-            },
-            "1910": {
-              "min": 34.0,
-              "max": 46.0
-            },
             "1919": {
               "min": 34.0,
               "max": 46.0
@@ -15865,26 +14620,6 @@
           "max_cumulative_positive_delta": 10.5,
           "max_cumulative_negative_delta": 3.0,
           "milestone_ranges": {
-            "1836": {
-              "min": 4.0,
-              "max": 4.0
-            },
-            "1850": {
-              "min": 4.0,
-              "max": 4.3
-            },
-            "1870": {
-              "min": 4.0,
-              "max": 4.8
-            },
-            "1900": {
-              "min": 4.0,
-              "max": 5.5
-            },
-            "1910": {
-              "min": 4.0,
-              "max": 6.2
-            },
             "1919": {
               "min": 4.8,
               "max": 7.2
@@ -15920,26 +14655,6 @@
           "max_cumulative_positive_delta": 80.0,
           "max_cumulative_negative_delta": 25.0,
           "milestone_ranges": {
-            "1836": {
-              "min": 110.0,
-              "max": 140.0
-            },
-            "1850": {
-              "min": 110.0,
-              "max": 140.0
-            },
-            "1870": {
-              "min": 110.0,
-              "max": 140.0
-            },
-            "1900": {
-              "min": 110.0,
-              "max": 145.0
-            },
-            "1910": {
-              "min": 110.0,
-              "max": 150.0
-            },
             "1919": {
               "min": 110.0,
               "max": 155.0
@@ -15975,26 +14690,6 @@
           "max_cumulative_positive_delta": 0.5,
           "max_cumulative_negative_delta": 0.0,
           "milestone_ranges": {
-            "1836": {
-              "min": 0.0,
-              "max": 0.0
-            },
-            "1850": {
-              "min": 0.0,
-              "max": 0.0
-            },
-            "1870": {
-              "min": 0.0,
-              "max": 0.0
-            },
-            "1900": {
-              "min": 0.0,
-              "max": 0.05
-            },
-            "1910": {
-              "min": 0.0,
-              "max": 0.08
-            },
             "1919": {
               "min": 0.0,
               "max": 0.12
@@ -16030,26 +14725,6 @@
           "max_cumulative_positive_delta": 0.22,
           "max_cumulative_negative_delta": 0.1,
           "milestone_ranges": {
-            "1836": {
-              "min": 0.95,
-              "max": 1.05
-            },
-            "1850": {
-              "min": 0.95,
-              "max": 1.05
-            },
-            "1870": {
-              "min": 0.95,
-              "max": 1.05
-            },
-            "1900": {
-              "min": 0.95,
-              "max": 1.08
-            },
-            "1910": {
-              "min": 0.95,
-              "max": 1.1
-            },
             "1919": {
               "min": 0.95,
               "max": 1.12
@@ -16085,26 +14760,6 @@
           "max_cumulative_positive_delta": 3.0,
           "max_cumulative_negative_delta": 1.0,
           "milestone_ranges": {
-            "1836": {
-              "min": 0.0,
-              "max": 0.0
-            },
-            "1850": {
-              "min": 0.0,
-              "max": 0.0
-            },
-            "1870": {
-              "min": 0.0,
-              "max": 0.0
-            },
-            "1900": {
-              "min": 0.0,
-              "max": 0.0
-            },
-            "1910": {
-              "min": 0.0,
-              "max": 0.0
-            },
             "1919": {
               "min": 0.0,
               "max": 0.4
@@ -16140,26 +14795,6 @@
           "max_cumulative_positive_delta": 4.0,
           "max_cumulative_negative_delta": 0.5,
           "milestone_ranges": {
-            "1836": {
-              "min": 0.9,
-              "max": 1.1
-            },
-            "1850": {
-              "min": 0.9,
-              "max": 1.1
-            },
-            "1870": {
-              "min": 0.9,
-              "max": 1.1
-            },
-            "1900": {
-              "min": 0.9,
-              "max": 1.2
-            },
-            "1910": {
-              "min": 0.9,
-              "max": 1.3
-            },
             "1919": {
               "min": 0.9,
               "max": 1.6
@@ -16195,26 +14830,6 @@
           "max_cumulative_positive_delta": 5.0,
           "max_cumulative_negative_delta": 3.0,
           "milestone_ranges": {
-            "1836": {
-              "min": 1.0,
-              "max": 1.0
-            },
-            "1850": {
-              "min": 0.902,
-              "max": 1.7
-            },
-            "1870": {
-              "min": 0.762,
-              "max": 2.7
-            },
-            "1900": {
-              "min": 0.552,
-              "max": 4.2
-            },
-            "1910": {
-              "min": 0.482,
-              "max": 4.7
-            },
             "1919": {
               "min": 0.419,
               "max": 5.15
@@ -16242,7 +14857,15 @@
           }
         }
       },
-      "historical_relevance_start_year": 1919
+      "historical_relevance_start_year": 1919,
+      "applicable_milestone_years": [
+        1919,
+        1929,
+        1936,
+        1945,
+        1955,
+        1966
+      ]
     }
   },
   "economic": {
