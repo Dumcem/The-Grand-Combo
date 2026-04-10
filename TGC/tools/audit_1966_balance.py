@@ -166,6 +166,29 @@ def get_historical_relevance_start_year(unit_cfg: dict[str, Any], default_year: 
     return max(year, default_year)
 
 
+def get_applicable_milestone_years(
+    unit_cfg: dict[str, Any],
+    milestone_years: list[int],
+    default_year: int,
+) -> list[int]:
+    historical_start_year = get_historical_relevance_start_year(unit_cfg, default_year)
+    configured = unit_cfg.get("applicable_milestone_years")
+    if configured is None:
+        return [year for year in milestone_years if year >= historical_start_year]
+
+    applicable: list[int] = []
+    seen: set[int] = set()
+    for raw_year in configured:
+        try:
+            year = int(raw_year)
+        except (TypeError, ValueError):
+            continue
+        if year in milestone_years and year >= historical_start_year and year not in seen:
+            applicable.append(year)
+            seen.add(year)
+    return sorted(applicable)
+
+
 def parse_goods_costs(rel_path: str) -> dict[str, float]:
     text = read_text(rel_path)
     costs: dict[str, float] = {}
@@ -783,6 +806,8 @@ def main() -> int:
 
     for unit, cfg in units_cfg.items():
         historical_start_year = get_historical_relevance_start_year(cfg, default_milestone_year)
+        applicable_milestone_years = get_applicable_milestone_years(cfg, milestone_years, default_milestone_year)
+        applicable_milestone_years_set = set(applicable_milestone_years)
         for stat, s_cfg in cfg["monitored_stats"].items():
             baseline = baselines.get(unit, {}).get(stat)
             if baseline is None:
@@ -828,10 +853,14 @@ def main() -> int:
             high_conf_abs = direct_abs_delta + strong_abs_delta
             high_conf_pct = 0.0 if total_abs_delta == 0 else (high_conf_abs / total_abs_delta) * 100.0
 
-            milestone_estimates: list[str] = []
+            technical_milestone_estimates: list[str] = []
             for year in milestone_years:
                 est = milestone_values_by_year[year]
-                milestone_estimates.append(f"{year}:{est:.3f}")
+                technical_milestone_estimates.append(f"{year}:{est:.3f}")
+            applicable_milestone_estimates: list[str] = []
+            for year in applicable_milestone_years:
+                est = milestone_values_by_year[year]
+                applicable_milestone_estimates.append(f"{year}:{est:.3f}")
 
             rep.add(
                 "INFO",
@@ -839,7 +868,8 @@ def main() -> int:
                 f"first_known_year {first_known_year if first_known_year is not None else 'n/a'}, "
                 f"last_known_year {last_known_year if last_known_year is not None else 'n/a'}, "
                 f"cumulative +{pos_delta:.3f}, cumulative -{abs(neg_delta):.3f}, "
-                f"milestones[{', '.join(milestone_estimates)}], estimated_final {estimated_final:.3f}, "
+                f"technical_milestones[{', '.join(technical_milestone_estimates)}], "
+                f"applicable_milestones[{', '.join(applicable_milestone_estimates)}], estimated_final {estimated_final:.3f}, "
                 f"scope_unit {unit_scope_abs_delta:.3f}, scope_global {global_scope_abs_delta:.3f}, "
                 f"time_direct {direct_abs_delta:.3f}, time_inferred_strong {strong_abs_delta:.3f}, "
                 f"time_inferred_weak {weak_abs_delta:.3f}, time_unknown {unknown_abs_delta:.3f}, "
@@ -890,12 +920,22 @@ def main() -> int:
                     f"{unit} {stat} estimated final outside final_range (baseline {baseline:.3f} + delta {total_delta:+.3f} = {estimated_final:.3f}, expected {min_final}..{max_final})",
                 )
             milestone_ranges = s_cfg.get("milestone_ranges", {})
-            skipped_milestone_years: list[int] = []
-            for year in milestone_years:
-                if year < historical_start_year:
-                    if milestone_ranges.get(str(year)) or milestone_ranges.get(year):
-                        skipped_milestone_years.append(year)
+            configured_milestone_years: set[int] = set()
+            for raw_year in milestone_ranges.keys():
+                try:
+                    configured_milestone_years.add(int(raw_year))
+                except (TypeError, ValueError):
                     continue
+            non_applicable_configured_years = sorted(configured_milestone_years - applicable_milestone_years_set)
+            if non_applicable_configured_years:
+                years_txt = ", ".join(str(y) for y in non_applicable_configured_years)
+                rep.add(
+                    "WARN",
+                    f"{unit} {stat}: milestone_ranges configured for non-applicable years [{years_txt}] "
+                    f"(historical_relevance_start_year={historical_start_year}, applicable_milestone_years={applicable_milestone_years})",
+                )
+
+            for year in applicable_milestone_years:
                 cfg_y = milestone_ranges.get(str(year)) or milestone_ranges.get(year)
                 if not cfg_y:
                     continue
@@ -907,13 +947,6 @@ def main() -> int:
                         "WARN",
                         f"{unit} {stat} milestone {year} outside configured range ({m_est:.3f}, expected {m_min}..{m_max})",
                     )
-            if skipped_milestone_years:
-                years_txt = ", ".join(str(y) for y in skipped_milestone_years)
-                rep.add(
-                    "INFO",
-                    f"{unit} {stat}: skipped milestone range checks for pre-applicability years [{years_txt}] "
-                    f"(historical_relevance_start_year={historical_start_year})",
-                )
 
     check_key_goods_availability(files_cfg["production_types"], rules["economic"]["key_goods"], rep)
 
