@@ -91,6 +91,7 @@ The model uses a **single unified timeline**:
 - known-year deltas may come either from unit-specific effect blocks or from applicable global base-scope effect blocks (currently `army_base` for land units and `navy_base` for naval units)
 - unknown-year deltas stay out of milestone sums and are reported separately
 - source provenance is preserved in reporting so globally scoped effects can be distinguished from unit-specific effects
+- reporting distinguishes **technical milestones** (full global grid) from **applicable milestones** (unit-specific normative check years)
 - milestones remain configurable and reusable, but are no longer tied to a special 1936 logic branch
 - tiered coverage/watchlists are used to keep the final report practical without changing rule strictness
 - the audit expands toward full per-unit stat coverage for all relevant stats detected in unit files
@@ -110,6 +111,7 @@ Per monitored unit stat, rules can define:
 Per monitored unit, rules can also define:
 
 - `historical_relevance_start_year`: first milestone year where historical milestone-range checks are meaningful for that unit
+- `applicable_milestone_years`: optional per-unit list of milestone years that are normatively applicable; if omitted, the audit falls back to all global milestone years at or after `historical_relevance_start_year`
 
 The audit distinguishes:
 
@@ -321,11 +323,15 @@ Why this matters:
 
 - late-era units such as `tank`, `submarine`, `plane`, and `aircraftcarrier` can look wrong in early milestones simply because they are being evaluated before historical applicability
 - that creates noisy false warnings and reduces diagnostic clarity
+- a single global milestone grid is still useful as a technical accumulation axis, but it should not force identical normative check years across unlike units
 
 Behavior:
 
-- if a milestone year is **before** a unit’s `historical_relevance_start_year`, milestone-range pass/fail evaluation for that unit/stat/year is skipped
-- the script emits an `INFO` diagnostic showing which pre-applicability milestone years were skipped
+- the audit keeps a **global technical milestone grid** for cumulative delta estimation and reporting
+- each unit may declare `applicable_milestone_years` to define the subset of milestone years that are normatively checked for that unit
+- if `applicable_milestone_years` is omitted, the audit falls back to all global milestone years at or after `historical_relevance_start_year`
+- `milestone_ranges` should be configured only for applicable milestone years
+- if `milestone_ranges` contains years outside the applicable set, the script emits a `WARN` because the rules are mixing technical timeline presence with normative applicability
 - `final_range`, economic checks, timeline coverage diagnostics, and non-blocking behavior remain unchanged
 
 This rule exists to prevent false diagnostics. It must not be used to hide progression problems in years where the unit is historically relevant.
@@ -355,7 +361,7 @@ Therefore, carrier `gun_power` envelopes should be calibrated with stricter mid-
 
 Interpretation rule:
 
-- `milestone_ranges` are historical guardrails only for years at or after `historical_relevance_start_year`
+- `milestone_ranges` are historical guardrails only for years in the unit’s applicable milestone set; absent an explicit set, this means years at or after `historical_relevance_start_year`
 
 ## Economic checks
 
