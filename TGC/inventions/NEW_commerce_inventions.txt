@@ -105,7 +105,7 @@ reserve_transparency = {
 		loan_interest = -0.01
 	}
 }
-banking_&_commerce_separation = {
+banking_commerce_separation = {
 	limit = { bond_markets = 1 }
 	news = no
 	chance = {
