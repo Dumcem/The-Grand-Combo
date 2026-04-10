@@ -852,9 +852,9 @@ EVTDESC800096;Several foreigners were attacked in $CAPITAL$, an incident spurred
 EVTNAME800096;Diplomatic Incident;;;;;;;;;;;;;x
 EVTDESC800097;Several foreigners were attacked in $CAPITAL$, an incident spurred on by differences between their country’s radical ideology and our government’s policies. It has severely harmed our relations.;;;;;;;;;;;;;x
 EVTNAME800097;Diplomatic Incident;;;;;;;;;;;;;x
-EVTDESC800098;Several of our country’s citizens have been attacked in the capital of $FROMCOUNTRY$, an incident spurred on by the severe differences between our country’s ideology and theirs. The $FROMCOUNTRY_ADJ$ has been extremely reluctant to admit any involvement in the affair, and our relations have been hurt as a result.;;;;;;;;;;;;;x
+EVTDESC800098;Several of our country's citizens have been attacked in the $FROMCOUNTRY_ADJ$ capital, an incident spurred on by the severe differences between our country's ideology and theirs. The $FROMCOUNTRY_ADJ$ has been extremely reluctant to admit any involvement in the affair, and our relations have been hurt as a result.;;;;;;;;;;;;;x
 EVTNAME800098;$COUNTRY_ADJ$ Citizens Attacked in $FROMCOUNTRY$;;;;;;;;;;;;;x
-EVTOPTA800098;It’s unfortunate.;;;;;;;;;;;;;x
+EVTOPTA800098;It's unfortunate.;;;;;;;;;;;;;x
 EVTDESC800100;We have been contacted by $COUNTRY_ADJ$ patriots, currently living under the dominion of a neighbouring country. They suggest that there is an opportunity to stir up sentiment among those living there so that they may rise up and re-join the mother country. There is, of course, a risk that our efforts could be discovered and bring war down upon us. Should we help them?;;;;;;;;;;;;;x
 EVTNAME800100;$COUNTRY_ADJ$ Patriots;;;;;;;;;;;;;x
 EVTOPTA800100;We must free our brethren.;;;;;;;;;;;;;x
