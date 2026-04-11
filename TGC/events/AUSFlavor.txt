@@ -1378,7 +1378,7 @@ country_event = {
 			remove_province_modifier = national_assimilation_complete
 			any_pop = { limit = { has_pop_culture = hungarian } move_pop = 3286 }
 		}
-		623 = { #Ödenburg
+		623 = { #Ã–denburg
 			remove_core = HUN
 			add_core = AUS
 			secede_province = FROM
@@ -2769,7 +2769,7 @@ country_event = {
 	}
 }
 
-## The Südtirol Compromise ##
+## The SÃ¼dtirol Compromise ##
 
 	#Description: Start - Compromise with Italy?
 	country_event = {
