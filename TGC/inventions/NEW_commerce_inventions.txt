@@ -60,7 +60,7 @@ IBRD = {
 		base = 1
 		modifier = {
 			factor = -7
-			NOT = { year = 1948 }
+			year = 1944
 		}
 		modifier = {
 			factor = 6
