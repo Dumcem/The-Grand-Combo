@@ -9,12 +9,12 @@ TGC is a complete game overhaul that started as an attempt to merge all the vari
 ![improved map](https://user-images.githubusercontent.com/32886642/209994969-e8232250-1b02-432b-b57d-8dd98b247653.png)
 ![improved map 2](https://user-images.githubusercontent.com/32886642/209994977-6d7af8fb-4ede-4d28-b80e-ef56144b0b52.png)
 
-TGC has the currently largest, most accurate, and well-made Victoria II map from Vanilla and all other mods, including an expanded 25% larger map with hundreds, if not thousands, of additional provinces, an improved map projection, enhanced coastlines and borders, flavor, new pops, buildings completely revamped and fixed economy and much much more. As of our motto, "No detail in history is too small to not be represented
+TGC has the currently largest, most accurate, and well-made Victoria II map from Vanilla and all other mods, including an expanded 25% larger map with hundreds, if not thousands, of additional provinces, an improved map projection, enhanced coastlines and borders, flavor, new pops, buildings, a completely revamped and fixed economy, and much much more. As of our motto, "No detail in history is too small to not be represented"
 
 ![CultureMap Banner](https://user-images.githubusercontent.com/32886642/209599678-d02b1aed-4b38-45ab-861b-2483fbfa2d29.png)
 ![CultureMap1](https://user-images.githubusercontent.com/32886642/209995096-c8b0d761-ab75-49cd-bb9b-cc210ca114ff.png)
 
-A better map requires better people living on it; TGC's superior culture map is meticulously designed to highlight the sociocultural intricacies of each location.. The assimilation mechanics have also been revamped so that the player can interact more effectively with this superior cultural map.
+A better map requires better people living on it; TGC's superior culture map is meticulously designed to highlight the sociocultural intricacies of each location. The assimilation mechanics have also been revamped so that the player can interact more effectively with this superior cultural map.
 
 ![Flavor](https://user-images.githubusercontent.com/32886642/209615095-a8aa7804-1e20-4592-aed0-f24c37543f7e.png)
 
@@ -36,7 +36,7 @@ When playing TGC, there are always cool "look what the AI did this time" moments
 
 Banks and Universities provide the player with new playstyles and methods to spend money. Universities are costly, but they provide prestige and a steady source of research points, giving the player the opportunity to pull ahead on research and become a technological powerhouse. Development banks will assist local landowners in developing their farms and considerably increasing farming capacity, allowing the player to develop their economy by investing in RGOs rather than just industrialization, creating a never-seen before playstyle.
 
-Our two new PoPs: Pioneers and Tribesmen allow for a never-seen experience when it comes to expanding and colonizing new lands. Pioneers, who are usually seen in lands ripe for colonization are a special pop that can work as both a farmer and a soldier, a worker always ready to get his trusty rifle and protect his land. Tribesmen are similarily unique PoPs, in the sense that they are harder to integrate into western society, and have no plans in working with settlers. Why would a native pick up a hoe and start farming as soon as someone steps into their lands? These two new PoPs open room to vast possibilities in terms of flavor, immersion, and gameplay, something which you may never see in any other mod.
+Our two new PoPs, Pioneers and Tribesmen, allow for a never-seen experience when it comes to expanding and colonizing new lands. Pioneers, who are usually seen in lands ripe for colonization, are a special pop that can work as both a farmer and a soldier, a worker always ready to get his trusty rifle and protect his land. Tribesmen are similarly unique PoPs, in the sense that they are harder to integrate into Western society, and have no plans to work with settlers. Why would a native pick up a hoe and start farming as soon as someone steps into their lands? These two new PoPs open room to vast possibilities in terms of flavor, immersion, and gameplay, something which you may never see in any other mod.
 
 <br clear="left"/>
 
@@ -44,7 +44,7 @@ Our two new PoPs: Pioneers and Tribesmen allow for a never-seen experience when 
 ![Econ1](https://user-images.githubusercontent.com/32886642/226188370-fdda9e06-40f4-4b54-8466-ea113a464536.png)
 
 
-TGC's Economy won't stagnate, quite the contrary, it will get stronger as the game goes on. There's no Liquidity Crisis or stagnation on TGC. You can keep playing after 1900 and expect the Roaring Tweenties to really be "Roaring", as the economy will keep growing more and more.
+TGC's Economy won't stagnate, quite the contrary, it will get stronger as the game goes on. There's no Liquidity Crisis or stagnation on TGC. You can keep playing after 1900 and expect the Roaring Twenties to really be "Roaring", as the economy will keep growing more and more.
 
 ![polling](https://user-images.githubusercontent.com/32886642/209735696-2d36c43b-fdb0-497c-a7ae-c9983106f57d.png)
 ![Community](https://user-images.githubusercontent.com/32886642/209602402-e39c39d9-4967-4056-85da-32d93a7eb803.png)
@@ -120,7 +120,7 @@ Due to download size constraints, The Grand Orchestra is stored in another repos
 <br>
 <br>
 <br>
-With the Endonymic Localization submod, by Guy from the Land of Phillip II, countries' names will be changed to their native names instead of english. For added immersion during gameplay.
+With the Endonymic Localization submod, by Guy from the Land of Phillip II, countries' names will be changed to their native names instead of English, for added immersion during gameplay.
 
 
 <br clear="left"/>
@@ -147,17 +147,17 @@ The features listed here are just a fraction of what TGC has to offer, it's a fu
 
 <br clear="left"/>
 
-By the end of the process, your /mod folder should look like the picture above, and you be able to select the mod in the Launcher.
+By the end of the process, your /mod folder should look like the picture above, and you should be able to select the mod in the Launcher.
 
 <br>
 
- * ***BEWARE: There is a chance that due to the sheer number of files, Github Browser zipping process can corrupt your download, therefore the mod might not work for you. If that happens, follow instructions below on how to download the mod (its very latest version) via Github Desktop app or download the zip from latest pre-packed release (usually somewhat outdated).***
+ * ***BEWARE: There is a chance that due to the sheer number of files, GitHub's browser zipping process can corrupt your download, therefore the mod might not work for you. If that happens, follow instructions below on how to download the mod (its very latest version) via GitHub Desktop app or download the zip from latest pre-packed release (usually somewhat outdated).***
   * Fresh off the press version: You can use the GitHub Desktop application. This is slightly more complicated but preferable since downloading the zip through the browser can lead to corrupted files being downloaded which can cause the game to crash. For instructions on this go to the #install-instructions channel on the Discord.
   * Slightly stale: Stable pre-packed zip releases: https://github.com/rderekp/The-Grand-Combo/releases
 
 ![64](https://user-images.githubusercontent.com/32886642/209701835-8fccabf5-35d0-4613-9d8e-5aaba237a2fe.png)
 
-For Increased Performace on 64-bit PCs):
+For Increased Performance on 64-bit PCs):
 1. Download laa_2_0_4.zip from the site: https://www.techpowerup.com/forums/threads/large-address-aware.112556/
 2. Open the .exe
 3. Select your V2game.exe
