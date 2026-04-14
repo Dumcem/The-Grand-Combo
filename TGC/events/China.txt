@@ -11579,7 +11579,7 @@ country_event = {
 		prestige = 10
 		literacy = 0.01
 		set_country_flag = switched_to_vernacular_chinese
-		add_country_modifier = { name = switched_to_vernacular_chinese duration = -1 }
+		add_country_modifier = { name = vernacular_chinese duration = -1 }
 	}
 }
 
