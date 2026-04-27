@@ -351,8 +351,8 @@ country_event = {
         set_variable = { which = slowdown_point value = 0 }
         #Delete Modifiers
         random_owned = {
-            limit = { owner = { has_country_modifier = interment_camps } }
-            owner = { remove_country_modifier = interment_camps }
+            limit = { owner = { has_country_modifier = internment_camps_modifier } }
+            owner = { remove_country_modifier = internment_camps_modifier }
         }
         #Delete Block
         clr_country_flag = government_busy_with_something
@@ -775,8 +775,8 @@ country_event = {
         set_variable = { which = slowdown_point value = 0 }
         #Delete Modifiers
         random_owned = {
-            limit = { owner = { has_country_modifier = interment_camps } }
-            owner = { remove_country_modifier = interment_camps }
+            limit = { owner = { has_country_modifier = internment_camps_modifier } }
+            owner = { remove_country_modifier = internment_camps_modifier }
         }
         #Delete Block
         clr_country_flag = government_busy_with_something
@@ -1199,8 +1199,8 @@ country_event = {
         set_variable = { which = slowdown_point value = 0 }
         #Delete Modifiers
         random_owned = {
-            limit = { owner = { has_country_modifier = interment_camps } }
-            owner = { remove_country_modifier = interment_camps }
+            limit = { owner = { has_country_modifier = internment_camps_modifier } }
+            owner = { remove_country_modifier = internment_camps_modifier }
         }
         #Delete Block
         clr_country_flag = government_busy_with_something
@@ -1623,8 +1623,8 @@ country_event = {
         set_variable = { which = slowdown_point value = 0 }
         #Delete Modifiers
         random_owned = {
-            limit = { owner = { has_country_modifier = interment_camps } }
-            owner = { remove_country_modifier = interment_camps }
+            limit = { owner = { has_country_modifier = internment_camps_modifier } }
+            owner = { remove_country_modifier = internment_camps_modifier }
         }
         #Delete Block
         clr_country_flag = government_busy_with_something
@@ -2047,8 +2047,8 @@ country_event = {
         set_variable = { which = slowdown_point value = 0 }
         #Delete Modifiers
         random_owned = {
-            limit = { owner = { has_country_modifier = interment_camps } }
-            owner = { remove_country_modifier = interment_camps }
+            limit = { owner = { has_country_modifier = internment_camps_modifier } }
+            owner = { remove_country_modifier = internment_camps_modifier }
         }
         #Delete Block
         clr_country_flag = government_busy_with_something
@@ -2471,8 +2471,8 @@ country_event = {
         set_variable = { which = slowdown_point value = 0 }
         #Delete Modifiers
         random_owned = {
-            limit = { owner = { has_country_modifier = interment_camps } }
-            owner = { remove_country_modifier = interment_camps }
+            limit = { owner = { has_country_modifier = internment_camps_modifier } }
+            owner = { remove_country_modifier = internment_camps_modifier }
         }
         #Delete Block
         clr_country_flag = government_busy_with_something
@@ -2895,8 +2895,8 @@ country_event = {
         set_variable = { which = slowdown_point value = 0 }
         #Delete Modifiers
         random_owned = {
-            limit = { owner = { has_country_modifier = interment_camps } }
-            owner = { remove_country_modifier = interment_camps }
+            limit = { owner = { has_country_modifier = internment_camps_modifier } }
+            owner = { remove_country_modifier = internment_camps_modifier }
         }
         #Delete Block
         clr_country_flag = government_busy_with_something
@@ -3319,8 +3319,8 @@ country_event = {
         set_variable = { which = slowdown_point value = 0 }
         #Delete Modifiers
         random_owned = {
-            limit = { owner = { has_country_modifier = interment_camps } }
-            owner = { remove_country_modifier = interment_camps }
+            limit = { owner = { has_country_modifier = internment_camps_modifier } }
+            owner = { remove_country_modifier = internment_camps_modifier }
         }
         #Delete Block
         clr_country_flag = government_busy_with_something
@@ -3743,8 +3743,8 @@ country_event = {
         set_variable = { which = slowdown_point value = 0 }
         #Delete Modifiers
         random_owned = {
-            limit = { owner = { has_country_modifier = interment_camps } }
-            owner = { remove_country_modifier = interment_camps }
+            limit = { owner = { has_country_modifier = internment_camps_modifier } }
+            owner = { remove_country_modifier = internment_camps_modifier }
         }
         #Delete Block
         clr_country_flag = government_busy_with_something
@@ -4167,8 +4167,8 @@ country_event = {
         set_variable = { which = slowdown_point value = 0 }
         #Delete Modifiers
         random_owned = {
-            limit = { owner = { has_country_modifier = interment_camps } }
-            owner = { remove_country_modifier = interment_camps }
+            limit = { owner = { has_country_modifier = internment_camps_modifier } }
+            owner = { remove_country_modifier = internment_camps_modifier }
         }
         #Delete Block
         clr_country_flag = government_busy_with_something
@@ -4591,8 +4591,8 @@ country_event = {
         set_variable = { which = slowdown_point value = 0 }
         #Delete Modifiers
         random_owned = {
-            limit = { owner = { has_country_modifier = interment_camps } }
-            owner = { remove_country_modifier = interment_camps }
+            limit = { owner = { has_country_modifier = internment_camps_modifier } }
+            owner = { remove_country_modifier = internment_camps_modifier }
         }
         #Delete Block
         clr_country_flag = government_busy_with_something
@@ -5015,8 +5015,8 @@ country_event = {
         set_variable = { which = slowdown_point value = 0 }
         #Delete Modifiers
         random_owned = {
-            limit = { owner = { has_country_modifier = interment_camps } }
-            owner = { remove_country_modifier = interment_camps }
+            limit = { owner = { has_country_modifier = internment_camps_modifier } }
+            owner = { remove_country_modifier = internment_camps_modifier }
         }
         #Delete Block
         clr_country_flag = government_busy_with_something
@@ -5439,8 +5439,8 @@ country_event = {
         set_variable = { which = slowdown_point value = 0 }
         #Delete Modifiers
         random_owned = {
-            limit = { owner = { has_country_modifier = interment_camps } }
-            owner = { remove_country_modifier = interment_camps }
+            limit = { owner = { has_country_modifier = internment_camps_modifier } }
+            owner = { remove_country_modifier = internment_camps_modifier }
         }
         #Delete Block
         clr_country_flag = government_busy_with_something
@@ -5863,8 +5863,8 @@ country_event = {
         set_variable = { which = slowdown_point value = 0 }
         #Delete Modifiers
         random_owned = {
-            limit = { owner = { has_country_modifier = interment_camps } }
-            owner = { remove_country_modifier = interment_camps }
+            limit = { owner = { has_country_modifier = internment_camps_modifier } }
+            owner = { remove_country_modifier = internment_camps_modifier }
         }
         #Delete Block
         clr_country_flag = government_busy_with_something
@@ -6287,8 +6287,8 @@ country_event = {
         set_variable = { which = slowdown_point value = 0 }
         #Delete Modifiers
         random_owned = {
-            limit = { owner = { has_country_modifier = interment_camps } }
-            owner = { remove_country_modifier = interment_camps }
+            limit = { owner = { has_country_modifier = internment_camps_modifier } }
+            owner = { remove_country_modifier = internment_camps_modifier }
         }
         #Delete Block
         clr_country_flag = government_busy_with_something
@@ -6711,8 +6711,8 @@ country_event = {
         set_variable = { which = slowdown_point value = 0 }
         #Delete Modifiers
         random_owned = {
-            limit = { owner = { has_country_modifier = interment_camps } }
-            owner = { remove_country_modifier = interment_camps }
+            limit = { owner = { has_country_modifier = internment_camps_modifier } }
+            owner = { remove_country_modifier = internment_camps_modifier }
         }
         #Delete Block
         clr_country_flag = government_busy_with_something
@@ -7135,8 +7135,8 @@ country_event = {
         set_variable = { which = slowdown_point value = 0 }
         #Delete Modifiers
         random_owned = {
-            limit = { owner = { has_country_modifier = interment_camps } }
-            owner = { remove_country_modifier = interment_camps }
+            limit = { owner = { has_country_modifier = internment_camps_modifier } }
+            owner = { remove_country_modifier = internment_camps_modifier }
         }
         #Delete Block
         clr_country_flag = government_busy_with_something
@@ -7559,8 +7559,8 @@ country_event = {
         set_variable = { which = slowdown_point value = 0 }
         #Delete Modifiers
         random_owned = {
-            limit = { owner = { has_country_modifier = interment_camps } }
-            owner = { remove_country_modifier = interment_camps }
+            limit = { owner = { has_country_modifier = internment_camps_modifier } }
+            owner = { remove_country_modifier = internment_camps_modifier }
         }
         #Delete Block
         clr_country_flag = government_busy_with_something
