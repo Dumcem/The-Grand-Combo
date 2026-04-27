@@ -2659,7 +2659,7 @@
 			}
 		}
 
-		securization = {
+		securitization = {
 			limit = { hedge_funds = 1 }
 
 			news = no
