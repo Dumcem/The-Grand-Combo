@@ -12,7 +12,7 @@ political_decisions = {
 		allow = {
 			money = 11000
 			naval_logistics = 1
-			invention = bell_n_greys_telephones
+			invention = bell_and_gray_telephones
 		}
 
 		effect = {

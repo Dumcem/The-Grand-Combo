@@ -373,7 +373,7 @@
 		carbon_transmitter = {
 			limit = {
 				electrical_power_generation = 1
-				invention = bell_n_greys_telephones
+				invention = bell_and_gray_telephones
 			}
 
 			news = no
@@ -435,7 +435,7 @@
 				}
 				modifier = {
 					factor = 2
-					invention = bell_n_greys_telephones
+					invention = bell_and_gray_telephones
 				}
 			}
 
@@ -519,7 +519,7 @@
 				}
 				modifier = {
 					factor = 1
-					invention = bell_n_greys_telephones
+					invention = bell_and_gray_telephones
 				}
 				modifier = {
 					factor = 1
@@ -2656,7 +2656,7 @@
 
 	# Electricity
 
-		bell_n_greys_telephones = {
+		bell_and_gray_telephones = {
 			limit = { electricity = 1 }
 
 			chance = {
@@ -2769,7 +2769,7 @@
 				base = 0
 				modifier = {
 					factor = 5
-					invention = bell_n_greys_telephones
+					invention = bell_and_gray_telephones
 				}
 				modifier = {
 					factor = 5
@@ -2837,7 +2837,7 @@
 				base = 2
 				modifier = {
 					factor = 2
-					invention = bell_n_greys_telephones
+					invention = bell_and_gray_telephones
 				}
 				modifier = {
 					factor = 2

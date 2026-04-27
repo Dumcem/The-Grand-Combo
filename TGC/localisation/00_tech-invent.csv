@@ -159,14 +159,14 @@ battlefield_destruction_doctrine;Battlefield Destruction Doctrine;;;;;;;;;;;;;x
 battlefield_destruction_doctrine_desc;Battlefield destruction called for airpower to focus on the bombing of frontline enemy military units, in close co-operation with friendly assaults launched against those enemy units.;;;;;;;;;;;;;x
 bayonet_charge;Bayonet Charge;;;;;;;;;;;;;x
 bayonet_charge_desc;The development of the bayonet in the late 17th century led to the bayonet charge becoming the main infantry tactic through the 19th century and into the 20th. As early as the 19th century, military scholars were already noting that most bayonet charges did not result in close combat. Instead, one side usually fled before actual bayonet fighting ensued. The act of fixing bayonets has been held to be primarily connected to morale, the making of a clear signal to friend and foe of a willingness to kill at close quarters.;;;;;;;;;;;;;x
-bell_n_greys_telephones;Bell & Grey’s Telephones;;;;;;;;;;;;;x
-bell_n_greys_telephones_desc;Through the invention of the telephone every household could afford communicating directly with relatives and other. It also revolutionized communication between firms and organizations.;;;;;;;;;;;;;x
+bell_and_gray_telephones;Bell & Gray's Telephones;;;;;;;;;;;;;x
+bell_and_gray_telephones_desc;The spread of practical telephones made direct communication between households and businesses far more accessible, accelerating both personal and commercial coordination.;;;;;;;;;;;;;x
 bessemer_steel;Bessemer Steel;;;;;;;;;;;;;x
 bessemer_steel_desc;By blowing air through molten pig iron in a converter, the Bessemer process rapidly reduces excess carbon and enables large-scale, low-cost steel production.;;;;;;;;;;;;;x
 biased_multiculturalism;Biased Multiculturalism;;;;;;;;;;;;;x
 biased_multiculturalism_desc;Multiculturalism means the acceptance that many cultures may coexist equally inside a political entity. However, some cultures are more equal than others. While members of some cultures may be welcome with open arms, others are, on the other hand, either considered ‘persona non grata’, expelled or even encouraged to leave the country.;;;;;;;;;;;;;x
 big_ship_competitor;Big Ship Competitor;;;;;;;;;;;;;x
-big_ship_competitor_desc;This meant building very small capital ships, thus, this meant a smaller ship with clearly oversized main armament.;;;;;;;;;;;;;x
+big_ship_competitor_desc;This doctrine favored compact capital ships mounting disproportionately heavy main guns, prioritizing striking power over secondary transport armament.;;;;;;;;;;;;;x
 blue_water_school;Blue Water School;;;;;;;;;;;;;x
 blue_water_school_desc;This meant building navies that could contest control of the High Seas. They included many capital ships and smaller ships to defend them.;;;;;;;;;;;;;x
 bolt_action_rifle_armament;Bolt-Action Rifle Armament;;;;;;;;;;;;;x
@@ -238,9 +238,9 @@ clericalism_desc;Clericalism is the application of the formal, church-based, lea
 clericalism_vs._anticlericalism;Clericalism vs. Anti-Clericalism;;;;;;;;;;;;;x
 clericalism_vs._anticlericalism_desc;The elites had, for centuries, allied with the clergy for maintaining social order by the belief in God and His church. A spread of the ideas inherited from the French Revolution and the Industrial Revolution boosted, both among the liberals and the socialists, the thought that both the State and society had to be freed from the yoke of religion.;;;;;;;;;;;;;x
 clinical_thermometers_and_binaural_stethoscopes;Clinical Thermometers & Binaural Stethoscopes;;;;;;;;;;;;;x
-clinical_thermometers_and_binaural_stethoscopes_desc;This new medical equipment simplified the work of doctors and improved the effect of their work considerably.;;;;;;;;;;;;;x
+clinical_thermometers_and_binaural_stethoscopes_desc;Widespread use of clinical thermometers and binaural stethoscopes improved diagnosis and treatment consistency, contributing to lower mortality and steadier population growth.;;;;;;;;;;;;;x
 clipper_shipyard_construction;Clipper Shipyard Construction;;;;;;;;;;;;;x
-clipper_shipyard_construction_desc;Building huge ships such as the Man-o’-War is no easy task, thus we need to first design a shipyard of the appropriate size to begin construction.;;;;;;;;;;;;;x
+clipper_shipyard_construction_desc;Constructing dedicated clipper shipyards enabled standardized, large-hull sail-ship production and reduced bottlenecks in naval construction.;;;;;;;;;;;;;x
 coke;Coke;;;;;;;;;;;;;x
 coke_desc;Coke was coal that had been enriched by a special process. By treating the coal more energy could be turned into power and it could also clean iron and other metals more effectively.;;;;;;;;;;;;;x
 collectivism;Collectivism;;;;;;;;;;;;;x
@@ -250,7 +250,7 @@ colonial_negotiations_desc;Machine-gun-era military superiority dramatically shi
 combat_loss_evaluation_schemata;Combat Loss Evaluation Schemata;;;;;;;;;;;;;x
 combat_loss_evaluation_schemata_desc;By counting losses on both sides and turn the figures into a matrix it was possible to estimate losses in an upcoming combat in advance.;;;;;;;;;;;;;x
 combat_medicine;Combat Medicine;;;;;;;;;;;;;x
-combat_medicine_desc;At this point the armies and navies of the world had acknowledged the need not only for a medical corps within their organizations, but also that the illness’ and wounds delivered in combat and frontline duty needed specialization.;;;;;;;;;;;;;x
+combat_medicine_desc;Armies and navies institutionalized combat medicine, improving frontline treatment and evacuation for illnesses and wounds, reducing operational losses from attrition.;;;;;;;;;;;;;x
 combat_station_training;Combat Station Training;;;;;;;;;;;;;x
 combat_station_training_desc;As war at sea became more and more mechanized combat station training became more important. Often this training was done under realistic conditions where two squadrons fought an imaginary sea battle.;;;;;;;;;;;;;x
 combine_harvesters;Combine Harvesters;;;;;;;;;;;;;x
@@ -993,16 +993,16 @@ saddle_orders;Army Saddle Orders;;;;;;;;;;;;;x
 saddle_orders_desc;Army command practice improved the speed and clarity of battlefield orders, strengthening unit confidence and frontline morale under pressure.;;;;;;;;;;;;;x
 sanitation;Sanitation;;;;;;;;;;;;;x
 sanitation_desc;It was not until the development of sanitation that the presence of waste and sewage in cities was even considered to be a health issue. Once methods were introduced to remove waste and keep the streets clean, it became possible for rodent infestations to be reduced in size and for cities to rapidly grow.;;;;;;;;;;;;;x
-sati_abolished;Abolishment of Sati;;;;;;;;;;;;;x
-sati_abolished_desc;The abolishment of Sati funeral practices, where a recent widow immolated herself on her husband’s grave, was incredibly unpopular in some parts of India.;;;;;;;;;;;;;x
+sati_abolished;Abolition of Sati;;;;;;;;;;;;;x
+sati_abolished_desc;The formal abolition of Sati represented a major social reform, but it also triggered significant conservative backlash in parts of India.;;;;;;;;;;;;;x
 scholarships;Scholarships;;;;;;;;;;;;;x
 scholarships_desc;The appearance of scholarships indicated the first attempt at offering higher education to students based on academic excellence, and not excluding them solely on the basis of finances. This allowed the attendance of colleges and universities to move from an elite part of the population towards being truly universal.;;;;;;;;;;;;;x
 school_of_maneuver;School of Manoeuvre;;;;;;;;;;;;;x
 school_of_maneuver_desc;The advent of tank warfare led to a new school of thought—that impressive speed and superior positioning would win the day in military clashes.;;;;;;;;;;;;;x
-shrapnel_standard_design;Shrapnel Standard Design;;;;;;;;;;;;;x
-shrapnel_standard_design_desc;Shrapnel shells were anti-personnel artillery munitions which carried a large number of individual bullets close to the target and then ejected them to allow them to continue along the shell’s trajectory and strike the target individually. They relied almost entirely on the shell’s velocity for their lethality. The final shrapnel shell design bore little similarity to Henry Shrapnel’s original design, marking the quick evolution of technology at the time.;;;;;;;;;;;;;x
 schwerpunkt;Schwerpunkt;;;;;;;;;;;;;x
 schwerpunkt_desc;Schwerpunkt is a term referring to the ‘centre of gravity or point of maximum effort, where a decisive action could be achieved’. Ground, mechanised and tactical air forces could be concentrated at this point of maximum effort whenever possible. By local success at the Schwerpunkt, a small force achieved a breakthrough and gained advantages by fighting in the enemy’s rear. Guderian summarized this doctrine as ‘Klotzen, nicht kleckern!’ meaning ‘act powerfully, not superficially’.;;;;;;;;;;;;;x
+shrapnel_standard_design;Shrapnel Standard Design;;;;;;;;;;;;;x
+shrapnel_standard_design_desc;Shrapnel shells were anti-personnel artillery munitions which carried a large number of individual bullets close to the target and then ejected them to allow them to continue along the shell’s trajectory and strike the target individually. They relied almost entirely on the shell’s velocity for their lethality. The final shrapnel shell design bore little similarity to Henry Shrapnel’s original design, marking the quick evolution of technology at the time.;;;;;;;;;;;;;x
 scientific_forestry;Scientific Forestry;;;;;;;;;;;;;x
 scientific_forestry_desc;Scientific Forestry using the Prussian model allows states to regularize and predict timber production through the classification and management of forest resources.;;;;;;;;;;;;;x
 sea_power_doctrine;Sea Power Doctrine;;;;;;;;;;;;;x
@@ -1013,8 +1013,8 @@ secret_police;Secret Police;;;;;;;;;;;;;x
 secret_police_desc;This special department of the Police was instituted to get at political groups disrespecting the current order. For people in general this could be understood either as a fair and good institution or an evil repressive face of power.;;;;;;;;;;;;;x
 secularization;Secularization;;;;;;;;;;;;;x
 secularization_desc;Secularization is the activity of changing something like art or education, so it is no longer under the control or influence of religion. This doctrine also proposes the transfer of property from ecclesiastical to civil possession.;;;;;;;;;;;;;x
-securization;Securitization;;;;;;;;;;;;;x
-securization_desc;Hedge funds may invest in securitized products, which are financial instruments created by pooling together various assets such as mortgages, credit card debt, or other loans. The development of securitization has led to increased liquidity in the banking system and allowed banks to free up capital.;;;;;;;;;;;;;x
+securitization;Securitization;;;;;;;;;;;;;x
+securitization_desc;By pooling loans into tradable securities, financial institutions expanded liquidity and spread risk, often reducing borrowing costs and lowering interest rates in developed credit markets.;;;;;;;;;;;;;x
 self_determination;Self-Determination;;;;;;;;;;;;;x
 self_determination_desc;Being subject to the will of a distant overlord has given the people a common cause, one that crosses all ideological boundaries. They will unite to oppose foreign rule, rising up violently if necessary, and deal with their other differences once a free government has been achieved.;;;;;;;;;;;;;x
 self_propelled_artillery;Self-Propelled Artillery;;;;;;;;;;;;;x
