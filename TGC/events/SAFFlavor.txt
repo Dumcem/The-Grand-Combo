@@ -615,7 +615,7 @@ country_event = {
 		name = "EVTOPTB6012"
 		set_country_flag = rename_mashonaland_boer
 		2068 = { change_province_name = "Herculaastad" }
-		2068 = { state_scope = { change_region_name = Rhodesië } }
+		2068 = { state_scope = { change_region_name = RhodesiÃ« } }
 	}
 
 	option = {
@@ -1744,7 +1744,7 @@ country_event = { #Petition Portugal for port access
 		money = 10000 #This will cost money for the railroads
 		2110 = { owned_by = THIS } #Transvaal owns Zotspanberg
 		2105 = { owned_by = THIS } #Transvaal owns Pretoria
-		2049 = { owned_by = POR } #Portugal owns Lourenço Marques
+		2049 = { owned_by = POR } #Portugal owns LourenÃ§o Marques
 		relation = { #Needs positive relations with Portugal
 			who = POR
 			value = 1
@@ -2476,7 +2476,7 @@ country_event = {
 
 country_event = {
 	id = 6054
-	title = "EVTNAME6054" #Recieves Alliance Offer from ZAR
+	title = "EVTNAME6054" #Receives Alliance Offer from ZAR
 	desc = "EVTDESC6054"
 	picture = "volksraad"
 

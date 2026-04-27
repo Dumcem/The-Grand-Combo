@@ -1,5 +1,5 @@
-#  The AI wont build new buildings by itself. This event and the next one are meant
-#  to give the AI access to those buildings at a resonable and realistic rate.
+#  The AI won't build new buildings by itself. This event and the next one are meant
+#  to give the AI access to those buildings at a reasonable and realistic rate.
 #  The conditions and modifiers are trying to replicate the decision making of building 
 #  banks and universities. For instance, if the AI is investing lots of research points
 #  into banking tech, it has higher chances of building banks, if it's spending very little
@@ -10,7 +10,7 @@
 #
 #  Made by Wyrm.
 #
-# TO DO: Stop the AI from building where the terrain wont allow. Thankfully that's rare and has low impact.
+# TO DO: Stop the AI from building where the terrain won't allow. Thankfully that's rare and has low impact.
 
 ## Event so the AI also builds universities
 province_event = {

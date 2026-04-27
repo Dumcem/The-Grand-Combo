@@ -231,7 +231,7 @@ political_decisions = {
 	the_pacific_reclamation = {
 		picture = cascadia_bioregion
 		potential = {
-			ai = no #This is also broken, they can refute mainfest destiny but don't get cores on California
+			ai = no #This is also broken, they can refute manifest destiny but don't get cores on California
 			tag = MEX
 			is_greater_power = yes
 			NOT = { has_global_flag = pacific_reclamation }

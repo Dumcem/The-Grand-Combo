@@ -46,7 +46,7 @@ aircraftcarrier = {
 		telephones = 0.03
 	}
 	
-	#Naval Abilties
+	#Naval Abilities
 	hull = 65
 	gun_power = 21
 	fire_range = 3.5

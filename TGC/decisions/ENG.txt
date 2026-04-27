@@ -525,7 +525,7 @@ political_decisions = {
 #Retake Thirteen Colonies larp
 #Need immigration nerf and militancy buff modifiers
 #TBD: Second American War for Independence
-	reconstitute_lost_america = { #this is the decision thats gonna show the dominions larp
+	reconstitute_lost_america = { #this is the decision that's gonna show the dominions larp
 		picture = britam
 		potential = {
 			primary_culture = british

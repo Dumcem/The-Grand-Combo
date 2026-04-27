@@ -134,7 +134,7 @@ country_event = {
 			}
 	}
 }
-#Warning player that theyre touching something they're not supposed to, bad player learn to behave!
+#Warning player that they're touching something they're not supposed to, bad player learn to behave!
 country_event = {
 	id = 50
 	title = "EVTNAME50"
@@ -284,7 +284,7 @@ country_event = {
 		#No Pioneers in Non-Pioneering countries
 		any_country = {
 			limit = {
-				#Basically = not 0, but we cant check for that so this is as good as it gets
+				#Basically = not 0, but we can't check for that so this is as good as it gets
 				any_owned_province = { has_pop_type = pioneers }
 				NOT = {
 					OR = {
@@ -1092,7 +1092,7 @@ country_event = {
 				any_country = { limit = { average_consciousness = 10 NOT = { has_country_flag = stability_adjusted } } plurality = -0.222 set_country_flag = stability_adjusted }
 				any_country = { limit = { has_country_flag = stability_adjusted } clr_country_flag = stability_adjusted }
 
-			#Stability ticking down cause of war exaustion, this is meant to be acomulative, as it does not need to be so finely adjusted as the militancy spread
+			#Stability ticking down cause of war exhaustion, this is meant to be accumulative, as it does not need to be so finely adjusted as the militancy spread
 				any_country = {	limit = { NOT = { war_exhaustion = 0 } } plurality = 0.0125 }
 				any_country = {	limit = { war_exhaustion = 10 } plurality = -0.05 }
 				any_country = {	limit = { war_exhaustion = 20 } plurality = -0.05 }
@@ -2324,7 +2324,7 @@ country_event = {
 				}
 			}
 
-		#Agressive Tag
+		#Aggressive Tag
 			any_country = { clr_country_flag = agressive_tag }
 			any_country = {
 				limit = {

@@ -1,5 +1,5 @@
-#The triggers in the potentials were optmized in this file, be careful messing with them.
-#The optmization was made with a good deegre of accuracy and it's mostly fine, but revision wouldnt be a bad idea
+#The triggers in the potentials were optimized in this file, be careful messing with them.
+#The optimization was made with a good degree of accuracy and it's mostly fine, but revision wouldn't be a bad idea
 
 political_decisions = {
 
@@ -152,9 +152,9 @@ political_decisions = {
 			badboy = 10
 			set_country_flag = greater_bulgaria_claimed
 			798 = { add_core = BUL } # Nis/Nisch
-			799 = { add_core = BUL } # Pirot/Šehirköy
+			799 = { add_core = BUL } # Pirot/Å ehirkÃ¶y
 			829 = { add_core = BUL } # Gyumyurdjina/Komotini
-			825 = { add_core = BUL } # Sketsha/Xánthi
+			825 = { add_core = BUL } # Sketsha/XÃ¡nthi
 			TUR_674 = { add_core = BUL } # Dobrudja
 			TUR_805 = { add_core = BUL } # Southern Macedonia
 			TUR_860 = { add_core = BUL } # Thrace

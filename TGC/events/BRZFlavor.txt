@@ -785,7 +785,7 @@
 		}
 	}
 
-	#The KPB falls appart if the player plays too badly
+	#The KPB falls apart if the player plays too badly
 	country_event = {
 		id = 8051
 		title = "EVTNAME8051"
@@ -1091,7 +1091,7 @@
 	}
 
 
-## Revolução Farroupilha
+## RevoluÃ§Ã£o Farroupilha
 	# Custom Civil War System
 	country_event = {
 		id = 8100
@@ -2384,7 +2384,7 @@
 	}
 
 #
-##Expasion, 8200-
+##Expansion, 8200-
 
 	#Brasilic Confederation Portugal Warning
 	country_event = {
@@ -3262,7 +3262,7 @@
 				}
 			}
 
-			# We´ll have to decline.
+			# WeÂ´ll have to decline.
 			option = {
 				name = "EVTOPTB8222"
 
@@ -4675,7 +4675,7 @@
 				set_country_flag = sv_capital
 				2436 = { add_province_modifier = { name = recently_built_city duration = 365 } }
 			}
-			#São Paulo
+			#SÃ£o Paulo
 			option = {
 				name = "EVTOPTC8412"
 				money = -175000
@@ -4744,7 +4744,7 @@
 				prestige = 25
 				plurality = 2
 				capital = 2421
-				2421 = { change_province_name = "Brasília" }
+				2421 = { change_province_name = "BrasÃ­lia" }
 				2421 = { add_province_modifier = { name = recently_built_city duration = 365 } }
 				clr_country_flag = building_brasilia
 				set_country_flag = brasilia_finished

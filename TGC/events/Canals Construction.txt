@@ -911,7 +911,7 @@ country_event = {
 	}
 }
 
-# Corinth Canal project goes bankrupt after partial completeion
+# Corinth Canal project goes bankrupt after partial completion
 country_event = {
 	id = 36985
 	title = "EVTNAME36985"
@@ -1073,7 +1073,7 @@ country_event = {
 		}
 	}
 
-	# Channel Tunnel Proposal Reciever
+	# Channel Tunnel Proposal Receiver
 	country_event = {
 		id = 36989
 		title = "EVTNAME36989"
@@ -1196,7 +1196,7 @@ country_event = {
 		}
 	}
 
-	# Channel Tunnel Proposal Accepted - Financing Reciever Country
+	# Channel Tunnel Proposal Accepted - Financing Receiver Country
 	country_event = {
 		id = 36993
 		title = "EVTNAME36993"
@@ -1352,7 +1352,7 @@ country_event = {
 		}
 	}
 
-	# Funding for Chunnel - Half Reciever
+	# Funding for Chunnel - Half Receiver
 	country_event = {
 		id = 36995
 		title = "EVTNAME36995"
@@ -1911,7 +1911,7 @@ country_event = {
 		}
 	}
 
-	# Chunnel Tunnel Proposal Accepted - Financing Reciever Country - Half-Half and Whole Declined
+	# Chunnel Tunnel Proposal Accepted - Financing Receiver Country - Half-Half and Whole Declined
 	country_event = {
 		id = 36998
 		title = "EVTNAME36998"

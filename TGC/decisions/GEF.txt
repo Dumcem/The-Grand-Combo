@@ -155,7 +155,7 @@ political_decisions = {
 			}
 			134 = { change_province_name = "Biebrich" }
 			137 = { change_province_name = "Neu Braunfels" }
-			3369 = { change_province_name = "Schöneberg" }
+			3369 = { change_province_name = "SchÃ¶neberg" }
 			3370 = { change_province_name = "Marzahn" }
 			inherit = TEX
 			138 = {	secede_province = MEX }
@@ -248,7 +248,7 @@ political_decisions = {
 			}
 			44 = { change_province_name = "Krakau Bucht" }
 			2212 = { change_province_name = "Allerheiligenbucht" }
-			2210 = { change_province_name = "Seelöwenbucht" }
+			2210 = { change_province_name = "SeelÃ¶wenbucht" }
 			2211 = { change_province_name = "Kaiserstedt" }
 			2597 = { change_province_name = "Kieferninsel" }
 			release = KRO
@@ -405,7 +405,7 @@ political_decisions = {
 			552 = {	secede_province = THIS }
 			558 = {	secede_province = THIS }
 			552 = { change_province_name = "Chotebuz" }
-			558 = { change_province_name = "Dráždany" }
+			558 = { change_province_name = "DrÃ¡Âždany" }
 			552 = {	remove_core = PRU }
 			552 = {	remove_core = NGF }
 			552 = {	remove_core = GER }
@@ -783,7 +783,7 @@ political_decisions = {
 	# 		}
 	# 		NOT = { has_global_flag = disable_GEF }
 	# 		NOT = { has_country_flag = give_in_into_radical_dutch_demands }
-	# 		NOT = { government = democracy } #NOTE: This seems unintentional, this govtype wasnt supposed to be in use yet
+	# 		NOT = { government = democracy } #NOTE: This seems unintentional, this govtype wasn't supposed to be in use yet
 	# 	}
 
 	# 	allow = {

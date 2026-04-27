@@ -1,5 +1,5 @@
-#The triggers in the potentials were optmized in this file, be careful messing with them.
-#The optmization was made with a good deegre of accuracy and it's mostly fine, but revision wouldnt be a bad idea
+#The triggers in the potentials were optimized in this file, be careful messing with them.
+#The optimization was made with a good degree of accuracy and it's mostly fine, but revision wouldn't be a bad idea
 political_decisions = {
 
 ## Occupation of empty provinces ##
@@ -480,7 +480,7 @@ political_decisions = {
 	}
 
 	#Description: Get relations with Uruguay.
-	a_telegraph_line_to_uruguay = { #original VIP event idea by General Perón, scripted by Scythe
+	a_telegraph_line_to_uruguay = { #original VIP event idea by General PerÃ³n, scripted by Scythe
 		picture = ems_dispatch
 		potential = {
 			tag = ARG
@@ -503,7 +503,7 @@ political_decisions = {
 	}
 
 	#Description: Get prestige and research, officers and soldiers lose consciousness.
-	found_the_school_of_military_aviation = { #original VIP event idea by General Perón, scripted by Scythe
+	found_the_school_of_military_aviation = { #original VIP event idea by General PerÃ³n, scripted by Scythe
 		picture = found_the_school_of_military_aviation
 		potential = {
 			owns = 2379 #Cordoba de Argentina
@@ -902,7 +902,7 @@ political_decisions = {
 				duration = 365
 			}
 			define_general = {
-				name = "Justo José de Urquiza"
+				name = "Justo JosÃ© de Urquiza"
 				personality = intelligent
 				background = school_of_the_bayonet
 			}

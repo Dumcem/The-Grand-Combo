@@ -61,7 +61,7 @@ country_event = {
 	}
 }
 
-# Parlimentary Inquiry
+# Parliamentary Inquiry
 country_event = {
 	id = 12010
 	title = "EVTNAME12010"
