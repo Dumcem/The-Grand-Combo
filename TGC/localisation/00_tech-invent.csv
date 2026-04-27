@@ -1,8 +1,10 @@
-CODE;ENGLISH;FRENCH;GERMAN;POLISH;SPANISH;ITALIAN;SWEDISH;CZECH;HUNGARIAN;DUTCH;PORTUGUESE;RUSSIAN;FINNISH;x
+﻿CODE;ENGLISH;FRENCH;GERMAN;POLISH;SPANISH;ITALIAN;SWEDISH;CZECH;HUNGARIAN;DUTCH;PORTUGUESE;RUSSIAN;FINNISH;x
 15_inch_main_armament;15-inch Main Armament;;;;;;;;;;;;;x
 15_inch_main_armament_desc;The main armament of the first dreadnoughts consisted in most cases of 12-inch or 13.5-inch guns, but modern navies soon began to desire a larger calibre main armament. This resulted in later battleships being armed with 15-inch or 16-inch main guns, which had significantly greater destructive power and range than their predecessors.;;;;;;;;;;;;;x
 76_millimeter_gun;76 Millimetre Gun;;;;;;;;;;;;;x
 76_millimeter_gun_desc;Artillery weapons have become even larger, and capable of delivering even larger ordinance. These weapons are the future of modern warfare.;;;;;;;;;;;;;x
+absorption_refrigerators;Absorption Refrigerators;;;;;;;;;;;;;x
+absorption_refrigerators_desc;The basic principle behind absorption refrigerators is that certain chemicals, such as ammonia and water, can be used to create a refrigeration cycle that operates using only heat as an energy source. The process involves heating a mixture of ammonia and water, causing the ammonia to vaporize and separate from the water. The ammonia vapor is then cooled, which causes it to condense back into a liquid. This liquid ammonia is then mixed with water, which absorbs the heat generated during the process, allowing the cycle to continue.;;;;;;;;;;;;;x
 academic_training;Naval Academic Training;;;;;;;;;;;;;x
 academic_training_desc;This meant that to become an officer it was no longer enough to be of gentle blood. You also had to attend a formal education which could at best be as good as any college. This was one of the most important causes behind the professionalization of the officers corps.;;;;;;;;;;;;;x
 adam_smith;Adam Smith;;;;;;;;;;;;;x
@@ -26,15 +28,17 @@ advanced_ore_smelting_processes_desc;This process cleaned the ore from by produc
 advanced_riflemaking;Advanced Rifle-Smithing;;;;;;;;;;;;;x
 advanced_riflemaking_desc;We have perfected small arms manufacturing to an artform.;;;;;;;;;;;;;x
 advanced_target_practice;Advanced Target Practice;;;;;;;;;;;;;x
-advanced_target_practice_desc;Fore!;;;;;;;;;;;;;x
+advanced_target_practice_desc;Systematic live-fire drills, range estimation exercises, and standardized marksmanship scoring improved accuracy and ammunition efficiency across line units.;;;;;;;;;;;;;x
 aerial_bacteria_and_antiseptic_principle;Aerial Bacteria And The Antiseptic Principle;;;;;;;;;;;;;x
 aerial_bacteria_and_antiseptic_principle_desc;The discovery of aerial bacteria and the development of antiseptics revolutionized life for humanity. No longer open wounds meant amputation or death, but infections even fevers could be cured with medicine.;;;;;;;;;;;;;x
+air_preheaters;Air Preheaters;;;;;;;;;;;;;x
+air_preheaters_desc;Air preheaters are essentially heat exchangers that heat the combustion air in a steam turbine by transferring heat from the flue gases that are leaving the turbine, making them a more cost-effective option for power generation;;;;;;;;;;;;;x
 alexander_bain;Alexander Bain;;;;;;;;;;;;;x
 alexander_bain_desc;An associate of J.S. Mill, Alexander Bain added connections from physiology to associationist psychology, adding the laws of compound and constructive association to those of contiguity, similarity, and frequency. He was known for writing two of the earliest textbooks in psychology in 1855 and 1859, which were used by later experimental psychologists such as William James. His Spencer–Bain principle concerning probability of behaviour recalls the later Behaviourist school in its conclusions.;;;;;;;;;;;;;x
 alfred_adler;Alfred Adler;;;;;;;;;;;;;x
 alfred_adler_desc;Alfred Adler was an Austrian doctor and psychotherapist. Adler diverged from Freud in arguing that unconscious motivation could be better explained by teleological goals rather than instinctual drives. According to Adler, people are born with a feeling of Inferiority. People attempt to overcome these feelings of inferiority. Adler posited one of three outcomes. An ‘inferiority complex’ develops in people who are overwhelmed by these feelings. Some of these will develop a superiority complex to mask their true feelings. Psychologically healthy people manifest the concept of self-esteem and satisfy their goals through a sense of personal achievement.;;;;;;;;;;;;;x
 alfred_binet;Alfred Binet;;;;;;;;;;;;;x
-alfred_binet_desc;Alfred Binet was a French psychologist who pioneered the use of standardized testing to measure individual differences in intelligence. The French government commissioned Binet and his student Theodore Simon to develop a test in 1899 to differentiate ‘retarded’ from ‘normal’ children. The Simon-Binet test divided intelligence into several areas and measured each with a battery of questions. Questions considered to measure higher ability were those answered more often by students whom their teachers had rated highly. Binet also believed that intelligences were inherited, but improvable by education. His test assigned a single ‘mental-level’ score to each subject based on their test results.;;;;;;;;;;;;;x
+alfred_binet_desc;Alfred Binet was a French psychologist who pioneered standardized testing to measure individual differences in intelligence. In the early 1900s, Binet and his collaborator Théodore Simon developed practical school-assessment tests to identify pupils needing additional educational support. Their work helped establish modern psychometrics, while Binet himself warned against treating test scores as fixed measures of innate worth.;;;;;;;;;;;;;x
 alfred_marshall;Alfred Marshall;;;;;;;;;;;;;x
 alfred_marshall_desc;He was, first and foremost, ‘a brilliant and original theorist’.;;;;;;;;;;;;;x
 alfred_nobel;Alfred Nobel;;;;;;;;;;;;;x
@@ -113,10 +117,10 @@ army_wargames;Military War Games;;;;;;;;;;;;;x
 army_wargames_desc;The wargames where staff training. It meant playing out a situation, a fictive war of conflict, and setting to staffs against each other and training them in order writing, communications and planning. At some degree it also trained their tactical and operational skill.;;;;;;;;;;;;;x
 arteries_of_commerce;Arteries of Commerce;;;;;;;;;;;;;x
 arteries_of_commerce_desc;The criss-cross pattern of railways became such that the economy of an entire nation depended upon them. In time, all industrial and commercial traffic moved on railways. Fortunes were built and lost on the construction of these arteries of commerce alone.;;;;;;;;;;;;;x
-arthur_evans;Arthur Evans;;;;;;;;;;;;;x
-arthur_evans_desc;Sir Arthur John Evans (8 July 1851–11 July 1941) was an English archaeologist and pioneer in the study of Aegean civilisation in the Bronze Age. He is most famous for unearthing the palace of Knossos on the Greek island of Crete. Based on the structures and artefacts found there and throughout the eastern Mediterranean, Evans found that he needed to distinguish the Minoan civilisation from Mycenaean Greece.;;;;;;;;;;;;;x
 artficial_nitrates;Artificial Nitrates;;;;;;;;;;;;;x
 artficial_nitrates_desc;Our understanding of chemistry has led to the development of artificial nitrates, reducing our dependency on naturally-extracted nitrates in sulphur production.;;;;;;;;;;;;;x
+arthur_evans;Arthur Evans;;;;;;;;;;;;;x
+arthur_evans_desc;Sir Arthur John Evans (8 July 1851–11 July 1941) was an English archaeologist and pioneer in the study of Aegean civilisation in the Bronze Age. He is most famous for unearthing the palace of Knossos on the Greek island of Crete. Based on the structures and artefacts found there and throughout the eastern Mediterranean, Evans found that he needed to distinguish the Minoan civilisation from Mycenaean Greece.;;;;;;;;;;;;;x
 artificial_fertilizers;Artificial Fertilizers;;;;;;;;;;;;;x
 artificial_fertilizers_desc;This was the technique of making fertilizers in a laboratory instead on relying on by-products from animals.;;;;;;;;;;;;;x
 artillery_production;Artillery Production;;;;;;;;;;;;;x
@@ -181,8 +185,6 @@ building_station_shipyards;Building Station Shipyards;;;;;;;;;;;;;x
 building_station_shipyards_desc;By industrializing shipyards and building them so that the work process was done in a modern fashion the output of ships and efficiency was vastly increased.;;;;;;;;;;;;;x
 bureaucracy;Bureaucracy;;;;;;;;;;;;;x
 bureaucracy_desc;The purpose of a bureaucracy is to successfully implement the actions of an organization of any size (but often associated with large entities such as government, corporations, and non-governmental organizations), in achieving its purpose and mission, and the bureaucracy is tasked to determine how it can achieve its purpose and mission with the greatest possible efficiency and at the least cost of any resources.;;;;;;;;;;;;;x
-provincial_bureaucracy;Provincial Bureaucracy;;;;;;;;;;;;;x
-provincial_bureaucracy_desc;The purpose of a bureaucracy is to successfully implement the actions of an organization of any size (but often associated with large entities such as government, corporations, and non-governmental organizations), in achieving its purpose and mission, and the bureaucracy is tasked to determine how it can achieve its purpose and mission with the greatest possible efficiency and at the least cost of any resources. Our land's cumbersome population and size requires more.;;;;;;;;;;;;;x
 bureaucracy_vs._nepotism;Bureaucracy vs. Nepotism;;;;;;;;;;;;;x
 bureaucracy_vs._nepotism_desc;Civil services, always seeking maximum efficiency, progressively tried to free themselves from political control. They began to set their own sets of regulations and hire their own staff. In other countries, however, civil servants were chosen among political supporters and allies. By use of patronage the administration was thus kept into line.;;;;;;;;;;;;;x
 buying_on_margin;Buying On Margin;;;;;;;;;;;;;x
@@ -333,6 +335,8 @@ early_interwar_fighters;Early Interwar Fighters;;;;;;;;;;;;;x
 early_interwar_fighters_desc;The concept of denying the enemy access to the air above one’s army was discovered early in the budding air war. Aircraft whose sole role was to engage and eliminate enemy aircraft found their use well before their bomber cousins.;;;;;;;;;;;;;x
 early_modern_oil_ship;Early Modern Oil Ships;;;;;;;;;;;;;x
 early_modern_oil_ship_desc;New advances in mobile refuelling soon gave way to new advances in naval supply production.;;;;;;;;;;;;;x
+early_radar;Early Radar;;;;;;;;;;;;;x
+early_radar_desc;Radar uses radio waves to detect objects in the air or on the surface of the sea. A radar system transmits pulses and analyzes returning echoes to determine the location, speed, and direction of targets.;;;;;;;;;;;;;x
 ec_tolman;Edward C. Tolman;;;;;;;;;;;;;x
 ec_tolman_desc;Edward C. Tolman was another prominent American psychologist in the field of behaviourism. Tolman performed maze experiments to demonstrate latent learning in animals. He showed that a rat could run the maze on the first try, if it was previously allowed to explore the maze while not hungry. Tolman evinced that the subject learned useful stimulus information about the world without reference to a reinforcing stimulus. The ability to run the maze correctly on trial one demonstrated flexibility in the use of the learned information. Tolman’s stimulus–stimulus learning was opposed by the stimulus–response orthodoxy of Skinner.;;;;;;;;;;;;;x
 edison_light_bulb;Edison Light Bulb;;;;;;;;;;;;;x
@@ -465,6 +469,8 @@ grand_battle_plan_doctrine;Grand Battle Plan Doctrine;;;;;;;;;;;;;x
 grand_battle_plan_doctrine_desc;The traditional ways of planning our battles has changed, primarily because the old ways of thinking no longer apply. Our generals must remain up-to-date, or all our advanced technology will be useless.;;;;;;;;;;;;;x
 grand_battle_plan_vs_superior_firepower;Grand Battle Plan vs. Superior Firepower;;;;;;;;;;;;;x
 grand_battle_plan_vs_superior_firepower_desc;For those armies that focussed on firepower, another crucial decision revolved around how that firepower was to be utilized. One possibility was to craft intricate and detailed plans that integrated artillery strikes on specific targets timed to end just as the main assault was launched, while another possibility was simply to mass together as much artillery as possible and bombard the enemy until he gave way.;;;;;;;;;;;;;x
+grand_fleet_doctrine;Grand Fleet Doctrine;;;;;;;;;;;;;x
+grand_fleet_doctrine_desc;Grand Fleet Doctrine concentrated major capital ships into a unified battle fleet to secure sea control, protect vital shipping lanes, and force decisive engagements under favorable conditions.;;;;;;;;;;;;;x
 gs_hall;G. Stanley Hall;;;;;;;;;;;;;x
 gs_hall_desc;G. Stanley Hall was the first President of the American Psychological Association. Hall founded the American Journal of Psychology in 1887. His research focused on educational psychology and adolescence. He adapted the term ‘Storm and Stress’ to characterize the period of adolescence. Hall believed in the heritability of behaviour and supported the Eugenics program. His views on child development were later largely refuted by Piaget and Vygotsky.;;;;;;;;;;;;;x
 gun_hydraulics;Gun Hydraulics;;;;;;;;;;;;;x
@@ -473,6 +479,8 @@ gustav_von_schmoller;Gustav von Schmoller;;;;;;;;;;;;;x
 gustav_von_schmoller_desc;Schmoller’s opposition to Neoclassical economics entered him into a famous methodological debate (Methodenstreit) with Carl Menger. Although many argue that he lost the debate by the simple fact of non-engagement (it is reported that upon receiving Menger’s Investigations, he returned it unread to its author and published a ‘semi-review’ of it claiming that, indeed, it had not even been worth reading), Schmoller nonetheless retained his grip on the German university appointment system and kept Classical and Neoclassical economic theory largely out of German teaching—earning him the eternal enmity of the only potential challenger at the time, Menger’s Austrian School. Gustav Schmoller’s political involvements were also important, in 1872, he formed the Verein für Sozialpolitik, (‘Society for Social Policy’), a group of largely conservative economists which supported a kind of corporatist state-industry-labour nexus. Liberals deplored their advocacy for state interventionism and came to label Schmoller and the Historicists as Kathedersozialisten (or ‘Socialists of the Chair’)—a jest they never entirely lived down.;;;;;;;;;;;;;x
 gyrostabilized_fire_control;Gyrostabilized Fire Control;;;;;;;;;;;;;x
 gyrostabilized_fire_control_desc;This invention made fire control and corrections of hits much easier and faster and increased the speed of fire as well as the hit probability.;;;;;;;;;;;;;x
+haber_process;Haber–Bosch process;;;;;;;;;;;;;x
+haber_process_desc;The Haber-Bosch process is a chemical process that converts atmospheric nitrogen and hydrogen gas into ammonia, which is a key ingredient in fertilizer and other industrial applications;;;;;;;;;;;;;x
 heavy_armour_plates;Heavy Armour Plates;;;;;;;;;;;;;x
 heavy_armour_plates_desc;By adding extra heavy armour plates to the ship, it not only got better protection, but it also gave extra protection against special ordonnance as armour piercing projectiles and torpedoes.;;;;;;;;;;;;;x
 heavy_artillery;Heavy Artillery;;;;;;;;;;;;;x
@@ -497,6 +505,8 @@ hierarchical_order;Hierarchical Order;;;;;;;;;;;;;x
 hierarchical_order_desc;Hierarchical Order is a system were several components or levels are dependent on the respective higher one. The components get smaller the higher they are.;;;;;;;;;;;;;x
 high_schools;Secondary Schooling;;;;;;;;;;;;;x
 high_schools_desc;A secondary school is an institution dedicated to providing post-grammar school education to the public.;;;;;;;;;;;;;x
+high_speed_steel;High Speed Steel;;;;;;;;;;;;;x
+high_speed_steel_desc;High-speed steel is a type of steel alloy that is specifically designed to maintain its hardness and cutting ability at high temperatures.;;;;;;;;;;;;;x
 high_tech_focus;High Tech Focus;;;;;;;;;;;;;x
 high_tech_focus_desc;Our nation’s industry has slowly become more focused on high-tech goods such as automobiles, telephones, radios and electronic equipment.;;;;;;;;;;;;;x
 hit_evaluation_reports;Hit Evaluation Reports;;;;;;;;;;;;;x
@@ -661,6 +671,8 @@ limited_partnership_company;Limited-Partnership Company;;;;;;;;;;;;;x
 limited_partnership_company_desc;This was the first legislation enacting the possibilities for ownership in a firm without direct responsibility. This was the first step to ensure infusion of capital form private citizens.;;;;;;;;;;;;;x
 liquidation_of_assets;Liquidation of Assets;;;;;;;;;;;;;x
 liquidation_of_assets_desc;This meant that a bankrupted firm got its assets sold to pay of the moneylenders. This was a complex but important set of laws that was the first step to a stable jurisdiction for bankruptcies.;;;;;;;;;;;;;x
+literacy_programs;Literacy Programs;;;;;;;;;;;;;x
+literacy_programs_desc;Literacy programs were developed to ensure that soldiers were able to read and write, which was seen as essential for effective communication and military intelligence.;;;;;;;;;;;;;x
 literate_ncos;Literate NCOs;;;;;;;;;;;;;x
 literate_ncos_desc;When literate NCOs started to flock to the ranks the average quality of the units and the training of the soldiers increased.;;;;;;;;;;;;;x
 lixiviation_mills;Lixiviation Milling;;;;;;;;;;;;;x
@@ -669,6 +681,8 @@ local_military_government;Local Military Government;;;;;;;;;;;;;x
 local_military_government_desc;In a highly militarized society, or a normal society in war, often needed not only military-civilian cooperation boards on a local level, but sometimes most of the local government could be appointed officers. This meant not only a strong military control, but also that the power of the Navy increased disproportionately in comparison to other governmental agencies.;;;;;;;;;;;;;x
 logging;Logging;;;;;;;;;;;;;x
 logging_desc;Logging is the process of systematically harvesting a country’s timber resources, replacing traditional methods of lumberjacking that relied primarily on disorganized groups of laborers cutting down what trees they could find and selling the timber on the market in a manner similar to farmers.;;;;;;;;;;;;;x
+logical_investigations;Logical Investigations;;;;;;;;;;;;;x
+logical_investigations_desc;Logical Investigations is a book written by the philosopher Edmund Husserl. The book is considered to be one of the most important works in the field of phenomenology, which is the study of consciousness and experience. In the book, Husserl develops his theory of intentionality, which is the idea that all consciousness is directed towards something or has an object.;;;;;;;;;;;;;x
 logical_positivism;Logical Positivism;;;;;;;;;;;;;x
 logical_positivism_desc;Logical positivists denied the soundness of metaphysics and traditional philosophy. They asserted that many philosophical problems are indeed meaningless, primarily concerned with the logical analysis of scientific knowledge. They though failed to secure what they themselves considered to be the sound foundation of knowledge and is today most often considered a dead-end.;;;;;;;;;;;;;x
 logistical_calculations;Logistical Calculations;;;;;;;;;;;;;x
@@ -678,7 +692,7 @@ long_range_fire_tactic_desc;This tactic meant lying off the firing range of the 
 louis_pasteur;Louis Pasteur;;;;;;;;;;;;;x
 louis_pasteur_desc;Louis Pasteur was a French chemist and microbiologist who is remembered for his remarkable breakthroughs in the causes and preventions of diseases. His discoveries reduced mortality from puerperal fever, and he created the first vaccine for rabies and anthrax. He was best known to the public for inventing a method to stop milk and wine from causing sickness, a process that came to be called pasteurization.;;;;;;;;;;;;;x
 low_echelon_fire_support;Low-Echelon Fire Support;;;;;;;;;;;;;x
-low_echelon_fire_support_desc;Low-Echelon Fire Support;;;;;;;;;;;;;x
+low_echelon_fire_support_desc;By organizing fire support at company and battalion level, commanders could quickly coordinate machine guns, mortars, and light artillery to reinforce local attacks and defenses.;;;;;;;;;;;;;x
 ludwig_von_mises;Ludwig von Mises;;;;;;;;;;;;;x
 ludwig_von_mises_desc;An Austrian economist who would challenge the growing influence of Keynesian economics upon the actions of the State in the 1930s. Von Mises argued that the attempt by the State to use its resources to revive demand in the economy created dangerous potentials for inflation of the economy and severe imbalances in the ability of the marketplace to find the balance between supply and demand that would ensure stable economic growth. Von Mises was also a sharp critic of socialist economic models, arguing that such models removed the ability of the market to determine price levels that would ensure adequate supply based on the demands of consumers for goods.;;;;;;;;;;;;;x
 luxury_clothes_factories;Luxury Clothing Factories;;;;;;;;;;;;;x
@@ -691,6 +705,8 @@ machine_tools;Machine Tools;;;;;;;;;;;;;x
 machine_tools_desc;By constructing special machines that produced standardized machine tools the exchangeability in industry was vastly improved.;;;;;;;;;;;;;x
 manifest_destiny;Manifest Destiny;;;;;;;;;;;;;x
 manifest_destiny_desc;The doctrine of ‘Manifest Destiny’ appeared first in the United States in the 1840s to justify its need to expand westward. Already in 1823, the Monroe Doctrine had forbidden America to European colonization. The United States had new a duty to reach its continental boundaries and expand its civilization all over the continent. The basic idea was that the nation was destined to greatness and expansion.;;;;;;;;;;;;;x
+manual_of_arms;Manual of Arms;;;;;;;;;;;;;x
+manual_of_arms_desc;The Manual of Arms is an essential part of military training, and soldiers have to learn a specific set of movements to handle their weapons safely and effectively.;;;;;;;;;;;;;x
 marcel_mauss;Marcel Mauss;;;;;;;;;;;;;x
 marcel_mauss_desc;Marcel Mauss was a French sociologist. Mauss’ academic work traversed the boundaries between sociology and anthropology. Today, he is perhaps better recognised for his influence on the latter discipline, particularly with respect to his analyses of topics such as magic, sacrifice and gift exchange in primitive cultures.;;;;;;;;;;;;;x
 market_behaviour_monitoring;Market Behaviour Monitoring;;;;;;;;;;;;;x
@@ -748,7 +764,7 @@ modern_archaeology_desc;Archaeological field methods underwent further developme
 modern_armaments_industry;Modern Armaments Industry;;;;;;;;;;;;;x
 modern_armaments_industry_desc;The modern armaments industry saw impressive gains in arms production.;;;;;;;;;;;;;x
 modern_battleships;Modern Battleships;;;;;;;;;;;;;x
-modern_battleships_desc;Description goes here.;;;;;;;;;;;;;x
+modern_battleships_desc;Interwar battleship design emphasized stronger deck armor, improved compartmentalization, better anti-aircraft batteries, and advanced fire-control systems, producing capital ships better suited to modern naval warfare.;;;;;;;;;;;;;x
 modern_cruisers;Modern Cruisers;;;;;;;;;;;;;x
 modern_cruisers_desc;With the rise of modern industrial practices and the increasing availability of new materials for construction purposes, a new school of architecture and design would evolve in the early twentieth century that would mark a radical break with the definitions of style of the past. Following upon the dictum ‘Form Follows Function,’ a new focus in architecture and design based around clean lines, verticality and a deliberate lack of orientation would come to the fore in the work of architects such as Louis Henri Sullivan, Frank Lloyd Wright, Walter Gropius and Le Corbusier and in schools of design such as the Bauhaus.;;;;;;;;;;;;;x
 modern_design;Modern Design;;;;;;;;;;;;;x
@@ -767,6 +783,8 @@ motorised_infantry_doctrine;Motorized Infantry Doctrine;;;;;;;;;;;;;x
 motorised_infantry_doctrine_desc;Supplying units of infantry with vehicles that could speedily transport them from one war zone to the next is the first step in the evolution of a truly modern armed forces.;;;;;;;;;;;;;x
 mountain_warfare;Mountain Warfare;;;;;;;;;;;;;x
 mountain_warfare_desc;Mountain warfare refers to warfare in the mountains or similarly rough terrain. This type of warfare is also called Alpine warfare, after the Alps mountains. Mountain warfare is one of the most dangerous types of combat as it involves surviving not only combat with the enemy but also the extreme weather and dangerous terrain. Mountain ranges are of strategic importance since they often act as a natural border and may also be the origin of a water source. Attacking a prepared enemy position in mountain terrain requires a greater ratio of attacking soldiers to defending soldiers than a war conducted on level ground.;;;;;;;;;;;;;x
+moving_assembly_line;Moving Assembly Line;;;;;;;;;;;;;x
+moving_assembly_line_desc;The moving assembly line reorganized factory work into sequential tasks along a continuously advancing production path, dramatically reducing unit costs and increasing industrial output.;;;;;;;;;;;;;x
 multitude_of_financial_instruments;Multitude of Financial Instruments;;;;;;;;;;;;;x
 multitude_of_financial_instruments_desc;The introduction of a multitude of financial instruments, meant not only a smoother flow of capital, but also that the middle class got better return on their private investments.;;;;;;;;;;;;;x
 mussolini;Benito Mussolini;;;;;;;;;;;;;x
@@ -785,6 +803,10 @@ naval_exercises;Naval Exercises;;;;;;;;;;;;;x
 naval_exercises_desc;A critical component of training for war at sea were naval exercises, in which ships would engage in mock-battles and other realistic training missions so as to understand how to act under wartime conditions. These exercises could involve entire fleets and stretch over days if not weeks and were important not just for the training they gave, but also for the evaluation of the abilities under pressure of officers and sailors themselves.;;;;;;;;;;;;;x
 naval_firepower_doctrine;Naval Firepower Doctrine;;;;;;;;;;;;;x
 naval_firepower_doctrine_desc;While a focus on winning the decisive naval battle was important, it was also considered valuable to use a variety of weaponry in order to achieve victory, in addition to the main armament of capital ships. Lighter warships were also important, as they could dart in and launch deadly torpedo attacks, while secondary armament was necessary to defend against these attacks. A balanced fleet of both capital and escort ships was essential to victory in modern naval combat.;;;;;;;;;;;;;x
+naval_literacy_programs;Naval Literacy Programs;;;;;;;;;;;;;x
+naval_literacy_programs_desc;Naval literacy programs ensured that sailors could read technical manuals, follow written signals, and report information accurately—skills essential for modern fleet coordination.;;;;;;;;;;;;;x
+naval_manual_of_arms;Manual of Arms;;;;;;;;;;;;;x
+naval_manual_of_arms_desc;Standardized naval drills taught sailors the safe handling of small arms and shipboard weapons, improving discipline, readiness, and combat effectiveness.;;;;;;;;;;;;;x
 naval_strike_success_criterium;Naval Strike Success Criterium;;;;;;;;;;;;;x
 naval_strike_success_criterium_desc;By measuring sea legs and speed of both enemy and friendly ships and earlier behaviour of the enemy. It was possible to optimize where and when to strike at the enemy and also to get realistic forecast of possible enemy strikes.;;;;;;;;;;;;;x
 nco_combat_station_training;NCO Combat Station Training;;;;;;;;;;;;;x
@@ -861,6 +883,8 @@ pit_mining_invention;Pit Mining;;;;;;;;;;;;;x
 pit_mining_invention_desc;Open-pit mining is a surface mining technique of extracting rock or minerals from the earth by their removal from an open pit or borrow. This form of mining differs from extractive methods that require tunnelling into the earth such as long wall mining. Open-pit mines are used when deposits of commercially useful minerals or rock are found near the surface, that is, where the overburden is relatively thin or the material of interest is structurally unsuitable for tunnelling.;;;;;;;;;;;;;x
 pitts_threshing_machine;Pitts’ Threshing Machine;;;;;;;;;;;;;x
 pitts_threshing_machine_desc;This farming machine made agriculture less labour intensive and increased the output.;;;;;;;;;;;;;x
+police_state;The Police State;;;;;;;;;;;;;x
+police_state_desc;The state expands surveillance, informants, and internal security powers to monitor dissent and suppress subversion before it can organize.;;;;;;;;;;;;;x
 political_lobbying;Political Lobbying;;;;;;;;;;;;;x
 political_lobbying_desc;By having high ranking officers attending politicians and being experts in defence commissions etc the Navy could easily have a strong influence over the political decisions concerning the defence and the security policy.;;;;;;;;;;;;;x
 political_religion;Political Religion;;;;;;;;;;;;;x
@@ -909,6 +933,10 @@ protected_cruisers;Armoured Cruisers;;;;;;;;;;;;;x
 protected_cruisers_desc;Cruisers are the evolution of the Man-o’-War. They are less heavily armed and armoured than a battleship but make up for that with greater speed.;;;;;;;;;;;;;x
 proto_existentialism;Proto-Existentialism;;;;;;;;;;;;;x
 proto_existentialism_desc;This was not a philosophical movement but disparate philosophers analysing and discussing concepts and conceptions which they considered flawed. The general notion about things as Intuition, Time, Intellect, and Being had to be reformulated not do create pseudo-problems.;;;;;;;;;;;;;x
+provincial_bureaucracy;Provincial Bureaucracy;;;;;;;;;;;;;x
+provincial_bureaucracy_desc;The purpose of a bureaucracy is to successfully implement the actions of an organization of any size (but often associated with large entities such as government, corporations, and non-governmental organizations), in achieving its purpose and mission, and the bureaucracy is tasked to determine how it can achieve its purpose and mission with the greatest possible efficiency and at the least cost of any resources. Our land's cumbersome population and size requires more.;;;;;;;;;;;;;x
+pulverized_coal_generators;Pulverized Coal Generators;;;;;;;;;;;;;x
+pulverized_coal_generators_desc;The idea behind pulverized coal generators is to crush coal into a very fine powder, which is then burned in a furnace with a high-speed airflow. This creates a highly efficient combustion process, which generates more heat and power than burning coal in a solid form.;;;;;;;;;;;;;x
 quality_assurance_procedure;Quality Assurance Procedures;;;;;;;;;;;;;x
 quality_assurance_procedure_desc;This meant introducing a procedure to check that all products had the same and authorized level of quality.;;;;;;;;;;;;;x
 quantum_theory;Quantum Theory;;;;;;;;;;;;;x
@@ -933,6 +961,8 @@ realist_music;Realist Music;;;;;;;;;;;;;x
 realist_music_desc;The realists opposed the ever-present glorification and dramatization in the arts. Their ambition was to portray the world naked, just as they saw it with their own eyes. With an unblurred vision and eye for each detail in their surroundings, they set their focus on the everyday life of the ordinary man.;;;;;;;;;;;;;x
 rear_area_dumps;Rear Area Dumps;;;;;;;;;;;;;x
 rear_area_dumps_desc;As technology advanced, particularly in terms of motorisation, new concepts needed to be applied to more traditional doctrines. Supply, always an issue to an army, was greatly enhanced by these changes. It was now possible, as well as necessary, to establish major supply depots, from which entire sectors could be supplied. It was no longer necessary for long supply trains to feed frontline units, as centralised depots could rapidly dispense needed material to units.;;;;;;;;;;;;;x
+reduced_intervention;Reduced Interventionism;;;;;;;;;;;;;x
+reduced_intervention_desc;Market-determined exchange rates can reduce the need for government intervention in currency markets, as there is less pressure to maintain fixed exchange rate regimes. This can help to reduce the costs associated with currency interventions and increase transparency in financial markets.;;;;;;;;;;;;;x
 refrigerator_technology;Refrigerator Technology;;;;;;;;;;;;;x
 refrigerator_technology_desc;The introduction of refrigerator technology revolutionized food industry, but also distillery industry which had always been limited by temperature.;;;;;;;;;;;;;x
 regenerative_forestry;Regenerative Forestry;;;;;;;;;;;;;x
@@ -941,6 +971,8 @@ regulated_buying_and_selling_of_stocks;Regulated Buying and Selling of Stocks;;;
 regulated_buying_and_selling_of_stocks_desc;This made it not only safer, but also cheaper in the long run to buy stocks as the routine for buying and selling was now institutionalized into time and place.;;;;;;;;;;;;;x
 replenishment_transport_organisation;Replenishment Transport Organisation;;;;;;;;;;;;;x
 replenishment_transport_organisation_desc;Depots were focus points for the wartime supply system, but a replenishment transport organization was needed to get bullets and toilet paper out to the men.;;;;;;;;;;;;;x
+reveille;Standardized Reveille;;;;;;;;;;;;;x
+reveille_desc;The Reveille, which is played at the start of the day to wake up soldiers, is now standardized. Soldiers are expected to wake up promptly and start their day when the bugle call sounded.;;;;;;;;;;;;;x
 rhetoric_of_hate;Rhetoric Of Hate;;;;;;;;;;;;;x
 rhetoric_of_hate_desc;This was a certain brand of public speaking which incited hate and the urge to do violence against a certain group in society. Most governments tried to forbid and stop such activities, but at some points they were unable to.;;;;;;;;;;;;;x
 richard_kahn;Richard Kahn;;;;;;;;;;;;;x
@@ -993,10 +1025,14 @@ secret_police;Secret Police;;;;;;;;;;;;;x
 secret_police_desc;This special department of the Police was instituted to get at political groups disrespecting the current order. For people in general this could be understood either as a fair and good institution or an evil repressive face of power.;;;;;;;;;;;;;x
 secularization;Secularization;;;;;;;;;;;;;x
 secularization_desc;Secularization is the activity of changing something like art or education, so it is no longer under the control or influence of religion. This doctrine also proposes the transfer of property from ecclesiastical to civil possession.;;;;;;;;;;;;;x
+securization;Securitization;;;;;;;;;;;;;x
+securization_desc;Hedge funds may invest in securitized products, which are financial instruments created by pooling together various assets such as mortgages, credit card debt, or other loans. The development of securitization has led to increased liquidity in the banking system and allowed banks to free up capital.;;;;;;;;;;;;;x
 self_determination;Self-Determination;;;;;;;;;;;;;x
 self_determination_desc;Being subject to the will of a distant overlord has given the people a common cause, one that crosses all ideological boundaries. They will unite to oppose foreign rule, rising up violently if necessary, and deal with their other differences once a free government has been achieved.;;;;;;;;;;;;;x
 self_propelled_artillery;Self-Propelled Artillery;;;;;;;;;;;;;x
 self_propelled_artillery_desc;The weakness of artillery has always been its lack of mobility and considering that mobility is quickly becoming the hallmark of a modern army, it is becoming increasingly clear that new methods must be developed to move artillery from one front to the next.;;;;;;;;;;;;;x
+semi_auto_rifle_armament;Semi Automatic Rifle Armament;;;;;;;;;;;;;x
+semi_auto_rifle_armament_desc;A rifle is considered semi-automatic if it uses the energy of a fired cartridge to automatically load the next cartridge into the chamber, without requiring the shooter to manually operate the bolt or other mechanism to load the next round;;;;;;;;;;;;;x
 separatism;Separatism;;;;;;;;;;;;;x
 separatism_desc;The idea of national sovereignty and the view that a people were a distinct group based on blood and language with certain rights evolved during the century and at several spots these ethnic groups started to work for independence.;;;;;;;;;;;;;x
 sequence_planning;Sequence Planning;;;;;;;;;;;;;x
@@ -1015,6 +1051,8 @@ siege_doctrine;Siege Doctrine;;;;;;;;;;;;;x
 siege_doctrine_desc;Methods of improving fortifications have improved rapidly since the days of castles and forts, thus the way we lay siege must also change.;;;;;;;;;;;;;x
 signal_detachments;Signal Detachments;;;;;;;;;;;;;x
 signal_detachments_desc;At this point separate signal detachments were added to divisions and up vastly increasing their communication.;;;;;;;;;;;;;x
+silicon_steel;Silicon Steel;;;;;;;;;;;;;x
+silicon_steel_desc;Silicon steel is an alloy of iron, carbon, and silicon, and is known for its magnetic properties.;;;;;;;;;;;;;x
 silver_standard;Silver Standard;;;;;;;;;;;;;x
 silver_standard_desc;This meant a currency system based on silver. Money was cheaper to produce by the government which meant that it was rarely any lack of money in the country. The problem was though that the silver prices had a tendency to be dominated by gold prices which meant that foreign trade was often suffering.;;;;;;;;;;;;;x
 small_arms_production;Small Arms Production;;;;;;;;;;;;;x
@@ -1037,6 +1075,8 @@ societal_status;Societal Status;;;;;;;;;;;;;x
 societal_status_desc;At this time the professionalization of the officer corps and the fact the majority of it consisted of middle-class men rather than gentry increased its societal status.;;;;;;;;;;;;;x
 sociology;Sociology;;;;;;;;;;;;;x
 sociology_desc;Sociology is the science of society, social institutions and social relationship. It attempts to recreate the effect of certain actions on societies.;;;;;;;;;;;;;x
+sonar;Sonar;;;;;;;;;;;;;x
+sonar_desc;Sonar uses sound waves to detect underwater objects, such as submarines or mines. A sonar system sends out sound waves that bounce off objects in the water and analyzes the returning echoes to estimate their location and characteristics.;;;;;;;;;;;;;x
 soren_kierkegaard;Søren Kierkegaard;;;;;;;;;;;;;x
 soren_kierkegaard_desc;Søren Kierkegaard was a Danish philosopher, theologian and religious author interested in human psychology. He strongly criticized many modern philosophers and the Christianity of the State Church versus the Free Church. Much of his philosophical work deals with the issues of how one lives as a ‘single individual’, giving priority to concrete human reality over abstract thinking, and highlighting the importance of personal choice and commitment.;;;;;;;;;;;;;x
 spearhead_doctrine;Spearhead Doctrine;;;;;;;;;;;;;x
@@ -1139,6 +1179,8 @@ time_clock;Time Clock;;;;;;;;;;;;;x
 time_clock_desc;By setting up regulated workhours the efficiency of the production increased. Workers could now work in shifts which further increased it. Though with the new regulation of workhours labourers left the old lifecycle of the farmers being awake from sunrise to sunset and it effected social life and increased tempo and stress.;;;;;;;;;;;;;x
 time_studies;Time Studies;;;;;;;;;;;;;x
 time_studies_desc;This meant checking how much time each task too for different workers and then analysing how work could be speed up, either by changing the way a specific task was done or by moving tasks around in the sequence.;;;;;;;;;;;;;x
+tool_steel;Tool Steel;;;;;;;;;;;;;x
+tool_steel_desc;Tool steel is a general term for a range of steel alloys that are specifically designed for use in tools, such as hammers, chisels, and punches. These alloys typically contain high levels of carbon.;;;;;;;;;;;;;x
 torpedo_attacks;Torpedo Attacks;;;;;;;;;;;;;x
 torpedo_attacks_desc;The torpedo is a self-propelled weapon with an explosive warhead, launched above or below the water surface, propelled underwater towards a target, and designed to detonate either on contact with its target or in proximity to it. Launched from a small ship, it can be deadly to even the largest warships.;;;;;;;;;;;;;x
 torpedo_boats;Torpedo Boats;;;;;;;;;;;;;x
@@ -1179,6 +1221,8 @@ vilfredo_pareto;Vilfredo Pareto;;;;;;;;;;;;;x
 vilfredo_pareto_desc;The Italian economist Vilfredo Pareto was one of the leaders of the Lausanne School and an illustrious member of the ‘second generation’ of the Neoclassical revolution. Although only mildly influential during his lifetime, his ‘tastes–and–obstacles’ approach to general equilibrium theory were resurrected during the great ‘Paretian Revival’ of the 1930s and have guided much of economics since.;;;;;;;;;;;;;x
 vitamins;Vitamins;;;;;;;;;;;;;x
 vitamins_desc;A Vitamin is an organic compound and an essential nutrient that an organism requires in limited amounts. An organic chemical compound is called a vitamin when the organism cannot make the compound in sufficient quantities, and it must be obtained through the diet.;;;;;;;;;;;;;x
+walkable_cities;Walkable Cities;;;;;;;;;;;;;x
+walkable_cities_desc;A walkable city is a city that is designed to be easily navigable on foot. This means that the streets are laid out in a grid pattern, with sidewalks and crosswalks that make it easy for pedestrians to get around. Buildings are constructed close to the street, creating a continuous street wall that provides shade and shelter for pedestrians.;;;;;;;;;;;;;x
 war_gamming;Modern Fleet War Gaming;;;;;;;;;;;;;x
 war_gamming_desc;The use of war games to plan and prepare for war is as old as warfare itself and includes such hallmarks as chess. However, serious analytical naval war gaming emerged in the late 19th and early 20th centuries. Major naval powers would use detailed gaming systems that took account of such variables as a ship’s armour, speed, and the number and calibre of guns in order to determine battle damage and the ultimate victor. These naval war games were used to test strategic plans, and different means of countering potential enemy strategies and warships.;;;;;;;;;;;;;x
 wargames;Naval Wargames;;;;;;;;;;;;;x
@@ -1208,52 +1252,8 @@ work_specialization_desc;By specializing workers and given certain tasks to cert
 working_board_of_directors;Working Board of Directors;;;;;;;;;;;;;x
 working_board_of_directors_desc;The business culture of having a working board of directors meant that those who made the long-run strategic decisions for the company also worked with its daily practises, which paved the way for good decisions.;;;;;;;;;;;;;x
 wright_n_langleys_aeroplanes;Wright & Langley’s Aeroplanes;;;;;;;;;;;;;x
-wright_n_langleys_aeroplanes_desc;This was the first durable aircraft. It was extremely expensive, and it would take a decade before a commercial version was produced and then only the ultrarich could afford it.;;;;;;;;;;;;;x
+wright_n_langleys_aeroplanes_desc;Early powered aircraft pioneers such as the Wright brothers and Samuel Langley demonstrated the military and commercial potential of flight, opening the path toward practical aviation in the early twentieth century.;;;;;;;;;;;;;x
 x_rays;X-Rays;;;;;;;;;;;;;x
 x_rays_desc;With X-rays it was now possible to perfectly view any shattered bones within a body without cutting it up. This of course made operations and rehabilitation much easier.;;;;;;;;;;;;;x
 young_school_doctrine;Young School Doctrine;;;;;;;;;;;;;x
 young_school_doctrine_desc;The Jeune École (‘Young School’) is a strategic naval concept developed that advocates the use of small, powerfully equipped units to combat a larger battleship fleet, and commerce raiders capable of ending the trade of the rival nation.;;;;;;;;;;;;;x
-pulverized_coal_generators;Pulverized Coal Generators;;;;;;;;;;;;;x
-pulverized_coal_generators_desc;The idea behind pulverized coal generators is to crush coal into a very fine powder, which is then burned in a furnace with a high-speed airflow. This creates a highly efficient combustion process, which generates more heat and power than burning coal in a solid form.;;;;;;;;;;;;;x
-air_preheaters;Air Preheaters;;;;;;;;;;;;;x
-air_preheaters_desc;Air preheaters are essentially heat exchangers that heat the combustion air in a steam turbine by transferring heat from the flue gases that are leaving the turbine, making them a more cost-effective option for power generation;;;;;;;;;;;;;x
-absorption_refrigerators;Absorption Refrigerators;;;;;;;;;;;;;x
-absorption_refrigerators_desc;The basic principle behind absorption refrigerators is that certain chemicals, such as ammonia and water, can be used to create a refrigeration cycle that operates using only heat as an energy source. The process involves heating a mixture of ammonia and water, causing the ammonia to vaporize and separate from the water. The ammonia vapor is then cooled, which causes it to condense back into a liquid. This liquid ammonia is then mixed with water, which absorbs the heat generated during the process, allowing the cycle to continue.;;;;;;;;;;;;;x
-high_speed_steel;High Speed Steel;;;;;;;;;;;;;x
-high_speed_steel_desc;High-speed steel is a type of steel alloy that is specifically designed to maintain its hardness and cutting ability at high temperatures.;;;;;;;;;;;;;x
-tool_steel;Tool Steel;;;;;;;;;;;;;x
-tool_steel_desc;Tool steel is a general term for a range of steel alloys that are specifically designed for use in tools, such as hammers, chisels, and punches. These alloys typically contain high levels of carbon.;;;;;;;;;;;;;x
-silicon_steel;Silicon Steel;;;;;;;;;;;;;x
-silicon_steel_desc;Silicon steel is an alloy of iron, carbon, and silicon, and is known for its magnetic properties.;;;;;;;;;;;;;x
-police_state;The Police State;;;;;;;;;;;;;x
-police_state_desc;The state expands surveillance, informants, and internal security powers to monitor dissent and suppress subversion before it can organize.;;;;;;;;;;;;;x
-logical_investigations;Logical Investigations;;;;;;;;;;;;;x
-logical_investigations_desc;Logical Investigations is a book written by the philosopher Edmund Husserl. The book is considered to be one of the most important works in the field of phenomenology, which is the study of consciousness and experience. In the book, Husserl develops his theory of intentionality, which is the idea that all consciousness is directed towards something or has an object.;;;;;;;;;;;;;x
-haber_process;Haber–Bosch process;;;;;;;;;;;;;x
-haber_process_desc;The Haber-Bosch process is a chemical process that converts atmospheric nitrogen and hydrogen gas into ammonia, which is a key ingredient in fertilizer and other industrial applications;;;;;;;;;;;;;x
-moving_assembly_line;Moving Assembly Line;;;;;;;;;;;;;x
-moving_assembly_line_desc;Moving Assembly Line;;;;;;;;;;;;;x
-semi_auto_rifle_armament;Semi Automatic Rifle Armament;;;;;;;;;;;;;x
-semi_auto_rifle_armament_desc;A rifle is considered semi-automatic if it uses the energy of a fired cartridge to automatically load the next cartridge into the chamber, without requiring the shooter to manually operate the bolt or other mechanism to load the next round;;;;;;;;;;;;;x
-sonar;Sonar;;;;;;;;;;;;;x
-sonar_desc;Sonars uses sound waves to detect underwater objects, such as submarines or mines. A sonar system sends out sound waves that bounce off of objects in the water and then detects the returning echoes to determine the location and characteristics of the object. Sonar is an important tool for anti-submarine warfare, as it allows ships and aircraft to locate and track submerged submarines.;;;;;;;;;;;;;x
-early_radar;Early Radar;;;;;;;;;;;;;x
-early_radar_desc;Radars uses radio waves to detect objects in the air or on the surface of the water. A radar system sends out radio waves that bounce off of objects and then detects the returning echoes to determine the location, speed, and direction of the object. Radar is used for a wide range of naval operations, including detecting enemy ships and aircraft, guiding weapons systems, and tracking the movement of friendly forces.;;;;;;;;;;;;;x
-literacy_programs;Literacy Programs;;;;;;;;;;;;;x
-literacy_programs_desc;Literacy programs were developed to ensure that soldiers were able to read and write, which was seen as essential for effective communication and military intelligence.;;;;;;;;;;;;;x
-manual_of_arms;Manual of Arms;;;;;;;;;;;;;x
-manual_of_arms_desc;The Manual of Arms is an essential part of military training, and soldiers have to learn a specific set of movements to handle their weapons safely and effectively.;;;;;;;;;;;;;x
-reveille;Standardized Reveille;;;;;;;;;;;;;x
-reveille_desc;The Reveille, which is played at the start of the day to wake up soldiers, is now standardized. Soldiers are expected to wake up promptly and start their day when the bugle call sounded.;;;;;;;;;;;;;x
-walkable_cities;Walkable Cities;;;;;;;;;;;;;x
-walkable_cities_desc;A walkable city is a city that is designed to be easily navigable on foot. This means that the streets are laid out in a grid pattern, with sidewalks and crosswalks that make it easy for pedestrians to get around. Buildings are constructed close to the street, creating a continuous street wall that provides shade and shelter for pedestrians.;;;;;;;;;;;;;x
-securization;Securization;;;;;;;;;;;;;x
-securization_desc;Hedge funds may invest in securitized products, which are financial instruments created by pooling together various assets such as mortgages, credit card debt, or other loans. The development of securitization has led to increased liquidity in the banking system and allowed banks to free up capital.;;;;;;;;;;;;;x
-reduced_intervention;Reduced Interventionism;;;;;;;;;;;;;x
-reduced_intervention_desc;Market-determined exchange rates can reduce the need for government intervention in currency markets, as there is less pressure to maintain fixed exchange rate regimes. This can help to reduce the costs associated with currency interventions and increase transparency in financial markets.;;;;;;;;;;;;;x
-naval_literacy_programs;Literacy Programs;;;;;;;;;;;;;x
-naval_literacy_programs_desc;Literacy programs were developed to ensure that soldiers were able to read and write, which was seen as essential for effective communication and military intelligence.;;;;;;;;;;;;;x
-naval_manual_of_arms;Manual of Arms;;;;;;;;;;;;;x
-naval_manual_of_arms_desc;The Manual of Arms is an essential part of military training, and soldiers have to learn a specific set of movements to handle their weapons safely and effectively.;;;;;;;;;;;;;x
-grand_fleet_doctrine;Grand Fleet Doctrine;;;;;;;;;;;;;x
-grand_fleet_doctrine_desc;Grand Fleet Doctrine;;;;;;;;;;;;;x
