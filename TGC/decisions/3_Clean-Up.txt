@@ -1,5 +1,5 @@
 #TODO: clean_up_colonial_government flag deprecated, remove decisions/events where its used, or replace with colonial_company_gov flag
-#TODO: Reintroduce way for Algiers to become Maghrebi primary culture instead of French if they go independent, but shouldnt be in this file
+#TODO: Reintroduce way for Algiers to become Maghrebi primary culture instead of French if they go independent, but shouldn't be in this file
 political_decisions = {
 #from CleanUp.txt
 
@@ -45,7 +45,7 @@ political_decisions = {
 		ai_will_do = { factor = 1 }
 	}
 
-	##Decisons to disable vassal payments can be found under utilities in Setup.txt
+	##Decisions to disable vassal payments can be found under utilities in Setup.txt
 
 	monthly_substate_payment = {
 		potential = {

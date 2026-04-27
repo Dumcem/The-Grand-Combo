@@ -49,7 +49,7 @@
 				modifier = {
 					factor = 0
 					owner = { tag = USA }
-					any_owned_province = { # Guarranteed to be Free States
+					any_owned_province = { # Guaranteed to be Free States
 						OR = {
 							region = MEX_85		# California
 							region = USA_106	# Colorado
@@ -141,7 +141,7 @@
 				modifier = {
 					factor = 0
 					owner = { tag = USA }
-					any_owned_province = { # Guarranteed to be Slave States
+					any_owned_province = { # Guaranteed to be Slave States
 						OR = {
 							region = USA_200 #Florida
 							is_core = TEX

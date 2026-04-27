@@ -3598,9 +3598,9 @@ country_event = {
 				all_core = {
 					limit = {
 						NOT = {
-							region = AUS_619 # Österreich
+							region = AUS_619 # Ã–sterreich
 							region = AUS_612 # Tirol
-							region = AUS_613 # Kärnten-Steiermark
+							region = AUS_613 # KÃ¤rnten-Steiermark
 							region = AUS_614 # Vorarlberg
 							region = AUS_615 # Salzburg
 							region = AUS_734 # South Tirol
@@ -5407,7 +5407,7 @@ country_event = {
 			owns = 619
 			year = 1897
 			NOT = { year = 1911 }
-			realism = 1 # I know that this is debateable, but someone who wants prestige, should invest research points in culture technology
+			realism = 1 # I know that this is debatable, but someone who wants prestige, should invest research points in culture technology
 		}
 
 		mean_time_to_happen = {
@@ -5435,7 +5435,7 @@ country_event = {
 		trigger = {
 			owns = 558
 			year = 1909
-			realism = 1 # I know that this is debateable, but someone who wants prestige, should invest research points in culture technology
+			realism = 1 # I know that this is debatable, but someone who wants prestige, should invest research points in culture technology
 		}
 
 		mean_time_to_happen = {
@@ -6139,7 +6139,7 @@ country_event = {
 	}
 }
 
-#Punctation of Olmutz - If Germany has not formed during the Revolution, Prussia gets its wings clipped 
+#Punctuation of Olmutz - If Germany has not formed during the Revolution, Prussia gets its wings clipped 
 country_event = {
 	id = 200053
 	title = "EVTNAME200053"

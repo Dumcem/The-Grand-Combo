@@ -23,7 +23,7 @@ A better map requires better people living on it; TGC's superior culture map is 
 <br>
 TGC, like many other major overhauls, is no stranger to additional historical content and flavor. From fresh events and decisions to new formables and plausible alternative historical pathways, the player can pursue and satisfy their geographical and roleplay desires.
 <br>
-One thing we strongly try to avoid is "railroady" content, focusing our modding efforts on a mechanical and detailed approach rather than novel-style gameplay is our focus as a team, this lets us provide with options not just to the player but also to the AI, making the game more intriguing, flexible, and unexpectable.
+One thing we strongly try to avoid is "railroady" content; as a team, we focus our modding efforts on a mechanical and detailed approach rather than novel-style gameplay. This gives not only the player but also the AI more options, making the game more intriguing, flexible, and unpredictable.
 <br>
 <br>
 When playing TGC, there are always cool "look what the AI did this time" moments during your campaigns.
@@ -102,11 +102,11 @@ With it, it's possible to influence migration with ease to adjust the country's 
 
 TGC's official music submod! With hours of carefully curated classic and folk music, to enhance your Victoria II gameplay. Each music was carefully chosen, and assigned special playing conditions, from war, peace, country, culture, even war exhaustion and level of westernization!
 
-* Songs carefully hand picked with proper research and analysis.
+* Songs carefully hand-picked with proper research and analysis.
 * Fully overhauled western music.
 * Different songs for different cultures.
 * Different songs for different game situations.
-* Completely new non-western playlist for asian countries.
+* Completely new non-western playlist for Asian countries.
 
 Due to download size constraints, The Grand Orchestra is stored in another repository, which you can access by clicking [here](https://github.com/joelAVS/The-Grand-Orchestra).
 
@@ -151,7 +151,7 @@ By the end of the process, your /mod folder should look like the picture above, 
 
 <br>
 
- * ***BEWARE: There is a chance that due to the sheer number of files, GitHub's browser zipping process can corrupt your download, therefore the mod might not work for you. If that happens, follow instructions below on how to download the mod (its very latest version) via GitHub Desktop app or download the zip from latest pre-packed release (usually somewhat outdated).***
+ * ***BEWARE: There is a chance that due to the sheer number of files, GitHub's browser zipping process can corrupt your download, therefore the mod might not work for you. If that happens, follow the instructions below on how to download the mod (its latest version) via the GitHub Desktop app or download the ZIP from the latest pre-packed release (usually somewhat outdated).***
   * Fresh off the press version: You can use the GitHub Desktop application. This is slightly more complicated but preferable since downloading the zip through the browser can lead to corrupted files being downloaded which can cause the game to crash. For instructions on this go to the #install-instructions channel on the Discord.
   * Slightly stale: Stable pre-packed zip releases: https://github.com/rderekp/The-Grand-Combo/releases
 
@@ -167,7 +167,7 @@ For Increased Performance on 64-bit PCs):
 
 ![lowram](https://user-images.githubusercontent.com/32886642/220321810-fc6d60fa-f18e-412c-adc6-f28c68561122.png)
 
-If you have a low end pc or laptop and is running low on ram, this patch will make your game run on less than 2gbs of ram.
+If you have a low-end PC or laptop and are running low on RAM, this patch will make your game run on less than 2 GB of RAM.
 
 1. After installing TGC, go to your "Victoria 2/mod" folder
 2. Enter the "TGCLowRam" folder
@@ -177,7 +177,7 @@ If you have a low end pc or laptop and is running low on ram, this patch will ma
 
 4. Go to your flag cache folder at "Documents\Paradox Interactive\Victoria II\TGC\gfx\flags"
 
-If you have not ran TGC yet, you will need to create this folder.
+If you have not run TGC yet, you will need to create this folder.
 
 5. Delete all the contents inside the /flags folder
 6. Paste the "CompressedFlagCache.zip" file you copied inside said folder
