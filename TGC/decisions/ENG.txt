@@ -5498,8 +5498,8 @@ political_decisions = {
 				factor = 0
 				NOT = { year = 1839 }
 				NET = { has_country_flag = willem_i }
-				NOT = { has_global_flag = PRU_willem_i_alliance }
-				NOT = { has_global_flag = FRA_willem_i_alliance }
+				NOT = { NET = { has_country_flag = PRU_willem_i_alliance } }
+				NOT = { NET = { has_country_flag = FRA_willem_i_alliance } }
 			}
 		}
 	}

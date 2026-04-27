@@ -1378,7 +1378,7 @@ political_decisions = {
 			NOT = { has_country_flag = offered_treaty_of_guadalupe_hidalgo }
 			MEX = {
 				is_greater_power = no
-				NOT = { has_country_flag = manifest_destiny_refuted }
+				NOT = { has_global_flag = manifest_destiny_refuted }
 			}
 		}
 
