@@ -2528,7 +2528,7 @@ political_decisions = {
 			}
 			random_owned = {
 				limit = { province_id = 2084 }
-				change_province_name = "Lüderitzbucht"
+				change_province_name = "LÃ¼deritzbucht"
 				life_rating = 21
 			}
 			random_owned = {
@@ -2538,7 +2538,7 @@ political_decisions = {
 			}
 			random_owned = {
 				limit = { province_id = 2085 }
-				change_province_name = "Maltahöhe"
+				change_province_name = "MaltahÃ¶he"
 				life_rating = 25
 			}
 			NMB = { government = colonial_company }
@@ -2604,7 +2604,7 @@ political_decisions = {
 			#random_owned = {
 			#	limit = { owner = { is_culture_group = germanic } }
 			#	owner = {
-			#		1915 = { change_province_name = "Misahöhe" } # which province is this now??
+			#		1915 = { change_province_name = "MisahÃ¶he" } # which province is this now??
 			#	}
 			#}
 		}
@@ -3634,7 +3634,7 @@ political_decisions = {
 			690 = { naval_base = 3 }
 			random_owned = {
 				limit = {
-					province_id = 690 #Westpreußen
+					province_id = 690 #WestpreuÃŸen
 					state_scope = {
 						NOT = { has_building = steamer_shipyard }
 					}
@@ -3740,8 +3740,8 @@ political_decisions = {
 					OR = {
 						region = PRU_682 #Lower Silesia
 						region = PRU_701 #Posen
-						region = PRU_690 #Westpreußen
-                        region = PRU_695 #Ostpreußen #Representing Masurian assimilation
+						region = PRU_690 #WestpreuÃŸen
+                        region = PRU_695 #OstpreuÃŸen #Representing Masurian assimilation
 					}
 				}
 				add_province_modifier = {
@@ -3945,7 +3945,7 @@ political_decisions = {
 
 		allow = {
 			war = no
-			NOT = { has_global_flag = force_austria_to_join }
+			NOT = { has_country_flag = force_austria_to_join }
 		}
 
 		effect = {
@@ -4086,7 +4086,7 @@ political_decisions = {
 	}
 
 ###############
-# Württemberg #
+# WÃ¼rttemberg #
 ###############
 
 	build_schiller_denkmal = {
@@ -4205,7 +4205,7 @@ political_decisions = {
 			inherit = SLV
 			inherit = BAN
 			inherit = SIE
-			623 = { add_core = GER } # Ödenburg (Burgenland)
+			623 = { add_core = GER } # Ã–denburg (Burgenland)
 		}
 	}
 #from MiniMod-HNS

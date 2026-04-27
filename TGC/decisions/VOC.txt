@@ -101,7 +101,7 @@ political_decisions = {
 				civilized = no
 				NOT = { in_sphere = NET }
 			}
-			NOT = { has_global_flag = gold_coast_treaty }
+			NOT = { ENG = { has_country_flag = gold_coast_treaty } }
 			NOT = { has_country_flag = made_aceh_proposal }
 			ATJ = { neighbour = NET }
 		}

@@ -1338,7 +1338,7 @@
 			year = 1848
 			OR = {
 				has_country_flag = hasmanifestdestiny
-				has_country_flag = manifest_destiny_refuted
+				has_global_flag = manifest_destiny_refuted
 			}
 			war = no
 			NOT = { has_global_flag = cali_gold_rush }

@@ -222,7 +222,7 @@
 			NOT = { tag = FROM }
 			NOT = { FROM = { tag = JAN } }
 			NOT = { has_country_modifier = neutrality }
-			NOT = { has_country_flag = bankruptcy_Events_disabled }
+			NOT = { has_global_flag = bankruptcy_Events_disabled }
 		}
 
 		is_triggered_only = yes
@@ -267,7 +267,7 @@
 		trigger = {
 			NOT = { tag = FROM }
 			NOT = { has_country_modifier = neutrality }
-			NOT = { has_country_flag = bankruptcy_Events_disabled }
+			NOT = { has_global_flag = bankruptcy_Events_disabled }
 		}
 
 		is_triggered_only = yes
@@ -314,7 +314,7 @@
 			NOT = { tag = FROM }
 			NOT = { FROM = { tag = JAN } }
 			NOT = { has_country_modifier = neutrality }
-			NOT = { has_country_flag = bankruptcy_Events_disabled }
+			NOT = { has_global_flag = bankruptcy_Events_disabled }
 		}
 
 		is_triggered_only = yes
