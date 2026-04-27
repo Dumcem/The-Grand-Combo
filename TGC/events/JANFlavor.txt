@@ -932,17 +932,20 @@ country_event = {
 				}
 				end_military_access = SWI
 			}
-		#Ghost Units Cleanup, thanks Bob.
-		any_country = {
-			limit = {
-				exists = no
-                OR = {
-                    is_mobilised = yes
-                    total_amount_of_ships = 1
-                }
+			#Ghost Units Cleanup, thanks Bob.
+			any_country = {
+				limit = {
+					exists = no
+	                OR = {
+	                    is_mobilised = yes
+	                    total_amount_of_ships = 1
+	                }
+				}
+				# NOTE:
+				# This monthly janitor runs from JAN scope and may not always have a reliable FROM scope.
+				# Annexing to a fixed janitor tag avoids scope-dependent behavior while preserving ghost cleanup intent.
+				annex_to = JAN
 			}
-			annex_to = FROM
-		}
 		#Pearl Season Starts
 			any_country = { limit = { tag = JAN month = 4 }
 				1162 = {
