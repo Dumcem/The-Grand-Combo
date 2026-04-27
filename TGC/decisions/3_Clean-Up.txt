@@ -69,11 +69,11 @@ political_decisions = {
 					money = 1500
 					NOT = { total_pops = 750000 }
 				}
-				AND = {
-					money = 2500
-					total_pops = 750000
-					NOT = { total_pops = 100000 }
-				}
+					AND = {
+						money = 2500
+						total_pops = 750000
+						NOT = { total_pops = 1000000 }
+					}
 				AND = {
 					money = 3000
 					total_pops = 1000000
@@ -250,11 +250,11 @@ political_decisions = {
 							money = 1500
 							NOT = { total_pops = 750000 }
 						}
-						AND = {
-							money = 2500
-							total_pops = 750000
-							NOT = { total_pops = 100000 }
-						}
+							AND = {
+								money = 2500
+								total_pops = 750000
+								NOT = { total_pops = 1000000 }
+							}
 						AND = {
 							money = 3000
 							total_pops = 1000000
