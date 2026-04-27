@@ -12,7 +12,7 @@ adam_smith_desc;Adam Smith was a Scottish Enlightenment philosopher of political
 adolph_wagner;Adolph Wagner;;;;;;;;;;;;;x
 adolph_wagner_desc;Although one of the more active members of Schmoller’s Verein, Wagner actually supported Menger in the Methodenstreit. His work on public finance is what he is best known for in economics. Outside economics, he was a companion of Lassalle and Rodbertus—although not sharing wholly in their socialist ideals and of more conservative instincts in political matters, Wagner was a severe critic of unfettered capitalism and recommended state alleviation of the burden upon labour. He wrote ‘Science of Finance Vol 1–4’ (1877–1901), and ‘Foundations of Political Economy’ (1876).;;;;;;;;;;;;;x
 advanced_battleships;Advanced Battleships;;;;;;;;;;;;;x
-advanced_battleships_desc;The experiences of the First World War lead to a series of design improvements for battleships, including a more effective use of armour protection to defend against plunging fire, improved protection against torpedoes, the widespread use of oil-driven propulsion, and further refinements in armament and fire control. Though few battleships were constructed in the first years after the First World War, due to economic constraints and treaty limitations, existing battleships were refitted to incorporate these advances in design.;;;;;;;;;;;;;x
+advanced_battleships_desc;The experiences of the First World War led to a series of design improvements for battleships, including a more effective use of armour protection to defend against plunging fire, improved protection against torpedoes, the widespread use of oil-driven propulsion, and further refinements in armament and fire control. Though few battleships were constructed in the first years after the First World War, due to economic constraints and treaty limitations, existing battleships were refitted to incorporate these advances in design.;;;;;;;;;;;;;x
 advanced_cruisers;Advanced Cruisers;;;;;;;;;;;;;x
 advanced_cruisers_desc;By the early 1920s cruiser design focussed on two main types: light cruisers, generally with 6-inch main armament, and heavy cruisers, generally with 8-inch main armament. Their primary roles were fleet support in combination with destroyers, defence of sea lanes, and raiding.;;;;;;;;;;;;;x
 advanced_drilling_techniques;Advanced Drilling Techniques;;;;;;;;;;;;;x
@@ -26,11 +26,11 @@ advanced_ore_roasting_processes_desc;This process removed by-products from ore t
 advanced_ore_smelting_processes;Advanced Ore-Smelting Processes;;;;;;;;;;;;;x
 advanced_ore_smelting_processes_desc;This process removed by-products from ore that would otherwise degrade the final metal. Using this technique improved metal quality and durability while lowering prices through higher throughput.;;;;;;;;;;;;;x
 advanced_riflemaking;Advanced Rifle-Smithing;;;;;;;;;;;;;x
-advanced_riflemaking_desc;We have perfected small arms manufacturing to an artform.;;;;;;;;;;;;;x
+advanced_riflemaking_desc;We have perfected small arms manufacturing to an art form.;;;;;;;;;;;;;x
 advanced_target_practice;Advanced Target Practice;;;;;;;;;;;;;x
 advanced_target_practice_desc;Systematic live-fire drills, range estimation exercises, and standardized marksmanship scoring improved accuracy and ammunition efficiency across line units.;;;;;;;;;;;;;x
 aerial_bacteria_and_antiseptic_principle;Aerial Bacteria And The Antiseptic Principle;;;;;;;;;;;;;x
-aerial_bacteria_and_antiseptic_principle_desc;The discovery of aerial bacteria and the development of antiseptics revolutionized life for humanity. No longer open wounds meant amputation or death, but infections even fevers could be cured with medicine.;;;;;;;;;;;;;x
+aerial_bacteria_and_antiseptic_principle_desc;The discovery of aerial bacteria and the development of antiseptics revolutionized life for humanity. No longer did open wounds necessarily mean amputation or death, and infections and fevers could be treated with medicine.;;;;;;;;;;;;;x
 air_preheaters;Air Preheaters;;;;;;;;;;;;;x
 air_preheaters_desc;Air preheaters are essentially heat exchangers that heat the combustion air in a steam turbine by transferring heat from the flue gases that are leaving the turbine, making them a more cost-effective option for power generation;;;;;;;;;;;;;x
 alexander_bain;Alexander Bain;;;;;;;;;;;;;x
@@ -247,8 +247,6 @@ collectivism;Collectivism;;;;;;;;;;;;;x
 collectivism_desc;Collectivism is a political theory that the people should own all the means of production.;;;;;;;;;;;;;x
 colonial_negotiations;Colonial Negotiations;;;;;;;;;;;;;x
 colonial_negotiations_desc;‘Whatever happens, we have got \nThe Maxim gun, and they have not’\n\n Machine Guns allowed armies to devastate forces using massed charge tactics, an ability that was especially useful when it came to defeating ‘uncivilised’ nations who objected to being colonised.;;;;;;;;;;;;;x
-color_motion_picture;Colour Motion Pictures;;;;;;;;;;;;;x
-color_motion_picture_desc;After the advent of motion pictures, a tremendous amount of energy was invested in the production of photography in natural colour. Early movies were not actually colour movies, since they were shot monochrome and hand-coloured or machine-coloured afterwards. In 1902, Edward Raymond Turner produced first films with natural colour process rather than using colorization techniques. In 1908, Kinemacolor was introduced. In the same year, A Visit to the Seaside, a short film became the first natural colour movie to be publicly presented. In 1917 Technicolor was introduced.;;;;;;;;;;;;;x
 combat_loss_evaluation_schemata;Combat Loss Evaluation Schemata;;;;;;;;;;;;;x
 combat_loss_evaluation_schemata_desc;By counting losses on both sides and turn the figures into a matrix it was possible to estimate losses in an upcoming combat in advance.;;;;;;;;;;;;;x
 combat_medicine;Combat Medicine;;;;;;;;;;;;;x
@@ -299,8 +297,6 @@ defensive_attitude;Defensive Attitude;;;;;;;;;;;;;x
 defensive_attitude_desc;This meant having a High Sea Navy as a fleet-in-being and only fighting the ultimate battle as a last resort or as a great opportunity.;;;;;;;;;;;;;x
 delegated_power;Delegated Naval Power;;;;;;;;;;;;;x
 delegated_power_desc;This meant that an officer could temporarily delegate authority to one or more of his subordinates when it comes to clearly defined areas of responsibility. This meant that he did not have to control everything himself at all times and that he could focus on the important questions.;;;;;;;;;;;;;x
-destroyers;Destroyers;;;;;;;;;;;;;x
-destroyers_desc;Destroyers are built mainly to combat the increasing threat from torpedo boats. They are equipped with several small-calibre gun turrets that can lay a barrage of shells in front of the small craft.;;;;;;;;;;;;;x
 determinism;Determinism;;;;;;;;;;;;;x
 determinism_desc;Determinism is a philosophical doctrine holding that all events are inevitable consequences of sufficient causes. This is often understood as denying the possibility of free will.;;;;;;;;;;;;;x
 diode;Diode;;;;;;;;;;;;;x
@@ -310,7 +306,7 @@ direct_current_desc;The first common way to transmit electricity was direct curr
 distribution_channels;Distribution Channels;;;;;;;;;;;;;x
 distribution_channels_desc;As the line for resource to finished value-added product became longer from specialization channels of distribution opened as some companies specialized in distribution to shops. This made the supply side more effective.;;;;;;;;;;;;;x
 dmitri_mendeleev;Dmitri Mendeleev;;;;;;;;;;;;;x
-dmitri_mendeleev_desc;Dmitri Mendeleev was a Russian chemist and inventory. He is credited as being the creator of the first version of the periodic table of elements. Using the table, he predicted the properties of elements yet to be discovered.;;;;;;;;;;;;;x
+dmitri_mendeleev_desc;Dmitri Mendeleev was a Russian chemist and inventor. He is credited as being the creator of the first version of the periodic table of elements. Using the table, he predicted the properties of elements yet to be discovered.;;;;;;;;;;;;;x
 dobby_loom;Dobby Loom;;;;;;;;;;;;;x
 dobby_loom_desc;A Dobby loom is a type of floor loom that controls all the warp threads using a device called a dobby. The main advantage of dobby looms is that more intricate designs can be produced. Dobby looms can be operated by wooden lags with pegs, which rotate around a roller above the loom. The pegs in the lags correspond to the lifting plan, which controls which harnesses are lifted. Punched paper pattern cards can also be used.;;;;;;;;;;;;;x
 dogma_of_mass_action;Dogma of Mass Action;;;;;;;;;;;;;x
@@ -745,8 +741,6 @@ meritocracy;Meritocracy;;;;;;;;;;;;;x
 meritocracy_desc;Meritocracy is a system of government or other administration (such as business administration) wherein appointments are made and responsibilities assigned to individuals based upon their ‘merits’, namely intelligence, credentials, and education, determined through evaluations or examinations.;;;;;;;;;;;;;x
 meritocracy_vs._aristocracy;Meritocracy vs. Aristocracy;;;;;;;;;;;;;x
 meritocracy_vs._aristocracy_desc;Birth and blood had always been an unbearable limit for the ambitions of the bourgeoisie. For them, logically, men with talents and merits should be promoted. However, the privileges of the old aristocracy keep the commoners into inferior strata, as only nobility of birth and tradition would be the sole determinant of the fittest of men.;;;;;;;;;;;;;x
-methyl_isoprene;Methyl Isoprene;;;;;;;;;;;;;x
-methyl_isoprene_desc;The development of isoprene will allow our rubber plants to produce better forms of artificial rubber, perhaps even making rubber that is far preferable to the real thing.;;;;;;;;;;;;;x
 military_aviation;Military Aviation;;;;;;;;;;;;;x
 military_aviation_desc;Military aviation is the use of aircraft and other flying machines for the purposes of conducting or enabling warfare. Heavier-than-air aircraft were recognized as having military applications early on. A Wright Model A was purchased in 1909 by the U.S. Army Signal Corps, and in 1911 the Italians used a variety of aircraft types in reconnaissance, photoreconnaissance, and bombing roles as part of the Italo–Turkish War. World War I saw military aviation rapidly embrace many specialized types, such as scouts, artillery observers, fighters or bombers.;;;;;;;;;;;;;x
 military_political_decision_making;Military-Political Decision-Making;;;;;;;;;;;;;x
@@ -821,8 +815,6 @@ neocolonialism_doctrine;Naval Imperialism Doctrine;;;;;;;;;;;;;x
 neocolonialism_doctrine_desc;Imperialism is a state government, practice, or advocacy of extending power and dominion, especially by direct territorial acquisition or by gaining political and economic control of other areas.;;;;;;;;;;;;;x
 neokantian_idealism;Neo-Kantian Idealism;;;;;;;;;;;;;x
 neokantian_idealism_desc;Kant’s transcendental idealism had meant that the world can only be understood through categories, or ideal concepts that are immanent in us, and empirically. This is sometimes called weak empiricism. The neo-Kantian idealist, however, departed very far from Kant and more or less went back to a more classical idealism though interpreted in a Kantian language referring to categories in their analyses of the world.;;;;;;;;;;;;;x
-neoliberal_theory;Nepotism;;;;;;;;;;;;;x
-neoliberal_theory_desc;Originally neoliberalism was an economic philosophy that emerged among European liberal scholars in the 1930s attempting to trace a so-called ‘Third’ or ‘Middle Way’ between the conflicting philosophies of classical liberalism and collectivist central planning. The impetus for this development arose from a desire to avoid repeating the economic failures of the early 1930s, which were mostly blamed on the economic policy of classical liberalism. In the decades that followed, the use of the term neoliberal tended to refer to theories at variance with the more laissez-faire doctrine of classical liberalism and promoted instead a market economy under the guidance and rules of a strong state, a model which came to be known as the social market economy.;;;;;;;;;;;;;x
 nepotism;Nepotism;;;;;;;;;;;;;x
 nepotism_desc;Nepotism is favouritism granted to relatives or friends regardless of merit. It is a common accusation in politics when the relative of a powerful figure ascends to similar power seemingly without appropriate qualifications.;;;;;;;;;;;;;x
 neurology;Neurology;;;;;;;;;;;;;x
@@ -879,8 +871,6 @@ pig_fat_cartridges;Pig Fat Cartridges;;;;;;;;;;;;;x
 pig_fat_cartridges_desc;The issuing of gunpowder cartridges which were believed to be greased with pig fat was considered an incredible insult by Sepoy soldiers, and further evidence of the growing cultural rift between Indians and colonial powers.;;;;;;;;;;;;;x
 pit_coal;Pit-Mined Coal;;;;;;;;;;;;;x
 pit_coal_desc;Pit Coal was much higher graded than Brown Coal and at this point new techniques made refining Pit Coal much simpler.;;;;;;;;;;;;;x
-pit_mining_invention;Pit Mining;;;;;;;;;;;;;x
-pit_mining_invention_desc;Open-pit mining is a surface mining technique of extracting rock or minerals from the earth by their removal from an open pit or borrow. This form of mining differs from extractive methods that require tunnelling into the earth such as long wall mining. Open-pit mines are used when deposits of commercially useful minerals or rock are found near the surface, that is, where the overburden is relatively thin or the material of interest is structurally unsuitable for tunnelling.;;;;;;;;;;;;;x
 pitts_threshing_machine;Pitts’ Threshing Machine;;;;;;;;;;;;;x
 pitts_threshing_machine_desc;This farming machine made agriculture less labour intensive and increased the output.;;;;;;;;;;;;;x
 police_state;The Police State;;;;;;;;;;;;;x
@@ -907,8 +897,6 @@ poudre_b;Poudre B;;;;;;;;;;;;;x
 poudre_b_desc;Meaning ‘poudre blanch’ or ‘white powder’, Poudre B was the first practical smokeless gunpowder, three times more powerful than black powder for the same weight. Originally called ‘Poudre V’, from the name of the inventor, Paul Vieille, it was arbitrarily renamed ‘Poudre B’ to distract foreign espionage.;;;;;;;;;;;;;x
 power_of_tradition;Power Of Tradition;;;;;;;;;;;;;x
 power_of_tradition_desc;The path to modernization for any uncivilized country involved walking a fine line between enacting reforms and appeasing those who saw such reforms as a violation of centuries of tradition… or, if they could not be appeased, putting down their revolts in violent fashion. Almost every uncivilized nation faced uprisings prior to achieving acceptance not only from their own people but from the world at large.;;;;;;;;;;;;;x
-power_transformer;Power Transformer;;;;;;;;;;;;;x
-power_transformer_desc;The transformer, and Tesla’s polyphase and single-phase induction motors, were essential for a combined AC distribution system for both lighting and machinery. Ownership of the rights to the Tesla patents was a key advantage to the Westinghouse Company in offering a complete alternating current power system for both lighting and power.;;;;;;;;;;;;;x
 practical_artillery_experience;Practical Artillery Experience;;;;;;;;;;;;;x
 practical_artillery_experience_desc;You see, the end of the barrel goes towards them, not us!;;;;;;;;;;;;;x
 pragmatism;Pragmatism;;;;;;;;;;;;;x
