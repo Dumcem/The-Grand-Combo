@@ -2234,7 +2234,7 @@
 			}
 		}
 
-		artficial_nitrates = {
+		artificial_nitrates = {
 			limit = { inorganic_chemistry = 1 }
 
 			news = no

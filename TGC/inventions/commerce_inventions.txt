@@ -2547,7 +2547,7 @@
 
 	# Management Strategy
 
-		anynomous_investor_business = {
+		anonymous_investor_business = {
 			limit = { management_strategy = 1 }
 
 			news = no
