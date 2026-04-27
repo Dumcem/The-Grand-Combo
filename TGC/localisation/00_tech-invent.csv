@@ -1219,8 +1219,6 @@ air_preheaters;Air Preheaters;;;;;;;;;;;;;x
 air_preheaters_desc;Air preheaters are essentially heat exchangers that heat the combustion air in a steam turbine by transferring heat from the flue gases that are leaving the turbine, making them a more cost-effective option for power generation;;;;;;;;;;;;;x
 absorption_refrigerators;Absorption Refrigerators;;;;;;;;;;;;;x
 absorption_refrigerators_desc;The basic principle behind absorption refrigerators is that certain chemicals, such as ammonia and water, can be used to create a refrigeration cycle that operates using only heat as an energy source. The process involves heating a mixture of ammonia and water, causing the ammonia to vaporize and separate from the water. The ammonia vapor is then cooled, which causes it to condense back into a liquid. This liquid ammonia is then mixed with water, which absorbs the heat generated during the process, allowing the cycle to continue.;;;;;;;;;;;;;x
-stainless_steel;Stainless Steel;;;;;;;;;;;;;x
-stainless_steel_desc;Stainless steel is an alloy of iron, carbon, and chromium, which gives it its characteristic resistance to corrosion and staining.;;;;;;;;;;;;;x
 high_speed_steel;High Speed Steel;;;;;;;;;;;;;x
 high_speed_steel_desc;High-speed steel is a type of steel alloy that is specifically designed to maintain its hardness and cutting ability at high temperatures.;;;;;;;;;;;;;x
 tool_steel;Tool Steel;;;;;;;;;;;;;x
@@ -1228,6 +1226,7 @@ tool_steel_desc;Tool steel is a general term for a range of steel alloys that ar
 silicon_steel;Silicon Steel;;;;;;;;;;;;;x
 silicon_steel_desc;Silicon steel is an alloy of iron, carbon, and silicon, and is known for its magnetic properties.;;;;;;;;;;;;;x
 police_state;The Police State;;;;;;;;;;;;;x
+police_state_desc;The state expands surveillance, informants, and internal security powers to monitor dissent and suppress subversion before it can organize.;;;;;;;;;;;;;x
 logical_investigations;Logical Investigations;;;;;;;;;;;;;x
 logical_investigations_desc;Logical Investigations is a book written by the philosopher Edmund Husserl. The book is considered to be one of the most important works in the field of phenomenology, which is the study of consciousness and experience. In the book, Husserl develops his theory of intentionality, which is the idea that all consciousness is directed towards something or has an object.;;;;;;;;;;;;;x
 haber_process;Haber–Bosch process;;;;;;;;;;;;;x
