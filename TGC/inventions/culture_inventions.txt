@@ -1543,7 +1543,7 @@
 			}
 		}
 
-		branislaw_malinowski = {
+		bronislaw_malinowski = {
 			limit = {
 				social_alienation = 1
 				
