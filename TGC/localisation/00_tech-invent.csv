@@ -20,11 +20,11 @@ advanced_drilling_techniques_desc;New methods of pumping oil from the ground are
 advanced_fire_control;Advanced Fire Control;;;;;;;;;;;;;x
 advanced_fire_control_desc;Advances in main armament and warship construction resulted in capital ships with more and larger main guns, capable of firing shells over great distances. It became increasingly important to simultaneously develop advanced methods of measuring where shells landed and deriving, from these observations, accurate measurements of where the main guns should be aimed in order to achieve hits on enemy warships.;;;;;;;;;;;;;x
 advanced_ore_grinding_processes;Advanced Ore-Grinding Processes;;;;;;;;;;;;;x
-advanced_ore_grinding_processes_desc;This process removed by-products from ore that would otherwise degrade the final metal. Using this technique improved metal quality and durability while lowering prices through higher throughput.;;;;;;;;;;;;;x
+advanced_ore_grinding_processes_desc;Improved crushing and grinding stages produce a more uniform ore feed, increasing extraction efficiency and raising iron output.;;;;;;;;;;;;;x
 advanced_ore_roasting_processes;Advanced Ore-Roasting Processes;;;;;;;;;;;;;x
-advanced_ore_roasting_processes_desc;This process removed by-products from ore that would otherwise degrade the final metal. Using this technique improved metal quality and durability while lowering prices through higher throughput.;;;;;;;;;;;;;x
+advanced_ore_roasting_processes_desc;Refined roasting methods remove volatile impurities before smelting, improving furnace efficiency and increasing iron output.;;;;;;;;;;;;;x
 advanced_ore_smelting_processes;Advanced Ore-Smelting Processes;;;;;;;;;;;;;x
-advanced_ore_smelting_processes_desc;This process removed by-products from ore that would otherwise degrade the final metal. Using this technique improved metal quality and durability while lowering prices through higher throughput.;;;;;;;;;;;;;x
+advanced_ore_smelting_processes_desc;Better smelting control improves conversion of ore into usable metal, increasing effective iron output from existing deposits.;;;;;;;;;;;;;x
 advanced_riflemaking;Advanced Rifle-Smithing;;;;;;;;;;;;;x
 advanced_riflemaking_desc;We have perfected small arms manufacturing to an art form.;;;;;;;;;;;;;x
 advanced_target_practice;Advanced Target Practice;;;;;;;;;;;;;x
@@ -63,6 +63,8 @@ anna_freud;Anna Freud;;;;;;;;;;;;;x
 anna_freud_desc;The daughter of Sigmund Freud, Anna began her psychoanalytic practice in 1923. She served as secretary of the International Psychoanalytical Association between 1925 and 1934. Freud became known for her work on the social importance of the ego in childhood development. She wrote ‘The Ego and the Mechanisms of Defence’ in which she further developed the concept of defence mechanisms such as repression, displacement, reaction formation and rationalization. These are mental processes to reduce consciousness of wishes, memories and thoughts that prove threatening to self-esteem and security of the individual.;;;;;;;;;;;;;x
 annual_report_proceedings;Annual Report Proceedings;;;;;;;;;;;;;x
 annual_report_proceedings_desc;By instituting rules for the preparation and submission of annual reports, market transparency increased to the benefit of both investors and owners. It was also easier to monitor firms that had problems.;;;;;;;;;;;;;x
+anonymous_investor_business;Anonymous Investor Businesses;;;;;;;;;;;;;x
+anonymous_investor_business_desc;This style of business culture meant that the owners treated the business as an investment. Ownership was not about producing and selling things. Instead the only reason for being the owner was to see the business ratios rise. This practice was professional, but lacked commitment and was intensely risk-averse.;;;;;;;;;;;;;x
 anti_aircraft_artillery;Anti-Aircraft Artillery;;;;;;;;;;;;;x
 anti_aircraft_artillery_desc;In response to the increasing role of aircraft in armed conflict, new methods and weapons were designed to counter this new threat. Dedicated anti-aircraft artillery was a major step forward in this area.;;;;;;;;;;;;;x
 anti_egalitarianism;Anti-Egalitarianism;;;;;;;;;;;;;x
@@ -73,16 +75,14 @@ anticlericalism;Anti-Clericalism;;;;;;;;;;;;;x
 anticlericalism_desc;Anti-clericalism is a historical movement that opposes religious institutional power and influence, real or alleged, in all aspects of public and political life, and the involvement of religion in the everyday life of the citizen. It suggests a more active and partisan role than mere laïcité, and has at times been violent, leading to attacks and seizure of church property.;;;;;;;;;;;;;x
 antitoxins;Antitoxins;;;;;;;;;;;;;x
 antitoxins_desc;An Antitoxin is an antibody with the ability to neutralize a specific toxin. Antitoxins are produced by certain animals, plants, and bacteria. Although they are most effective in neutralizing toxins, they can kill bacteria and other microorganisms. Antitoxins are made within organisms, but can be injected into other organisms, including humans. This procedure involves injecting an animal with a safe amount of a particular toxin. Then, the animal’s body makes the antitoxin needed to neutralize the toxin. Later, the blood is withdrawn from the animal. When the antitoxin is obtained from the blood, it is purified and injected into a human or other animal, inducing passive immunity.;;;;;;;;;;;;;x
-anonymous_investor_business;Anonymous Investor Businesses;;;;;;;;;;;;;x
-anonymous_investor_business_desc;This style of business culture meant that the owners treated the business as an investment. Ownership was not about producing and selling things. Instead the only reason for being the owner was to see the business ratios rise. This practice was professional, but lacked commitment and was intensely risk-averse.;;;;;;;;;;;;;x
 archibald_scott_couper;Archibald Scott Couper;;;;;;;;;;;;;x
 archibald_scott_couper_desc;Archibald Scott Couper was a Scottish chemist who proposed an early theory of chemical structure and bonding. He developed the concepts of tetravalent carbon atoms linking together to form large molecules, and that the bonding order of the atoms in a molecule can be determined from chemical evidence.;;;;;;;;;;;;;x
 aristocracy;Aristocracy;;;;;;;;;;;;;x
 aristocracy_desc;Aristocracy is a form of government in which the best qualified citizens rule. The concept evolved in Ancient Greece, whereby a council of famous citizens was commonly used and contrasted with ‘direct monarchy’ in which an individual king held the power.;;;;;;;;;;;;;x
 armour_piercing_exploding_projectiles;Armour-Piercing Exploding Projectiles;;;;;;;;;;;;;x
-armour_piercing_exploding_projectiles_desc;These projectiles were specially developed to penetrate the thick armour plates of the capital ships. This invention opened up an evolution of new projectiles as a countermeasure to the ever-increasing thickness of the plates.;;;;;;;;;;;;;x
+armour_piercing_exploding_projectiles_desc;These shells were developed to defeat heavy armour and then inflict greater internal damage, improving naval gunnery effectiveness against protected warships.;;;;;;;;;;;;;x
 armour_piercing_projectiles;Armour-Piercing Projectiles;;;;;;;;;;;;;x
-armour_piercing_projectiles_desc;These projectiles were specially developed to penetrate the thick armour plates of the capital ships. This invention opened up an evolution of new projectiles as a countermeasure to the ever-increasing thickness of the plates.;;;;;;;;;;;;;x
+armour_piercing_projectiles_desc;These projectiles were developed to penetrate the heavy armour of capital ships, improving naval gunnery effectiveness against protected targets.;;;;;;;;;;;;;x
 armoured_cars;Armoured Cars;;;;;;;;;;;;;x
 armoured_cars_desc;Armoured Cars filled a role not well suited to tanks or to regular infantry mounted on trucks. Providing lighter vehicles to cavalry and police units, armoured cars could travel at speed over regular roads, and provide a high degree of fire power per vehicle.;;;;;;;;;;;;;x
 armoured_citadels;Armoured Citadels;;;;;;;;;;;;;x
@@ -114,15 +114,15 @@ army_political_lobbying_desc;By having high ranking officers attending politicia
 army_societal_status;Military Societal Status;;;;;;;;;;;;;x
 army_societal_status_desc;At this time the professionalization of the officer corps and the fact the majority of it consisted of middle-class men rather than gentry increased its societal status.;;;;;;;;;;;;;x
 army_wargames;Military War Games;;;;;;;;;;;;;x
-army_wargames_desc;The wargames where staff training. It meant playing out a situation, a fictive war of conflict, and setting to staffs against each other and training them in order writing, communications and planning. At some degree it also trained their tactical and operational skill.;;;;;;;;;;;;;x
+army_wargames_desc;The wargames were staff training. It meant playing out a situation, a fictive war or conflict, and setting two staffs against each other while training them in order writing, communications, and planning. To some degree it also trained their tactical and operational skills.;;;;;;;;;;;;;x
 arteries_of_commerce;Arteries of Commerce;;;;;;;;;;;;;x
 arteries_of_commerce_desc;The criss-cross pattern of railways became such that the economy of an entire nation depended upon them. In time, all industrial and commercial traffic moved on railways. Fortunes were built and lost on the construction of these arteries of commerce alone.;;;;;;;;;;;;;x
-artificial_nitrates;Artificial Nitrates;;;;;;;;;;;;;x
-artificial_nitrates_desc;Our understanding of chemistry has led to the development of artificial nitrates, reducing our dependency on naturally-extracted nitrates in sulphur production.;;;;;;;;;;;;;x
 arthur_evans;Arthur Evans;;;;;;;;;;;;;x
 arthur_evans_desc;Sir Arthur John Evans (8 July 1851–11 July 1941) was an English archaeologist and pioneer in the study of Aegean civilisation in the Bronze Age. He is most famous for unearthing the palace of Knossos on the Greek island of Crete. Based on the structures and artefacts found there and throughout the eastern Mediterranean, Evans found that he needed to distinguish the Minoan civilisation from Mycenaean Greece.;;;;;;;;;;;;;x
 artificial_fertilizers;Artificial Fertilizers;;;;;;;;;;;;;x
-artificial_fertilizers_desc;This was the technique of making fertilizers in a laboratory instead on relying on by-products from animals.;;;;;;;;;;;;;x
+artificial_fertilizers_desc;This was the technique of making fertilizers in a laboratory instead of relying on by-products from animals.;;;;;;;;;;;;;x
+artificial_nitrates;Artificial Nitrates;;;;;;;;;;;;;x
+artificial_nitrates_desc;Advances in industrial chemistry improve our ability to synthesize nitrate compounds, reducing pressure on natural nitrate deposits and making sulphur extraction and processing more efficient.;;;;;;;;;;;;;x
 artillery_production;Artillery Production;;;;;;;;;;;;;x
 artillery_production_desc;The Industrial Revolution of the 19th century affected practically all areas of human endeavour, and the production of artillery was no exception. What had previously been a lengthy process of cast moulding bronze cannons would—in the hands of luminaries of the industry, such as Alfred Krupp or Hiram Maxim—become an industrialized and exact science.;;;;;;;;;;;;;x
 atheism;Atheism;;;;;;;;;;;;;x
@@ -162,7 +162,7 @@ bayonet_charge_desc;The development of the bayonet in the late 17th century led 
 bell_n_greys_telephones;Bell & Grey’s Telephones;;;;;;;;;;;;;x
 bell_n_greys_telephones_desc;Through the invention of the telephone every household could afford communicating directly with relatives and other. It also revolutionized communication between firms and organizations.;;;;;;;;;;;;;x
 bessemer_steel;Bessemer Steel;;;;;;;;;;;;;x
-bessemer_steel_desc;This method not only cleaned iron during the process of making it into steel, but it also allowed for the use of iron that had earlier been unusable because of its low grade.;;;;;;;;;;;;;x
+bessemer_steel_desc;By blowing air through molten pig iron in a converter, the Bessemer process rapidly reduces excess carbon and enables large-scale, low-cost steel production.;;;;;;;;;;;;;x
 biased_multiculturalism;Biased Multiculturalism;;;;;;;;;;;;;x
 biased_multiculturalism_desc;Multiculturalism means the acceptance that many cultures may coexist equally inside a political entity. However, some cultures are more equal than others. While members of some cultures may be welcome with open arms, others are, on the other hand, either considered ‘persona non grata’, expelled or even encouraged to leave the country.;;;;;;;;;;;;;x
 big_ship_competitor;Big Ship Competitor;;;;;;;;;;;;;x
@@ -173,10 +173,10 @@ bolt_action_rifle_armament;Bolt-Action Rifle Armament;;;;;;;;;;;;;x
 bolt_action_rifle_armament_desc;Bolt action is a type of firearm action in which the weapon’s bolt is operated manually by the opening and closing of the breech with a small handle. The first bolt-action rifle was produced in 1824 by Johann Nikolaus von Dreyse, following work on breechloading rifles. European armies continued to develop bolt-action rifles through the latter half of the Nineteenth Century, and World War I marked the height of the bolt-action rifle’s use, with all of the nations in that war fielding troops armed with various bolt-action designs.;;;;;;;;;;;;;x
 bomb_guns;Bomb Guns;;;;;;;;;;;;;x
 bomb_guns_desc;These guns fired in a 45-degree angle and shot bombs which was to penetrate the deck of the enemy vessel. The deck was often less armoured than other parts.;;;;;;;;;;;;;x
-bronislaw_malinowski;Bronislaw Malinowski;;;;;;;;;;;;;x
-bronislaw_malinowski_desc;Bronislaw Kasper Malinowski was a Polish anthropologist, widely considered one of the most important modern anthropologists, and also influential in structural functionalist sociology. His pioneering ethnographic fieldwork made a major contribution to the study of Melanesia and of phenomena relating to reciprocity.;;;;;;;;;;;;;x
 breech_loaded_rifle_armament;Breech-Loaded Rifle Armament;;;;;;;;;;;;;x
 breech_loaded_rifle_armament_desc;A breech-loading weapon is a firearm in which the cartridge or shell is inserted or loaded into a chamber integral to the rear portion of a barrel. Although breech-loading weapons were developed as far back as the late 14th century, breech-loading became more successful with improvements in precision engineering and machining in the 19th century.;;;;;;;;;;;;;x
+bronislaw_malinowski;Bronislaw Malinowski;;;;;;;;;;;;;x
+bronislaw_malinowski_desc;Bronislaw Kasper Malinowski was a Polish anthropologist, widely considered one of the most important modern anthropologists, and also influential in structural functionalist sociology. His pioneering ethnographic fieldwork made a major contribution to the study of Melanesia and of phenomena relating to reciprocity.;;;;;;;;;;;;;x
 brown_water_school;Brown Water School;;;;;;;;;;;;;x
 brown_water_school_desc;This meant building navies that defended home waters intensively while raiding the secondary lines of the enemy. It relied on a more diverse mix of ships than the Blue Water School, but it was also more cost efficient as it needed fewer expensive capital ships.;;;;;;;;;;;;;x
 bruno_hildebrand;Bruno Hildebrand;;;;;;;;;;;;;x
@@ -404,7 +404,7 @@ first_railroads_desc;The first railroads using steam engines were built after 18
 fish_trawlers;Fishing Trawlers;;;;;;;;;;;;;x
 fish_trawlers_desc;The modern fishing trawler was developed in the 19th century, at the English fishing port of Brixham. By the early 19th century, the fishermen at Brixham needed to expand their fishing area further than ever before due to the ongoing depletion of stocks that was occurring in the overfished waters of South Devon. The Brixham trawler that evolved there was of a sleek build and had a tall gaff rig, which gave the vessel sufficient speed to make long distance trips out to the fishing grounds in the ocean. They were also sufficiently robust to be able to tow large trawls in deep water. The great trawling fleet that built up at Brixham, earned the village the title of ‘Mother of Deep-Sea Fisheries’.;;;;;;;;;;;;;x
 fixed_intramonetary_exchange_rates;Fixed Intra-Monetary Exchange Rates;;;;;;;;;;;;;x
-fixed_intramonetary_exchange_rates_desc;This meant a system of comparing prices of different currencies, and a simplified system of buying and selling them. This improved the efficiency of foreign trade enormously.;;;;;;;;;;;;;x
+fixed_intramonetary_exchange_rates_desc;A fixed-rate framework stabilizes currency conversion values and improves fiscal predictability, supporting more efficient tax administration.;;;;;;;;;;;;;x
 fleet_in_being_doctrine;Fleet-In-Being Doctrine;;;;;;;;;;;;;x
 fleet_in_being_doctrine_desc;The ‘fleet in being’ concept is based on the assumption that the fleet is relatively safe in port, even if near the enemy. Keeping the ‘fleet in being’, one could maintain an active threat which would force the enemy to remain in the area and prevent them from taking the initiative elsewhere.;;;;;;;;;;;;;x
 flexible_counterattacks;Flexible Counterattacks;;;;;;;;;;;;;x
@@ -580,7 +580,7 @@ integral_distillery_process_desc;Greater knowledge of the fermentation process, 
 interest_inflation_weapon;Interest-Inflation Weapon;;;;;;;;;;;;;x
 interest_inflation_weapon_desc;By letting the National Bank changing the interest rate the government could, at least to an extent, balance inflation against unemployment.;;;;;;;;;;;;;x
 international_monetary_exchange_rates;International Monetary Exchange Rates;;;;;;;;;;;;;x
-international_monetary_exchange_rates_desc;This meant a system of comparing prices of different currencies, and a simplified system of buying and selling them. This improved the efficiency of foreign trade enormously.;;;;;;;;;;;;;x
+international_monetary_exchange_rates_desc;Standardized international exchange conventions reduce monetary friction between markets, strengthening state revenue collection from expanding commerce.;;;;;;;;;;;;;x
 interwar_cavalry;Interwar Cavalry;;;;;;;;;;;;;x
 interwar_cavalry_desc;With the mass casualties suffered in the Great War, and the dawning of the motorised age, traditional horse cavalry was on its way out. The new focus on motorisation changed the way cavalry was to be used, and its role on the battlefield. No longer horse-mounted, soldiers would be mounted instead on motorised vehicles. Motorisation would also allow for more fire power from heavier guns and speed up deployment times.;;;;;;;;;;;;;x
 interwar_infantry;Interwar Infantry;;;;;;;;;;;;;x
@@ -710,7 +710,7 @@ market_behaviour_monitoring_desc;By instituting a separate agency for monitoring
 marketized_smallholder_business;Marketized Smallholder Business;;;;;;;;;;;;;x
 marketized_smallholder_business_desc;This style of business culture meant that the owners where either foundations or household investors. This often meant a conservative but sound regime.;;;;;;;;;;;;;x
 martin_steel;Martin Steel;;;;;;;;;;;;;x
-martin_steel_desc;This method not only cleaned iron during the process of making it into steel, but it also allowed for the use of iron that had earlier been unusable because of its low grade.;;;;;;;;;;;;;x
+martin_steel_desc;The open-hearth Martin process allows slower, more controlled refining, improving compositional consistency and making steel quality easier to standardize.;;;;;;;;;;;;;x
 mary_calkins;Mary Calkins;;;;;;;;;;;;;x
 mary_calkins_desc;Mary Calkins was an American teacher who became the first female President of the American Psychological Association. A student of James’ in 1890, Calkins completed the requirements for a PhD at Harvard only to be refused. She went on to a distinguished tenure at Wellesley College, writing about the psychology of the self: ‘a totality, a one of many characters… a unique being in the sense that I am I and you are you’….;;;;;;;;;;;;;x
 mass_advertising;Mass Advertising;;;;;;;;;;;;;x
@@ -1160,7 +1160,7 @@ thomas_brown_desc;Thomas Brown was an associationist of the Scottish School, he 
 thomas_robert_malthus;Thomas Robert Malthus;;;;;;;;;;;;;x
 thomas_robert_malthus_desc;Thomas Robert Malthus was a British scholar, influential in political economy and demography. Malthus popularised the economic theory of rent.;;;;;;;;;;;;;x
 thomas_steel;Thomas Steel;;;;;;;;;;;;;x
-thomas_steel_desc;This method not only cleaned iron during the process of making it into steel, but it also allowed for the use of iron that had earlier been unusable because of its low grade.;;;;;;;;;;;;;x
+thomas_steel_desc;The basic Bessemer (Thomas) process uses a basic-lined converter to remove phosphorus from iron, making previously unsuitable ores viable for steelmaking.;;;;;;;;;;;;;x
 thorstein_veblen;Thorstein Veblen;;;;;;;;;;;;;x
 thorstein_veblen_desc;Thorstein Veblen is to economics what Jonathan Swift is to English literature: a master of the art of satire. Is essential to effective satire that its message be ambiguous: the reader should never be sure whether the author is absolutely serious or just pulling his or her leg That quality is certainly present in Swift’s Gulliver’s Travels and it is also present in Veblen’s Theory of the Leisure Class, The Instinct of Workmanship, Imperial Germany and the Industrial Revolution, The Higher Learning in America, Absentee Ownership, and his many essays. In fact, it is there in everything he wrote except The Theory of Business Enterprise, which is as near as he ever came to write a conventional academic book. No matter which of these books we open, we find the idea that life in a modern industrial community is the result of a polar conflict between ‘pecuniary employments’ and ‘industrial employments’, between ‘business enterprise’ and ‘the machine process’, between ‘vendibility’ and ‘serviceability’—in short, between making money and making goods. There is a class struggle under capitalism, not between the bourgeoisie and the proletariat, but between businessmen and engineers. Pecuniary habits of thought unite bankers, brokers, lawyers and managers in a defence of private acquisition.;;;;;;;;;;;;;x
 time_clock;Time Clock;;;;;;;;;;;;;x
