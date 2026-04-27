@@ -105,8 +105,8 @@ army_literate_ncos;Literate Army NCOs;;;;;;;;;;;;;x
 army_literate_ncos_desc;Literate NCOs improved drill quality, reporting, and small-unit control, raising overall army organization.;;;;;;;;;;;;;x
 army_local_military_government;Army Local Military Government;;;;;;;;;;;;;x
 army_local_military_government_desc;In a highly militarized society, or a normal society in war, often needed not only military-civilian cooperation boards on a local level, but sometimes most of the local government could be appointed officers. This meant not only a strong military control, but also that the power of the Army increased disproportionately in comparison to other governmental agencies.;;;;;;;;;;;;;x
-army_military_political_decision_making;Military-Political Decision-Making;;;;;;;;;;;;;x
-army_military_political_decision_making_desc;In wartime an influential Army that had lobbied for their cause for a long time could get full control not only over the execution of the war, but also over the resource management of the country. This could basically be called a Military Dictatorship governed by the General Staff.;;;;;;;;;;;;;x
+army_military_political_decision_making;Army Military-Political Decision-Making;;;;;;;;;;;;;x
+army_military_political_decision_making_desc;In wartime, strong army influence over state decision-making could centralize strategic direction and military resource allocation under the General Staff, improving coordination of land operations.;;;;;;;;;;;;;x
 army_nco_tactical_training;NCO Tactical Military Training;;;;;;;;;;;;;x
 army_nco_tactical_training_desc;By excessively training the NCOs in the field and with tactical situations these not only became the leaders of the men, but also the initiative takers in combat.;;;;;;;;;;;;;x
 army_political_lobbying;Army Political Lobbying;;;;;;;;;;;;;x
@@ -151,8 +151,8 @@ barbed_wire_defense;Barbed Wire Defence;;;;;;;;;;;;;x
 barbed_wire_defense_desc;Barbed wire is a type of steel fencing wire constructed with sharp edges or points arranged at intervals along the strand. It is used to construct inexpensive fences and is used atop walls or as a major feature of the fortifications in trench warfare, stopping infantry charges.;;;;;;;;;;;;;x
 barrage_fire;Barrage Fire;;;;;;;;;;;;;x
 barrage_fire_desc;A barrage is massed artillery fire aimed at points, typically 20-30 yards apart, along one or more lines that can be from a few hundred to several thousand yards long. The lines are usually 100 yards apart and fire is lifted from one line to the next and one or several lines may be simultaneously engaged by different firing units. The artillery usually fires at a continuous steady rate, using high explosive or, historically, shrapnel shells. A barrage might be from a few or many batteries, or even from a single gun. Barrage fire may be defensive to deny or hamper enemy passage through an area or offensive to provide covering fire that neutralises the enemy in an area through or towards which friendly forces are advancing.;;;;;;;;;;;;;x
-basic_ship_building_r&d;Basic Ship Building R&D;;;;;;;;;;;;;x
-basic_ship_building_r&d_desc;Early production techniques were aided by increasing ship research.;;;;;;;;;;;;;x
+basic_ship_building_research_and_development;Basic Ship Building R&D;;;;;;;;;;;;;x
+basic_ship_building_research_and_development_desc;Early production techniques were aided by increasing ship research.;;;;;;;;;;;;;x
 basic_training;Basic Training;;;;;;;;;;;;;x
 basic_training_desc;Every country holds a process by which new recruits into their armed forces are trained, but the refinement of this process has enabled not only for recruits to be trained more quickly but for the overall quality of their training to be increased.;;;;;;;;;;;;;x
 battlefield_destruction_doctrine;Battlefield Destruction Doctrine;;;;;;;;;;;;;x
@@ -545,8 +545,8 @@ improved_anti_aircraft_artillery;Improved Anti-Aircraft Artillery;;;;;;;;;;;;;x
 improved_anti_aircraft_artillery_desc;As aircraft improved over time, so too did the weapons to counter them. Heavier guns, with improved sights, and better designed shells made the dreaded ‘ack-ack’ all the more dangerous.;;;;;;;;;;;;;x
 improved_artillery_manufacturing;Improved Artillery Manufacturing;;;;;;;;;;;;;x
 improved_artillery_manufacturing_desc;As artillery improved, so did its manufacture.;;;;;;;;;;;;;x
-improved_ship_building_r&d;Improved Ship Building R&D;;;;;;;;;;;;;x
-improved_ship_building_r&d_desc;With advanced warships came advanced supply output.;;;;;;;;;;;;;x
+improved_ship_building_research_and_development;Improved Ship Building R&D;;;;;;;;;;;;;x
+improved_ship_building_research_and_development_desc;With advanced warships came advanced supply output.;;;;;;;;;;;;;x
 inclosure;Inclosure;;;;;;;;;;;;;x
 inclosure_desc;Inclosure is the process which was used in order to end some traditional rights, such as mowing meadows for hay, or grazing livestock on land which is owned by another person. Under inclosure, such land is fenced and deeded or entitled to one or more owners. By the 19th century, unenclosed commons had become largely restricted to rough pasture in mountainous areas and in relatively small parts of the lowlands.;;;;;;;;;;;;;x
 independent_command;Independent Naval Command;;;;;;;;;;;;;x
@@ -743,8 +743,8 @@ meritocracy_vs._aristocracy;Meritocracy vs. Aristocracy;;;;;;;;;;;;;x
 meritocracy_vs._aristocracy_desc;Birth and blood had always been an unbearable limit for the ambitions of the bourgeoisie. For them, logically, men with talents and merits should be promoted. However, the privileges of the old aristocracy keep the commoners into inferior strata, as only nobility of birth and tradition would be the sole determinant of the fittest of men.;;;;;;;;;;;;;x
 military_aviation;Military Aviation;;;;;;;;;;;;;x
 military_aviation_desc;Military aviation is the use of aircraft and other flying machines for the purposes of conducting or enabling warfare. Heavier-than-air aircraft were recognized as having military applications early on. A Wright Model A was purchased in 1909 by the U.S. Army Signal Corps, and in 1911 the Italians used a variety of aircraft types in reconnaissance, photoreconnaissance, and bombing roles as part of the Italo–Turkish War. World War I saw military aviation rapidly embrace many specialized types, such as scouts, artillery observers, fighters or bombers.;;;;;;;;;;;;;x
-military_political_decision_making;Military-Political Decision-Making;;;;;;;;;;;;;x
-military_political_decision_making_desc;In wartime an influential Navy that had lobbied for their cause for a long time could get full control not only over the execution of the war, but also over the resource management of the country. This could basically be called a Military Dictatorship governed by the Admiralty.;;;;;;;;;;;;;x
+military_political_decision_making;Naval Military-Political Decision-Making;;;;;;;;;;;;;x
+military_political_decision_making_desc;In wartime, strong naval influence over national planning could concentrate strategic authority and maritime resource allocation under the Admiralty, improving fleet-wide coordination and readiness.;;;;;;;;;;;;;x
 military_psychology;Military Psychology;;;;;;;;;;;;;x
 military_psychology_desc;Military psychology is the research, design and application of psychological theories and experimentation data towards understanding, predicting and countering behaviours either in friendly or enemy forces or civilian populations that may be undesirable, threatening or potentially dangerous to the conduct of military operations. Military psychology is applied towards counselling and treatment of stress and fatigue of military personnel or military families as well as treatment of psychological trauma suffered as a result of military operations.;;;;;;;;;;;;;x
 mission_to_civilize;Mission To Civilize;;;;;;;;;;;;;x
@@ -786,7 +786,7 @@ mussolini_desc;Benito Mussolini was an Italian politician who led the National F
 muzzle_loaded_rifle_armament;Caplock Rifle Armament;;;;;;;;;;;;;x
 muzzle_loaded_rifle_armament_desc;A muzzle-loading rifle is a gun in which the projectile and propelling charge is loaded through the front-end of the gun, in contrast to a breech loading rifle. Handheld rifles were well-developed by the 1740s. A recognizable form of the ‘muzzleloader’ is the Kentucky Rifle, which was actually developed in Pennsylvania. The American Long rifle evolved from the German ‘Jäger’ rifle.;;;;;;;;;;;;;x
 n_saddle_orders;Naval Saddle Orders;;;;;;;;;;;;;x
-n_saddle_orders_desc;This was the ability to give good order fast and under heavy stress. This was trained, and of course when possible learnt through experience.;;;;;;;;;;;;;x
+n_saddle_orders_desc;Naval command drills standardized rapid order transmission under stress, improving fleet discipline and operational cohesion during complex maneuvers.;;;;;;;;;;;;;x
 nassau_william_sr;Nassau William Senior;;;;;;;;;;;;;x
 nassau_william_sr_desc;The works of Nassau William Senior have been printed and distributed in your country. When the academics have debated and refined their dialogue its merits will soon be known by large segments of your population. At this point it will produce changed economic behaviour and procedures in your country.;;;;;;;;;;;;;x
 national_fraternity;National Fraternity;;;;;;;;;;;;;x
@@ -917,10 +917,10 @@ prophylactics;Prophylactics;;;;;;;;;;;;;x
 prophylactics_desc;The invention of modern methods of voluntary birth control are having a profound effect on the national birth rate, as citizens are able to exert far more control over when and how often they have children.;;;;;;;;;;;;;x
 prophylaxis_against_malaria;Prophylaxis Against Malaria;;;;;;;;;;;;;x
 prophylaxis_against_malaria_desc;This medicament gave the patient a protection against the disease gotten from the Malaria mosquito which was very common in the tropics.;;;;;;;;;;;;;x
-protected_cruisers;Armoured Cruisers;;;;;;;;;;;;;x
+protected_cruisers;Protected Cruisers;;;;;;;;;;;;;x
 protected_cruisers_desc;Cruisers are the evolution of the Man-o’-War. They are less heavily armed and armoured than a battleship but make up for that with greater speed.;;;;;;;;;;;;;x
 proto_existentialism;Proto-Existentialism;;;;;;;;;;;;;x
-proto_existentialism_desc;This was not a philosophical movement but disparate philosophers analysing and discussing concepts and conceptions which they considered flawed. The general notion about things as Intuition, Time, Intellect, and Being had to be reformulated not do create pseudo-problems.;;;;;;;;;;;;;x
+proto_existentialism_desc;This was not a philosophical movement but disparate philosophers analysing and discussing concepts and conceptions which they considered flawed. The general notion about things as Intuition, Time, Intellect, and Being had to be reformulated not to create pseudo-problems.;;;;;;;;;;;;;x
 provincial_bureaucracy;Provincial Bureaucracy;;;;;;;;;;;;;x
 provincial_bureaucracy_desc;The purpose of a bureaucracy is to successfully implement the actions of an organization of any size (but often associated with large entities such as government, corporations, and non-governmental organizations), in achieving its purpose and mission, and the bureaucracy is tasked to determine how it can achieve its purpose and mission with the greatest possible efficiency and at the least cost of any resources. Our land's cumbersome population and size requires more.;;;;;;;;;;;;;x
 pulverized_coal_generators;Pulverized Coal Generators;;;;;;;;;;;;;x
@@ -990,17 +990,17 @@ rotherham_plough_desc;The Rotherham or Yorkshire Plough invented by Disney Stany
 rubber_vulcanization;Rubber Vulcanization;;;;;;;;;;;;;x
 rubber_vulcanization_desc;This was a process to make industrial rubber out of the rubber source material. This enabled mass production of this strategic material and thus gave an enormously increased output.;;;;;;;;;;;;;x
 saddle_orders;Army Saddle Orders;;;;;;;;;;;;;x
-saddle_orders_desc;This was the ability to give good order fast and under heavy stress. This was trained, and of course when possible learnt through experience.;;;;;;;;;;;;;x
+saddle_orders_desc;Army command practice improved the speed and clarity of battlefield orders, strengthening unit confidence and frontline morale under pressure.;;;;;;;;;;;;;x
 sanitation;Sanitation;;;;;;;;;;;;;x
 sanitation_desc;It was not until the development of sanitation that the presence of waste and sewage in cities was even considered to be a health issue. Once methods were introduced to remove waste and keep the streets clean, it became possible for rodent infestations to be reduced in size and for cities to rapidly grow.;;;;;;;;;;;;;x
 sati_abolished;Abolishment of Sati;;;;;;;;;;;;;x
 sati_abolished_desc;The abolishment of Sati funeral practices, where a recent widow immolated herself on her husband’s grave, was incredibly unpopular in some parts of India.;;;;;;;;;;;;;x
 scholarships;Scholarships;;;;;;;;;;;;;x
 scholarships_desc;The appearance of scholarships indicated the first attempt at offering higher education to students based on academic excellence, and not excluding them solely on the basis of finances. This allowed the attendance of colleges and universities to move from an elite part of the population towards being truly universal.;;;;;;;;;;;;;x
-school_of_manuever;School of Manoeuvre;;;;;;;;;;;;;x
-school_of_manuever_desc;The advent of tank warfare led to a new school of thought—that impressive speed and superior positioning would win the day in military clashes.;;;;;;;;;;;;;x
-schrapnel_standard_design;Shrapnel Standard Design;;;;;;;;;;;;;x
-schrapnel_standard_design_desc;Shrapnel shells were anti-personnel artillery munitions which carried a large number of individual bullets close to the target and then ejected them to allow them to continue along the shell’s trajectory and strike the target individually. They relied almost entirely on the shell’s velocity for their lethality. The final shrapnel shell design bore little similarity to Henry Shrapnel’s original design, marking the quick evolution of technology at the time.;;;;;;;;;;;;;x
+school_of_maneuver;School of Manoeuvre;;;;;;;;;;;;;x
+school_of_maneuver_desc;The advent of tank warfare led to a new school of thought—that impressive speed and superior positioning would win the day in military clashes.;;;;;;;;;;;;;x
+shrapnel_standard_design;Shrapnel Standard Design;;;;;;;;;;;;;x
+shrapnel_standard_design_desc;Shrapnel shells were anti-personnel artillery munitions which carried a large number of individual bullets close to the target and then ejected them to allow them to continue along the shell’s trajectory and strike the target individually. They relied almost entirely on the shell’s velocity for their lethality. The final shrapnel shell design bore little similarity to Henry Shrapnel’s original design, marking the quick evolution of technology at the time.;;;;;;;;;;;;;x
 schwerpunkt;Schwerpunkt;;;;;;;;;;;;;x
 schwerpunkt_desc;Schwerpunkt is a term referring to the ‘centre of gravity or point of maximum effort, where a decisive action could be achieved’. Ground, mechanised and tactical air forces could be concentrated at this point of maximum effort whenever possible. By local success at the Schwerpunkt, a small force achieved a breakthrough and gained advantages by fighting in the enemy’s rear. Guderian summarized this doctrine as ‘Klotzen, nicht kleckern!’ meaning ‘act powerfully, not superficially’.;;;;;;;;;;;;;x
 scientific_forestry;Scientific Forestry;;;;;;;;;;;;;x
@@ -1097,8 +1097,6 @@ steamer_shipyard_construction;Steamer Shipyards;;;;;;;;;;;;;x
 steamer_shipyard_construction_desc;Building steam ships is no easy task, thus we need to first design a shipyard of the appropriate size to begin construction.;;;;;;;;;;;;;x
 steamer_transports;Steamer Transports;;;;;;;;;;;;;x
 steamer_transports_desc;Steamer transports are the replacement for clipper transports. They replaced the traditional sails with steam propulsion and therefore had much greater speed and reliability.;;;;;;;;;;;;;x
-steel_alloys;Steel Alloys;;;;;;;;;;;;;x
-steel_alloys_desc;Alloying steel with controlled additions of other elements allows industry to tailor hardness, toughness, and corrosion resistance for different applications.;;;;;;;;;;;;;x
 steelworks;Steelworks;;;;;;;;;;;;;x
 steelworks_desc;A refinery capable of mass-producing quality steel is one of the most expensive and important abilities for a nation seeking to truly industrialize.;;;;;;;;;;;;;x
 stiff_plastic_brickmaking_machine;Stiff-Plastic Brickmaking Machine;;;;;;;;;;;;;x

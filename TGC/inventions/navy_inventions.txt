@@ -569,7 +569,7 @@
 
 	# Iron Steamers
 
-		basic_ship_building_r&d = {
+		basic_ship_building_research_and_development = {
 			limit = { iron_steamers = 1 }
 
 			news = no
@@ -725,7 +725,7 @@
 
 	# Steel Steamers
 
-		improved_ship_building_r&d = {
+		improved_ship_building_research_and_development = {
 			limit = { steel_steamers = 1 }
 
 			news = no

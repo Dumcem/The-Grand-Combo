@@ -1320,7 +1320,7 @@
 			}
 		}
 
-		schrapnel_standard_design = {
+		shrapnel_standard_design = {
 			limit = { steel_breech_loaded_artillery = 1 } # 1870
 
 			chance = {
@@ -1421,7 +1421,7 @@
 				}
 				modifier = {
 					factor = 2
-					invention = schrapnel_standard_design
+					invention = shrapnel_standard_design
 				}
 				modifier = {
 					factor = 3
@@ -2836,7 +2836,7 @@
 			}
 		}
 
-		school_of_manuever = {
+		school_of_maneuver = {
 			limit = { armored_vehicles = 1 }
 
 			news = no
