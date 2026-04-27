@@ -6,7 +6,7 @@
 absorption_refrigerators;Absorption Refrigerators;;;;;;;;;;;;;x
 absorption_refrigerators_desc;The basic principle behind absorption refrigerators is that certain chemicals, such as ammonia and water, can be used to create a refrigeration cycle that operates using only heat as an energy source. The process involves heating a mixture of ammonia and water, causing the ammonia to vaporize and separate from the water. The ammonia vapor is then cooled, which causes it to condense back into a liquid. This liquid ammonia is then mixed with water, which absorbs the heat generated during the process, allowing the cycle to continue.;;;;;;;;;;;;;x
 academic_training;Naval Academic Training;;;;;;;;;;;;;x
-academic_training_desc;This meant that to become an officer it was no longer enough to be of gentle blood. You also had to attend a formal education which could at best be as good as any college. This was one of the most important causes behind the professionalization of the officers corps.;;;;;;;;;;;;;x
+academic_training_desc;Formal naval academies professionalized officer training in navigation, gunnery, and staff work, improving fleet discipline and command reliability.;;;;;;;;;;;;;x
 adam_smith;Adam Smith;;;;;;;;;;;;;x
 adam_smith_desc;Adam Smith was a Scottish Enlightenment philosopher of political economy. He was author of The Theory of Moral Sentiments and An Inquiry into the Nature and Causes of the Wealth of Nations. Smith promoted the central tenet of capitalism as the individual pursuing his own self-interest and, in so doing, promoting the greater good. He talked about the ‘invisible hand’ that would guide the actions of individuals and argued against government interference in all but a few aspects of the economy.;;;;;;;;;;;;;x
 adolph_wagner;Adolph Wagner;;;;;;;;;;;;;x
@@ -48,7 +48,7 @@ alite_desc;Alite is a name for tricalcium silicate. It is the major, and charact
 alternating_current;Alternating Current;;;;;;;;;;;;;x
 alternating_current_desc;In alternating current or AC systems electrons flow in both directions in wave patterns. After a fierce competition with direct current, alternating current got dominance for most domestic and industrial applications. One of the first applications were the electric chairs, which didn’t help in convincing that alternating current wasn’t more dangerous than direct current.;;;;;;;;;;;;;x
 alternative_plans;Naval Alternative Plans;;;;;;;;;;;;;x
-alternative_plans_desc;By letting the staff produce several alternative plans, the best option could be identified faster by the commander. Also, if things changed the commander and his staff always had an alternative to go for quickly.;;;;;;;;;;;;;x
+alternative_plans_desc;Preparing multiple fleet operation plans improved reaction speed under uncertainty and helped commanders preserve cohesion when conditions changed at sea.;;;;;;;;;;;;;x
 ammunition_area_effect_calculations;Ammunition Area-Effect Calculations;;;;;;;;;;;;;x
 ammunition_area_effect_calculations_desc;By establishing standard statistical measures for how much ammunition was needed to achieve the desired effect against a predefined enemy unit size in a predefined area, combat became more cost efficient.;;;;;;;;;;;;;x
 ammunition_conservation_system;Ammunition Conservation System;;;;;;;;;;;;;x
@@ -92,18 +92,18 @@ armoured_fist_doctrine_desc;Who needs to move a tank quickly when it can destroy
 armoured_turrets;Armoured Turrets;;;;;;;;;;;;;x
 armoured_turrets_desc;By armouring the gun turrets, the ship became less vulnerable to hits that made it unable to defend itself.;;;;;;;;;;;;;x
 army_academic_training;Military Academic Training;;;;;;;;;;;;;x
-army_academic_training_desc;This meant that to become an officer it was no longer enough to be of gentle blood. You also had to attend a formal education which could at best be as good as any college. This was one of the most important causes behind the professionalization of the officers corps.;;;;;;;;;;;;;x
+army_academic_training_desc;Formal military academies standardized officer education, improving doctrine, leadership quality, and operational morale across the army.;;;;;;;;;;;;;x
 army_alternative_plans;Military Alternative Planning;;;;;;;;;;;;;x
-army_alternative_plans_desc;By letting the staff produce several alternative plans, the best option could be identified faster by the commander. Also, if things changed the commander and his staff always had an alternative to go for quickly.;;;;;;;;;;;;;x
+army_alternative_plans_desc;Developing multiple operational plans improved army responsiveness, allowing faster redeployment and adaptation during changing battlefield conditions.;;;;;;;;;;;;;x
 army_continuous_issuing_of_orders;Continuous Issuing Of Military Orders;;;;;;;;;;;;;x
-army_continuous_issuing_of_orders_desc;By using a staff system even at low echelon units, it enabled the leader to give orders continuously and accurately.;;;;;;;;;;;;;x
+army_continuous_issuing_of_orders_desc;A formalized staff cycle allowed armies to issue and update orders continuously, improving maneuver tempo and operational control.;;;;;;;;;;;;;x
 army_delegated_power;Delegated Military Power;;;;;;;;;;;;;x
-army_delegated_power_desc;This meant that an officer could temporarily delegate authority to one or more of his subordinates when it comes to clearly defined areas of responsibility. This meant that he did not have to control everything himself at all times and that he could focus on the important questions.;;;;;;;;;;;;;x
+army_delegated_power_desc;Delegating authority within clear boundaries enabled faster local decisions, strengthening confidence and battlefield morale.;;;;;;;;;;;;;x
 army_independent_command;Independent Military Command;;;;;;;;;;;;;x
-army_independent_command_desc;The old rules said that an officer breaking an order of a higher officer was to be brought to court martial. This made decision-making very indecisive. At this point regulations said that an officer was to carry on the core idea of the order of his superior officer, but how was at his own discretion.;;;;;;;;;;;;;x
+army_independent_command_desc;Mission-type command empowered officers to act on intent when circumstances changed, improving unit organization in combat.;;;;;;;;;;;;;x
 army_literate_ncos;Literate Army NCOs;;;;;;;;;;;;;x
-army_literate_ncos_desc;When literate NCOs started to flock to the ranks the average quality of the units and the training of the soldiers increased.;;;;;;;;;;;;;x
-army_local_military_government;Local Military Government;;;;;;;;;;;;;x
+army_literate_ncos_desc;Literate NCOs improved drill quality, reporting, and small-unit control, raising overall army organization.;;;;;;;;;;;;;x
+army_local_military_government;Army Local Military Government;;;;;;;;;;;;;x
 army_local_military_government_desc;In a highly militarized society, or a normal society in war, often needed not only military-civilian cooperation boards on a local level, but sometimes most of the local government could be appointed officers. This meant not only a strong military control, but also that the power of the Army increased disproportionately in comparison to other governmental agencies.;;;;;;;;;;;;;x
 army_military_political_decision_making;Military-Political Decision-Making;;;;;;;;;;;;;x
 army_military_political_decision_making_desc;In wartime an influential Army that had lobbied for their cause for a long time could get full control not only over the execution of the war, but also over the resource management of the country. This could basically be called a Military Dictatorship governed by the General Staff.;;;;;;;;;;;;;x
@@ -112,7 +112,7 @@ army_nco_tactical_training_desc;By excessively training the NCOs in the field an
 army_political_lobbying;Army Political Lobbying;;;;;;;;;;;;;x
 army_political_lobbying_desc;By having high ranking officers attending politicians and being experts in defence commissions etc the Army could easily have a strong influence over the political decisions concerning the defence and the security policy.;;;;;;;;;;;;;x
 army_societal_status;Military Societal Status;;;;;;;;;;;;;x
-army_societal_status_desc;At this time the professionalization of the officer corps and the fact the majority of it consisted of middle-class men rather than gentry increased its societal status.;;;;;;;;;;;;;x
+army_societal_status_desc;As the officer corps became more professional and socially respected, the army could mobilize with lower economic disruption.;;;;;;;;;;;;;x
 army_wargames;Military War Games;;;;;;;;;;;;;x
 army_wargames_desc;The wargames were staff training. It meant playing out a situation, a fictive war or conflict, and setting two staffs against each other while training them in order writing, communications, and planning. To some degree it also trained their tactical and operational skills.;;;;;;;;;;;;;x
 arteries_of_commerce;Arteries of Commerce;;;;;;;;;;;;;x
@@ -136,11 +136,11 @@ authoritarianism_desc;Authoritarianism is the view that authority is the most im
 autobahn;Autobahn;;;;;;;;;;;;;x
 autobahn_desc;Transportation, whether it be by rail or by road, has become an integral part of the nation’s economy. Goods and passengers are moving with an unheard-of speed, whereas not so long ago the idea of traveling even a moderate distance away from one’s home province was a major undertaking now it is a minor inconvenience.;;;;;;;;;;;;;x
 avantgarde_art;Avant-Garde Art;;;;;;;;;;;;;x
-avantgarde_art_desc;Using the newly developed means of expressions, the avant-garde gave the means a meaning of itself. Setting off to break down those pillars of tradition that were still standing, the avant-garde spread like seeds in the wind. A few rooted, many didn’t.;;;;;;;;;;;;;x
+avantgarde_art_desc;Avant-garde art rejected academic conventions through abstraction, fragmentation, and experimentation, reshaping modern visual culture.;;;;;;;;;;;;;x
 avantgarde_literature;Avant-Garde Literature;;;;;;;;;;;;;x
-avantgarde_literature_desc;Using the newly developed means of expressions, the avant-garde gave the means a meaning of itself. Setting off to break down those pillars of tradition that were still standing, the avant-garde spread like seeds in the wind. A few rooted, many didn’t.;;;;;;;;;;;;;x
+avantgarde_literature_desc;Avant-garde literature broke with traditional narrative form, using experimental language and structure to reflect modern social dislocation.;;;;;;;;;;;;;x
 avantgarde_music;Avant-Garde Music;;;;;;;;;;;;;x
-avantgarde_music_desc;Using the newly developed means of expressions, the avant-garde gave the means a meaning of itself. Setting off to break down those pillars of tradition that were still standing, the avant-garde spread like seeds in the wind. A few rooted, many didn’t.;;;;;;;;;;;;;x
+avantgarde_music_desc;Avant-garde music challenged tonal and rhythmic norms, expanding modern composition through experimentation and new performance practices.;;;;;;;;;;;;;x
 bakelite;Bakelite;;;;;;;;;;;;;x
 bakelite_desc;The first plastic, Bakelite was the invention of Belgium chemist Leo Hendrick Baekeland and quickly became an important product in the production of industrial and consumer goods beginning in the 1920s as a result of its durability and its fire-resistant properties. Inexpensive to produce, it would be the dominant plastic in the marketplace well into the 1950s.;;;;;;;;;;;;;x
 banking_regulations;Bank Regulations;;;;;;;;;;;;;x
@@ -170,7 +170,7 @@ big_ship_competitor_desc;This meant building very small capital ships, thus, thi
 blue_water_school;Blue Water School;;;;;;;;;;;;;x
 blue_water_school_desc;This meant building navies that could contest control of the High Seas. They included many capital ships and smaller ships to defend them.;;;;;;;;;;;;;x
 bolt_action_rifle_armament;Bolt-Action Rifle Armament;;;;;;;;;;;;;x
-bolt_action_rifle_armament_desc;Bolt action is a type of firearm action in which the weapon’s bolt is operated manually by the opening and closing of the breech with a small handle. The first bolt-action rifle was produced in 1824 by Johann Nikolaus von Dreyse, following work on breechloading rifles. European armies continued to develop bolt-action rifles through the latter half of the Nineteenth Century, and World War I marked the height of the bolt-action rifle’s use, with all of the nations in that war fielding troops armed with various bolt-action designs.;;;;;;;;;;;;;x
+bolt_action_rifle_armament_desc;Bolt-action systems became the dominant military rifle mechanism in the mid-to-late nineteenth century, with major breakthroughs in breech-loading design, metallurgy, and cartridge reliability. Their accuracy and rate of aimed fire helped define infantry combat from the late 1800s through the First World War.;;;;;;;;;;;;;x
 bomb_guns;Bomb Guns;;;;;;;;;;;;;x
 bomb_guns_desc;These guns fired in a 45-degree angle and shot bombs which was to penetrate the deck of the enemy vessel. The deck was often less armoured than other parts.;;;;;;;;;;;;;x
 breech_loaded_rifle_armament;Breech-Loaded Rifle Armament;;;;;;;;;;;;;x
@@ -246,7 +246,7 @@ coke_desc;Coke was coal that had been enriched by a special process. By treating
 collectivism;Collectivism;;;;;;;;;;;;;x
 collectivism_desc;Collectivism is a political theory that the people should own all the means of production.;;;;;;;;;;;;;x
 colonial_negotiations;Colonial Negotiations;;;;;;;;;;;;;x
-colonial_negotiations_desc;‘Whatever happens, we have got \nThe Maxim gun, and they have not’\n\n Machine Guns allowed armies to devastate forces using massed charge tactics, an ability that was especially useful when it came to defeating ‘uncivilised’ nations who objected to being colonised.;;;;;;;;;;;;;x
+colonial_negotiations_desc;Machine-gun-era military superiority dramatically shifted colonial diplomacy. States with modern firepower and logistics could impose terms more effectively, lowering the practical barriers to expansion into hostile environments.;;;;;;;;;;;;;x
 combat_loss_evaluation_schemata;Combat Loss Evaluation Schemata;;;;;;;;;;;;;x
 combat_loss_evaluation_schemata_desc;By counting losses on both sides and turn the figures into a matrix it was possible to estimate losses in an upcoming combat in advance.;;;;;;;;;;;;;x
 combat_medicine;Combat Medicine;;;;;;;;;;;;;x
@@ -264,7 +264,7 @@ commercial_railroads_desc;Advances in railway technology, such as the Pullman Sl
 constitutionalism;Constitutionalism;;;;;;;;;;;;;x
 constitutionalism_desc;Constitutionalism is a constitutional system of government, usually with a written constitution. It advocates that all actions taken by the government must be in accordance with constitutional principles.;;;;;;;;;;;;;x
 continuous_issuing_of_orders;Continuous Issuing of Orders;;;;;;;;;;;;;x
-continuous_issuing_of_orders_desc;By using a staff system even at low echelon units, it enabled the leader to give orders continuously and accurately.;;;;;;;;;;;;;x
+continuous_issuing_of_orders_desc;Continuous signal and staff procedures enabled fleets to update orders rapidly, improving command continuity during fast-moving engagements.;;;;;;;;;;;;;x
 cotton_gin;Cotton Gin;;;;;;;;;;;;;x
 cotton_gin_desc;The Cotton Gin is a machine for cleaning cotton of its seeds. The device pulls the cotton through a set of wire teeth mounted on a revolving cylinder, the fibre passing through narrow slots in an iron breastwork too small to permit passage of the seed. The simplicity of the invention—which could be powered by man, animal, or water—caused it to be widely copied despite patents. The cotton gin increased productivity of removing seed from cotton by a factor of 50. While it took a single slave about ten hours to separate a single pound of fibre from the seeds, a team of two or three slaves using a cotton gin could produce around fifty pounds of cotton in just one day.;;;;;;;;;;;;;x
 counter_battery_fire;Counter-Battery Fire;;;;;;;;;;;;;x
@@ -296,7 +296,7 @@ deep_mining_desc;Deep mining means the extraction of coal through underground mi
 defensive_attitude;Defensive Attitude;;;;;;;;;;;;;x
 defensive_attitude_desc;This meant having a High Sea Navy as a fleet-in-being and only fighting the ultimate battle as a last resort or as a great opportunity.;;;;;;;;;;;;;x
 delegated_power;Delegated Naval Power;;;;;;;;;;;;;x
-delegated_power_desc;This meant that an officer could temporarily delegate authority to one or more of his subordinates when it comes to clearly defined areas of responsibility. This meant that he did not have to control everything himself at all times and that he could focus on the important questions.;;;;;;;;;;;;;x
+delegated_power_desc;Delegating clearly defined authority to subordinate commanders reduced decision bottlenecks and improved fleet command resilience.;;;;;;;;;;;;;x
 determinism;Determinism;;;;;;;;;;;;;x
 determinism_desc;Determinism is a philosophical doctrine holding that all events are inevitable consequences of sufficient causes. This is often understood as denying the possibility of free will.;;;;;;;;;;;;;x
 diode;Diode;;;;;;;;;;;;;x
@@ -550,7 +550,7 @@ improved_ship_building_r&d_desc;With advanced warships came advanced supply outp
 inclosure;Inclosure;;;;;;;;;;;;;x
 inclosure_desc;Inclosure is the process which was used in order to end some traditional rights, such as mowing meadows for hay, or grazing livestock on land which is owned by another person. Under inclosure, such land is fenced and deeded or entitled to one or more owners. By the 19th century, unenclosed commons had become largely restricted to rough pasture in mountainous areas and in relatively small parts of the lowlands.;;;;;;;;;;;;;x
 independent_command;Independent Naval Command;;;;;;;;;;;;;x
-independent_command_desc;The old rules said that an officer breaking an order of a higher officer was to be brought to court martial. This made decision-making very indecisive. At this point regulations said that an officer was to carry on the core idea of the order of his superior officer, but how was at his own discretion.;;;;;;;;;;;;;x
+independent_command_desc;Mission-oriented command doctrine allowed captains to pursue intent rather than rigid orders, improving fleet adaptability.;;;;;;;;;;;;;x
 individualism;Individualism;;;;;;;;;;;;;x
 individualism_desc;Individualism is the belief in the importance of the individual and the virtue of self-reliance and personal independence. This doctrine also states that the government should not interfere in commercial affairs.;;;;;;;;;;;;;x
 industrial_distribution_investments;Industrial Distribution Investments;;;;;;;;;;;;;x
@@ -670,10 +670,10 @@ liquidation_of_assets_desc;This meant that a bankrupted firm got its assets sold
 literacy_programs;Literacy Programs;;;;;;;;;;;;;x
 literacy_programs_desc;Literacy programs were developed to ensure that soldiers were able to read and write, which was seen as essential for effective communication and military intelligence.;;;;;;;;;;;;;x
 literate_ncos;Literate NCOs;;;;;;;;;;;;;x
-literate_ncos_desc;When literate NCOs started to flock to the ranks the average quality of the units and the training of the soldiers increased.;;;;;;;;;;;;;x
+literate_ncos_desc;Higher literacy among petty officers improved technical instruction, damage-control routines, and shipboard discipline.;;;;;;;;;;;;;x
 lixiviation_mills;Lixiviation Milling;;;;;;;;;;;;;x
 lixiviation_mills_desc;Lixiviation milling, also known as Heap leaching, is an industrial mining process used to extract precious metals, copper, uranium, and other compounds from ore using a series of chemical reactions that absorb specific minerals and re-separate them after their division from other earth materials.;;;;;;;;;;;;;x
-local_military_government;Local Military Government;;;;;;;;;;;;;x
+local_military_government;Naval Local Military Government;;;;;;;;;;;;;x
 local_military_government_desc;In a highly militarized society, or a normal society in war, often needed not only military-civilian cooperation boards on a local level, but sometimes most of the local government could be appointed officers. This meant not only a strong military control, but also that the power of the Navy increased disproportionately in comparison to other governmental agencies.;;;;;;;;;;;;;x
 logging;Logging;;;;;;;;;;;;;x
 logging_desc;Logging is the process of systematically harvesting a country’s timber resources, replacing traditional methods of lumberjacking that relied primarily on disorganized groups of laborers cutting down what trees they could find and selling the timber on the market in a manner similar to farmers.;;;;;;;;;;;;;x
@@ -701,7 +701,7 @@ machine_tools;Machine Tools;;;;;;;;;;;;;x
 machine_tools_desc;By constructing special machines that produced standardized machine tools the exchangeability in industry was vastly improved.;;;;;;;;;;;;;x
 manifest_destiny;Manifest Destiny;;;;;;;;;;;;;x
 manifest_destiny_desc;The doctrine of ‘Manifest Destiny’ appeared first in the United States in the 1840s to justify its need to expand westward. Already in 1823, the Monroe Doctrine had forbidden America to European colonization. The United States had new a duty to reach its continental boundaries and expand its civilization all over the continent. The basic idea was that the nation was destined to greatness and expansion.;;;;;;;;;;;;;x
-manual_of_arms;Manual of Arms;;;;;;;;;;;;;x
+manual_of_arms;Army Manual of Arms;;;;;;;;;;;;;x
 manual_of_arms_desc;The Manual of Arms is an essential part of military training, and soldiers have to learn a specific set of movements to handle their weapons safely and effectively.;;;;;;;;;;;;;x
 marcel_mauss;Marcel Mauss;;;;;;;;;;;;;x
 marcel_mauss_desc;Marcel Mauss was a French sociologist. Mauss’ academic work traversed the boundaries between sociology and anthropology. Today, he is perhaps better recognised for his influence on the latter discipline, particularly with respect to his analyses of topics such as magic, sacrifice and gift exchange in primitive cultures.;;;;;;;;;;;;;x
@@ -799,7 +799,7 @@ naval_firepower_doctrine;Naval Firepower Doctrine;;;;;;;;;;;;;x
 naval_firepower_doctrine_desc;While a focus on winning the decisive naval battle was important, it was also considered valuable to use a variety of weaponry in order to achieve victory, in addition to the main armament of capital ships. Lighter warships were also important, as they could dart in and launch deadly torpedo attacks, while secondary armament was necessary to defend against these attacks. A balanced fleet of both capital and escort ships was essential to victory in modern naval combat.;;;;;;;;;;;;;x
 naval_literacy_programs;Naval Literacy Programs;;;;;;;;;;;;;x
 naval_literacy_programs_desc;Naval literacy programs ensured that sailors could read technical manuals, follow written signals, and report information accurately—skills essential for modern fleet coordination.;;;;;;;;;;;;;x
-naval_manual_of_arms;Manual of Arms;;;;;;;;;;;;;x
+naval_manual_of_arms;Navy Manual of Arms;;;;;;;;;;;;;x
 naval_manual_of_arms_desc;Standardized naval drills taught sailors the safe handling of small arms and shipboard weapons, improving discipline, readiness, and combat effectiveness.;;;;;;;;;;;;;x
 naval_strike_success_criterium;Naval Strike Success Criterium;;;;;;;;;;;;;x
 naval_strike_success_criterium_desc;By measuring sea legs and speed of both enemy and friendly ships and earlier behaviour of the enemy. It was possible to optimize where and when to strike at the enemy and also to get realistic forecast of possible enemy strikes.;;;;;;;;;;;;;x
@@ -942,11 +942,11 @@ rationalism_desc;Rationalism is the theological doctrine that human reason rathe
 rayon;Rayon;;;;;;;;;;;;;x
 rayon_desc;The first of the artificial fibres to be developed in commercial qualities, its production is derived from the liquefaction of wood pulp, which cools to produce a fibre with the tactile feel of silk, and was known as ‘wood silk’ until the name rayon was adopted for the fibre in the 1920s. With disruptions in international trade caused by war between industrial nations, materials such as rayon became important substituted to maintain production of textiles for military and consumer consumption.;;;;;;;;;;;;;x
 realist_art;Realist Art;;;;;;;;;;;;;x
-realist_art_desc;The realists opposed the ever-present glorification and dramatization in the arts. Their ambition was to portray the world naked, just as they saw it with their own eyes. With an unblurred vision and eye for each detail in their surroundings, they set their focus on the everyday life of the ordinary man.;;;;;;;;;;;;;x
+realist_art_desc;Realist painters depicted ordinary life without romantic idealization, emphasizing social conditions and material detail.;;;;;;;;;;;;;x
 realist_literature;Realist Literature;;;;;;;;;;;;;x
-realist_literature_desc;The realists opposed the ever-present glorification and dramatization in the arts. Their ambition was to portray the world naked, just as they saw it with their own eyes. With an unblurred vision and eye for each detail in their surroundings, they set their focus on the everyday life of the ordinary man.;;;;;;;;;;;;;x
+realist_literature_desc;Realist writers focused on everyday characters, social pressures, and credible settings rather than heroic or mythic narratives.;;;;;;;;;;;;;x
 realist_music;Realist Music;;;;;;;;;;;;;x
-realist_music_desc;The realists opposed the ever-present glorification and dramatization in the arts. Their ambition was to portray the world naked, just as they saw it with their own eyes. With an unblurred vision and eye for each detail in their surroundings, they set their focus on the everyday life of the ordinary man.;;;;;;;;;;;;;x
+realist_music_desc;Realist tendencies in music favored dramatic and social immediacy, grounding themes in contemporary life rather than courtly idealization.;;;;;;;;;;;;;x
 rear_area_dumps;Rear Area Dumps;;;;;;;;;;;;;x
 rear_area_dumps_desc;As technology advanced, particularly in terms of motorisation, new concepts needed to be applied to more traditional doctrines. Supply, always an issue to an army, was greatly enhanced by these changes. It was now possible, as well as necessary, to establish major supply depots, from which entire sectors could be supplied. It was no longer necessary for long supply trains to feed frontline units, as centralised depots could rapidly dispense needed material to units.;;;;;;;;;;;;;x
 reduced_intervention;Reduced Interventionism;;;;;;;;;;;;;x
@@ -1060,7 +1060,7 @@ social_psychology_desc;Social psychology is the scientific study of how we think
 socialist_realism;Socialist Realism;;;;;;;;;;;;;x
 socialist_realism_desc;The growing split between elite and popular forms of cultural production in the early twentieth century would merge with the rise of new anti-liberal political ideologies to result in a backlash against the cultural avant-garde by the growing power of the State in the name of ‘the people’. In both fascist and communist regimes, a new artistic ethos would develop that encouraged production that the masses could not only understand but encourage the installation of the values that these regimes wished to instil upon the societies they governed. For the cultural elite, a stark choice was offered, either accept the limits of creativity imposed by the State in one’s work or face the retribution of the State for challenging its authority. In communist regimes this new artistic ethos came to be known as Socialist Realism, but fascist regimes had their own analogous stylistic ethos which was imposed from above.;;;;;;;;;;;;;x
 societal_status;Societal Status;;;;;;;;;;;;;x
-societal_status_desc;At this time the professionalization of the officer corps and the fact the majority of it consisted of middle-class men rather than gentry increased its societal status.;;;;;;;;;;;;;x
+societal_status_desc;As naval officers became a recognized professional elite, recruitment and institutional legitimacy improved.;;;;;;;;;;;;;x
 sociology;Sociology;;;;;;;;;;;;;x
 sociology_desc;Sociology is the science of society, social institutions and social relationship. It attempts to recreate the effect of certain actions on societies.;;;;;;;;;;;;;x
 sonar;Sonar;;;;;;;;;;;;;x
@@ -1098,7 +1098,7 @@ steamer_shipyard_construction_desc;Building steam ships is no easy task, thus we
 steamer_transports;Steamer Transports;;;;;;;;;;;;;x
 steamer_transports_desc;Steamer transports are the replacement for clipper transports. They replaced the traditional sails with steam propulsion and therefore had much greater speed and reliability.;;;;;;;;;;;;;x
 steel_alloys;Steel Alloys;;;;;;;;;;;;;x
-steel_alloys_desc;This meant adding small amounts of other metals to the iron during the steel-making process. The effect was that it was now possible to tailor the attributes of the metal and make different kind of steel for different kinds of uses.;;;;;;;;;;;;;x
+steel_alloys_desc;Alloying steel with controlled additions of other elements allows industry to tailor hardness, toughness, and corrosion resistance for different applications.;;;;;;;;;;;;;x
 steelworks;Steelworks;;;;;;;;;;;;;x
 steelworks_desc;A refinery capable of mass-producing quality steel is one of the most expensive and important abilities for a nation seeking to truly industrialize.;;;;;;;;;;;;;x
 stiff_plastic_brickmaking_machine;Stiff-Plastic Brickmaking Machine;;;;;;;;;;;;;x
