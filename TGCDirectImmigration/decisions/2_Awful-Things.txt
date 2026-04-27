@@ -2278,6 +2278,7 @@ political_decisions = {
 			add_tax_relative_income = -365
 			plurality = -50
 			set_country_flag = preparations_to_kill
+			country_event = 4433
 			random_owned = {
 				limit = { owner = { has_country_modifier = signed_the_geneva_convention } }
 				owner = { badboy = 10 }
