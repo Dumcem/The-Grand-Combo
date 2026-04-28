@@ -1050,7 +1050,7 @@ political_decisions = {
 		}
 
 		effect = {
-			set_country_flag = protecting_legacy_GCO
+			set_country_flag = protecting_legacy_gco
 			prestige = 10
 			CLM = { government = democracy all_core = { limit = { NOT = { is_core = THIS } } add_core = GCO } }
 			VNZ = { government = democracy all_core = { limit = { NOT = { is_core = THIS } } add_core = GCO } }
