@@ -1402,6 +1402,7 @@ claim_western_poland = {
 		}
 		effect = {
 			set_country_flag = polish_foreign_intervention
+			set_country_flag = polish_foreign_intervention2
 			any_country = {
 				limit = {
 					exists = yes
