@@ -5,7 +5,10 @@ on:
     paths:
       - ".github/workflows/validate-1966-extension.yml"
       - "TGC/tools/validate_1966_extension.py"
+      - "TGC/tools/audit_1966_balance.py"
       - "TGC/tools/1966_extension_scope.json"
+      - "TGC/tools/1966_balance_rules.json"
+      - "TGC/tools/lib_1966_parser.py"
       - "TGC/technologies/*_tech.txt"
       - "TGC/inventions/*.txt"
       - "TGC/localisation/00_SUP_technology.csv"
@@ -20,7 +23,10 @@ on:
     paths:
       - ".github/workflows/validate-1966-extension.yml"
       - "TGC/tools/validate_1966_extension.py"
+      - "TGC/tools/audit_1966_balance.py"
       - "TGC/tools/1966_extension_scope.json"
+      - "TGC/tools/1966_balance_rules.json"
+      - "TGC/tools/lib_1966_parser.py"
       - "TGC/technologies/*_tech.txt"
       - "TGC/inventions/*.txt"
       - "TGC/localisation/00_SUP_technology.csv"
@@ -46,3 +52,7 @@ jobs:
 
       - name: Run 1966 extension validator
         run: python TGC/tools/validate_1966_extension.py
+
+      - name: Run 1966 balance audit (diagnostic)
+        continue-on-error: true
+        run: python TGC/tools/audit_1966_balance.py
