@@ -7,51 +7,14 @@ import sys
 from collections import defaultdict
 from pathlib import Path
 
+from lib_1966_parser import TopLevelBlockMeta, parse_top_level_block_meta, read_text
+
 ROOT = Path(__file__).resolve().parents[2]
 MANIFEST_PATH = "TGC/tools/1966_extension_scope.json"
 
 
-def read_text(rel_path: str, encoding: str = "utf-8") -> str:
-    return (ROOT / rel_path).read_text(encoding=encoding, errors="ignore")
-
-
 def read_manifest() -> dict:
     return json.loads(read_text(MANIFEST_PATH, encoding="utf-8"))
-
-
-def parse_top_level_blocks(rel_path: str) -> list[dict]:
-    lines = read_text(rel_path).splitlines()
-    out: list[dict] = []
-    i = 0
-    depth = 0
-    while i < len(lines):
-        line = lines[i]
-        if depth == 0:
-            m = re.match(r"\s*([a-z0-9_]+)\s*=\s*\{\s*(?:#.*)?$", line)
-            if m:
-                key = m.group(1)
-                depth = 1
-                i += 1
-                area = None
-                year = None
-                while i < len(lines) and depth > 0:
-                    cur = lines[i]
-                    if area is None:
-                        ma = re.match(r"\s*area\s*=\s*([a-z0-9_]+)", cur)
-                        if ma:
-                            area = ma.group(1)
-                    if year is None:
-                        my = re.match(r"\s*year\s*=\s*(\d+)", cur)
-                        if my:
-                            year = int(my.group(1))
-                    depth += cur.count("{") - cur.count("}")
-                    i += 1
-                out.append({"key": key, "area": area, "year": year, "file": rel_path})
-                depth = 0
-                continue
-        depth += line.count("{") - line.count("}")
-        i += 1
-    return out
 
 
 def build_localisation_index(localisation_files: list[str]) -> dict[str, list[str]]:
@@ -146,6 +109,46 @@ def validate_effect_unit_targets(rel_path: str, unit_keys: set[str]) -> list[str
     return failures
 
 
+def block_has_section_year(block_lines: list[tuple[int, str]], section: str, expected_year: int) -> bool:
+    i = 0
+    while i < len(block_lines):
+        _, line = block_lines[i]
+        m = re.match(rf"\s*{re.escape(section)}\s*=\s*\{{\s*(?:#.*)?$", line)
+        if not m:
+            i += 1
+            continue
+
+        depth = 1
+        i += 1
+        while i < len(block_lines) and depth > 0:
+            _, cur = block_lines[i]
+            if re.search(rf"\byear\s*=\s*{expected_year}\b", cur):
+                return True
+            depth += cur.count("{") - cur.count("}")
+            i += 1
+    return False
+
+
+def find_named_block_lines(rel_path: str, block_key: str) -> list[tuple[int, str]] | None:
+    lines = read_text(rel_path).splitlines()
+    i = 0
+    while i < len(lines):
+        m = re.match(rf"\s*{re.escape(block_key)}\s*=\s*\{{\s*(?:#.*)?$", lines[i])
+        if not m:
+            i += 1
+            continue
+
+        depth = 1
+        i += 1
+        block: list[tuple[int, str]] = []
+        while i < len(lines) and depth > 0:
+            block.append((i + 1, lines[i]))
+            depth += lines[i].count("{") - lines[i].count("}")
+            i += 1
+        return block
+    return None
+
+
 def main() -> int:
     m = read_manifest()
     branches = m["tech_tree"]["branches"]
@@ -160,16 +163,16 @@ def main() -> int:
     loc_index = build_localisation_index(loc_files)
     loc_keys = set(loc_index)
 
-    all_tech: list[dict] = []
+    all_tech: list[TopLevelBlockMeta] = []
     expected_areas = 0
 
     for b in branches:
         rel_path = b["file"]
         area_spec = b["areas"]
         expected_areas += len(area_spec)
-        blocks = parse_top_level_blocks(rel_path)
+        blocks = parse_top_level_block_meta(rel_path)
         all_tech.extend(blocks)
-        by_area: dict[str, list[dict]] = defaultdict(list)
+        by_area: dict[str, list[TopLevelBlockMeta]] = defaultdict(list)
         for x in blocks:
             if x["area"]:
                 by_area[x["area"]].append(x)
@@ -192,9 +195,9 @@ def main() -> int:
         if f"{k}_desc" not in loc_keys:
             failures.append(f"TECH missing localisation desc: {k}_desc")
 
-    all_inv: list[dict] = []
+    all_inv: list[TopLevelBlockMeta] = []
     for rel in invention_files:
-        all_inv.extend(parse_top_level_blocks(rel))
+        all_inv.extend(parse_top_level_block_meta(rel))
     inv_idx: dict[str, list[str]] = defaultdict(list)
     for x in all_inv:
         inv_idx[x["key"]].append(x["file"])
@@ -218,15 +221,13 @@ def main() -> int:
                     failures.append(f"STALE reference {rule['old_key']} found in {rel}:{n} (expected context: {rule['new_key']})")
 
     d = structural["decision_alignment"]
-    setup = read_text(d["file"])
-    block = re.search(rf"{re.escape(d['decision_key'])}\s*=\s*\{{.*?\n\t\t\}}", setup, re.S)
-    if not block:
+    decision_block = find_named_block_lines(d["file"], d["decision_key"])
+    if not decision_block:
         failures.append(f"STRUCTURAL missing {d['decision_key']} block in {d['file']}")
     else:
-        btxt = block.group(0)
-        if not re.search(rf"potential\s*=\s*\{{[^}}]*year\s*=\s*{d['potential_year']}", btxt, re.S):
+        if not block_has_section_year(decision_block, "potential", d["potential_year"]):
             failures.append(f"STRUCTURAL {d['decision_key']} potential must include year = {d['potential_year']}")
-        if not re.search(rf"allow\s*=\s*\{{[^}}]*year\s*=\s*{d['allow_year']}", btxt, re.S):
+        if not block_has_section_year(decision_block, "allow", d["allow_year"]):
             failures.append(f"STRUCTURAL {d['decision_key']} allow must include year = {d['allow_year']}")
 
     for chk in structural["required_patterns"]:

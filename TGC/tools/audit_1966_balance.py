@@ -8,6 +8,8 @@ from collections import defaultdict
 from pathlib import Path
 from typing import Any
 
+from lib_1966_parser import parse_top_level_blocks, read_text
+
 ROOT = Path(__file__).resolve().parents[2]
 RULES_PATH = ROOT / "TGC/tools/1966_balance_rules.json"
 
@@ -142,10 +144,6 @@ def build_priority_summary(
     return buckets, playtest_candidates[:5]
 
 
-def read_text(rel_path: str, encoding: str = "utf-8") -> str:
-    return (ROOT / rel_path).read_text(encoding=encoding, errors="ignore")
-
-
 def read_rules() -> dict[str, Any]:
     return json.loads(RULES_PATH.read_text(encoding="utf-8"))
 
@@ -275,27 +273,6 @@ def infer_block_year(block_lines: list[tuple[int, str]]) -> int | None:
         if m_year:
             return int(m_year.group(1))
     return None
-
-
-def parse_top_level_blocks(rel_path: str) -> dict[str, list[tuple[int, str]]]:
-    lines = read_text(rel_path).splitlines()
-    blocks: dict[str, list[tuple[int, str]]] = {}
-    i = 0
-    while i < len(lines):
-        m_open = re.match(r"\s*([a-z0-9_]+)\s*=\s*\{\s*(?:#.*)?$", lines[i])
-        if not m_open:
-            i += 1
-            continue
-        key = m_open.group(1)
-        depth = 1
-        i += 1
-        block: list[tuple[int, str]] = []
-        while i < len(lines) and depth > 0:
-            block.append((i + 1, lines[i]))
-            depth += lines[i].count("{") - lines[i].count("}")
-            i += 1
-        blocks[key] = block
-    return blocks
 
 
 def extract_year_refs(block_lines: list[tuple[int, str]]) -> set[str]:
