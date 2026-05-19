@@ -8,7 +8,7 @@ land_mines_tactics_desc;A land mine is an explosive device concealed under or on
 anti_tank_mines;Anti-Tank Mines;;;;;;;;;;;;x,,,,,,,;;;;;;;;;;;;;;;;
 anti_tank_mines_desc;An anti-tank mine is a type of land mine designed to damage or destroy vehicles including tanks.;;;;;;;;;;;;x,,,,,;;;;;;;;;;;;;;;;
 land_mines_defence;Land Mines Defence;;;;;;;;;;;;x,,,,,,,;;;;;;;;;;;;;;;;
-land_mines_defence_desc;Widespreas use of land mine make up for an excellent defence against enemies.;;;;;;;;;;;;x,,,,,;;;;;;;;;;;;;;;;
+land_mines_defence_desc;Widespread use of land mines makes for an excellent defence against enemies.;;;;;;;;;;;;x,,,,,;;;;;;;;;;;;;;;;
 dragons_teeth;Dragon's Teeth;;;;;;;;;;;;x,,,,,,,;;;;;;;;;;;;;;;;
 dragons_teeth_desc;Dragon's teeth are square-pyramidal fortifications of reinforced concrete used to impede the movement of tanks and mechanised infantry.;;;;;;;;;;;;x,,,,,;;;;;;;;;;;;;;;;
 partially_motorized_units;Partially Motorized Units;;;;;;;;;;;;x,,,,,,,;;;;;;;;;;;;;;;;
@@ -22,7 +22,7 @@ largely_mechanized_units_desc;Mechanized units become a standard, making their b
 anti_tank_rifle;Anti-Tank Rifle;;;;;;;;;;;;x,,,,,,,;;;;;;;;;;;;;;;;
 anti_tank_rifle_desc;An anti-tank rifle is an anti-materiel rifle designed to penetrate the armor of armored fighting vehicles.;;;;;;;;;;;;x,,,,,;;;;;;;;;;;;;;;;
 rocket_anti_tank_weapons;Advanced Anti-Tank Weapons;;;;;;;;;;;;x,,,,,,,;;;;;;;;;;;;;;;;
-rocket_anti_tank_weapons_desc;As armour becomes thicker on newer tank models, newwe weapons, such as the Bazooka, PIAT, and Panzerfaust, allow a more effective attack against armor from a distance.;;;;;;;;;;;;x,,,,,;;;;;;;;;;;;;;;;
+rocket_anti_tank_weapons_desc;As armour becomes thicker on newer tank models, new weapons, such as the Bazooka, PIAT, and Panzerfaust, allow a more effective attack against armor from a distance.;;;;;;;;;;;;x,,,,,;;;;;;;;;;;;;;;;
 sperimental_multiple_rocket_launcher;Sperimental Multiple Rocket Launcher;;;;;;;;;;;;x,,,,,,,;;;;;;;;;;;;;;;;
 sperimental_multiple_rocket_launcher_desc;A multiple rocket launcher is a type of rocket artillery system that contains multiple launchers which are fixed to a single platform, and shoots its rocket ordnance in a fashion similar to a volley gun. The first experiments on this new type of weapon reach the battlefield.;;;;;;;;;;;;x,,,,,;;;;;;;;;;;;;;;;
 early_multiple_rocket_launcher;Early Multiple Rocket Launcher;;;;;;;;;;;;x,,,,,,,;;;;;;;;;;;;;;;;
