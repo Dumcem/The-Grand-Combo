@@ -1,20 +1,32 @@
-# TODO mixed files for phase 4
+# Mixed file maintenance notes
 
-## Completed in phase 3
+This file is retained for existing documentation and validation references. It
+is a stable maintenance note for mixed core/submod files, not a temporary task
+list.
 
-- `TGC/decisions/00_Setup.txt` was split manually: core is back to the base end-game year, while `TGC_Timeline_1966/decisions/00_Setup.txt` carries the 1966 override.
-- `TGC/inventions/navy_inventions.txt` was split manually: core keeps generic key-renaming fixes, while `TGC_Timeline_1966/inventions/navy_inventions.txt` carries the submarine timeline effects as an override carrier file.
-- Timeline-only runtime files and assets were removed from `TGC/` after confirming they are staged in `TGC_Timeline_1966/`.
-- Mixed UI files with demonstrated timeline dependencies were moved to submod override/carrier files: `buildunit.gui`, `combat.gfx`, `province_interface.gfx`, and `unitpanel.gfx`, plus their directly referenced DDS assets.
-- Duplicate non-timeline localisation rows for core commerce inventions were removed from `TGC_Timeline_1966/localisation/1966_other_tech.csv`; `TGC/localisation/00_tech-invent.csv` remains the source for those vanilla/core invention names and descriptions.
+## Current split
 
-## Left intentionally in core
+- `TGC/` is the non-1966 core mod.
+- `TGC_Timeline_1966/` is the runtime layer for the 1966 timeline extension.
+- Full override and carrier files in the submod preserve the active TGC or
+  Victoria 2 definitions while adding the minimum 1966-specific behavior needed
+  for the extended timeline.
 
-- Generic localisation/encoding/typo fixes in `TGC/localisation/00_tech-invent.csv` and `TGC/localisation/00_technology.csv`. Phase 3 found no remaining lines in those files matching the new 1966 tech/invention key set that were not already carried by the dedicated submod localisation files.
-- Historical/flavour references to submarines, province id `1966`, and `submarine_warfare` remain in core because they are not the 1966 runtime timeline extension.
+## Mixed-file boundaries
 
-## Remaining follow-up after phase 4
+- `TGC_Timeline_1966/decisions/00_Setup.txt` carries the 1966 end-game decision
+  date while core keeps the non-1966 setup behavior.
+- `TGC_Timeline_1966/inventions/navy_inventions.txt` carries submarine-specific
+  effects while core keeps the generic navy invention behavior.
+- Mixed interface carriers such as `buildunit.gui`, `combat.gfx`,
+  `province_interface.gfx`, and `unitpanel.gfx` exist because the loader expects
+  full interface definitions and frame counts rather than small patch fragments.
+- Dedicated 1966 localisation files carry the late technology, invention, and
+  unit text for the submod layer.
 
-- Re-check localisation duplicate-key behavior with the submod active when doing future content changes.
-- Review whether full override carrier files should be minimized further if a safer loader strategy becomes available.
-- Keep the submod-aware validator/audit scope in sync whenever timeline runtime files move or new override carrier files are added.
+## Maintenance rule
+
+When a generic bugfix or typo fix touches a file that has a 1966 carrier, review
+whether the same non-1966 part must be present in both `TGC/` and
+`TGC_Timeline_1966/`. When a change is genuinely 1966-only, keep it in the
+submod and leave core unchanged.
