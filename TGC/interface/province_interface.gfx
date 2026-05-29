@@ -207,7 +207,7 @@ spriteTypes = {
 	}
 	spriteType = {
 		name = "GFX_province_remove_recruit"
-		texturefile = "gfx\\interface\\province_remove_recruit.tga"
+		texturefile = "gfx\\interface\\province_remove_recruit.dds"
 		norefcount = yes
 	}
 
