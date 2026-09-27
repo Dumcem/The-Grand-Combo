@@ -1,5 +1,18 @@
 # AGENTS.md
 
+## Project Alice compatibility policy
+
+- Project Alice is an officially supported runtime target alongside the original Victoria II engine (`v2game.exe`). Changes must not knowingly break either supported engine unless an explicit project decision changes this policy.
+- The Project Alice compatibility baseline is the latest stable version that has been explicitly audited and adopted by the project. The current baseline is Project Alice 1.3.0. A newer Project Alice release does not automatically replace the baseline: review relevant changes and compatibility before adopting it.
+- When implementing or reviewing changes to scripts, triggers/effects, defines, technologies, inventions, units, buildings, economy, AI, GUI/GFX, mod loading, or other engine-facing data, explicitly consider behavior under both Victoria II and the supported Project Alice baseline.
+- Prefer constructs that behave correctly under both engines. When the engines require different behavior, use an intentional engine-specific path where possible, such as `has_global_flag = project_alice` or Alice-specific configuration, rather than degrading one engine silently.
+- A construct being accepted by the Project Alice parser is not sufficient evidence of compatibility. Check whether relevant fields and mechanics are actually implemented and used by Alice; recognized-but-discarded fields must not be relied upon for gameplay behavior under Alice.
+- When Project Alice does not implement a Victoria II mechanic used by the mod, either provide an Alice-compatible equivalent when practical or explicitly document the remaining behavioral divergence. Do not silently treat ignored behavior as equivalent.
+- Compatibility means that the mod remains valid and functionally coherent on both supported engines. It does not require identical simulation results where Project Alice intentionally implements systems differently from Victoria II.
+- Changes affecting engine compatibility must include the applicable Project Alice static/scenario validation when such validation is available. Compatibility regressions are treated as implementation regressions, not optional follow-up work.
+- After upstream TGC synchronization, consider Project Alice compatibility as part of the mandatory regression review together with core/1966 synchronization.
+- If preserving both engines would require a substantive gameplay or design compromise, do not choose one silently: report the conflict and obtain a project decision before proceeding.
+
 ## Validation trigger policy
 Run validation from repository root only when the current task includes:
 
