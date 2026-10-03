@@ -245,8 +245,10 @@ checks, not race-proof handle-relative filesystem operations. Source/HEAD/live
 are checked again before publication and staging hashes are verified. Free
 space is checked by a conservative estimate, not reserved with an OS quota.
 
-Apply checks active game/launcher processes with Windows tasklist and selected
-live files with exclusive DELETE-access handles. Process inspection failure is
+Apply checks active game/launcher processes with Windows tasklist, including
+`Alice512.exe` and `AliceSSE.exe`, runtime variants that the Project Alice 1.3.0
+launcher can actually start, and selected live files with exclusive DELETE-access
+handles. Process inspection failure is
 refused. A unique temporary probe checks write/rename capability only in the
 tool workspace and is removed before the transaction. Windows directory ACL
 rights to add files/subdirectories and delete children are probed without

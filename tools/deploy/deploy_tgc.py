@@ -402,7 +402,8 @@ def active_processes():
         return []
     result = subprocess.run(["tasklist", "/FO", "CSV", "/NH"], capture_output=True, check=False)
     require(result.returncode == 0, "Unable to inspect active Windows processes")
-    names = {"v2game.exe", "victoria2.exe", "alice.exe", "launch_alice.exe", "dbg_alice.exe"}
+    names = {"v2game.exe", "victoria2.exe", "alice.exe", "alice512.exe", "alicesse.exe",
+             "launch_alice.exe", "dbg_alice.exe"}
     import csv
     return [row[0] for row in csv.reader(result.stdout.decode(errors="replace").splitlines())
             if row and row[0].casefold() in names]

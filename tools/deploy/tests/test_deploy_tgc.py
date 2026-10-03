@@ -18,6 +18,7 @@ spec.loader.exec_module(d)
 
 class DeploymentTests(unittest.TestCase):
     def setUp(self):
+        self.real_active_processes = d.active_processes
         # Never inspect the user's active games in simulated filesystem tests.
         processes = mock.patch.object(d, "active_processes", return_value=[])
         processes.start()
@@ -372,6 +373,43 @@ class DeploymentTests(unittest.TestCase):
         with mock.patch.object(d, "active_processes", return_value=["v2game.exe"]), \
                 self.assertRaises(d.DeploymentError):
             self.apply()
+
+    def assert_alice_variant_refused(self, image_name):
+        self.legacy()
+        plan = self.plan()
+        before_game = d.snapshot(self.game)
+        before_foreign = {name: d.snapshot(self.game / "mod" / name)
+                          for name in ("CWE", "CWE.mod", "dummy.txt")}
+        output = subprocess.CompletedProcess(
+            ["tasklist", "/FO", "CSV", "/NH"], 0,
+            (f'"{image_name}","1234","Console","1","100 K"\n'
+             '"unrelated.exe","5678","Console","1","100 K"\n').encode(), b"")
+
+        def enumerate_processes():
+            # Exercise the real CSV parser and case handling, mocking only tasklist.
+            with mock.patch.object(d.os, "name", "nt"), \
+                    mock.patch.object(d.subprocess, "run", return_value=output) as tasklist:
+                found = self.real_active_processes()
+                tasklist.assert_called_once_with(
+                    ["tasklist", "/FO", "CSV", "/NH"], capture_output=True, check=False)
+                self.assertEqual(found, [image_name])
+                return found
+
+        with mock.patch.object(d, "active_processes", side_effect=enumerate_processes) as processes, \
+                self.assertRaisesRegex(d.DeploymentError, "Game/launcher process active"):
+            self.apply(plan, adopt=True)
+        processes.assert_called_once_with()
+        self.assertFalse((self.game / ".tgc-deploy").exists())
+        self.assertFalse(self.state_base.exists())
+        self.assertEqual(before_game, d.snapshot(self.game))
+        self.assertEqual(before_foreign, {name: d.snapshot(self.game / "mod" / name)
+                                        for name in before_foreign})
+
+    def test_alice512_runtime_refuses_apply_before_transaction(self):
+        self.assert_alice_variant_refused("Alice512.exe")
+
+    def test_alicesse_runtime_refuses_apply_before_transaction(self):
+        self.assert_alice_variant_refused("AliceSSE.exe")
 
     def test_process_inspection_failure_refused(self):
         with mock.patch.object(d, "active_processes", side_effect=d.DeploymentError("cannot inspect")), \
