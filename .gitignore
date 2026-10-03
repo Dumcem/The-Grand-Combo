@@ -66,3 +66,17 @@
 !TGCCountriesEndonymicLocalization.mod
 *.py
 !TGC/tools/*.py
+
+# Local deployment tooling and documentation
+!/tools/
+/tools/*
+!/tools/deploy/
+!/tools/deploy/**
+
+!/docs/
+/docs/*
+!/docs/deployment/
+!/docs/deployment/**
+
+**/__pycache__/
+*.pyc

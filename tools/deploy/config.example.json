@@ -1,0 +1,6 @@
+{
+  "schema": 1,
+  "game_root": "<absolute path to your Victoria II installation>",
+  "configuration": "Pass game_root explicitly using --game-root; this example is documentation, not automatically loaded.",
+  "state_root": "Defaults to %LOCALAPPDATA%/TGCDeployment; --state-root overrides it."
+}

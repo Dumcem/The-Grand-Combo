@@ -1,0 +1,434 @@
+{
+  "schema": 1,
+  "runtime_policy_version": 1,
+  "profiles": {
+    "core": [
+      "TGC"
+    ],
+    "core+1966": [
+      "TGC",
+      "TGC_Timeline_1966"
+    ]
+  },
+  "components": [
+    {
+      "id": "TGC",
+      "name": "TGC - The Grand Combination",
+      "source_dir": "TGC",
+      "source_descriptor": "TGC.mod",
+      "destination_dir": "TGC",
+      "destination_descriptor": "TGC.mod",
+      "dependencies": [],
+      "class": "core",
+      "profiles": [
+        "core",
+        "core+1966"
+      ],
+      "runtime_policy": {
+        "files": "git-tracked-working-copy-bytes",
+        "roots": [
+          "common",
+          "decisions",
+          "events",
+          "gfx",
+          "history",
+          "interface",
+          "inventions",
+          "localisation",
+          "map",
+          "news",
+          "poptypes",
+          "settings.txt",
+          "technologies",
+          "units"
+        ]
+      },
+      "exclusions": [
+        "docs/**",
+        "tools/**",
+        "gfx/flags/flags.py"
+      ]
+    },
+    {
+      "id": "TGC_Timeline_1966",
+      "name": "TGC Timeline 1966",
+      "source_dir": "TGC_Timeline_1966",
+      "source_descriptor": "TGC_Timeline_1966.mod",
+      "destination_dir": "TGC_Timeline_1966",
+      "destination_descriptor": "TGC_Timeline_1966.mod",
+      "dependencies": [
+        "TGC"
+      ],
+      "class": "timeline",
+      "profiles": [
+        "core+1966"
+      ],
+      "runtime_policy": {
+        "files": "git-tracked-working-copy-bytes",
+        "roots": [
+          "common",
+          "decisions",
+          "gfx",
+          "interface",
+          "inventions",
+          "localisation",
+          "technologies",
+          "units"
+        ]
+      },
+      "exclusions": [
+        "docs/**"
+      ]
+    },
+    {
+      "id": "TGCApocalypse1836",
+      "name": "TGC Submod - Apocalypse 1836",
+      "source_dir": "TGCApocalypse1836",
+      "source_descriptor": "TGCApocalypse1836.mod",
+      "destination_dir": "TGCApocalypse1836",
+      "destination_descriptor": "TGCApocalypse1836.mod",
+      "dependencies": [
+        "TGC"
+      ],
+      "class": "optional",
+      "profiles": [],
+      "runtime_policy": {
+        "files": "git-tracked-working-copy-bytes",
+        "roots": [
+          "decisions",
+          "events",
+          "gfx",
+          "interface",
+          "inventions",
+          "localisation"
+        ]
+      },
+      "exclusions": []
+    },
+    {
+      "id": "TGCBelleCartographieMap",
+      "name": "TGC Map - Belle Cartographie",
+      "source_dir": "TGCBelleCartographieMap",
+      "source_descriptor": "TGCBelleCartographieMap.mod",
+      "destination_dir": "TGCBelleCartographieMap",
+      "destination_descriptor": "TGCBelleCartographieMap.mod",
+      "dependencies": [
+        "TGC"
+      ],
+      "class": "optional",
+      "profiles": [],
+      "runtime_policy": {
+        "files": "git-tracked-working-copy-bytes",
+        "roots": [
+          "README.md",
+          "gfx",
+          "map",
+          "water.fx"
+        ]
+      },
+      "exclusions": [
+        "README.md"
+      ]
+    },
+    {
+      "id": "TGCDirectImmigration",
+      "name": "TGC Submod - Direct Immigration Submod",
+      "source_dir": "TGCDirectImmigration",
+      "source_descriptor": "TGCDirectImmigration.mod",
+      "destination_dir": "TGCDirectImmigration",
+      "destination_descriptor": "TGCDirectImmigration.mod",
+      "dependencies": [
+        "TGC"
+      ],
+      "class": "optional",
+      "profiles": [],
+      "runtime_policy": {
+        "files": "git-tracked-working-copy-bytes",
+        "roots": [
+          "common",
+          "decisions",
+          "events",
+          "gfx",
+          "interface",
+          "inventions",
+          "localisation",
+          "poptypes"
+        ]
+      },
+      "exclusions": []
+    },
+    {
+      "id": "TGCFantasyFormables",
+      "name": "TGC Submod - Fantasy Formables Submods",
+      "source_dir": "TGCFantasyFormables",
+      "source_descriptor": "TGCFantasyFormables.mod",
+      "destination_dir": "TGCFantasyFormables",
+      "destination_descriptor": "TGCFantasyFormables.mod",
+      "dependencies": [
+        "TGC"
+      ],
+      "class": "optional",
+      "profiles": [],
+      "runtime_policy": {
+        "files": "git-tracked-working-copy-bytes",
+        "roots": [
+          "Decisions",
+          "Events",
+          "gfx",
+          "localisation"
+        ]
+      },
+      "exclusions": []
+    },
+    {
+      "id": "TGCHFMMap",
+      "name": "TGC Map - HFM Style",
+      "source_dir": "TGCHFMMap",
+      "source_descriptor": "TGCHFMMap.mod",
+      "destination_dir": "TGCHFMMap",
+      "destination_descriptor": "TGCHFMMap.mod",
+      "dependencies": [
+        "TGC"
+      ],
+      "class": "optional",
+      "profiles": [],
+      "runtime_policy": {
+        "files": "git-tracked-working-copy-bytes",
+        "roots": [
+          "gfx",
+          "map"
+        ]
+      },
+      "exclusions": []
+    },
+    {
+      "id": "TGCHoI3Style",
+      "name": "TGC Map - HoI III Dark Style",
+      "source_dir": "TGCHoI3Style",
+      "source_descriptor": "TGCHoI3Style.mod",
+      "destination_dir": "TGCHoI3Style",
+      "destination_descriptor": "TGCHoI3Style.mod",
+      "dependencies": [
+        "TGC"
+      ],
+      "class": "optional",
+      "profiles": [],
+      "runtime_policy": {
+        "files": "git-tracked-working-copy-bytes",
+        "roots": [
+          "gfx",
+          "map"
+        ]
+      },
+      "exclusions": []
+    },
+    {
+      "id": "TGCLessCombatRNG",
+      "name": "TGC Combat - Less RNG",
+      "source_dir": "TGCLessCombatRNG",
+      "source_descriptor": "TGCLessCombatRNG.mod",
+      "destination_dir": "TGCLessCombatRNG",
+      "destination_descriptor": "TGCLessCombatRNG.mod",
+      "dependencies": [
+        "TGC"
+      ],
+      "class": "optional",
+      "profiles": [],
+      "runtime_policy": {
+        "files": "git-tracked-working-copy-bytes",
+        "roots": [
+          "common",
+          "gfx",
+          "map",
+          "technologies"
+        ]
+      },
+      "exclusions": []
+    },
+    {
+      "id": "TGCPastelMap",
+      "name": "TGC Map - Pastel",
+      "source_dir": "TGCPastelMap",
+      "source_descriptor": "TGCPastelMap.mod",
+      "destination_dir": "TGCPastelMap",
+      "destination_descriptor": "TGCPastelMap.mod",
+      "dependencies": [
+        "TGC"
+      ],
+      "class": "optional",
+      "profiles": [],
+      "runtime_policy": {
+        "files": "git-tracked-working-copy-bytes",
+        "roots": [
+          "Readme.txt",
+          "Robau_font_Readme.txt",
+          "gfx",
+          "map"
+        ]
+      },
+      "exclusions": [
+        "Readme.txt",
+        "Robau_font_Readme.txt"
+      ]
+    },
+    {
+      "id": "TGCPerformanceAddon",
+      "name": "TGC Submod - Performance Addon",
+      "source_dir": "TGCPerformanceAddon",
+      "source_descriptor": "TGCPerformanceAddon.mod",
+      "destination_dir": "TGCPerformanceAddon",
+      "destination_descriptor": "TGCPerformanceAddon.mod",
+      "dependencies": [
+        "TGC"
+      ],
+      "class": "optional",
+      "profiles": [],
+      "runtime_policy": {
+        "files": "git-tracked-working-copy-bytes",
+        "roots": [
+          "decisions",
+          "news"
+        ]
+      },
+      "exclusions": []
+    },
+    {
+      "id": "TGCCountriesEndonymicLocalization",
+      "name": "TGC Submod - Endonymic Localization",
+      "source_dir": "TGC Niche Submods/TGCCountriesEndonymicLocalization",
+      "source_descriptor": "TGC Niche Submods/TGCCountriesEndonymicLocalization.mod",
+      "destination_dir": "TGCCountriesEndonymicLocalization",
+      "destination_descriptor": "TGCCountriesEndonymicLocalization.mod",
+      "dependencies": [
+        "TGC"
+      ],
+      "class": "optional",
+      "profiles": [],
+      "runtime_policy": {
+        "files": "git-tracked-working-copy-bytes",
+        "roots": [
+          "localisation"
+        ]
+      },
+      "exclusions": []
+    },
+    {
+      "id": "TGCHFMStyleCultureColors",
+      "name": "TGC Submod - HFM Style Culture",
+      "source_dir": "TGC Niche Submods/TGCHFMStyleCultureColors",
+      "source_descriptor": "TGC Niche Submods/TGCHFMStyleCultureColors.mod",
+      "destination_dir": "TGCHFMStyleCultureColors",
+      "destination_descriptor": "TGCHFMStyleCultureColors.mod",
+      "dependencies": [
+        "TGC"
+      ],
+      "class": "optional",
+      "profiles": [],
+      "runtime_policy": {
+        "files": "git-tracked-working-copy-bytes",
+        "roots": [
+          "common"
+        ]
+      },
+      "exclusions": []
+    },
+    {
+      "id": "TGCOrganizedStacks",
+      "name": "TGC Units - Organized Stacks",
+      "source_dir": "TGC Niche Submods/TGCOrganizedStacks",
+      "source_descriptor": "TGC Niche Submods/TGCOrganizedStacks.mod",
+      "destination_dir": "TGCOrganizedStacks",
+      "destination_descriptor": "TGCOrganizedStacks.mod",
+      "dependencies": [
+        "TGC"
+      ],
+      "class": "optional",
+      "profiles": [],
+      "runtime_policy": {
+        "files": "git-tracked-working-copy-bytes",
+        "roots": [
+          "history"
+        ]
+      },
+      "exclusions": []
+    },
+    {
+      "id": "TGCScreenshotMode",
+      "name": "TGC Submod - Screenshot Mode",
+      "source_dir": "TGC Niche Submods/TGCScreenshotMode",
+      "source_descriptor": "TGC Niche Submods/TGCScreenshotMode.mod",
+      "destination_dir": "TGCScreenshotMode",
+      "destination_descriptor": "TGCScreenshotMode.mod",
+      "dependencies": [
+        "TGC"
+      ],
+      "class": "optional",
+      "profiles": [],
+      "runtime_policy": {
+        "files": "git-tracked-working-copy-bytes",
+        "roots": [
+          "gfx",
+          "interface"
+        ]
+      },
+      "exclusions": []
+    },
+    {
+      "id": "TGCSixGreatPowers",
+      "name": "TGC Submod - Six Great Powers",
+      "source_dir": "TGC Niche Submods/TGCSixGreatPowers",
+      "source_descriptor": "TGC Niche Submods/TGCSixGreatPowers.mod",
+      "destination_dir": "TGCSixGreatPowers",
+      "destination_descriptor": "TGCSixGreatPowers.mod",
+      "dependencies": [
+        "TGC"
+      ],
+      "class": "optional",
+      "profiles": [],
+      "runtime_policy": {
+        "files": "git-tracked-working-copy-bytes",
+        "roots": [
+          "common",
+          "gfx"
+        ]
+      },
+      "exclusions": []
+    },
+    {
+      "id": "TGCStreamerMode",
+      "name": "TGC Submod - Content Creator Mode",
+      "source_dir": "TGC Niche Submods/TGCStreamerMode",
+      "source_descriptor": "TGC Niche Submods/TGCStreamerMode.mod",
+      "destination_dir": "TGCStreamerMode",
+      "destination_descriptor": "TGCStreamerMode.mod",
+      "dependencies": [
+        "TGC"
+      ],
+      "class": "optional",
+      "profiles": [],
+      "runtime_policy": {
+        "files": "git-tracked-working-copy-bytes",
+        "roots": [
+          "gfx"
+        ]
+      },
+      "exclusions": []
+    },
+    {
+      "id": "TGCLowRam",
+      "name": "TGC Low RAM cache utility",
+      "source_dir": "TGC Niche Submods/TGCLowRam",
+      "source_descriptor": null,
+      "destination_dir": null,
+      "destination_descriptor": null,
+      "dependencies": [],
+      "class": "utility/non-mod-target",
+      "profiles": [],
+      "runtime_policy": {
+        "files": "not-deployable-to-mod",
+        "roots": []
+      },
+      "exclusions": []
+    }
+  ]
+}
