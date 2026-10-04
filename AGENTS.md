@@ -13,6 +13,14 @@
 - After upstream TGC synchronization, consider Project Alice compatibility as part of the mandatory regression review together with core/1966 synchronization.
 - If preserving both engines would require a substantive gameplay or design compromise, do not choose one silently: report the conflict and obtain a project decision before proceeding.
 
+## Local deployment policy
+
+- The Git working copy is the authoritative edit surface. Do not develop or maintain managed TGC components by editing the live Victoria II installation directly.
+- Deploy managed components from the repository to the live Victoria II installation with `tools/deploy/deploy_tgc.py`, following `docs/deployment/local_deployment.md`. Do not replace this workflow with manual copy, synchronization, or ad-hoc file deletion.
+- Use the normal deployment lifecycle `plan → apply → verify`. Review the plan before applying it, and treat a failed or recovery-required transaction according to the deployment tool's documented recovery procedure rather than repairing its state manually.
+- When source changes must be exercised or validated in a runtime, deploy the intended repository state through the deployment tool first so the live installation corresponds to the source under review.
+- When Project Alice scenario validation is required after relevant deployed changes, generate or regenerate the Alice scenario from that verified live deployment rather than relying on a scenario built from an older live state.
+
 ## Validation trigger policy
 Run validation from repository root only when the current task includes:
 
