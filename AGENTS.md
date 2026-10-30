@@ -21,6 +21,28 @@
 - When source changes must be exercised or validated in a runtime, deploy the intended repository state through the deployment tool first so the live installation corresponds to the source under review.
 - When Project Alice scenario validation is required after relevant deployed changes, generate or regenerate the Alice scenario from that verified live deployment rather than relying on a scenario built from an older live state.
 
+## Re-baseline verification policy — temporary
+
+- Treat existing fork changes, prior fixes, audit conclusions, validation results, documentation claims, and legacy AI-generated work as evidence to be re-evaluated, not as proof of correctness.
+- During the re-baseline, validate the implementation from first principles where practical. Do not preserve a previous conclusion solely because it is already implemented, documented, tested, or reported as passing.
+- Audit the audit tooling itself. Review validator and audit code, parsing assumptions, rulesets, coverage, thresholds, reference values, balance targets, and other parameters used to decide whether content is valid or plausible.
+- A validator passing is meaningful only after the relevant validator logic and its reference assumptions have themselves been reviewed to an appropriate level of confidence.
+- Reassess historical fixes individually. Confirm the underlying defect, the correctness and completeness of the fix, cross-file consequences, and compatibility with both supported runtime targets before treating the fix as trusted baseline.
+- Use current project capabilities and evidence to improve or replace earlier methods where they are incomplete, weakly justified, or obsolete. The purpose of the re-baseline is to reconstruct confidence from the foundations rather than inherit it.
+- This policy is scoped to the current re-baseline phase. When the re-baseline is formally completed, review this section as part of the closing checkpoint: remove phase-specific instructions and retain or reformulate only principles that remain useful for normal ongoing development.
+
+## Upstream contribution policy
+
+- Confirmed bugs should be fixed and validated in this fork without waiting for acceptance by the original/upstream TGC project.
+- When a confirmed fix is generic to TGC rather than specific to this fork, retain the validated fix locally and separately mark it as a candidate upstream contribution.
+- Previously implemented generic fixes must be re-evaluated during the re-baseline before being proposed upstream; prior implementation alone is not evidence that the fix is correct.
+- Prepare upstream contributions as minimal, clean patches separated from fork-specific customization whenever practical.
+- Upstream review or acceptance must not block continued use of a validated fix in this fork. If upstream later implements the same fix independently, compare the implementations deliberately rather than merging or duplicating them blindly.
+
+## Instruction lifecycle policy
+
+- Keep persistent agent instructions limited to rules that still affect future work. Phase-specific policies must be clearly identifiable and reviewed when their phase closes; remove obsolete instructions instead of allowing AGENTS.md to accumulate historical workflow.
+
 ## Validation trigger policy
 Run validation from repository root only when the current task includes:
 
