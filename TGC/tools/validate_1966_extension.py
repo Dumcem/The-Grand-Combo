@@ -8,7 +8,11 @@ import sys
 from collections import defaultdict
 from pathlib import Path
 
-from lib_1966_parser import TopLevelBlockMeta, parse_top_level_block_meta, read_text, rebase_path, resolve_repo_path
+from lib_1966_parser import (
+    Node, ScriptError, TopLevelBlockMeta, member, parse_file,
+    parse_top_level_block_meta, read_text, rebase_path, resolve_repo_path,
+    scalar, unique_definitions, walk,
+)
 
 ROOT = Path(__file__).resolve().parents[2]
 MANIFEST_PATH = "TGC/tools/1966_extension_scope.json"
@@ -82,101 +86,48 @@ def discover_unit_keys(core_root: str, timeline_root: str) -> set[str]:
 
 
 def validate_effect_unit_targets(rel_path: str, unit_keys: set[str]) -> list[str]:
+    """Only technology modifiers and invention effect bodies, never trigger text."""
     failures: list[str] = []
-    lines = read_text(rel_path).splitlines()
-    i = 0
-    while i < len(lines):
-        if re.match(r"\s*effect\s*=\s*\{\s*(?:#.*)?$", lines[i]):
-            depth = 1
-            i += 1
-            effect_lines: list[tuple[int, str, int]] = []
-            while i < len(lines) and depth > 0:
-                cur = lines[i]
-                effect_lines.append((i + 1, cur, depth))
-                depth += cur.count("{") - cur.count("}")
-                i += 1
-
-            j = 0
-            while j < len(effect_lines):
-                lineno, txt, local_depth = effect_lines[j]
-                if local_depth == 1:
-                    ma = re.match(r"\s*activate_unit\s*=\s*([a-z0-9_]+)", txt)
-                    if ma:
-                        unit_key = ma.group(1)
-                        if unit_key not in unit_keys:
-                            failures.append(f"UNIT target unknown key '{unit_key}' in {rel_path}:{lineno} (activate_unit)")
-
-                    mb = re.match(r"\s*([a-z0-9_]+)\s*=\s*\{\s*(?:#.*)?$", txt)
-                    if mb:
-                        key = mb.group(1)
-                        sub_depth = 1
-                        k = j + 1
-                        sub: list[tuple[int, str]] = []
-                        while k < len(effect_lines) and sub_depth > 0:
-                            ln2, t2, _ = effect_lines[k]
-                            sub.append((ln2, t2))
-                            sub_depth += t2.count("{") - t2.count("}")
-                            k += 1
-
-                        if key not in NON_UNIT_EFFECT_KEYS:
-                            joined = "\n".join(x[1] for x in sub)
-                            looks_like_unit_target = any(re.search(rf"\b{re.escape(stat)}\b", joined) for stat in UNIT_STAT_HINTS)
-                            if looks_like_unit_target and key not in unit_keys:
-                                if key in LEGACY_UNIT_ALIASES and LEGACY_UNIT_ALIASES[key] in unit_keys:
-                                    failures.append(
-                                        f"UNIT target legacy key '{key}' in {rel_path}:{lineno} (use '{LEGACY_UNIT_ALIASES[key]}')"
-                                    )
-                                else:
-                                    failures.append(f"UNIT target unknown key '{key}' in {rel_path}:{lineno}")
-                        j = k
-                        continue
-                j += 1
-            continue
-        i += 1
+    is_tech = "/technologies/" in "/" + rel_path.replace("\\", "/").lower()
+    for definition in parse_file(rel_path).definitions:
+        bodies = [definition] if is_tech else [n for n in definition.children if n.keyword == "effect"]
+        for body in bodies:
+            if not body.is_group:
+                raise ScriptError(f"{body.start}: expected effect group")
+            for node in body.children:
+                if node.keyword == "activate_unit":
+                    if node.is_group or node.operator != "=" or node.value not in unit_keys:
+                        failures.append(f"UNIT target unknown key {node.value!r} in {node.start} (activate_unit)")
+                if not node.is_group or node.key in NON_UNIT_EFFECT_KEYS:
+                    continue
+                if any(n.keyword in UNIT_STAT_HINTS for n in node.children) and node.key not in unit_keys:
+                    replacement = LEGACY_UNIT_ALIASES.get(node.key)
+                    detail = f" (use '{replacement}')" if replacement in unit_keys else ""
+                    failures.append(f"UNIT target unknown/legacy key '{node.key}' in {node.start}{detail}")
     return failures
 
 
-def block_has_section_year(block_lines: list[tuple[int, str]], section: str, expected_year: int) -> bool:
-    i = 0
-    while i < len(block_lines):
-        _, line = block_lines[i]
-        m = re.match(rf"\s*{re.escape(section)}\s*=\s*\{{\s*(?:#.*)?$", line)
-        if not m:
-            i += 1
-            continue
-
-        depth = 1
-        i += 1
-        while i < len(block_lines) and depth > 0:
-            _, cur = block_lines[i]
-            if re.search(rf"\byear\s*=\s*{expected_year}\b", cur):
-                return True
-            depth += cur.count("{") - cur.count("}")
-            i += 1
-    return False
+def block_has_section_year(block: Node, section: str, expected_year: int) -> bool:
+    """Require the direct positive gate, not a comment, NOT, or another section."""
+    child = member(block, section)
+    if child is None:
+        return False
+    if not child.is_group:
+        raise ScriptError(f"{child.start}: expected {section} group")
+    return scalar(child, "year") == str(expected_year)
 
 
-def find_named_block_lines(rel_path: str, block_key: str) -> list[tuple[int, str]] | None:
-    lines = read_text(rel_path).splitlines()
-    i = 0
-    while i < len(lines):
-        m = re.match(rf"\s*{re.escape(block_key)}\s*=\s*\{{\s*(?:#.*)?$", lines[i])
-        if not m:
-            i += 1
-            continue
-
-        depth = 1
-        i += 1
-        block: list[tuple[int, str]] = []
-        while i < len(lines) and depth > 0:
-            block.append((i + 1, lines[i]))
-            depth += lines[i].count("{") - lines[i].count("}")
-            i += 1
-        return block
-    return None
+def find_decision(rel_path: str, block_key: str) -> Node | None:
+    roots = unique_definitions(parse_file(rel_path).definitions)
+    containers = [node for node in roots.values() if node.keyword == "political_decisions"]
+    if len(containers) > 1:
+        raise ScriptError(f"{rel_path}: ambiguous political_decisions containers")
+    if not containers:
+        return None
+    return unique_definitions(containers[0].children).get(block_key)
 
 
-def main() -> int:
+def _run() -> int:
     args = parse_args()
     m = read_manifest(args.core_root, args.timeline_root)
     branches = m["tech_tree"]["branches"]
@@ -202,8 +153,15 @@ def main() -> int:
         all_tech.extend(blocks)
         by_area: dict[str, list[TopLevelBlockMeta]] = defaultdict(list)
         for x in blocks:
-            if x["area"]:
+            where = f"{x['file']}:{x['line']}:{x['column']}"
+            if x["area"] is None:
+                failures.append(f"TECH missing direct area for {x['key']} at {where}")
+            elif x["area"] not in area_spec:
+                failures.append(f"TECH unknown area {x['area']} for {x['key']} at {where}")
+            else:
                 by_area[x["area"]].append(x)
+            if x["year"] is None:
+                failures.append(f"TECH missing direct year for {x['key']} at {where}")
         for area, expected in area_spec.items():
             actual = len(by_area.get(area, []))
             if actual != expected:
@@ -211,7 +169,7 @@ def main() -> int:
 
     tech_idx: dict[str, list[str]] = defaultdict(list)
     for x in all_tech:
-        tech_idx[x["key"]].append(x["file"])
+        tech_idx[x["key"]].append(f"{x['file']}:{x['line']}:{x['column']}")
     for k, files in tech_idx.items():
         if len(files) > 1:
             failures.append(f"TECH duplicate definition for {k}: {', '.join(sorted(set(files)))}")
@@ -228,7 +186,7 @@ def main() -> int:
         all_inv.extend(parse_top_level_block_meta(rel))
     inv_idx: dict[str, list[str]] = defaultdict(list)
     for x in all_inv:
-        inv_idx[x["key"]].append(x["file"])
+        inv_idx[x["key"]].append(f"{x['file']}:{x['line']}:{x['column']}")
     for k, files in inv_idx.items():
         if len(files) > 1:
             failures.append(f"INVENTION duplicate definition for {k}: {', '.join(sorted(set(files)))}")
@@ -242,21 +200,20 @@ def main() -> int:
         failures.extend(validate_effect_unit_targets(rel, unit_keys))
 
     for rule in stale_rules:
-        pat = re.compile(rf"\b{re.escape(rule['old_key'])}\b")
         for rel in rule["files"]:
-            for n, line in enumerate(read_text(rel).splitlines(), 1):
-                if pat.search(line):
-                    failures.append(f"STALE reference {rule['old_key']} found in {rel}:{n} (expected context: {rule['new_key']})")
+            for node in walk(parse_file(rel).nodes):
+                if node.key == rule["old_key"] or (not node.is_group and node.value == rule["old_key"]):
+                    failures.append(f"STALE reference {rule['old_key']} found at {node.start} (expected context: {rule['new_key']})")
 
     d = structural["decision_alignment"]
-    decision_block = find_named_block_lines(d["file"], d["decision_key"])
-    if not decision_block:
+    decision_block = find_decision(d["file"], d["decision_key"])
+    if decision_block is None:
         failures.append(f"STRUCTURAL missing {d['decision_key']} block in {d['file']}")
     else:
         if not block_has_section_year(decision_block, "potential", d["potential_year"]):
-            failures.append(f"STRUCTURAL {d['decision_key']} potential must include year = {d['potential_year']}")
+            failures.append(f"STRUCTURAL {d['decision_key']} potential must include direct year = {d['potential_year']}")
         if not block_has_section_year(decision_block, "allow", d["allow_year"]):
-            failures.append(f"STRUCTURAL {d['decision_key']} allow must include year = {d['allow_year']}")
+            failures.append(f"STRUCTURAL {d['decision_key']} allow must include direct year = {d['allow_year']}")
 
     for chk in structural["required_patterns"]:
         if not re.search(chk["pattern"], read_text(chk["file"]), re.S):
@@ -295,8 +252,16 @@ def main() -> int:
             print(f" - {item}")
         return 1
 
-    print("\nOK: full-tree 1966 static checks passed (25 areas @ 12 tiers + localisation + structure).")
+    print(f"\nOK: manifest-scoped 1966 checks passed ({expected_areas} areas, {len(all_tech)} technology occurrences + localisation + structure).")
     return 0
+
+
+def main() -> int:
+    try:
+        return _run()
+    except (ScriptError, OSError, UnicodeError, json.JSONDecodeError) as exc:
+        print(f"FAIL: 1966 validation input error: {exc}")
+        return 1
 
 
 if __name__ == "__main__":

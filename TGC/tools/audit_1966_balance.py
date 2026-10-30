@@ -6,10 +6,14 @@ import json
 import re
 import sys
 from collections import defaultdict
+from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
-from lib_1966_parser import parse_top_level_blocks, read_text, rebase_path
+from lib_1966_parser import (
+    Node, ScriptError, integer, member, number, parse_file, read_text,
+    rebase_path, scalar, unique_definitions, walk,
+)
 
 ROOT = Path(__file__).resolve().parents[2]
 RULES_PATH = ROOT / "TGC/tools/1966_balance_rules.json"
@@ -46,7 +50,7 @@ def infer_bucket(message: str) -> str:
     m = message.lower()
     if any(x in m for x in ["build_cost", "upkeep", "key goods", "economic ", "supply_cost"]):
         return "economic plausibility issues"
-    if any(x in m for x in ["coverage", "unreadable year", "unknown monitored unit", "missing/unreadable", "cannot estimate"]):
+    if any(x in m for x in ["coverage", "unreadable year", "unknown monitored unit", "missing/unreadable", "cannot estimate", "input error"]):
         return "structural/data confidence issues"
     return "stat progression issues"
 
@@ -167,7 +171,7 @@ def _rebase_obj(obj: Any, *, core_root: str, timeline_root: str) -> Any:
 
 
 def read_rules(core_root: str = "TGC", timeline_root: str = "TGC_Timeline_1966") -> dict[str, Any]:
-    rules = json.loads(RULES_PATH.read_text(encoding="utf-8"))
+    rules = json.loads(read_text(str(RULES_PATH)))
     return _rebase_obj(rules, core_root=core_root, timeline_root=timeline_root)
 
 
@@ -210,72 +214,53 @@ def get_applicable_milestone_years(
     return sorted(applicable)
 
 
+def numeric_members(node: Node) -> dict[str, float]:
+    result: dict[str, float] = {}
+    for child in node.children:
+        if child.key is None or child.is_group or child.operator != "=":
+            raise ScriptError(f"{child.start}: expected a numeric assignment")
+        if child.key in result:
+            raise ScriptError(f"{child.start}: duplicate numeric property {child.key}")
+        result[child.key] = number(child.value, child.start)
+    return result
+
+
 def parse_goods_costs(rel_path: str) -> dict[str, float]:
-    text = read_text(rel_path)
     costs: dict[str, float] = {}
-    current: str | None = None
-    for line in text.splitlines():
-        m_open = re.match(r"\s*([a-z0-9_]+)\s*=\s*\{\s*(?:#.*)?$", line)
-        if m_open:
-            current = m_open.group(1)
-            continue
-        if current:
-            m_cost = re.match(r"\s*cost\s*=\s*([0-9.]+)", line)
-            if m_cost:
-                costs[current] = float(m_cost.group(1))
-            if line.strip() == "}":
-                current = None
+    categories = unique_definitions(parse_file(rel_path).definitions)
+    for category in categories.values():
+        for good in unique_definitions(category.children).values():
+            cost = scalar(good, "cost", required=True)
+            if good.key in costs:
+                raise ScriptError(f"{good.start}: duplicate commodity {good.key}")
+            costs[good.key] = number(cost, member(good, "cost").start)
     return costs
 
 
 def parse_unit_block(unit_file: str, unit_key: str) -> dict[str, Any]:
-    lines = read_text(unit_file).splitlines()
-    data: dict[str, Any] = {"stats": {}, "build_cost": {}, "supply_cost": {}, "unit_domain": None}
-
-    i = 0
-    while i < len(lines):
-        if re.match(rf"\s*{re.escape(unit_key)}\s*=\s*\{{\s*$", lines[i]):
-            depth = 1
-            i += 1
-            mode: str | None = None
-            while i < len(lines) and depth > 0:
-                cur = lines[i]
-                stripped = cur.strip()
-
-                if re.match(r"\s*build_cost\s*=\s*\{", cur):
-                    mode = "build"
-                    i += 1
-                    continue
-                if re.match(r"\s*supply_cost\s*=\s*\{", cur):
-                    mode = "supply"
-                    i += 1
-                    continue
-
-                if mode and stripped == "}":
-                    mode = None
-                    i += 1
-                    continue
-
-                if mode == "build" or mode == "supply":
-                    m = re.match(r"\s*([a-z0-9_]+)\s*=\s*([-0-9.]+)", cur)
-                    if m:
-                        if mode == "build":
-                            data["build_cost"][m.group(1)] = float(m.group(2))
-                        else:
-                            data["supply_cost"][m.group(1)] = float(m.group(2))
-                else:
-                    m_type = re.match(r"\s*type\s*=\s*([a-z_]+)\b", cur)
-                    if m_type:
-                        data["unit_domain"] = m_type.group(1)
-                    m_stat = re.match(r"\s*([a-z0-9_]+)\s*=\s*([-0-9.]+)\s*(?:#.*)?$", cur)
-                    if m_stat:
-                        data["stats"][m_stat.group(1)] = float(m_stat.group(2))
-
-                depth += cur.count("{") - cur.count("}")
-                i += 1
-            return data
-        i += 1
-
+    definitions = unique_definitions(parse_file(unit_file).definitions)
+    if unit_key not in definitions:
+        raise ScriptError(f"{unit_file}: missing unit definition {unit_key}")
+    node = definitions[unit_key]
+    data: dict[str, Any] = {"stats": {}, "build_cost": {}, "supply_cost": {},
+                            "unit_domain": scalar(node, "type", required=True).lower()}
+    if data["unit_domain"] not in {"land", "naval"}:
+        raise ScriptError(f"{node.start}: unsupported unit domain {data['unit_domain']!r}")
+    for field in ("build_cost", "supply_cost"):
+        member(node, field, required=True)
+    seen: set[str] = set()
+    for child in node.children:
+        if child.keyword in seen:
+            raise ScriptError(f"{child.start}: duplicate unit property {child.key}")
+        seen.add(child.keyword)
+        if child.keyword in {"build_cost", "supply_cost"}:
+            if not child.is_group or child.operator != "=":
+                raise ScriptError(f"{child.start}: expected commodity-cost group")
+            data[child.keyword] = numeric_members(child)
+        elif not child.is_group and child.operator == "=":
+            # Non-numeric flags/names are retained in the tree but are not stats.
+            if re.fullmatch(r"[+-]?(?:[0-9]+(?:\.[0-9]*)?|\.[0-9]+)(?:[eE][+-]?[0-9]+)?", child.value):
+                data["stats"][child.keyword] = number(child.value, child.start)
     return data
 
 
@@ -283,244 +268,251 @@ def estimate_costs(cost_block: dict[str, float], goods_costs: dict[str, float]) 
     missing_goods = [g for g in cost_block if g not in goods_costs]
     if missing_goods:
         return None, missing_goods, []
-
     contributions = [(g, cost_block[g] * goods_costs[g]) for g in cost_block]
-    contributions.sort(key=lambda x: x[1], reverse=True)
-    estimated = sum(v for _, v in contributions)
-    return estimated, [], contributions[:3]
+    contributions.sort(key=lambda x: (-x[1], x[0]))
+    return sum(v for _, v in contributions), [], contributions[:3]
 
 
-def infer_block_year(block_lines: list[tuple[int, str]]) -> int | None:
-    for _, line in block_lines:
-        m_year = re.match(r"\s*year\s*=\s*(\d{4})\b", line)
-        if m_year:
-            return int(m_year.group(1))
-    return None
+DefinitionKey = tuple[str, str]
 
 
-def extract_year_refs(block_lines: list[tuple[int, str]]) -> set[str]:
-    refs: set[str] = set()
-    for _, line in block_lines:
-        m_inv = re.findall(r"\binvention\s*=\s*([a-z0-9_]+)\b", line)
-        refs.update(m_inv)
-        m_flag = re.findall(r"\b([a-z0-9_]+)\s*=\s*1\b", line)
-        refs.update(m_flag)
-    return refs
+@dataclass(frozen=True)
+class YearEvidence:
+    # A technology's direct research-year property is a model input, NOT the
+    # calendar date at which any particular nation gains its effects.
+    year: int | None
+    not_before: int | None
+    source: str
+    notes: tuple[str, ...] = ()
+    references: tuple[DefinitionKey, ...] = ()
+    probability_years: tuple[int, ...] = ()
 
 
-def extract_limit_year_refs(block_lines: list[tuple[int, str]]) -> set[str]:
-    refs: set[str] = set()
-    in_limit = False
-    depth = 0
-    for _, line in block_lines:
-        if not in_limit and re.match(r"\s*limit\s*=\s*\{\s*$", line):
-            in_limit = True
-            depth = 1
+def definition_kind(rel_path: str) -> str:
+    path = "/" + rel_path.replace("\\", "/").lower()
+    if "/technologies/" in path:
+        return "technology"
+    if "/inventions/" in path:
+        return "invention"
+    raise ScriptError(f"{rel_path}: explicitly identified technology/invention directory required")
+
+
+def build_year_inference(scan_files: list[str]) -> dict[DefinitionKey, YearEvidence]:
+    """Research-model lower bounds, never exact invention acquisition dates.
+
+    AND takes the maximum known necessary bound; unknown siblings remain noted.
+    OR needs a bound for EVERY branch and takes their minimum. NOT and country
+    scopes are not converted to positive gates. Synchronous fixed-point updates
+    handle chains independently of hash/file order; unresolved cycles stay unknown.
+    Scripted early technology grants and actual discovery probability are outside
+    this static research model, so even a complete gate only yields a bound.
+    """
+    definitions: dict[DefinitionKey, Node] = {}
+    for rel in sorted(scan_files):
+        kind = definition_kind(rel)
+        for node in parse_file(rel).definitions:
+            key = (kind, node.key)
+            if key in definitions:
+                raise ScriptError(f"{node.start}: duplicate {kind} {node.key}; first at {definitions[key].start}")
+            definitions[key] = node
+    definitions = dict(sorted(definitions.items()))
+
+    def reference(node: Node) -> tuple[DefinitionKey | None, str | None]:
+        if node.is_group or node.operator != "=":
+            return None, None
+        if node.keyword == "invention":
+            name = node.value
+        elif node.value.lower() in {"1", "yes"}:
+            name = node.key
+        else:
+            return None, None
+        candidates = [(kind, name) for kind in ("technology", "invention") if (kind, name) in definitions]
+        if len(candidates) == 1:
+            return candidates[0], None
+        if len(candidates) > 1:
+            return None, f"ambiguous technology/invention reference: {name}"
+        return None, f"unresolved or unmodelled predicate: {name}"
+
+    limits: dict[DefinitionKey, Node | None] = {}
+    probability: dict[DefinitionKey, tuple[int, ...]] = {}
+    edges: dict[DefinitionKey, set[DefinitionKey]] = {}
+    evidence: dict[DefinitionKey, YearEvidence] = {}
+    for key, node in definitions.items():
+        if key[0] == "technology":
+            scalar(node, "area", required=True)
+            year = integer(scalar(node, "year", required=True), member(node, "year").start)
+            evidence[key] = YearEvidence(year, year, "direct")
             continue
-        if not in_limit:
-            continue
+        limit = member(node, "limit")
+        if limit is not None and not limit.is_group:
+            raise ScriptError(f"{limit.start}: expected limit group")
+        limits[key] = limit
+        chance = member(node, "chance")
+        if chance is not None and not chance.is_group:
+            raise ScriptError(f"{chance.start}: expected chance group")
+        probability[key] = tuple(sorted({integer(n.value, n.start) for n in walk(chance.children if chance else ())
+                                         if n.keyword == "year" and not n.is_group}))
+        evidence[key] = YearEvidence(None, None, "unknown", probability_years=probability[key])
+        refs: set[DefinitionKey] = set()
 
-        depth += line.count("{") - line.count("}")
-        if "NOT" not in line:
-            m_inv = re.findall(r"\binvention\s*=\s*([a-z0-9_]+)\b", line)
-            refs.update(m_inv)
-            m_flag = re.findall(r"\b([a-z0-9_]+)\s*=\s*1\b", line)
-            refs.update(m_flag)
-        if depth <= 0:
-            in_limit = False
-    return refs
+        def collect(nodes: tuple[Node, ...]) -> None:
+            for child in nodes:
+                if child.is_group and child.keyword in {"and", "or"}:
+                    collect(child.children)
+                elif not child.is_group and child.keyword != "year":
+                    ref, _ = reference(child)
+                    if ref is not None:
+                        refs.add(ref)
+        collect(limit.children if limit else ())
+        edges[key] = refs
 
+    def in_cycle(start: DefinitionKey) -> bool:
+        pending = list(edges.get(start, ()))
+        seen: set[DefinitionKey] = set()
+        while pending:
+            item = pending.pop()
+            if item == start:
+                return True
+            if item not in seen:
+                seen.add(item)
+                pending.extend(edges.get(item, ()))
+        return False
 
-def build_year_inference(scan_files: list[str]) -> tuple[dict[str, int], dict[str, str]]:
-    all_blocks: dict[str, list[tuple[int, str]]] = {}
-    for rel in scan_files:
-        all_blocks.update(parse_top_level_blocks(rel))
+    cycles = {key for key in limits if in_cycle(key)}
 
-    year_by_key: dict[str, int] = {}
-    year_reason: dict[str, str] = {}
-    unresolved = set(all_blocks.keys())
-
-    for key in list(unresolved):
-        direct = infer_block_year(all_blocks[key])
-        if direct is not None:
-            year_by_key[key] = direct
-            year_reason[key] = "direct"
-            unresolved.remove(key)
-
-    changed = True
-    while changed:
-        changed = False
-        for key in list(unresolved):
-            refs_all = extract_year_refs(all_blocks[key])
-            refs_limit = extract_limit_year_refs(all_blocks[key])
-            candidate_refs = [r for r in refs_all if r in year_by_key]
-            if not candidate_refs:
-                continue
-
-            limit_candidate_refs = [r for r in refs_limit if r in year_by_key]
-            if limit_candidate_refs:
-                inferred = max(year_by_key[r] for r in limit_candidate_refs)
-                ref_reasons = [year_reason.get(r, "unknown") for r in limit_candidate_refs]
-            else:
-                inferred = max(year_by_key[r] for r in candidate_refs)
-                ref_reasons = [year_reason.get(r, "unknown") for r in candidate_refs]
-
-            if inferred:
-                year_by_key[key] = inferred
-                if all(x in ("direct", "inferred_strong") for x in ref_reasons):
-                    year_reason[key] = "inferred_strong"
+    def condition(nodes: tuple[Node, ...], previous: dict[DefinitionKey, YearEvidence],
+                  *, disjunction: bool = False) -> tuple[int | None, set[str]]:
+        bounds: list[int | None] = []
+        notes: set[str] = set()
+        for child in nodes:
+            bound = None
+            if child.is_group:
+                if child.keyword in {"and", "or"} and child.operator == "=":
+                    bound, subnotes = condition(child.children, previous, disjunction=child.keyword == "or")
+                    notes.update(subnotes)
                 else:
-                    year_reason[key] = "inferred_weak"
-                unresolved.remove(key)
-                changed = True
+                    notes.add(f"unmodelled/negated scope: {child.key}")
+            elif child.keyword == "year" and child.operator in {"=", ">=", "==", ">"}:
+                bound = integer(child.value, child.start) + (child.operator == ">")
+            else:
+                ref, note = reference(child)
+                if note:
+                    notes.add(note)
+                if ref is not None:
+                    bound = previous[ref].not_before
+                    if bound is None:
+                        notes.add(f"unresolved availability: {ref[0]}:{ref[1]}")
+                elif note is None:
+                    notes.add(f"unmodelled predicate: {child.key}")
+            bounds.append(bound)
+        if disjunction:
+            return (min(bounds) if bounds and all(b is not None for b in bounds) else None), notes
+        known = [b for b in bounds if b is not None]
+        return (max(known) if known else None), notes
 
-    return year_by_key, year_reason
+    while True:
+        updated = dict(evidence)
+        for key, limit in limits.items():
+            bound, notes = condition(limit.children, evidence) if limit else (None, {"no availability limit"})
+            if key in cycles:
+                notes.add("cycle in availability prerequisites")
+            if member(definitions[key], "year") is not None:
+                notes.add("unsupported direct invention year; not an acquisition date")
+            updated[key] = YearEvidence(None, bound, "availability_bound" if bound is not None else "unknown",
+                                        tuple(sorted(notes)), tuple(sorted(edges[key])), probability[key])
+        # Bounds live on the finite set of source-year anchors. Notes are derived
+        # again from the stable bounds so discovery order never enters provenance.
+        if all(updated[k].not_before == evidence[k].not_before for k in evidence):
+            return dict(sorted(updated.items()))
+        evidence = updated
 
 
 def parse_effect_unit_assignments(
     rel_path: str,
     monitored_units: set[str],
     monitored_stats: set[str],
-    inferred_years: dict[str, int],
-    year_reason: dict[str, str],
+    inferred_years: dict[DefinitionKey, YearEvidence],
     global_scope_units: dict[str, set[str]],
+    *,
+    known_units: set[str] | None = None,
 ) -> dict[str, list[dict[str, Any]]]:
-    lines = read_text(rel_path).splitlines()
     out: dict[str, list[dict[str, Any]]] = defaultdict(list)
-
-    def append_assignment(
-        target_unit: str,
-        scope_key: str,
-        scope_kind: str,
-        stat: str,
-        raw_val: str,
-        line_no: int,
-        invention: str,
-        block_year: int | None,
-        block_year_source: str | None,
-    ) -> None:
-        out[target_unit].append(
-            {
-                "source_file": rel_path,
-                "invention": invention,
-                "line": line_no,
-                "stat": stat,
-                "value": float(raw_val),
-                "year": block_year,
-                "year_source": block_year_source,
-                "scope_key": scope_key,
-                "scope_kind": scope_kind,
-            }
-        )
-
-    def resolve_targets(scope_key: str) -> tuple[list[str], str] | None:
-        if scope_key in monitored_units:
-            return [scope_key], "unit"
-        global_targets = sorted(global_scope_units.get(scope_key, set()))
-        if global_targets:
-            return global_targets, "global"
-        return None
-
-    i = 0
-    while i < len(lines):
-        inv_match = re.match(r"\s*([a-z0-9_]+)\s*=\s*\{\s*(?:#.*)?$", lines[i])
-        if not inv_match:
-            i += 1
+    kind = definition_kind(rel_path)
+    definitions = unique_definitions(parse_file(rel_path).definitions)
+    for key, definition in definitions.items():
+        if (kind, key) not in inferred_years:
+            raise ScriptError(f"{definition.start}: missing temporal evidence for {kind}:{key}")
+        timing = inferred_years[(kind, key)]
+        effect = member(definition, "effect") if kind == "invention" else definition
+        if effect is None:
             continue
-        inv_key = inv_match.group(1)
-        inv_depth = 1
-        i += 1
-        block: list[tuple[int, str]] = []
-        while i < len(lines) and inv_depth > 0:
-            block.append((i + 1, lines[i]))
-            inv_depth += lines[i].count("{") - lines[i].count("}")
-            i += 1
-
-        block_year = infer_block_year(block)
-        block_year_source = "direct" if block_year is not None else None
-        if block_year is None and inv_key in inferred_years:
-            block_year = inferred_years[inv_key]
-            block_year_source = year_reason.get(inv_key, "inferred_weak")
-
-        j = 0
-        while j < len(block):
-            ln3, t3 = block[j]
-
-            m_inline = re.match(r"\s*([a-z0-9_]+)\s*=\s*\{(.*)\}\s*$", t3)
-            if m_inline:
-                scope_key = m_inline.group(1)
-                body = m_inline.group(2)
-                resolved = resolve_targets(scope_key)
-                if resolved is not None:
-                    targets, scope_kind = resolved
-                    for stat, raw_val in re.findall(r"([a-z0-9_]+)\s*=\s*([-0-9.]+)", body):
-                        if stat in monitored_stats:
-                            for target_unit in targets:
-                                append_assignment(
-                                    target_unit,
-                                    scope_key,
-                                    scope_kind,
-                                    stat,
-                                    raw_val,
-                                    ln3,
-                                    inv_key,
-                                    block_year,
-                                    block_year_source,
-                                )
-                j += 1
+        if not effect.is_group:
+            raise ScriptError(f"{effect.start}: expected effect group")
+        for scope in effect.children:
+            targets = {scope.key} if scope.key in monitored_units else global_scope_units.get(scope.key, set())
+            if not targets:
+                if (known_units is not None and scope.key not in known_units and scope.key not in global_scope_units and scope.is_group
+                        and any(n.keyword in monitored_stats for n in scope.children)):
+                    raise ScriptError(f"{scope.start}: unknown unit-effect scope {scope.key}")
                 continue
-
-            m_scope = re.match(r"\s*([a-z0-9_]+)\s*=\s*\{\s*(?:#.*)?$", t3)
-            if m_scope:
-                scope_key = m_scope.group(1)
-                resolved = resolve_targets(scope_key)
-                if resolved is None:
-                    j += 1
+            if not scope.is_group or scope.operator != "=":
+                raise ScriptError(f"{scope.start}: expected unit modifier group")
+            seen: set[str] = set()
+            for stat in scope.children:
+                if stat.key is None:
+                    raise ScriptError(f"{stat.start}: unsupported free entry in unit modifier")
+                if stat.keyword not in monitored_stats:
                     continue
-                targets, scope_kind = resolved
-                sub_depth = 1
-                j += 1
-                while j < len(block) and sub_depth > 0:
-                    ln4, t4 = block[j]
-                    m_stat = re.match(r"\s*([a-z0-9_]+)\s*=\s*([-0-9.]+)", t4)
-                    if m_stat and m_stat.group(1) in monitored_stats:
-                        for target_unit in targets:
-                            append_assignment(
-                                target_unit,
-                                scope_key,
-                                scope_kind,
-                                m_stat.group(1),
-                                m_stat.group(2),
-                                ln4,
-                                inv_key,
-                                block_year,
-                                block_year_source,
-                            )
-                    sub_depth += t4.count("{") - t4.count("}")
-                    j += 1
-                continue
+                if stat.keyword in seen:
+                    raise ScriptError(f"{stat.start}: duplicate/ambiguous unit modifier {stat.key}")
+                seen.add(stat.keyword)
+                if stat.is_group or stat.operator != "=":
+                    raise ScriptError(f"{stat.start}: expected numeric unit modifier")
+                value = number(stat.value, stat.start)
+                for target in sorted(targets):
+                    out[target].append({
+                        "source_file": rel_path, "invention": key, "line": stat.start.line,
+                        "column": stat.start.column, "stat": stat.keyword, "value": value,
+                        "year": timing.year, "not_before": timing.not_before, "year_source": timing.source,
+                        "year_notes": timing.notes, "year_references": timing.references,
+                        "probability_years": timing.probability_years,
+                        "scope_key": scope.key, "scope_kind": "unit" if scope.key in monitored_units else "global",
+                    })
+    return dict(sorted(out.items()))
 
-            j += 1
-    return out
+
+def milestone_envelope(baseline: float, assignments: list[dict[str, Any]], year: int) -> tuple[float, float]:
+    """All possible placements under the static model; no invented event dates."""
+    low = high = baseline
+    for item in assignments:
+        if item.get("year") is not None:
+            if item["year"] <= year:
+                low += item["value"]
+                high += item["value"]
+        elif item.get("not_before") is None or item["not_before"] <= year:
+            low += min(0., item["value"])
+            high += max(0., item["value"])
+    return low, high
 
 
 def format_assignment_origin(item: dict[str, Any]) -> str:
     scope_key = item.get("scope_key") or "unknown_scope"
     scope_kind = item.get("scope_kind") or "unit"
     scope_txt = f"{scope_kind}:{scope_key}"
-    return f"{scope_txt} in {item['source_file']}:{item['line']} ({item['invention']})"
+    return f"{scope_txt} in {item['source_file']}:{item['line']}:{item['column']} ({item['invention']})"
 
 
 def check_key_goods_availability(production_types_file: str, key_goods: list[str], rep: Reporter) -> None:
-    txt = read_text(production_types_file)
-    for g in key_goods:
-        if re.search(rf"\boutput_goods\s*=\s*{re.escape(g)}\b", txt):
-            rep.add("INFO", f"KEY GOODS mapping present in production types: {g}")
+    nodes = tuple(walk(parse_file(production_types_file).definitions))
+    outputs = {n.value for n in nodes if n.keyword == "output_goods" and not n.is_group and n.operator == "="}
+    for good in key_goods:
+        if good in outputs:
+            rep.add("INFO", f"KEY GOODS mapping present in production types: {good}")
         else:
-            rep.add("WARN", f"KEY GOODS missing production output mapping: {g}")
+            rep.add("WARN", f"KEY GOODS missing production output mapping: {good}")
 
 
-def main() -> int:
+def _run() -> int:
     args = parse_args()
     rules = read_rules(args.core_root, args.timeline_root)
     rep = Reporter()
@@ -642,23 +634,26 @@ def main() -> int:
         int(y) for y in rules.get("milestone_years", [1836, 1850, 1870, 1900, 1910, 1919, 1929, 1936, 1945, 1955, 1966])
     )
     default_milestone_year = milestone_years[0] if milestone_years else 1836
-    inferred_years, year_reason = build_year_inference(rules["scan_files"])
-    direct_blocks = sum(1 for _, reason in year_reason.items() if reason == "direct")
-    strong_blocks = sum(1 for _, reason in year_reason.items() if reason == "inferred_strong")
-    weak_blocks = sum(1 for _, reason in year_reason.items() if reason == "inferred_weak")
-    rep.add(
-        "INFO",
-        f"YEAR INFERENCE: resolved {len(inferred_years)} block year(s) [direct={direct_blocks}, inferred_strong={strong_blocks}, inferred_weak={weak_blocks}]",
-    )
+    inferred_years = build_year_inference(rules["scan_files"])
+    direct_blocks = sum(e.source == "direct" for e in inferred_years.values())
+    bound_blocks = sum(e.source == "availability_bound" for e in inferred_years.values())
+    unknown_blocks = len(inferred_years) - direct_blocks - bound_blocks
+    rep.add("INFO", f"YEAR EVIDENCE: {len(inferred_years)} definitions [research_year={direct_blocks}, availability_bound={bound_blocks}, unknown={unknown_blocks}]")
+    rep.add("INFO", "DATING MODEL: technology research-year anchors; invention gates are lower bounds, not acquisition dates. Probability modifiers, scripted early grants, discovery timing and actual nation histories are not simulated.")
+    for (kind, key), evidence in inferred_years.items():
+        if kind == "invention":
+            rep.add("INFO", f"AVAILABILITY {key}: not_before={evidence.not_before}; source={evidence.source}; "
+                    f"probability_years={list(evidence.probability_years)} (not availability gates); "
+                    f"references={list(evidence.references)}; notes={'; '.join(evidence.notes) or 'bound only; acquisition unknown'}")
     all_assignments: dict[str, list[dict[str, Any]]] = defaultdict(list)
-    for rel in rules["scan_files"]:
+    for rel in sorted(rules["scan_files"]):
         found = parse_effect_unit_assignments(
             rel,
             monitored_units,
             monitored_stats_set,
             inferred_years,
-            year_reason,
             global_scope_units,
+            known_units=discovered_units,
         )
         for k, vals in found.items():
             all_assignments[k].extend(vals)
@@ -691,19 +686,12 @@ def main() -> int:
 
     relevant_assignment_items = [x for vals in relevant_assignments_by_unit.values() for x in vals]
     total_effect_assignments = len(relevant_assignment_items)
-    known_year_assignments = sum(1 for x in relevant_assignment_items if x.get("year") is not None)
-    rep.add(
-        "INFO",
-        f"TIMELINE PLACEMENT (count): known={known_year_assignments}/{total_effect_assignments}, unknown={total_effect_assignments - known_year_assignments}",
-    )
-    direct_assignments = sum(1 for x in relevant_assignment_items if x.get("year_source") == "direct")
-    strong_assignments = sum(1 for x in relevant_assignment_items if x.get("year_source") == "inferred_strong")
-    weak_assignments = sum(1 for x in relevant_assignment_items if x.get("year_source") == "inferred_weak")
-    unknown_assignments = total_effect_assignments - direct_assignments - strong_assignments - weak_assignments
-    rep.add(
-        "INFO",
-        f"TIMELINE CONFIDENCE (count): direct={direct_assignments}, inferred_strong={strong_assignments}, inferred_weak={weak_assignments}, unknown={unknown_assignments}",
-    )
+    direct_assignments = sum(x.get("year_source") == "direct" for x in relevant_assignment_items)
+    bound_assignments = sum(x.get("year_source") == "availability_bound" for x in relevant_assignment_items)
+    unknown_assignments = total_effect_assignments - direct_assignments - bound_assignments
+    rep.add("INFO", f"MODEL DATE PLACEMENT (count): research_year_anchors={direct_assignments}/{total_effect_assignments}, "
+            f"availability_bounds={bound_assignments}, unconstrained={unknown_assignments}")
+    rep.add("INFO", "TIMELINE CONFIDENCE: only research-year anchors enter point sums; invention bounds enter possibility envelopes, never exact-year sums.")
     tech_items = [x for x in relevant_assignment_items if "/technologies/" in x.get("source_file", "")]
     inv_items = [x for x in relevant_assignment_items if "/inventions/" in x.get("source_file", "")]
     unit_scoped_assignments = sum(1 for x in relevant_assignment_items if x.get("scope_kind") == "unit")
@@ -726,8 +714,8 @@ def main() -> int:
 
     def _src_counts(items: list[dict[str, Any]]) -> tuple[int, int, int, int]:
         direct = sum(1 for x in items if x.get("year_source") == "direct")
-        inferred = sum(1 for x in items if x.get("year_source") in ("inferred_strong", "inferred_weak"))
-        unknown = sum(1 for x in items if x.get("year") is None)
+        inferred = sum(1 for x in items if x.get("year_source") == "availability_bound")
+        unknown = sum(1 for x in items if x.get("year_source") == "unknown")
         return len(items), direct, inferred, unknown
 
     t_total, t_direct, t_inferred, t_unknown = _src_counts(tech_items)
@@ -735,8 +723,8 @@ def main() -> int:
     rep.add(
         "INFO",
         "TIMELINE CONFIDENCE BY SOURCE: "
-        f"tech_total={t_total}, tech_direct={t_direct}, tech_inferred={t_inferred}, tech_unknown={t_unknown}, "
-        f"invention_total={i_total}, invention_direct={i_direct}, invention_inferred={i_inferred}, invention_unknown={i_unknown}",
+        f"tech_total={t_total}, tech_direct={t_direct}, tech_bounds={t_inferred}, tech_unknown={t_unknown}, "
+        f"invention_total={i_total}, invention_direct={i_direct}, invention_bounds={i_inferred}, invention_unknown={i_unknown}",
     )
     direct_tech_examples = [x for x in tech_items if x.get("year_source") == "direct"][:3]
     if direct_tech_examples:
@@ -754,7 +742,7 @@ def main() -> int:
             rep.add(
                 "INFO",
                 f"INVENTION EXAMPLE: {format_assignment_origin(ex)} {ex['stat']}={ex['value']} "
-                f"year={ex.get('year')} confidence={ex.get('year_source') or 'unknown'}",
+                f"model_year={ex.get('year')} not_before={ex.get('not_before')} source={ex.get('year_source') or 'unknown'}",
             )
     else:
         rep.add("WARN", "INVENTION EXAMPLE: none found for monitored units in scanned invention files")
@@ -830,22 +818,7 @@ def main() -> int:
             known_years = sorted({a["year"] for a in stat_assignments if a.get("year") is not None})
             first_known_year = known_years[0] if known_years else None
             last_known_year = known_years[-1] if known_years else None
-            known_year_deltas: dict[int, float] = defaultdict(float)
-            for assignment in stat_assignments:
-                assignment_year = assignment.get("year")
-                if assignment_year is None:
-                    continue
-                known_year_deltas[assignment_year] += assignment["value"]
-
-            milestone_values_by_year: dict[int, float] = {}
-            running_total = baseline
-            sorted_known_years = sorted(known_year_deltas)
-            known_year_index = 0
-            for year in milestone_years:
-                while known_year_index < len(sorted_known_years) and sorted_known_years[known_year_index] <= year:
-                    running_total += known_year_deltas[sorted_known_years[known_year_index]]
-                    known_year_index += 1
-                milestone_values_by_year[year] = running_total
+            milestone_bounds = {year: milestone_envelope(baseline, stat_assignments, year) for year in milestone_years}
 
             total_abs_delta = sum(abs(a["value"]) for a in stat_assignments)
             unit_scope_abs_delta = sum(abs(a["value"]) for a in stat_assignments if a.get("scope_kind") == "unit")
@@ -854,47 +827,46 @@ def main() -> int:
             unknown_abs_delta = total_abs_delta - known_abs_delta
             coverage_pct = 0.0 if total_abs_delta == 0 else (known_abs_delta / total_abs_delta) * 100.0
             direct_abs_delta = sum(abs(a["value"]) for a in stat_assignments if a.get("year_source") == "direct")
-            strong_abs_delta = sum(abs(a["value"]) for a in stat_assignments if a.get("year_source") == "inferred_strong")
-            weak_abs_delta = sum(abs(a["value"]) for a in stat_assignments if a.get("year_source") == "inferred_weak")
-            high_conf_abs = direct_abs_delta + strong_abs_delta
+            bound_abs_delta = sum(abs(a["value"]) for a in stat_assignments if a.get("year_source") == "availability_bound")
+            high_conf_abs = direct_abs_delta
             high_conf_pct = 0.0 if total_abs_delta == 0 else (high_conf_abs / total_abs_delta) * 100.0
 
             technical_milestone_estimates: list[str] = []
             for year in milestone_years:
-                est = milestone_values_by_year[year]
-                technical_milestone_estimates.append(f"{year}:{est:.3f}")
+                lo, hi = milestone_bounds[year]
+                technical_milestone_estimates.append(f"{year}:[{lo:.3f},{hi:.3f}]")
             applicable_milestone_estimates: list[str] = []
             for year in applicable_milestone_years:
-                est = milestone_values_by_year[year]
-                applicable_milestone_estimates.append(f"{year}:{est:.3f}")
+                lo, hi = milestone_bounds[year]
+                applicable_milestone_estimates.append(f"{year}:[{lo:.3f},{hi:.3f}]")
 
             rep.add(
                 "INFO",
                 f"{unit} {stat}: baseline_raw {baseline:.3f}, "
-                f"first_known_year {first_known_year if first_known_year is not None else 'n/a'}, "
-                f"last_known_year {last_known_year if last_known_year is not None else 'n/a'}, "
+                f"first_research_year {first_known_year if first_known_year is not None else 'n/a'}, "
+                f"last_research_year {last_known_year if last_known_year is not None else 'n/a'}, "
                 f"cumulative +{pos_delta:.3f}, cumulative -{abs(neg_delta):.3f}, "
-                f"technical_milestones[{', '.join(technical_milestone_estimates)}], "
-                f"applicable_milestones[{', '.join(applicable_milestone_estimates)}], estimated_final {estimated_final:.3f}, "
+                f"technical_envelopes[{', '.join(technical_milestone_estimates)}], "
+                f"applicable_envelopes[{', '.join(applicable_milestone_estimates)}], estimated_final_all_effects_scenario {estimated_final:.3f}, "
                 f"scope_unit {unit_scope_abs_delta:.3f}, scope_global {global_scope_abs_delta:.3f}, "
-                f"time_direct {direct_abs_delta:.3f}, time_inferred_strong {strong_abs_delta:.3f}, "
-                f"time_inferred_weak {weak_abs_delta:.3f}, time_unknown {unknown_abs_delta:.3f}, "
-                f"time_coverage {coverage_pct:.1f}%, high_conf_coverage {high_conf_pct:.1f}%",
+                f"research_anchor_abs {direct_abs_delta:.3f}, availability_bound_abs {bound_abs_delta:.3f}, "
+                f"unconstrained_abs {unknown_abs_delta - bound_abs_delta:.3f}, "
+                f"point_model_coverage {coverage_pct:.1f}%, research_anchor_share {high_conf_pct:.1f}%",
             )
             if unknown_year_count > 0:
                 rep.add(
                     "INFO",
-                    f"{unit} {stat}: unknown-year deltas excluded from milestones: count={unknown_year_count}, total={unknown_year_delta:+.3f} "
+                    f"{unit} {stat}: uncertain-date deltas included only as possibility envelopes: count={unknown_year_count}, total={unknown_year_delta:+.3f} "
                     f"(known_count={known_year_count})",
                 )
             important_stats = set(cfg.get("important_stats", []))
             if total_abs_delta > 0 and stat in important_stats and coverage_pct < coverage_warn_below:
                 rep.add(
                     "WARN",
-                    f"{unit} {stat} low timeline coverage ({coverage_pct:.1f}% < {coverage_warn_below:.1f}%)",
+                    f"{unit} {stat} low timeline coverage ({coverage_pct:.1f}% < {coverage_warn_below:.1f}%; point-model research anchors only)",
                 )
             elif coverage_pct >= coverage_info_good:
-                rep.add("INFO", f"{unit} {stat} timeline coverage is good ({coverage_pct:.1f}%)")
+                rep.add("INFO", f"{unit} {stat} point-model timeline coverage is good ({coverage_pct:.1f}%; research anchors only)")
             if (
                 total_abs_delta > 0
                 and stat in important_stats
@@ -906,7 +878,7 @@ def main() -> int:
                     f"{unit} {stat} timeline mostly placed but low high-confidence coverage ({high_conf_pct:.1f}% < {confidence_high_warn_below:.1f}%)",
                 )
             elif high_conf_pct >= confidence_high_good:
-                rep.add("INFO", f"{unit} {stat} high-confidence coverage is good ({high_conf_pct:.1f}%)")
+                rep.add("INFO", f"{unit} {stat} research-anchor coverage is good ({high_conf_pct:.1f}%; not actual acquisition dates)")
             max_pos = s_cfg.get("max_cumulative_positive_delta")
             max_neg = s_cfg.get("max_cumulative_negative_delta")
             if max_pos is not None and pos_delta > max_pos:
@@ -923,7 +895,7 @@ def main() -> int:
             if (min_final is not None and estimated_final < min_final) or (max_final is not None and estimated_final > max_final):
                 rep.add(
                     "WARN",
-                    f"{unit} {stat} estimated final outside final_range (baseline {baseline:.3f} + delta {total_delta:+.3f} = {estimated_final:.3f}, expected {min_final}..{max_final})",
+                    f"{unit} {stat} estimated final outside final_range in all-effects scenario (baseline {baseline:.3f} + delta {total_delta:+.3f} = {estimated_final:.3f}, expected {min_final}..{max_final})",
                 )
             milestone_ranges = s_cfg.get("milestone_ranges", {})
             configured_milestone_years: set[int] = set()
@@ -947,12 +919,13 @@ def main() -> int:
                     continue
                 m_min = cfg_y.get("min")
                 m_max = cfg_y.get("max")
-                m_est = milestone_values_by_year[year]
-                if (m_min is not None and m_est < m_min) or (m_max is not None and m_est > m_max):
-                    rep.add(
-                        "WARN",
-                        f"{unit} {stat} milestone {year} outside configured range ({m_est:.3f}, expected {m_min}..{m_max})",
-                    )
+                lo, hi = milestone_bounds[year]
+                if (m_min is not None and hi < m_min) or (m_max is not None and lo > m_max):
+                    rep.add("WARN", f"{unit} {stat} milestone {year} entirely outside configured range "
+                            f"(possible {lo:.3f}..{hi:.3f}, expected {m_min}..{m_max})")
+                elif (m_min is not None and lo < m_min) or (m_max is not None and hi > m_max):
+                    rep.add("INFO", f"{unit} {stat} milestone {year} indeterminate: uncertainty envelope "
+                            f"{lo:.3f}..{hi:.3f} overlaps configured range {m_min}..{m_max}")
 
     check_key_goods_availability(files_cfg["production_types"], rules["economic"]["key_goods"], rep)
 
@@ -1081,6 +1054,18 @@ def main() -> int:
 
     # WARN/INFO diagnostics are non-blocking, but FAIL-level structural/tooling errors should fail CI.
     return 1 if any(level == "FAIL" for level, _ in rep.items) else 0
+
+
+def main() -> int:
+    try:
+        return _run()
+    except (ScriptError, OSError, UnicodeError, json.JSONDecodeError) as exc:
+        rep = Reporter()
+        rep.add("FAIL", f"INPUT ERROR: {exc}; analysis aborted, no partial conclusions")
+        rep.dump()
+        print("\nPRIORITY SUMMARY\n - structural/data confidence issues: input error")
+        print("\nRECOMMENDED PLAYTEST FOCUS\n - Unavailable: analysis aborted before valid conclusions.")
+        return 1
 
 
 if __name__ == "__main__":

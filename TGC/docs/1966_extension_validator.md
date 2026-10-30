@@ -45,7 +45,7 @@ forbidden validator patterns; they are documented in the submod manifest.
 From repository root:
 
 ```bash
-python TGC/tools/validate_1966_extension.py
+python -B TGC/tools/validate_1966_extension.py
 ```
 
 Optional roots are available for compatibility/testing:
@@ -56,6 +56,68 @@ python TGC/tools/validate_1966_extension.py --core-root TGC --timeline-root TGC_
 
 The script exits with code `0` when all targeted checks pass, and `1` with a
 failure list otherwise.
+
+## Structural extraction contract
+
+The shared reader `TGC/tools/lib_1966_parser.py` tokenizes comments, quoted
+strings, operators and braces before constructing a tree. Newlines and inline
+layout do not determine which definitions exist. Identifiers are preserved,
+including uppercase names such as `IBRD` and `IDA`. Source positions contain
+file, physical line, column and character offset. Every occurrence is retained;
+there is no implicit last-definition-wins dictionary conversion.
+
+Known schema keywords are matched without case, as in Alice 1.3.0's
+[parser generator](https://github.com/schombert/Project-Alice/blob/v1.3.0/ParserGenerator/parser_generator.cpp).
+This keyword view never renames technology, invention, area, unit or commodity
+identifiers. Duplicate metadata differing only in keyword case is still ambiguous.
+
+`parse_top_level_blocks()` now returns a tuple of `Node` occurrences, not the old
+dictionary of body lines. `parse_file()` returns a `Document`; callers explicitly
+select named definitions and their direct children. Unsupported free entries in
+definition contexts, incomplete groups, stray closing braces, unterminated
+single-line strings and unreadable inputs raise `ScriptError`. A caller cannot
+consume a partial document after one of these errors.
+
+Technology `area` and `year` are direct properties. Missing, repeated or malformed
+metadata and areas outside the manifest are diagnosed, rather than allowing an
+unknown year to bypass localisation checks. Years in AI/chance/limit groups are
+not technology metadata. Inventions need no direct year: localisation is checked
+for every tracked definition independently of dating. Definition duplicates are
+checked both inside files and across the tracked files, with occurrence locations.
+
+Unit-target checks select technology modifiers and invention effect bodies
+structurally, including inline blocks. Decision-year checks select the named
+decision under `political_decisions` and its direct positive section gates;
+comments and nested NOT conditions cannot satisfy them. Raw required-pattern
+checks for Lua, GUI and documentation remain targeted manifest checks, not a
+complete validator for those languages.
+
+Decoding defaults to strict UTF-8 (an initial BOM is consumed). Legacy
+localisation is explicitly read as Latin-1; `read_text(..., encoding=...)` allows
+other declared encodings without lossy fallback. Invalid bytes produce a
+diagnostic with byte offset instead of changing identifiers silently. String
+tokenization follows Project Alice v1.3.0's single-line, non-escaping treatment
+of single and double quotes; this does not certify every Victoria II string or
+encoding convention. Free values and free groups are retained for list contexts;
+consumers reject them where their analysis needs named definitions/assignments.
+
+The supported subset is a structural inventory, not the complete engine grammar,
+runtime file-loading model or a proof of general Alice/Victoria II compatibility.
+Duplicate metadata is treated as ambiguous analysis input even where a runtime
+may accept it with an engine-specific precedence. The old parser API has only
+the two in-repository callers, both migrated together.
+
+Independent regression tests live outside the runtime trees:
+
+```bash
+python -B -m unittest discover -s tools/tests -v
+```
+
+They compare the current corpus to a separate token-stream/stack inventory,
+exercise malformed-input failure and duplicate retention, and run the balance
+report across processes and hash seeds. See `1966_balance_audit.md` for temporal
+uncertainty, engine references and effect-identity checks. The tests validate
+tool behavior; the normative balance parameters require their own audit.
 
 ## CI automation
 

@@ -96,7 +96,7 @@ How tiers interact:
 
 - unit tiers prioritize *where* to look first
 - stat tiers prioritize *what* to look at first
-- signal quality (`strong_signal` / `limited_signal` / `formal_coverage_only`) prioritizes *how much confidence* can be assigned to the dating evidence behind a diagnostic
+- signal quality (`strong_signal` / `limited_signal` / `formal_coverage_only`) describes the quantity and spread of extracted effects; it does not certify their dating
 
 These tiers are prioritization tools only. They do **not** change the underlying normative meaning of rules, and they must not be used to justify permissive calibration.
 
@@ -106,9 +106,11 @@ The model uses a **single unified timeline**:
 
 - `baseline_raw` is always the technical starting point (value read from the unit file)
 - `baseline_raw` is input evidence and is **not** checked against `final_range`
-- all known-year deltas are applied cumulatively up to each milestone year (`year <= milestone`)
-- known-year deltas may come either from unit-specific effect blocks or from applicable global base-scope effect blocks (currently `army_base` for land units and `navy_base` for naval units)
-- unknown-year deltas stay out of milestone sums and are reported separately
+- technology effects enter the reference scenario at the technology's direct research-year property; this is a model anchor, not an observed acquisition date
+- unit-specific effects and applicable global effects (`army_base` / `navy_base`) retain their provenance
+- invention prerequisites provide conditional research-model lower bounds (`not_before`), never exact acquisition years
+- milestone results are possibility envelopes: eligible uncertain positive effects contribute to the upper endpoint, negative effects to the lower endpoint
+- an unknown bound leaves an effect potentially eligible at every milestone; country-specific discovery, scripted early grants and real acquisition histories are outside this model
 - source provenance is preserved in reporting so globally scoped effects can be distinguished from unit-specific effects
 - reporting distinguishes **technical milestones** (full global grid) from **applicable milestones** (unit-specific normative check years)
 - milestones remain configurable and reusable, but are no longer tied to a special 1936 logic branch
@@ -125,7 +127,7 @@ Per monitored unit stat, rules can define:
 - `max_cumulative_positive_delta` / `max_cumulative_negative_delta`
 - `milestone_ranges`: per-year guardrails at configured milestone years
 
-`estimated_final` and milestone estimates are built from `baseline_raw` plus all applicable dated deltas for that unit/stat, including both unit-specific effects and applicable global base-scope effects.
+`estimated_final_all_effects_scenario` is baseline plus every scanned relevant delta, regardless of date. It is an all-effects scenario, not a promise of acquisition by 1966. Milestone envelopes use research-year anchors and conditional invention bounds separately. Correlations between effects are relaxed, so the envelope can be wider than the set of realizable game histories.
 
 Per monitored unit, rules can also define:
 
@@ -394,39 +396,73 @@ These checks are normative as well. Their function is not to reproduce whatever 
 
 ## Data extraction and dating
 
-The auditor scans configured tech and invention files and reads unit stat deltas from effect blocks.
+The auditor uses the shared structural reader in `TGC/tools/lib_1966_parser.py`.
+It reads named technology modifiers directly from the technology definition and
+invention modifiers only from its direct `effect` group. A matching name inside
+AI/chance/limit triggers is not an effect. Inline groups, final comments and
+multiline groups have identical meaning to the extractor.
 
-Extraction scope includes:
+Each assignment preserves unit, statistic, value, owner definition, scope name
+and kind, source file, line and column, and temporal evidence. Repeated modifier
+groups remain separate occurrences. Duplicate statistics within one modifier
+group, ambiguous definitions, bad numeric values and malformed structure stop
+analysis with FAIL; no dictionary overwrite or partial-success result is used.
 
-- unit-specific effect blocks (for example `tank = { attack = 1 defence = 1 }`)
-- applicable global base-scope effect blocks that target whole domains rather than named units
-  - `army_base` for land units
-  - `navy_base` for naval units
+Year evidence has three sources:
 
-Global base-scope effects are included only when they are relevant to the monitored unit domain and monitored stat catalog. They are folded into milestone and final-value estimation, but their source remains explicitly distinguishable in the report.
+- `direct`: a technology's direct research-year property, used only as a reference-scenario anchor.
+- `availability_bound`: an invention's conditional research-model lower bound, with `year=None` and a separate `not_before`.
+- `unknown`: no usable bound; this remains explicit.
 
-Year placement:
+The synchronous fixed-point analysis uses positive, unambiguous technology or
+invention prerequisites in `limit`. AND takes the maximum known necessary bound;
+unknown siblings remain in the notes. OR takes the minimum only if every branch
+has a bound. NOT and unsupported country scopes do not become positive gates.
+Forward references are re-evaluated, unanchored cycles stay unknown, and reference
+cycles are noted. Bounds and reports are independent of Python hash seed and
+configured file traversal order. Technology and invention namespaces remain
+separate; cross-namespace reference ambiguity stays unknown.
 
-- `direct`: `year = XXXX` found directly in a block
-- `inferred_strong`: inferred from clear dated prerequisites, especially hard `limit = { ... }` anchors tied to direct-year tech/invention gates
-- `inferred_weak`: inferred from multiple or weaker propagated references
+Comments contribute no references. Years inside `chance` are recorded separately
+as `probability_years` and never treated as acquisition or availability dates.
+An unsupported direct invention year is also noted, not promoted to a direct date.
+Evidence includes reference identities and local uncertainty notes so unresolved
+or unmodelled conditions can be inspected without fictional precision.
 
-Confidence refinement note:
+For each milestone, a WARN is justified only if the entire possibility envelope
+is outside the configured range. Partial overlap is reported as INFO
+`indeterminate`, not as a successful balance check or a definite violation.
+The existing single-delta, cumulative-delta and all-effects final-range checks
+retain their configured limits. No rule values are fitted to these new results.
 
-- when an invention has multiple mixed references, such as chance modifiers, neighbor checks, or war context, the auditor prioritizes hard `limit` anchors for confidence classification
-- this improves attribution for clearly tech-anchored chains without globally relabeling all inferred years as strong-confidence
+Coverage denominators include every extracted relevant effect:
 
-Coverage metrics:
+- `point_model_coverage`: absolute delta share with a direct research-year anchor.
+- `availability_bound_abs`: absolute delta with an invention lower bound.
+- `unconstrained_abs`: absolute delta without a usable temporal bound.
+- `research_anchor_share`: direct-anchor share used by the retained confidence-threshold configuration.
 
-- `time_coverage`: share of absolute delta with any known year
-- `high_conf_coverage`: share of absolute delta with high-confidence dating (`direct + inferred_strong`)
-- `signal assignments / touched_stats`: per-unit signal-strength summary to distinguish high-value monitored units from baseline-only or low-evidence coverage
+There is deliberately no `inferred_strong` invention date. The two direct-anchor
+percentages currently coincide; the retained `timeline_coverage` and
+`confidence_coverage` threshold values have not been revalidated. Their normative
+calibration remains a separate audit. Coverage does not independently prove
+extraction completeness; the independent occurrence/assignment tests do that.
 
-Reporting provenance:
-- the report preserves whether a timed delta came from a unit-specific block or from an applicable global base-scope block
-- this exists to improve diagnosis, so the user can distinguish progression driven by direct unit edits from progression driven by shared doctrinal/base effects
+### Verified engine evidence and boundaries
 
-Dating confidence should improve the interpretation of a diagnostic. It must not be used as a justification for adapting envelopes to current values.
+The technical references are pinned to Project Alice **v1.3.0**:
+
+- [Tokenizer](https://github.com/schombert/Project-Alice/blob/v1.3.0/src/parsing/parsers.cpp): comments, quoted strings, braces and whitespace are tokenized separately.
+- [Parser definitions](https://github.com/schombert/Project-Alice/blob/v1.3.0/src/parsing/parser_defs.txt): technology metadata and invention limit/chance/effect have distinct contexts.
+- [Trigger parser](https://github.com/schombert/Project-Alice/blob/v1.3.0/src/parsing/trigger_parsing.hpp): default year comparison is >=; named references can target technologies or inventions.
+- [Trigger evaluation](https://github.com/schombert/Project-Alice/blob/v1.3.0/src/scripting/triggers.cpp): year conditions compare the simulation year.
+- [Modifier parsing](https://github.com/schombert/Project-Alice/blob/v1.3.0/src/parsing/parsers_declarations.cpp) and [culture runtime](https://github.com/schombert/Project-Alice/blob/v1.3.0/src/culture/culture.cpp): unit modifiers are stored and applied; invention eligibility and monthly probability are evaluated separately.
+
+These findings do not establish identical Victoria II recovery, encoding,
+duplicate precedence or discovery behavior. The tools diagnose ambiguity instead
+of choosing an engine's override semantics. They do not simulate runtime loading,
+event grants, national research choices, probability or the whole engine grammar.
+No runtime payload, deployment or Alice scenario is changed by this tooling work.
 
 ## Implemented checks
 
@@ -435,7 +471,7 @@ Dating confidence should improve the interpretation of a diagnostic. It must not
 - Single stat delta beyond `max_single_delta` (`WARN`)
 - Cumulative positive/negative delta beyond configured caps (`WARN`)
 - Estimated final (`baseline_raw + cumulative delta`) outside `final_range` (`WARN`)
-- Milestone estimate outside per-year `milestone_ranges` (`WARN`)
+- Entire milestone possibility envelope outside per-year `milestone_ranges` (`WARN`); overlapping uncertain envelopes (`INFO indeterminate`)
 - Build/upkeep estimate not calculable due to missing goods costs (`FAIL`)
 - Build/upkeep estimates outside configured economic ranges (`WARN`)
 - Key-good expectation mismatch (`WARN`)
@@ -444,9 +480,14 @@ Dating confidence should improve the interpretation of a diagnostic. It must not
 
 ## Example report lines
 
-Unified stat summary example:
+Illustrative envelope example (not a current-data benchmark):
 
-`tank attack: baseline_raw 16.000, first_known_year 1929, last_known_year 1966, cumulative +20.000, cumulative -0.000, milestones[1836:16.000, 1850:16.000, 1870:16.000, 1900:16.000, 1910:16.000, 1919:16.000, 1929:18.000, 1936:28.000, 1945:32.000, 1955:32.000, 1966:36.000], estimated_final 36.000, time_direct 2.000, time_inferred_strong 11.000, time_inferred_weak 7.000, time_unknown 0.000, time_coverage 100.0%, high_conf_coverage 65.0%`
+A baseline of 5, a technology delta of +2 anchored at 1900, an invention delta
+of +10 bounded by 1950, and an undated -3 effect yield `1940:[4,7]` and
+`1960:[4,17]`. The all-effects scenario is 14. Neither invention effect is
+assigned an invented calendar date. Report fields include `research_anchor_abs`,
+`availability_bound_abs`, `unconstrained_abs`, `technical_envelopes` and
+`applicable_envelopes`.
 
 Economic summary example:
 
@@ -457,7 +498,7 @@ Economic summary example:
 From repo root:
 
 ```bash
-python TGC/tools/audit_1966_balance.py
+python -B TGC/tools/audit_1966_balance.py
 ```
 
 The command prints `FAIL/WARN/INFO`, a priority summary, and a playtest focus shortlist. Stat progression summaries also preserve source provenance for applicable global base-scope effects.
@@ -580,3 +621,31 @@ The benchmark is the strongest defensible combination of:
 - coherent inter-era progression
 - bounded mechanical balance
 - diagnostic usefulness
+
+## Independent extraction regression tests
+
+From repository root:
+
+```bash
+python -B -m unittest discover -s tools/tests -v
+```
+
+The tests use a separate regex-token/explicit-stack inventory, with manually
+annotated samples, rather than asking the production tree to supply expected
+values. They compare every effect's unit, statistic, value, scope, owner, source
+file, line and column as a multiset. A hand-annotated set of 16 navy speed
+assignments guards the known inline-comment omission. Layout/comment variants
+are compared to a fresh independent inventory at their new positions.
+
+The regression corpus at baseline `edd883799f55d4b91bccede553009ce8c8ab0f66`
+contains 300 technologies, 232 inventions in the five tracked NEW files, 626
+definitions in the union of eleven inputs, and 2,667 relevant assignments in the
+balance scan. These are test observations, not implementation constants. Earlier
+tools reported 230 tracked inventions and 2,651 assignments. Correcting those
+losses and replacing invented dates changes WARN totals; the old 1,545/1,546
+counts are not acceptance targets.
+
+Full reports, not just totals, are compared across separate interpreter processes,
+hash seeds and reversed file lists. Negative tests ensure both callers fail on
+relevant extraction errors. These checks do not validate the historical accuracy
+of the balance rules or certify the complete mod on either engine.
