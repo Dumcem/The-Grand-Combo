@@ -8,6 +8,7 @@ from __future__ import annotations
 
 from bisect import bisect_right
 from dataclasses import dataclass
+import json
 import math
 from pathlib import Path
 import re
@@ -107,6 +108,22 @@ def read_text(rel_path: str, encoding: str = "utf-8") -> str:
         raise ScriptError(f"{rel_path}: invalid {encoding} at byte {exc.start}; select the documented encoding explicitly") from exc
     except OSError as exc:
         raise ScriptError(f"{rel_path}: cannot read input: {exc}") from exc
+
+
+def read_json(rel_path: str):
+    """Configuration must not lose duplicate keys or accept non-finite numbers."""
+    def object_pairs(pairs):
+        result = {}
+        for key, value in pairs:
+            if key in result:
+                raise ScriptError(f'{rel_path}: duplicate JSON key {key}')
+            result[key] = value
+        return result
+
+    def invalid_constant(value):
+        raise ScriptError(f'{rel_path}: non-finite JSON constant {value}')
+
+    return json.loads(read_text(rel_path), object_pairs_hook=object_pairs, parse_constant=invalid_constant)
 
 
 def tokenize(text: str, *, file: str = "<memory>") -> tuple[Token, ...]:

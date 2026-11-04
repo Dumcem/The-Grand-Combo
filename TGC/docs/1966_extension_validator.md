@@ -25,8 +25,9 @@ The validator is manifest-driven and now checks two layers:
      each.
    - Tracked `NEW_*_inventions.txt` files are present and localized.
    - Carrier/submarine units and key binary assets exist in the submod.
-   - Unit-target effects in tracked technology/invention files resolve against
-     units from both `TGC/units` and `TGC_Timeline_1966/units`.
+   - Unit-target effects in all effective technology/invention sources resolve
+     against identifiers read from effective unit definitions. The source layer
+     is composed from the descriptors; a filename is not a unit identifier.
 
 2. **Core cleanup**
    - `TGC/common/defines.lua` must not contain the 1966 end date.
@@ -86,7 +87,13 @@ for every tracked definition independently of dating. Definition duplicates are
 checked both inside files and across the tracked files, with occurrence locations.
 
 Unit-target checks select technology modifiers and invention effect bodies
-structurally, including inline blocks. Decision-year checks select the named
+structurally, including inline blocks. They reject free entries outside list
+contexts, duplicate `effect` groups, non-assignment operators and malformed known
+numeric modifiers. Alice's confirmed `defense` alias is canonicalized for this
+inventory without asserting Victoria II alias support. Unsupported grouped unit
+properties remain explicit semantic limitations rather than being mistaken for
+scalar deltas or declared invalid runtime data solely due to this tool's subset.
+Decision-year checks select the named
 decision under `political_decisions` and its direct positive section gates;
 comments and nested NOT conditions cannot satisfy them. Raw required-pattern
 checks for Lua, GUI and documentation remain targeted manifest checks, not a
@@ -106,6 +113,22 @@ runtime file-loading model or a proof of general Alice/Victoria II compatibility
 Duplicate metadata is treated as ambiguous analysis input even where a runtime
 may accept it with an engine-specific precedence. The old parser API has only
 the two in-repository callers, both migrated together.
+
+The effective-source contract now covers the declared `TGC + Timeline` pair via
+`lib_1966_runtime.py`, including core army inventions. Technology scheduling is
+read from effective `common/technology.txt`; invention files overlay by runtime
+path. Optional mods, actual launcher state, saves and any unprovided vanilla
+fallback are not certified. Localisation/tier/cleanup checks remain manifest
+scoped: broadening target validation does not claim broad localisation coverage.
+
+The validator prints a count of physical-property Alice semantic limitations and
+explicitly leaves Victoria II script semantics unverified. A structural PASS does
+not certify engine application. The balance auditor supplies source-specific
+findings and applied-subset projections; see `1966_balance_audit.md`. In
+particular, ignored `max_strength`/`limit_per_port`, unsupported modifiers and
+integer-prefix organisation conversion are not treated as common engine behavior.
+JSON configuration rejects duplicate keys and non-finite constants. Numeric rule
+schema checks in the auditor are integrity checks, not normative validation.
 
 Independent regression tests live outside the runtime trees:
 

@@ -35,8 +35,11 @@ core cleanup remains intact:
 ## Known limitations of static validation
 
 Static validation does not certify gameplay quality or release balance. It
-validates structural coherence for the declared tracked scope. The balance audit
-is the normative diagnostic layer for tuning warnings.
+validates structural coherence for the declared tracked scope and unit-target
+contracts over effective sources. Engine semantic limitations are printed
+separately. The balance auditor separates raw-script rule comparisons, Alice
+1.3.0 applied subsets and unverified Victoria II script semantics; its quantitative
+rules remain unvalidated. Warning totals are not a tuning objective.
 
 Full interface and decision overrides remain necessary because Victoria 2 loads
 these files as whole-file definitions rather than fine-grained patches. These
@@ -45,7 +48,9 @@ reviewed when core files change.
 
 ## Final status judgment
 
-- **Static completion for the declared 1966 extension scope is complete in the
-  submod architecture.**
-- Remaining work is optional balancing iteration and maintenance of the full-file
-  override carriers.
+- A successful targeted static run is an observation of the checks it implements,
+  not certification of the extension's functional completeness.
+- Source/engine/evidence contracts are documented in `1966_balance_audit.md`.
+  Normative parameter validation, role/availability decisions and documented engine
+  divergences remain substantive work; balancing is not classified as an optional
+  cleanup merely because structural checks pass.

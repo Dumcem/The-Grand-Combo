@@ -11,8 +11,11 @@ from pathlib import Path
 from lib_1966_parser import (
     Node, ScriptError, TopLevelBlockMeta, member, parse_file,
     parse_top_level_block_meta, read_text, rebase_path, resolve_repo_path,
-    scalar, unique_definitions, walk,
+    scalar, unique_definitions, walk, read_json,
 )
+from lib_1966_semantics import canonical_stat, effect_body, numeric_modifier_entries, report_modifier_semantics
+from lib_1966_diagnostics import Reporter
+from lib_1966_runtime import compose_runtime, unit_definitions
 
 ROOT = Path(__file__).resolve().parents[2]
 MANIFEST_PATH = "TGC/tools/1966_extension_scope.json"
@@ -40,7 +43,7 @@ def _rebase_obj(obj, *, core_root: str, timeline_root: str):
 
 
 def read_manifest(core_root: str = "TGC", timeline_root: str = "TGC_Timeline_1966") -> dict:
-    manifest = json.loads(read_text(MANIFEST_PATH, encoding="utf-8"))
+    manifest = read_json(MANIFEST_PATH)
     return _rebase_obj(manifest, core_root=core_root, timeline_root=timeline_root)
 
 
@@ -77,20 +80,18 @@ LEGACY_UNIT_ALIASES = {"carrier": "aircraftcarrier"}
 
 
 def discover_unit_keys(core_root: str, timeline_root: str) -> set[str]:
-    keys: set[str] = set()
-    for rel_dir in (f"{core_root}/units", f"{timeline_root}/units"):
-        unit_dir = resolve_repo_path(rel_dir)
-        if unit_dir.exists():
-            keys.update(p.stem for p in unit_dir.glob("*.txt"))
-    return keys
+    return set(unit_definitions(compose_runtime(ROOT, core_root, timeline_root), ROOT))
 
 
 def validate_effect_unit_targets(rel_path: str, unit_keys: set[str]) -> list[str]:
     """Only technology modifiers and invention effect bodies, never trigger text."""
     failures: list[str] = []
     is_tech = "/technologies/" in "/" + rel_path.replace("\\", "/").lower()
+    # Definition uniqueness is diagnosed by the caller's cross-file inventory;
+    # retain occurrences here so its specific diagnostics are not replaced.
     for definition in parse_file(rel_path).definitions:
-        bodies = [definition] if is_tech else [n for n in definition.children if n.keyword == "effect"]
+        body = effect_body(definition, 'technology' if is_tech else 'invention')
+        bodies = [body] if body is not None else []
         for body in bodies:
             if not body.is_group:
                 raise ScriptError(f"{body.start}: expected effect group")
@@ -98,9 +99,12 @@ def validate_effect_unit_targets(rel_path: str, unit_keys: set[str]) -> list[str
                 if node.keyword == "activate_unit":
                     if node.is_group or node.operator != "=" or node.value not in unit_keys:
                         failures.append(f"UNIT target unknown key {node.value!r} in {node.start} (activate_unit)")
-                if not node.is_group or node.key in NON_UNIT_EFFECT_KEYS:
+                if node.key in unit_keys | NON_UNIT_EFFECT_KEYS:
+                    numeric_modifier_entries(node)
                     continue
-                if any(n.keyword in UNIT_STAT_HINTS for n in node.children) and node.key not in unit_keys:
+                if not node.is_group:
+                    continue
+                if any(canonical_stat(n.key) in UNIT_STAT_HINTS for n in node.children if n.key) and node.key not in unit_keys:
                     replacement = LEGACY_UNIT_ALIASES.get(node.key)
                     detail = f" (use '{replacement}')" if replacement in unit_keys else ""
                     failures.append(f"UNIT target unknown/legacy key '{node.key}' in {node.start}{detail}")
@@ -195,9 +199,13 @@ def _run() -> int:
         if f"{k}_desc" not in loc_keys:
             failures.append(f"INVENTION missing localisation desc: {k}_desc")
 
-    unit_target_files = sorted({b["file"] for b in branches} | set(invention_files) | set(structural.get("unit_target_files_extra", [])))
+    inventory = compose_runtime(ROOT, args.core_root, args.timeline_root)
+    unit_target_files = sorted(set(inventory.files('technologies') + inventory.files('inventions')))
     for rel in unit_target_files:
         failures.extend(validate_effect_unit_targets(rel, unit_keys))
+    semantic_rep = Reporter()
+    if not failures:
+        report_modifier_semantics(unit_target_files, unit_keys, semantic_rep)
 
     for rule in stale_rules:
         for rel in rule["files"]:
@@ -245,6 +253,10 @@ def _run() -> int:
     print(f" - parsed inventions in tracked files: {len(all_inv)}")
     print(f" - discovered unit keys: {len(unit_keys)}")
     print(" - structural checks: submod runtime + core cleanup + docs")
+    print(f' - effective source unit-target checks: {len(unit_target_files)} files')
+    limits = [d for d in semantic_rep.diagnostics if d.level == 'WARN']
+    print(f' - Alice semantic limitations: {len(limits)} physical-property findings; V2 script application remains unverified')
+    print(' - semantic limits are NOT a compatibility PASS; use the balance auditor for provenance and engine projections')
 
     if failures:
         print("\nFAILED checks:")

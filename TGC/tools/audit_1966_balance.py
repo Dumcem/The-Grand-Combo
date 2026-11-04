@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import math
 import re
 import sys
 from collections import defaultdict
@@ -12,145 +13,23 @@ from typing import Any
 
 from lib_1966_parser import (
     Node, ScriptError, integer, member, number, parse_file, read_text,
-    rebase_path, scalar, unique_definitions, walk,
+    rebase_path, scalar, unique_definitions, walk, read_json,
+)
+from lib_1966_diagnostics import Reporter
+from lib_1966_runtime import compose_runtime, unit_definitions
+from lib_1966_semantics import (
+    ALICE, V2, BASE_KNOWN, canonical_stat, effect_body,
+    named_entries, numeric_modifier_entries, property_evidence, projected_stat, report_modifier_semantics,
 )
 
 ROOT = Path(__file__).resolve().parents[2]
 RULES_PATH = ROOT / "TGC/tools/1966_balance_rules.json"
 
 
-class Reporter:
-    def __init__(self) -> None:
-        self.items: list[tuple[str, str]] = []
-
-    def add(self, level: str, message: str) -> None:
-        self.items.append((level, message))
-
-    def dump(self) -> None:
-        levels = ["FAIL", "WARN", "INFO"]
-        counts = {k: 0 for k in levels}
-        for lvl, _ in self.items:
-            counts[lvl] = counts.get(lvl, 0) + 1
-
-        print("1966 BALANCE AUDIT (WARN/INFO diagnostic; FAIL blocks)")
-        print(f" - FAIL: {counts.get('FAIL', 0)}")
-        print(f" - WARN: {counts.get('WARN', 0)}")
-        print(f" - INFO: {counts.get('INFO', 0)}")
-
-        for lvl in levels:
-            group = [msg for x, msg in self.items if x == lvl]
-            if not group:
-                continue
-            print(f"\n[{lvl}]")
-            for msg in group:
-                print(f" - {msg}")
-
-
-def infer_bucket(message: str) -> str:
-    m = message.lower()
-    if any(x in m for x in ["build_cost", "upkeep", "key goods", "economic ", "supply_cost"]):
-        return "economic plausibility issues"
-    if any(x in m for x in ["coverage", "unreadable year", "unknown monitored unit", "missing/unreadable", "cannot estimate", "input error"]):
-        return "structural/data confidence issues"
-    return "stat progression issues"
-
-
-def extract_unit_and_subject(message: str) -> tuple[str, str]:
-    m_colon = re.match(r"^([a-z0-9_]+):", message)
-    if m_colon:
-        return m_colon.group(1), "costs/data"
-    m_pair = re.match(r"^([a-z0-9_]+)\s+([a-z0-9_]+)\b", message)
-    if m_pair:
-        return m_pair.group(1), m_pair.group(2)
-    return "global", "audit"
-
-
-def build_stat_tier_map(rules: dict[str, Any], monitored_stats: set[str]) -> dict[str, str]:
-    stat_tiers_cfg: dict[str, list[str]] = rules.get("stat_tiers", {})
-    tier_by_stat: dict[str, str] = {}
-    for tier_name in ("primary", "secondary", "structural"):
-        for s in stat_tiers_cfg.get(tier_name, []):
-            tier_by_stat[s] = tier_name
-    for s in monitored_stats:
-        tier_by_stat.setdefault(s, "secondary")
-    return tier_by_stat
-
-
-def get_stat_signal_quality(assignments: int, units_with_signal: int) -> str:
-    if assignments == 0:
-        return "formal_coverage_only"
-    if assignments < 8 or units_with_signal < 2:
-        return "limited_signal"
-    return "strong_signal"
-
-
-def build_priority_summary(
-    items: list[tuple[str, str]],
-    units_cfg: dict[str, Any],
-    tier_by_unit: dict[str, str],
-    tier_by_stat: dict[str, str],
-    stat_signal_quality: dict[str, str],
-    stat_priority_weights: dict[str, Any],
-) -> tuple[dict[str, list[tuple[int, str]]], list[tuple[int, str]]]:
-    buckets: dict[str, list[tuple[int, str]]] = {
-        "structural/data confidence issues": [],
-        "stat progression issues": [],
-        "economic plausibility issues": [],
-    }
-    playtest_candidates: list[tuple[int, str]] = []
-
-    for level, msg in items:
-        if level not in {"FAIL", "WARN"}:
-            continue
-        unit, subject = extract_unit_and_subject(msg)
-        bucket = infer_bucket(msg)
-        base = 100 if level == "FAIL" else 60
-        score = base
-
-        important_stats = set(units_cfg.get(unit, {}).get("important_stats", []))
-        tier = tier_by_unit.get(unit, "secondary")
-        if tier == "core":
-            score += 20
-        elif tier == "secondary":
-            score += 5
-        elif tier == "low_signal":
-            score -= 15
-        stat_tier = tier_by_stat.get(subject, "secondary")
-        tier_weights = stat_priority_weights.get("tier", {})
-        signal_weights = stat_priority_weights.get("signal", {})
-        score += int(tier_weights.get(stat_tier, 0))
-        signal_quality = stat_signal_quality.get(subject, "limited_signal")
-        score += int(signal_weights.get(signal_quality, 0))
-        if subject in important_stats:
-            score += 20
-        if "high-confidence coverage" in msg or "low timeline coverage" in msg:
-            score += 15
-        if "outside final_range" in msg or "milestone" in msg or "cumulative" in msg:
-            score += 10
-        if "build_cost outside range" in msg or "upkeep_cost outside range" in msg:
-            score += 15
-
-        short = (
-            f"{unit} | unit_tier={tier} | stat_tier={stat_tier} | stat_signal={signal_quality} | "
-            f"{subject} | {msg} | {level}"
-        )
-        buckets[bucket].append((score, short))
-        structural_warn_floor = int(stat_priority_weights.get("structural_warn_focus_score_min", 100))
-        if bucket != "structural/data confidence issues" and not (tier == "low_signal" and level == "WARN"):
-            if level == "WARN" and signal_quality == "formal_coverage_only":
-                continue
-            if level == "WARN" and stat_tier == "structural" and score < structural_warn_floor:
-                continue
-            playtest_candidates.append((score, f"{unit}: {subject} -> {msg}"))
-
-    for k in buckets:
-        buckets[k].sort(key=lambda x: x[0], reverse=True)
-    playtest_candidates.sort(key=lambda x: x[0], reverse=True)
-    return buckets, playtest_candidates[:5]
-
-
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Run the TGC 1966 balance audit against the timeline submod layer.")
+    parser.add_argument("--json", action="store_true", help="Emit structured diagnostics as JSON only.")
+    parser.add_argument("--summary", action="store_true", help="Print counts and grouped findings without the detailed report.")
     parser.add_argument("--core-root", default="TGC", help="Base/core mod root (default: TGC).")
     parser.add_argument(
         "--timeline-root",
@@ -171,8 +50,61 @@ def _rebase_obj(obj: Any, *, core_root: str, timeline_root: str) -> Any:
 
 
 def read_rules(core_root: str = "TGC", timeline_root: str = "TGC_Timeline_1966") -> dict[str, Any]:
-    rules = json.loads(read_text(str(RULES_PATH)))
+    rules = read_json(str(RULES_PATH))
+    validate_rule_structure(rules)
     return _rebase_obj(rules, core_root=core_root, timeline_root=timeline_root)
+
+
+def validate_rule_structure(rules: dict) -> None:
+    """Technical shape checks only, never a calibration of normative values."""
+    def numeric(value):
+        try:
+            return type(value) in {int, float} and math.isfinite(value)
+        except OverflowError:
+            return False
+
+    def interval(value, where):
+        if not isinstance(value, dict) or any(k not in {'min', 'max'} for k in value):
+            raise ScriptError(f'{where}: expected min/max interval')
+        if not value or not all(numeric(v) for v in value.values()):
+            raise ScriptError(f'{where}: interval requires finite numeric bounds')
+        if 'min' in value and 'max' in value and value['min'] > value['max']:
+            raise ScriptError(f'{where}: inverted interval')
+
+    if not isinstance(rules, dict) or not isinstance(rules.get('units'), dict) or not rules['units']:
+        raise ScriptError('rules: nonempty units mapping required')
+    years = rules.get('milestone_years')
+    if not isinstance(years, list) or not years or any(type(y) is not int for y in years) or len(set(years)) != len(years):
+        raise ScriptError('rules: distinct integer milestone years required')
+    catalog = rules.get('monitored_stat_catalog')
+    if not isinstance(catalog, list) or not all(isinstance(s, str) for s in catalog) or len(set(catalog)) != len(catalog):
+        raise ScriptError('rules: distinct stat catalog required')
+    for unit, cfg in rules['units'].items():
+        if not isinstance(cfg, dict) or not isinstance(cfg.get('monitored_stats'), dict):
+            raise ScriptError(f'{unit}: monitored_stats mapping required')
+        if type(cfg.get('historical_relevance_start_year', years[0])) is not int:
+            raise ScriptError(f'{unit}: historical relevance year must be an integer')
+        applicable = cfg.get('applicable_milestone_years', years)
+        if not isinstance(applicable, list) or any(type(y) is not int or y not in years for y in applicable) or len(set(applicable)) != len(applicable):
+            raise ScriptError(f'{unit}: invalid/duplicate applicable milestone years')
+        for stat, cfg_stat in cfg['monitored_stats'].items():
+            if stat not in catalog or not isinstance(cfg_stat, dict):
+                raise ScriptError(f'{unit}/{stat}: stat outside catalog or invalid configuration')
+            if 'final_range' in cfg_stat:
+                interval(cfg_stat['final_range'], f'{unit}/{stat}/final_range')
+            for key in ('max_single_delta', 'max_cumulative_positive_delta', 'max_cumulative_negative_delta'):
+                if key in cfg_stat and (not numeric(cfg_stat[key]) or cfg_stat[key] < 0):
+                    raise ScriptError(f'{unit}/{stat}/{key}: expected finite nonnegative magnitude')
+            ranges = cfg_stat.get('milestone_ranges', {})
+            if not isinstance(ranges, dict):
+                raise ScriptError(f'{unit}/{stat}: milestone_ranges mapping required')
+            for year, value in ranges.items():
+                if str(year) not in {str(y) for y in years}:
+                    raise ScriptError(f'{unit}/{stat}: milestone outside global grid: {year}')
+                interval(value, f'{unit}/{stat}/{year}')
+        for key in ('estimated_build_cost_range', 'estimated_upkeep_cost_range'):
+            if key in cfg:
+                interval(cfg[key], f'{unit}/{key}')
 
 
 def get_final_range(stat_cfg: dict[str, Any]) -> tuple[float | None, float | None]:
@@ -242,7 +174,8 @@ def parse_unit_block(unit_file: str, unit_key: str) -> dict[str, Any]:
     if unit_key not in definitions:
         raise ScriptError(f"{unit_file}: missing unit definition {unit_key}")
     node = definitions[unit_key]
-    data: dict[str, Any] = {"stats": {}, "build_cost": {}, "supply_cost": {},
+    named_entries(node)
+    data: dict[str, Any] = {"stats": {}, "raw_stats": {}, "property_nodes": {}, "build_cost": {}, "supply_cost": {},
                             "unit_domain": scalar(node, "type", required=True).lower()}
     if data["unit_domain"] not in {"land", "naval"}:
         raise ScriptError(f"{node.start}: unsupported unit domain {data['unit_domain']!r}")
@@ -250,9 +183,13 @@ def parse_unit_block(unit_file: str, unit_key: str) -> dict[str, Any]:
         member(node, field, required=True)
     seen: set[str] = set()
     for child in node.children:
-        if child.keyword in seen:
+        key = canonical_stat(child.key)
+        if key in seen:
             raise ScriptError(f"{child.start}: duplicate unit property {child.key}")
-        seen.add(child.keyword)
+        seen.add(key)
+        data["property_nodes"][key] = child
+        if child.operator != '=':
+            raise ScriptError(f'{child.start}: expected unit property assignment')
         if child.keyword in {"build_cost", "supply_cost"}:
             if not child.is_group or child.operator != "=":
                 raise ScriptError(f"{child.start}: expected commodity-cost group")
@@ -260,7 +197,8 @@ def parse_unit_block(unit_file: str, unit_key: str) -> dict[str, Any]:
         elif not child.is_group and child.operator == "=":
             # Non-numeric flags/names are retained in the tree but are not stats.
             if re.fullmatch(r"[+-]?(?:[0-9]+(?:\.[0-9]*)?|\.[0-9]+)(?:[eE][+-]?[0-9]+)?", child.value):
-                data["stats"][child.keyword] = number(child.value, child.start)
+                data["stats"][key] = number(child.value, child.start)
+                data["raw_stats"][key] = child.value
     return data
 
 
@@ -443,7 +381,7 @@ def parse_effect_unit_assignments(
         if (kind, key) not in inferred_years:
             raise ScriptError(f"{definition.start}: missing temporal evidence for {kind}:{key}")
         timing = inferred_years[(kind, key)]
-        effect = member(definition, "effect") if kind == "invention" else definition
+        effect = effect_body(definition, kind)
         if effect is None:
             continue
         if not effect.is_group:
@@ -452,27 +390,21 @@ def parse_effect_unit_assignments(
             targets = {scope.key} if scope.key in monitored_units else global_scope_units.get(scope.key, set())
             if not targets:
                 if (known_units is not None and scope.key not in known_units and scope.key not in global_scope_units and scope.is_group
-                        and any(n.keyword in monitored_stats for n in scope.children)):
+                        and any(canonical_stat(n.key) in monitored_stats for n in scope.children if n.key)):
                     raise ScriptError(f"{scope.start}: unknown unit-effect scope {scope.key}")
                 continue
             if not scope.is_group or scope.operator != "=":
                 raise ScriptError(f"{scope.start}: expected unit modifier group")
-            seen: set[str] = set()
-            for stat in scope.children:
-                if stat.key is None:
-                    raise ScriptError(f"{stat.start}: unsupported free entry in unit modifier")
-                if stat.keyword not in monitored_stats:
+            for stat, stat_key, value in numeric_modifier_entries(scope):
+                if stat_key not in monitored_stats:
                     continue
-                if stat.keyword in seen:
-                    raise ScriptError(f"{stat.start}: duplicate/ambiguous unit modifier {stat.key}")
-                seen.add(stat.keyword)
-                if stat.is_group or stat.operator != "=":
-                    raise ScriptError(f"{stat.start}: expected numeric unit modifier")
-                value = number(stat.value, stat.start)
+                if value is None:
+                    raise ScriptError(f'{stat.start}: cannot represent grouped {stat_key} as a scalar raw progression')
                 for target in sorted(targets):
                     out[target].append({
                         "source_file": rel_path, "invention": key, "line": stat.start.line,
-                        "column": stat.start.column, "stat": stat.keyword, "value": value,
+                        "column": stat.start.column, "stat": stat_key, "value": value, "raw_value": stat.value,
+                        "raw_stat": stat.key,
                         "year": timing.year, "not_before": timing.not_before, "year_source": timing.source,
                         "year_notes": timing.notes, "year_references": timing.references,
                         "probability_years": timing.probability_years,
@@ -507,9 +439,9 @@ def check_key_goods_availability(production_types_file: str, key_goods: list[str
     outputs = {n.value for n in nodes if n.keyword == "output_goods" and not n.is_group and n.operator == "="}
     for good in key_goods:
         if good in outputs:
-            rep.add("INFO", f"KEY GOODS mapping present in production types: {good}")
+            rep.add("INFO", f"KEY GOODS mapping present in production types: {good}", code='production_mapping', category='economic_index', stat=good, source=production_types_file, evidence='recipe_presence_not_availability')
         else:
-            rep.add("WARN", f"KEY GOODS missing production output mapping: {good}")
+            rep.add("WARN", f"KEY GOODS missing production output mapping: {good}", code='production_mapping', category='economic_index', stat=good, source=production_types_file, evidence='recipe_presence_not_availability')
 
 
 def _run() -> int:
@@ -517,33 +449,39 @@ def _run() -> int:
     rules = read_rules(args.core_root, args.timeline_root)
     rep = Reporter()
     rep.add("INFO", f"AUDIT ROOTS: core={args.core_root}; timeline={args.timeline_root}")
-
-    units_cfg: dict[str, Any] = rules["units"]
-    coverage_tiers_cfg: dict[str, list[str]] = rules.get("coverage_tiers", {})
-    tier_by_unit: dict[str, str] = {}
-    for tier_name in ("core", "secondary", "low_signal"):
-        for u in coverage_tiers_cfg.get(tier_name, []):
-            tier_by_unit[u] = tier_name
-    for u in units_cfg:
-        tier_by_unit.setdefault(u, "secondary")
-    files_cfg: dict[str, str] = rules["files"]
+    inventory = compose_runtime(ROOT, args.core_root, args.timeline_root)
+    effective_units = unit_definitions(inventory, ROOT)
+    unknown = set(rules['units']) - set(effective_units)
+    if unknown:
+        raise ScriptError(f'unknown monitored unit definitions: {sorted(unknown)}')
+    units_cfg: dict[str, Any] = {u: dict(c, unit_file=effective_units[u]) for u, c in rules['units'].items()}
+    outside_roster = sorted(set(effective_units) - set(units_cfg))
+    if outside_roster:
+        rep.add('WARN', f'Effective units without normative configuration: {outside_roster}',
+                code='unmonitored_units', category='evidence_gap', evidence='effective_definition_inventory', cause='catalog_coverage')
+    scan_files = inventory.files('technologies') + inventory.files('inventions')
+    rep.add('INFO', f'Effective direct sources: technologies={len(inventory.files("technologies"))}; inventions={len(inventory.files("inventions"))}; units={len(effective_units)}; legacy scan_files is not the source universe.',
+            code='effective_sources', category='source_scope', evidence='descriptor_overlay')
+    for source in sorted(inventory.selected.values(), key=lambda s: s.runtime_path):
+        if source.classification == 'direct':
+            rep.add('INFO', f'{source.runtime_path} <- {source.file} ({source.layer})', code='source_selected', category='source_scope', source=source.file, evidence='descriptor_overlay')
+    rep.add('INFO', f'Replaced sources={len(inventory.replaced)}; conditional/context files={sum(s.classification != "direct" for s in inventory.selected.values())}. These are inventoried, not universally accumulated.',
+            code='source_boundaries', category='source_scope', evidence='descriptor_overlay')
+    for source in inventory.excluded:
+        rep.add('WARN', source.classification, code='unscheduled_source', category='source_scope', source=source.file, evidence='pinned_Alice_loader', uncertainty='V2 loading unverified')
+    for boundary in inventory.boundaries:
+        rep.add('INFO', boundary, code='model_boundary', category='evidence_gap', evidence='declared_model_boundary', cause='conditional_runtime')
+    rep.add('INFO', 'Normative basis: UNVALIDATED. All range/cap findings below concern a RAW SCRIPT scenario, not a common V2/Alice runtime or a confirmed gameplay bug. Legacy coverage/confidence thresholds and priority weights are retained unchanged in JSON but inactive as quality criteria.',
+            code='unvalidated_rules', category='evidence_gap', evidence='Task_23_audit', cause='normative_basis')
+    rep.add('INFO', 'Coverage dimensions: sources=declared descriptor composition, direct unit effects only; property coverage=catalog presence; engine support=pinned Alice schema/V2 unverified; extraction=structural contract with explicit limitations; temporal evidence=anchors/bounds/unknown; indeterminacy=possibility envelopes; normative validity=UNVALIDATED. No aggregate confidence score.',
+            code='coverage_dimensions', category='evidence_gap', evidence='analysis_contract', cause='coverage_dimensions')
+    rep.add('INFO', 'Victoria II script numeric types, aliases and property application are UNVERIFIED here; no Alice behavior is copied into a V2 projection.',
+            code='v2_unverified', category='evidence_gap', engine=V2, evidence='missing_script_specification', cause='V2_semantics')
+    files_cfg = {'goods': inventory.require('common/goods.txt'), 'production_types': inventory.require('common/production_types.txt')}
     monitored_units = set(units_cfg.keys())
-    discovered_units: set[str] = set()
-    for rel_dir in (f"{args.core_root}/units", f"{args.timeline_root}/units"):
-        unit_dir = ROOT / rel_dir
-        if unit_dir.exists():
-            discovered_units.update(p.stem for p in unit_dir.glob("*.txt"))
+    discovered_units = set(effective_units)
     unit_groups: dict[str, list[str]] = rules.get("unit_groups", {})
-    coverage_cfg: dict[str, Any] = rules.get("timeline_coverage", {})
-    coverage_warn_below = float(coverage_cfg.get("warn_below_pct_important", 60))
-    coverage_info_good = float(coverage_cfg.get("info_good_pct", 80))
-    confidence_cfg: dict[str, Any] = rules.get("confidence_coverage", {})
-    confidence_time_high = float(confidence_cfg.get("time_high_pct", 80))
-    confidence_high_warn_below = float(confidence_cfg.get("high_conf_warn_below_pct", 50))
-    confidence_high_good = float(confidence_cfg.get("high_conf_info_good_pct", 70))
     monitored_stats_set = set(rules["monitored_stat_catalog"])
-    tier_by_stat = build_stat_tier_map(rules, monitored_stats_set)
-    stat_priority_weights: dict[str, Any] = rules.get("stat_priority_weights", {})
     detected_stats_by_unit: dict[str, set[str]] = {}
     covered_stats_by_unit: dict[str, set[str]] = {}
     unit_domain_by_unit: dict[str, str | None] = {}
@@ -551,65 +489,71 @@ def _run() -> int:
     for group_name, members in unit_groups.items():
         unknown_members = [u for u in members if u not in discovered_units]
         if unknown_members:
-            rep.add("WARN", f"UNIT GROUP {group_name}: unknown members {', '.join(sorted(unknown_members))}")
+            rep.add("WARN", f"UNIT GROUP {group_name}: unknown members {', '.join(sorted(unknown_members))}", code='unit_group', category='source_scope', evidence='configured_group')
         else:
-            rep.add("INFO", f"UNIT GROUP {group_name}: {len(members)} member(s)")
-
-    # 1) unit target sconosciute nelle regole
-    for unit in sorted(monitored_units):
-        if unit not in discovered_units:
-            rep.add("FAIL", f"RULES unknown monitored unit target: {unit}")
+            rep.add("INFO", f"UNIT GROUP {group_name}: {len(members)} member(s)", code='unit_group', category='source_scope', evidence='configured_group')
 
     goods_costs = parse_goods_costs(files_cfg["goods"])
 
     baselines: dict[str, dict[str, float]] = defaultdict(dict)
+    unit_inputs: dict[str, dict[str, Any]] = {}
+    supply_indices: dict[str, float] = {}
 
     # 2) stat monitorate mancanti/non leggibili + 5) costo build/upkeep non calcolabile
     for unit, cfg in units_cfg.items():
         unit_data = parse_unit_block(cfg["unit_file"], unit)
+        unit_inputs[unit] = unit_data
         stats = unit_data["stats"]
         unit_domain_by_unit[unit] = unit_data.get("unit_domain")
+        for prop, node in unit_data['property_nodes'].items():
+            if prop not in BASE_KNOWN:
+                rep.add('WARN', f'{unit}: property {prop} outside verified base schema; retained in tree', code='unknown_base_property', category='engine_semantics', unit=unit, stat=prop, source=str(node.start), engine=ALICE, evidence='pinned_engine_schema', uncertainty='application unverified')
+            elif prop in unit_data['raw_stats']:
+                e = property_evidence(prop, unit_data['raw_stats'][prop], 'base', ALICE)
+                if e.status != 'applied' or e.value != unit_data['stats'][prop]:
+                    rep.add('WARN', f'{unit} {prop}: raw={node.value}; Alice={e.value}; {e.status}: {e.note}', code='base_semantics', category='engine_semantics', unit=unit, stat=prop, source=str(node.start), engine=ALICE, evidence='pinned_engine_source', cause=prop)
         detected_stats = {s for s in stats.keys() if s in monitored_stats_set}
         covered_stats = {s for s in cfg.get("monitored_stats", {}).keys() if s in monitored_stats_set}
         detected_stats_by_unit[unit] = detected_stats
         covered_stats_by_unit[unit] = covered_stats
         missing_coverage = sorted(detected_stats - covered_stats)
         if missing_coverage:
-            rep.add("WARN", f"{unit}: unit stats detected but not covered by rules: {', '.join(missing_coverage)}")
+            rep.add("WARN", f"{unit}: unit stats detected but not covered by rules: {', '.join(missing_coverage)}", code='property_coverage_gap', category='evidence_gap', unit=unit, source=cfg['unit_file'], cause='catalog_coverage')
 
         for stat, stat_cfg in cfg["monitored_stats"].items():
             if stat not in stats:
-                rep.add("FAIL", f"{unit}: monitored stat missing/unreadable in unit file: {stat}")
+                rep.add("FAIL", f"{unit}: monitored stat missing/unreadable in unit file: {stat}", code='missing_baseline', category='integrity', unit=unit, stat=stat, source=cfg['unit_file'])
             else:
                 baseline = stats[stat]
                 baselines[unit][stat] = baseline
-                rep.add("INFO", f"{unit}: baseline {stat}={baseline}")
+                rep.add("INFO", f"{unit}: baseline {stat}={baseline}", code='raw_baseline', unit=unit, stat=stat, source=cfg['unit_file'])
 
         est_build, miss_build, top_build = estimate_costs(unit_data["build_cost"], goods_costs)
         est_upkeep, miss_upkeep, top_upkeep = estimate_costs(unit_data["supply_cost"], goods_costs)
 
         if miss_build:
-            rep.add("FAIL", f"{unit}: cannot estimate build_cost; missing goods costs: {', '.join(sorted(miss_build))}")
+            rep.add("FAIL", f"{unit}: cannot estimate build_cost; missing goods costs: {', '.join(sorted(miss_build))}", code='missing_good_price', category='integrity', unit=unit, source=cfg['unit_file'])
         if miss_upkeep:
-            rep.add("FAIL", f"{unit}: cannot estimate supply_cost; missing goods costs: {', '.join(sorted(miss_upkeep))}")
+            rep.add("FAIL", f"{unit}: cannot estimate supply_cost; missing goods costs: {', '.join(sorted(miss_upkeep))}", code='missing_good_price', category='integrity', unit=unit, source=cfg['unit_file'])
 
         if est_build is not None:
             build_top = ", ".join(f"{g}={v:.2f}" for g, v in top_build) if top_build else "none"
-            rep.add("INFO", f"{unit}: economic build_est={est_build:.2f}; top3_build=[{build_top}]")
+            rep.add("INFO", f"{unit}: build_basket_base_price_index={est_build:.2f}; top3_build=[{build_top}]", code='basket_index', category='economic_index', unit=unit, source=cfg['unit_file'], evidence='base_price_basket')
             build_range = cfg.get("estimated_build_cost_range", {})
             b_min = build_range.get("min")
             b_max = build_range.get("max")
             if (b_min is not None and est_build < b_min) or (b_max is not None and est_build > b_max):
-                rep.add("WARN", f"{unit}: estimated build_cost outside range ({est_build:.2f}, expected {b_min}..{b_max})")
+                rep.add("WARN", f"{unit}: build basket index outside legacy unvalidated range ({est_build:.2f}, expected {b_min}..{b_max})", code='legacy_basket_range', category='economic_index', unit=unit, evidence='unvalidated_legacy_index_rule', cause='basket_index')
 
         if est_upkeep is not None:
+            supply_indices[unit] = est_upkeep
             upkeep_top = ", ".join(f"{g}={v:.2f}" for g, v in top_upkeep) if top_upkeep else "none"
-            rep.add("INFO", f"{unit}: economic upkeep_est={est_upkeep:.2f}; top3_upkeep=[{upkeep_top}]")
+            rep.add("INFO", f"{unit}: supply_basket_base_price_index={est_upkeep:.2f}; top3_upkeep=[{upkeep_top}]", code='basket_index', category='economic_index', unit=unit, source=cfg['unit_file'], evidence='base_price_basket')
             upkeep_range = cfg.get("estimated_upkeep_cost_range", {})
             u_min = upkeep_range.get("min")
             u_max = upkeep_range.get("max")
             if (u_min is not None and est_upkeep < u_min) or (u_max is not None and est_upkeep > u_max):
-                rep.add("WARN", f"{unit}: estimated upkeep_cost outside range ({est_upkeep:.2f}, expected {u_min}..{u_max})")
+                rep.add("WARN", f"{unit}: supply basket index outside legacy unvalidated range ({est_upkeep:.2f}, expected {u_min}..{u_max})", code='legacy_basket_range', category='economic_index', unit=unit, evidence='unvalidated_legacy_index_rule', cause='basket_index')
 
         expected_goods = set(cfg.get("key_goods_expectations", []))
         unit_goods = set(unit_data["build_cost"].keys()) | set(unit_data["supply_cost"].keys())
@@ -617,14 +561,10 @@ def _run() -> int:
             rep.add(
                 "WARN",
                 f"{unit}: none of expected key goods found in unit costs ({', '.join(sorted(expected_goods))})",
-            )
+             code='key_goods_presence', category='economic_index', unit=unit, evidence='at_least_one_presence_only')
 
     land_units = {u for u, domain in unit_domain_by_unit.items() if domain == "land"}
     naval_units = {u for u, domain in unit_domain_by_unit.items() if domain == "naval"}
-    if not land_units:
-        land_units = set(unit_groups.get("all_land_units", [])) & monitored_units
-    if not naval_units:
-        naval_units = set(unit_groups.get("all_naval_units", [])) & monitored_units
     global_scope_units: dict[str, set[str]] = {
         "army_base": set(land_units),
         "navy_base": set(naval_units),
@@ -634,7 +574,8 @@ def _run() -> int:
         int(y) for y in rules.get("milestone_years", [1836, 1850, 1870, 1900, 1910, 1919, 1929, 1936, 1945, 1955, 1966])
     )
     default_milestone_year = milestone_years[0] if milestone_years else 1836
-    inferred_years = build_year_inference(rules["scan_files"])
+    inferred_years = build_year_inference(scan_files)
+    report_modifier_semantics(scan_files, discovered_units, rep)
     direct_blocks = sum(e.source == "direct" for e in inferred_years.values())
     bound_blocks = sum(e.source == "availability_bound" for e in inferred_years.values())
     unknown_blocks = len(inferred_years) - direct_blocks - bound_blocks
@@ -646,7 +587,7 @@ def _run() -> int:
                     f"probability_years={list(evidence.probability_years)} (not availability gates); "
                     f"references={list(evidence.references)}; notes={'; '.join(evidence.notes) or 'bound only; acquisition unknown'}")
     all_assignments: dict[str, list[dict[str, Any]]] = defaultdict(list)
-    for rel in sorted(rules["scan_files"]):
+    for rel in sorted(scan_files):
         found = parse_effect_unit_assignments(
             rel,
             monitored_units,
@@ -667,23 +608,13 @@ def _run() -> int:
 
     stat_assignment_count: dict[str, int] = defaultdict(int)
     stat_assignment_units: dict[str, set[str]] = defaultdict(set)
-    covered_units_by_stat: dict[str, int] = defaultdict(int)
     for u, cfg in units_cfg.items():
-        for s in cfg.get("monitored_stats", {}):
-            covered_units_by_stat[s] += 1
         for item in relevant_assignments_by_unit.get(u, []):
             s = item.get("stat")
             if not s:
                 continue
             stat_assignment_count[s] += 1
             stat_assignment_units[s].add(u)
-    stat_signal_quality: dict[str, str] = {}
-    for s in monitored_stats_set:
-        stat_signal_quality[s] = get_stat_signal_quality(
-            stat_assignment_count.get(s, 0),
-            len(stat_assignment_units.get(s, set())),
-        )
-
     relevant_assignment_items = [x for vals in relevant_assignments_by_unit.values() for x in vals]
     total_effect_assignments = len(relevant_assignment_items)
     direct_assignments = sum(x.get("year_source") == "direct" for x in relevant_assignment_items)
@@ -745,25 +676,19 @@ def _run() -> int:
                 f"model_year={ex.get('year')} not_before={ex.get('not_before')} source={ex.get('year_source') or 'unknown'}",
             )
     else:
-        rep.add("WARN", "INVENTION EXAMPLE: none found for monitored units in scanned invention files")
+        rep.add("WARN", "INVENTION EXAMPLE: none found for monitored units in scanned invention files", code='no_invention_effects', category='evidence_gap', cause='extraction_signal')
 
-    # v3 signal-quality summary per unit: helps distinguish broad coverage from high-value coverage.
-    signal_summary: dict[str, dict[str, int]] = {}
+    # Expanded contribution counts are descriptive, not confidence grades.
     for unit, cfg in units_cfg.items():
         unit_items = relevant_assignments_by_unit.get(unit, [])
         monitored_stats = set(cfg.get("monitored_stats", {}).keys())
         touched_stats = {x.get("stat") for x in unit_items if x.get("stat") in monitored_stats}
-        signal_summary[unit] = {
-            "assignments": len(unit_items),
-            "touched_stats": len(touched_stats),
-            "monitored_stats": len(monitored_stats),
-        }
         rep.add(
             "INFO",
             f"{unit}: signal assignments={len(unit_items)}, monitored_stats={len(monitored_stats)}, touched_stats={len(touched_stats)}",
-        )
+         code='expanded_signal', unit=unit)
         if len(unit_items) == 0:
-            rep.add("WARN", f"{unit}: no readable timed deltas found in scanned files; coverage is baseline/economic only")
+            rep.add("WARN", f"{unit}: no readable timed deltas found in scanned files; coverage is baseline/economic only", code='no_signal', category='evidence_gap', unit=unit, cause='extraction_signal')
 
     # 3) delta singolo oltre soglia + 4) delta cumulative oltre soglia + 5) stima finale fuori range assoluto
     cumulative_positive: dict[str, dict[str, float]] = defaultdict(lambda: defaultdict(float))
@@ -786,7 +711,7 @@ def _run() -> int:
                 rep.add(
                     "WARN",
                     f"{unit} {stat} delta too large from {format_assignment_origin(item)} ({delta}, max_single_delta {max_delta})",
-                )
+                 code='single_delta', category='numeric_rule', unit=unit, stat=stat, source=format_assignment_origin(item), evidence='unvalidated_rule', uncertainty='not a gameplay verdict', cause='raw_progression')
 
     assignments_by_unit_stat: dict[str, dict[str, list[dict[str, Any]]]] = {}
     for unit, unit_items in relevant_assignments_by_unit.items():
@@ -812,6 +737,17 @@ def _run() -> int:
             estimated_final = baseline + total_delta
 
             stat_assignments = assignments_by_unit_stat.get(unit, {}).get(stat, [])
+            raw_stat = unit_inputs[unit]['raw_stats'][stat]
+            projection = projected_stat(raw_stat, stat, stat_assignments, ALICE)
+            engine_envelopes = {y: milestone_envelope(projection['baseline'], projection['assignments'], y)
+                                for y in milestone_years} if projection['baseline'] is not None else None
+            rep.add('INFO', f'{unit} {stat}: raw_script_all_effects={estimated_final:.6g}; Alice status={projection["status"]}, baseline={projection["baseline"]}, applied_subset_final={projection["final"]}, excluded_effects={projection["excluded"]}; milestone_envelopes={engine_envelopes}; V2=unverified. No range is applied to a different engine quantity.',
+                    code='engine_projection', category='engine_semantics', unit=unit, stat=stat, engine=ALICE,
+                    source=cfg['unit_file'], evidence='pinned_engine_source', uncertainty='static additive subset; conditional systems excluded')
+            if stat == 'supply_consumption' and projection['final'] is not None and unit in supply_indices:
+                rep.add('INFO', f'{unit}: Alice conditional supply index baseline={supply_indices[unit] * projection["baseline"]:.6g}, all_effects={supply_indices[unit] * projection["final"]:.6g}; basket at base prices x applied supply multiplier; national modifier=0, full strength, unit demand only. Prices, availability, budget and operating conditions not simulated; legacy ranges NOT applied.',
+                        code='conditional_supply_index', category='economic_index', unit=unit, stat=stat, engine=ALICE,
+                        evidence='pinned_economy_formula', uncertainty='conditional scenario, not runtime expenditure')
             unknown_year_delta = sum(a["value"] for a in stat_assignments if a.get("year") is None)
             unknown_year_count = sum(1 for a in stat_assignments if a.get("year") is None)
             known_year_count = len(stat_assignments) - unknown_year_count
@@ -828,9 +764,6 @@ def _run() -> int:
             coverage_pct = 0.0 if total_abs_delta == 0 else (known_abs_delta / total_abs_delta) * 100.0
             direct_abs_delta = sum(abs(a["value"]) for a in stat_assignments if a.get("year_source") == "direct")
             bound_abs_delta = sum(abs(a["value"]) for a in stat_assignments if a.get("year_source") == "availability_bound")
-            high_conf_abs = direct_abs_delta
-            high_conf_pct = 0.0 if total_abs_delta == 0 else (high_conf_abs / total_abs_delta) * 100.0
-
             technical_milestone_estimates: list[str] = []
             for year in milestone_years:
                 lo, hi = milestone_bounds[year]
@@ -851,52 +784,32 @@ def _run() -> int:
                 f"scope_unit {unit_scope_abs_delta:.3f}, scope_global {global_scope_abs_delta:.3f}, "
                 f"research_anchor_abs {direct_abs_delta:.3f}, availability_bound_abs {bound_abs_delta:.3f}, "
                 f"unconstrained_abs {unknown_abs_delta - bound_abs_delta:.3f}, "
-                f"point_model_coverage {coverage_pct:.1f}%, research_anchor_share {high_conf_pct:.1f}%",
-            )
+                f"research_anchor_share {coverage_pct:.1f}% (descriptive only)",
+             code='raw_scenario', unit=unit, stat=stat, evidence='static_raw_script_scenario')
             if unknown_year_count > 0:
                 rep.add(
                     "INFO",
                     f"{unit} {stat}: uncertain-date deltas included only as possibility envelopes: count={unknown_year_count}, total={unknown_year_delta:+.3f} "
                     f"(known_count={known_year_count})",
-                )
-            important_stats = set(cfg.get("important_stats", []))
-            if total_abs_delta > 0 and stat in important_stats and coverage_pct < coverage_warn_below:
-                rep.add(
-                    "WARN",
-                    f"{unit} {stat} low timeline coverage ({coverage_pct:.1f}% < {coverage_warn_below:.1f}%; point-model research anchors only)",
-                )
-            elif coverage_pct >= coverage_info_good:
-                rep.add("INFO", f"{unit} {stat} point-model timeline coverage is good ({coverage_pct:.1f}%; research anchors only)")
-            if (
-                total_abs_delta > 0
-                and stat in important_stats
-                and coverage_pct >= confidence_time_high
-                and high_conf_pct < confidence_high_warn_below
-            ):
-                rep.add(
-                    "WARN",
-                    f"{unit} {stat} timeline mostly placed but low high-confidence coverage ({high_conf_pct:.1f}% < {confidence_high_warn_below:.1f}%)",
-                )
-            elif high_conf_pct >= confidence_high_good:
-                rep.add("INFO", f"{unit} {stat} research-anchor coverage is good ({high_conf_pct:.1f}%; not actual acquisition dates)")
+                 code='raw_scenario', unit=unit, stat=stat, evidence='static_raw_script_scenario')
             max_pos = s_cfg.get("max_cumulative_positive_delta")
             max_neg = s_cfg.get("max_cumulative_negative_delta")
             if max_pos is not None and pos_delta > max_pos:
                 rep.add(
                     "WARN",
                     f"{unit} {stat} cumulative positive delta too large (+{pos_delta:.3f}, max {max_pos})",
-                )
+                 code='cumulative_positive', category='numeric_rule', unit=unit, stat=stat, evidence='unvalidated_rule', uncertainty='not a gameplay verdict', cause='raw_progression')
             if max_neg is not None and abs(neg_delta) > max_neg:
                 rep.add(
                     "WARN",
                     f"{unit} {stat} cumulative negative delta too large ({neg_delta:.3f}, max -{max_neg})",
-                )
+                 code='cumulative_negative', category='numeric_rule', unit=unit, stat=stat, evidence='unvalidated_rule', uncertainty='not a gameplay verdict', cause='raw_progression')
             min_final, max_final = get_final_range(s_cfg)
             if (min_final is not None and estimated_final < min_final) or (max_final is not None and estimated_final > max_final):
                 rep.add(
                     "WARN",
                     f"{unit} {stat} estimated final outside final_range in all-effects scenario (baseline {baseline:.3f} + delta {total_delta:+.3f} = {estimated_final:.3f}, expected {min_final}..{max_final})",
-                )
+                 code='final_range', category='numeric_rule', unit=unit, stat=stat, evidence='unvalidated_rule', uncertainty='not a gameplay verdict', cause='raw_progression')
             milestone_ranges = s_cfg.get("milestone_ranges", {})
             configured_milestone_years: set[int] = set()
             for raw_year in milestone_ranges.keys():
@@ -911,7 +824,7 @@ def _run() -> int:
                     "WARN",
                     f"{unit} {stat}: milestone_ranges configured for non-applicable years [{years_txt}] "
                     f"(historical_relevance_start_year={historical_start_year}, applicable_milestone_years={applicable_milestone_years})",
-                )
+                 code='rule_applicability', category='integrity', unit=unit, stat=stat, evidence='configuration')
 
             for year in applicable_milestone_years:
                 cfg_y = milestone_ranges.get(str(year)) or milestone_ranges.get(year)
@@ -922,135 +835,25 @@ def _run() -> int:
                 lo, hi = milestone_bounds[year]
                 if (m_min is not None and hi < m_min) or (m_max is not None and lo > m_max):
                     rep.add("WARN", f"{unit} {stat} milestone {year} entirely outside configured range "
-                            f"(possible {lo:.3f}..{hi:.3f}, expected {m_min}..{m_max})")
+                            f"(possible {lo:.3f}..{hi:.3f}, expected {m_min}..{m_max})", code='milestone_range', category='numeric_rule', unit=unit, stat=stat, evidence='unvalidated_rule', uncertainty='not a gameplay verdict', cause='raw_progression')
                 elif (m_min is not None and lo < m_min) or (m_max is not None and hi > m_max):
                     rep.add("INFO", f"{unit} {stat} milestone {year} indeterminate: uncertainty envelope "
-                            f"{lo:.3f}..{hi:.3f} overlaps configured range {m_min}..{m_max}")
+                            f"{lo:.3f}..{hi:.3f} overlaps configured range {m_min}..{m_max}", code='milestone_indeterminate', category='evidence_gap', unit=unit, stat=stat, evidence='possibility_envelope', uncertainty='overlap is not PASS', cause='temporal_indeterminacy')
 
     check_key_goods_availability(files_cfg["production_types"], rules["economic"]["key_goods"], rep)
 
-    rep.dump()
-    priority_buckets, playtest_focus = build_priority_summary(
-        rep.items,
-        units_cfg,
-        tier_by_unit,
-        tier_by_stat,
-        stat_signal_quality,
-        stat_priority_weights,
-    )
-    print("\nPRIORITY SUMMARY")
-    for bucket in ("structural/data confidence issues", "stat progression issues", "economic plausibility issues"):
-        print(f"\n - {bucket}")
-        top_items = priority_buckets.get(bucket, [])[:8]
-        if not top_items:
-            print("   * none")
-            continue
-        for score, text in top_items:
-            print(f"   * [score {score}] {text}")
-
-    print("\nRECOMMENDED PLAYTEST FOCUS")
-    if not playtest_focus:
-        print(" - No high-priority WARN/FAIL playtest targets identified from current run.")
-    else:
-        for _, text in playtest_focus:
-            print(f" - {text}")
-
-    # Tiered watchlists (short practical summary by unit).
-    fail_by_unit = {extract_unit_and_subject(msg)[0] for lvl, msg in rep.items if lvl == "FAIL"}
-    main_warn_by_unit: dict[str, str] = {}
-    for lvl, msg in rep.items:
-        if lvl not in {"FAIL", "WARN"}:
-            continue
-        u, _ = extract_unit_and_subject(msg)
-        if u not in units_cfg:
-            continue
-        current = main_warn_by_unit.get(u)
-        if current is None:
-            main_warn_by_unit[u] = msg
-            continue
-        if lvl == "WARN" and u in fail_by_unit:
-            continue
-        if "milestone" in msg and "milestone" not in current:
-            main_warn_by_unit[u] = msg
-
-    def _print_watchlist(title: str, tier_name: str) -> None:
-        print(f"\n{title}")
-        members = sorted(u for u in units_cfg if tier_by_unit.get(u, "secondary") == tier_name)
-        if not members:
-            print(" - none")
-            return
-        for u in members:
-            sig = signal_summary.get(u, {"assignments": 0, "touched_stats": 0})
-            top_warn = main_warn_by_unit.get(u, "none")
-            print(
-                f" - {u} | tier={tier_name} | signal_assignments={sig['assignments']} | "
-                f"touched_stats={sig['touched_stats']} | top_warning={top_warn}"
-            )
-
-    _print_watchlist("CORE WATCHLIST", "core")
-    _print_watchlist("SECONDARY WATCHLIST", "secondary")
-    _print_watchlist("LOW-SIGNAL COVERAGE", "low_signal")
-
-    print("\nSTAT COVERAGE SUMMARY")
-    total_detected = sum(len(v) for v in detected_stats_by_unit.values())
-    total_covered = sum(len(covered_stats_by_unit.get(u, set()) & detected_stats_by_unit.get(u, set())) for u in units_cfg)
-    global_detected_stats = sorted({s for vals in detected_stats_by_unit.values() for s in vals})
-    global_covered_stats = sorted({s for vals in covered_stats_by_unit.values() for s in vals})
-    print(f" - total_covered_stats={total_covered}")
-    print(f" - total_detected_stats={total_detected}")
-    print(f" - global_detected_stat_types={len(global_detected_stats)}")
-    print(f" - global_covered_stat_types={len(global_covered_stats)}")
-    for u in sorted(units_cfg):
-        det = detected_stats_by_unit.get(u, set())
-        cov = covered_stats_by_unit.get(u, set()) & det
-        missing = sorted(det - cov)
-        if missing:
-            print(f" - {u}: covered_stats={len(cov)}/{len(det)} missing={', '.join(missing)}")
-        else:
-            print(f" - {u}: covered_stats={len(cov)}/{len(det)}")
-
-    print("\nSTAT DIAGNOSTIC QUALITY")
-    for tier_name in ("primary", "secondary", "structural"):
-        print(f" - {tier_name.upper()}")
-        stats = [s for s, t in tier_by_stat.items() if t == tier_name]
-        if not stats:
-            print("   * none")
-            continue
-        for s in sorted(stats):
-            covered_units = covered_units_by_stat.get(s, 0)
-            assignments = stat_assignment_count.get(s, 0)
-            units_with_signal = len(stat_assignment_units.get(s, set()))
-            quality = stat_signal_quality.get(s, "limited_signal")
-            print(
-                f"   * {s}: covered_units={covered_units}, assignments={assignments}, "
-                f"units_with_signal={units_with_signal}, quality={quality}"
-            )
-
-    print("\nTOP STAT WATCHLIST")
-    stat_watch: dict[str, tuple[int, str]] = {}
-    for level, msg in rep.items:
-        if level not in {"FAIL", "WARN"}:
-            continue
-        unit, subject = extract_unit_and_subject(msg)
-        if subject not in monitored_stats_set:
-            continue
-        score = 100 if level == "FAIL" else 60
-        score += int(stat_priority_weights.get("tier", {}).get(tier_by_stat.get(subject, "secondary"), 0))
-        score += int(stat_priority_weights.get("signal", {}).get(stat_signal_quality.get(subject, "limited_signal"), 0))
-        score += 10 if tier_by_unit.get(unit, "secondary") == "core" else 0
-        prev = stat_watch.get(subject)
-        if prev is None or score > prev[0]:
-            stat_watch[subject] = (score, msg)
-    top_stats = sorted(stat_watch.items(), key=lambda x: x[1][0], reverse=True)[:8]
-    if not top_stats:
-        print(" - none")
-    else:
-        for stat, (score, msg) in top_stats:
-            print(
-                f" - {stat} | tier={tier_by_stat.get(stat, 'secondary')} | "
-                f"units_with_signal={len(stat_assignment_units.get(stat, set()))} | "
-                f"quality={stat_signal_quality.get(stat, 'limited_signal')} | score={score} | top_issue={msg}"
-            )
+    if args.json:
+        print(rep.json())
+        return 1 if any(d.level == 'FAIL' for d in rep.diagnostics) else 0
+    rep.dump(details=not args.summary)
+    rep.summary()
+    print("\nSTAT COVERAGE SUMMARY (catalog presence, not source/engine/normative validity)")
+    print(f" - total_covered_stats={sum(len(v) for v in covered_stats_by_unit.values())}")
+    print(f" - total_detected_stats={sum(len(v) for v in detected_stats_by_unit.values())}")
+    print("\nSTAT SOURCE SIGNAL (physical origins; no confidence grade)")
+    for stat in sorted(monitored_stats_set):
+        origins = {(x['source_file'], x['line'], x['column']) for x in relevant_assignment_items if x['stat'] == stat}
+        print(f" - {stat}: physical_assignments={len(origins)}, expanded_contributions={stat_assignment_count.get(stat, 0)}, units={len(stat_assignment_units.get(stat, set()))}")
 
     # WARN/INFO diagnostics are non-blocking, but FAIL-level structural/tooling errors should fail CI.
     return 1 if any(level == "FAIL" for level, _ in rep.items) else 0
@@ -1061,7 +864,10 @@ def main() -> int:
         return _run()
     except (ScriptError, OSError, UnicodeError, json.JSONDecodeError) as exc:
         rep = Reporter()
-        rep.add("FAIL", f"INPUT ERROR: {exc}; analysis aborted, no partial conclusions")
+        rep.add("FAIL", f"INPUT ERROR: {exc}; analysis aborted, no partial conclusions", code='input_error', category='integrity', evidence='invalid_or_outside_structural_contract')
+        if '--json' in sys.argv:
+            print(rep.json())
+            return 1
         rep.dump()
         print("\nPRIORITY SUMMARY\n - structural/data confidence issues: input error")
         print("\nRECOMMENDED PLAYTEST FOCUS\n - Unavailable: analysis aborted before valid conclusions.")
