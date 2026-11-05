@@ -33,6 +33,8 @@ not inspect the live installation, launcher, scenarios or saves.
 - `lib_1966_semantics.py`: context-specific properties and engine evidence,
   caller contracts, raw-to-Alice additive projections.
 - `lib_1966_diagnostics.py`: structured findings and cause grouping.
+- `lib_1966_mechanics.py`: conditional consumers, numerical domains and
+  activation/infrastructure scenarios independent of the legacy numeric bands.
 - `audit_1966_balance.py`: extraction, conditional dating, raw rule comparisons,
   projections and basket indices.
 
@@ -210,3 +212,67 @@ The independent inventory still shares the documented Clausewitz subset and some
 scope assumptions. Hand-authored engine fixtures and pinned sources provide a
 separate line of evidence; no test suite certifies the closed-source V2 executable,
 actual gameplay balance or the 2,985 final/milestone intervals.
+
+## Applied consumers and technical invariants
+
+Alice projection now folds shared fields independently of the normative unit/stat
+filters. Base assignment order and each physical modifier body are preserved;
+distinct bodies accumulate after their members have been assigned. JSON `data`
+exposes baseline origins, selected contributions, overwritten occurrences and
+unsupported/unverified exclusions. No V2 numeric projection is inferred.
+
+`consumer_factors` reports baseline and all-effects scenarios, holding external
+battle conditions equal. Land factors are `1 + attack/10` and
+`1 + defence/10`; rear factors multiply by support only for the normal
+support/special deployment path. Tank is special, plane is cavalry. Eligibility
+does not predict actual deployment. Maneuver target steps use integer conversion.
+Infantry/guard ratios exclude discipline, organisation, costs and recruitment.
+Naval factors keep small-target gun power, big-target gun power plus torpedoes,
+`hull/(1-evasion)`, range and speed separate. Range above 2 covers the initial
+two-center-distance separation; it is not a proportional battle advantage.
+Sources: Alice v1.3.0 `military.cpp` 4891-4928, 6634-6717, 7405-7454,
+7625-7718, 8115-8155 and `military.hpp` 45-47.
+
+Technical checks are separate from numeric bands: positive time/organisation/
+hull/land-discipline divisors, nonnegative ordinary consumer inputs, integer base
+port/colonial/supply-score properties, and evasion in [0,1]. Evasion exactly 1 is
+flagged as an immunity design question. A bad direct baseline is FAIL; a relaxed
+combination envelope crossing a domain boundary is WARN with
+`basis=conditional_model`, NOT a proved reachable defect. Correlations, discovery,
+activation and national modifiers must still be checked. Unsupported or partial
+projections do not produce a technical PASS.
+
+Activation diagnostics preserve positive necessary references (AND union, OR
+intersection, NOT excluded), research anchors, invention bounds/probability-year
+notes, culture/overseas restrictions and commodity baskets. Technology predecessor
+references follow source order within each area of the declared scheduled tree.
+Country histories, scripted grants, discovery probabilities, actual construction,
+industry and national ownership remain explicit boundaries.
+
+Port progression includes BOTH `max_naval_base = 1` and
+`activate_building = naval_base`: Alice sets one increase-building boolean per
+technology/invention, not one increment per spelling. In the current Timeline,
+`post_nelsonian_thought` contributes the previously omitted initial increment.
+The research scenario has eight flags: port 7 references 1929, port 8 references
+1939. Carrier activation has reference bound 1919; research/building completion
+are additional requirements. This corrects the Task 25 seven-flag/1939-port-7
+interpretation. No runtime content was changed to achieve that correction.
+Sources: `parsers_declarations.cpp` technology_contents/invention_contents
+activate_building/any_value; `culture.cpp` clear_existing_tech_effects and tech/
+invention application; `commands.cpp` can_start_research/naval_unit_construction.
+
+## Legacy normative contract
+
+All 283 final bands, 2,702 milestone bands and associated caps remain unchanged
+and UNVALIDATED. Raw comparisons retain their codes, severities and provenance
+for historical comparison; text is explicitly prefixed `LEGACY UNVALIDATED` and
+JSON adds `basis=legacy_unvalidated`. This does not promote a warning to a
+gameplay defect. New categories `technical_invariant`, `availability`,
+`mechanics` and `design_question` distinguish contracts, conditional scenarios
+and choices still open. The 23-unit role taxonomy remains a design proposal.
+
+The independent applied-field oracle in `tools/tests/test_1966_applied.py` uses a
+separate recursive token reader and literal storage schema, selects the effective
+files without the rules, and compares every winning contribution's source and
+value, not just the six Task 25 totals. Synthetic fixtures test repeated members,
+distinct blocks, base/modifier contexts, discrete domains and consumer sensitivity.

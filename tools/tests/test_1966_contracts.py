@@ -156,7 +156,7 @@ class RuntimeFixtures(unittest.TestCase):
             root=Path(td).resolve();w=self.fixture(root)
             w('Core/common/goods.txt','military = { steel = { cost = 10 } }')
             w('Core/common/production_types.txt','factory = { output_goods = steel }')
-            w('Core/units/different_filename.txt','actual_id = { type = land attack = 1 supply_consumption = .5 build_cost = { steel = 2 } supply_cost = { steel = .1 } }')
+            w('Core/units/different_filename.txt','actual_id = { type = land attack = 1 build_time = 90 default_organisation = 30 discipline = 1 supply_consumption = .5 build_cost = { steel = 2 } supply_cost = { steel = .1 } }')
             w('Core/inventions/retained.txt','I = { effect = { actual_id = { attack = 2 supply_consumption = .25 } } }')
             rules={'units':{'actual_id':{'unit_file':'missing.txt','monitored_stats':{'attack':{'final_range':{'min':0,'max':10}},'supply_consumption':{}}}},
                    'files':{},'scan_files':[],'monitored_stat_catalog':['attack','supply_consumption'],'milestone_years':[1900], 'economic':{'key_goods':['steel']}}

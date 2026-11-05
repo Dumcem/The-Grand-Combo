@@ -16,6 +16,7 @@ from lib_1966_parser import (
     rebase_path, scalar, unique_definitions, walk, read_json,
 )
 from lib_1966_diagnostics import Reporter
+from lib_1966_mechanics import report_consumers, report_availability
 from lib_1966_runtime import compose_runtime, unit_definitions
 from lib_1966_semantics import (
     ALICE, V2, BASE_KNOWN, canonical_stat, effect_body,
@@ -179,6 +180,8 @@ def parse_unit_block(unit_file: str, unit_key: str) -> dict[str, Any]:
                             "unit_domain": scalar(node, "type", required=True).lower()}
     data['unit_type'] = scalar(node, 'unit_type')
     data['active'] = scalar(node, 'active') != 'no'
+    data['primary_culture'] = scalar(node, 'primary_culture') == 'yes'
+    data['can_build_overseas'] = scalar(node, 'can_build_overseas') != 'no'
     if data["unit_domain"] not in {"land", "naval"}:
         raise ScriptError(f"{node.start}: unsupported unit domain {data['unit_domain']!r}")
     for field in ("build_cost", "supply_cost"):
@@ -595,7 +598,7 @@ def _run() -> int:
         found = parse_effect_unit_assignments(
             rel,
             monitored_units,
-            monitored_stats_set,
+            monitored_stats_set | VARIABLE,
             inferred_years,
             global_scope_units,
             known_units=discovered_units,
@@ -728,6 +731,8 @@ def _run() -> int:
         assignments_by_unit_stat[unit] = grouped
 
     engine_units = {u: project_unit(unit_inputs[u], all_assignments.get(u, []), ALICE) for u in units_cfg}
+    report_consumers(unit_inputs, engine_units, rep)
+    report_availability(inventory, unit_inputs, engine_units, scan_files, inferred_years, rep)
 
     for unit, cfg in units_cfg.items():
         historical_start_year = get_historical_relevance_start_year(cfg, default_milestone_year)

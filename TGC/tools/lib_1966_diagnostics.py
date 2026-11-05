@@ -3,7 +3,7 @@ from collections import Counter, defaultdict
 from dataclasses import asdict, dataclass
 import json
 
-CATEGORIES = ('integrity', 'source_scope', 'engine_semantics', 'evidence_gap', 'numeric_rule', 'economic_index', 'observation')
+CATEGORIES = ('integrity', 'source_scope', 'engine_semantics', 'technical_invariant', 'availability', 'mechanics', 'design_question', 'evidence_gap', 'numeric_rule', 'economic_index', 'observation')
 
 
 @dataclass(frozen=True)
@@ -21,6 +21,7 @@ class Diagnostic:
     cause: str | None = None
     scope: str | None = None
     data: dict | None = None
+    basis: str = 'observation'
 
 
 class Reporter:
@@ -35,6 +36,13 @@ class Reporter:
     def add(self, level, message, *, code='observation', category='observation', **metadata):
         if level not in {'FAIL', 'WARN', 'INFO'} or category not in CATEGORIES:
             raise ValueError('invalid diagnostic severity/category')
+        legacy = category=='numeric_rule' or metadata.get('evidence','').startswith('unvalidated') or code=='legacy_basket_range'
+        if legacy:
+            message = 'LEGACY UNVALIDATED: ' + message
+        metadata.setdefault('basis', 'legacy_unvalidated' if legacy else
+                            'technical_contract' if category=='technical_invariant' else
+                            'open_design' if category=='design_question' else
+                            'conditional_model' if category in {'availability','mechanics'} else 'observation')
         self.diagnostics.append(Diagnostic(level, message, code, category, **metadata))
 
     def dump(self, *, details=True):
