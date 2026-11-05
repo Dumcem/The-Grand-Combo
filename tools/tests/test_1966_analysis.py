@@ -448,7 +448,9 @@ class RealDataTests(unittest.TestCase):
     def test_effects_individually_match_independent_inventory(self):
         _, rules = real_inputs()
         expected, scopes = oracle_effects(rules)
-        self.assertEqual(sum(expected.values()), 2667)
+        # Historical five-file corpus was 2667; removing the two late transport
+        # cuts changes four identities. Exact oracle comparison, not its count,
+        # is the regression contract after intentional runtime edits.
         actual = Counter()
         inference = a.build_year_inference(rules["scan_files"])
         for file in rules["scan_files"]:

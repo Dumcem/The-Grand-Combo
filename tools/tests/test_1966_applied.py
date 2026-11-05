@@ -222,6 +222,116 @@ class MechanicalContracts(unittest.TestCase):
         self.assertEqual([d.basis for d in rep.diagnostics],['legacy_unvalidated','technical_contract'])
         self.assertTrue(rep.diagnostics[0].message.startswith('LEGACY UNVALIDATED:'))
 
+    def test_direct_invalid_divisor_and_relaxed_envelope_have_different_basis(self):
+        data,xs = fixture('u = { type = land build_time = 0 default_organisation = 30 discipline = 1 build_cost = {} supply_cost = {} }',
+                          'T = { u = { build_time = -10 } }')
+        rep = Reporter();m.report_consumers({'u':data},{'u':s.project_unit(data,xs)},rep)
+        row = next(d for d in rep.diagnostics if d.code=='consumer_domain' and d.stat=='build_time')
+        self.assertEqual((row.level,row.basis),('FAIL','technical_contract'))
+        data,xs = fixture('u = { type = land build_time = 5 default_organisation = 30 discipline = 1 build_cost = {} supply_cost = {} }',
+                          'T = { u = { build_time = -10 } }')
+        rep = Reporter();m.report_consumers({'u':data},{'u':s.project_unit(data,xs)},rep)
+        row = next(d for d in rep.diagnostics if d.code=='consumer_domain' and d.stat=='build_time')
+        self.assertEqual((row.level,row.basis),('WARN','conditional_model'))
+
+    def test_unverified_later_member_supersedes_verified_earlier_member(self):
+        data,xs = fixture('u = { type = naval hull = 10 build_cost = {} supply_cost = {} }',
+                          'T = { u = { hull = 2 defence = 2e3 } }')
+        q = s.project_unit(data,xs)['stats']['hull']
+        self.assertEqual((q['status'],q['final'],q['excluded']),('applied_subset',10,1))
+        self.assertEqual(q['assignments'],[])
+        self.assertEqual(q['superseded'][0]['raw_value'],'2')
+
+    def test_port_above_configured_cap_is_a_technical_failure(self):
+        data,xs = fixture('u = { type = naval hull = 10 min_port_level = 9 build_cost = {} supply_cost = {} }','T = {}')
+        class Inventory:
+            def require(self,path):return path
+        rep = Reporter()
+        with patch.object(p,'read_text',return_value='naval_base = { max_level = 8 }'):
+            m.report_availability(Inventory(),{'u':data},{'u':s.project_unit(data,xs)},[],{},rep)
+        row = next(d for d in rep.diagnostics if d.code=='port_requirement_cap')
+        self.assertEqual((row.level,row.basis,row.engine),('FAIL','technical_contract','alice_1.3.0'))
+
+
+class TransportRuntimeContracts(unittest.TestCase):
+    def inputs(self, layer):
+        files = {}
+        for directory in ['units','technologies','inventions']:
+            by_name = {}
+            for root in (['TGC'] if layer=='TGC' else ['TGC','TGC_Timeline_1966']):
+                for f in (ROOT/root/directory).glob('*.txt'):
+                    by_name[f.name] = f
+            files[directory] = list(by_name.values())
+        units = {}
+        for f in files['units']:
+            for u, fields, _, _ in reference_tree(f.read_text(encoding='utf-8-sig')):
+                fields = dict((k,v) for k,v,_,_ in fields)
+                if fields['type']=='naval':
+                    units[u] = int(fields['build_time'])
+        rows = []
+        for f in files['technologies']+files['inventions']:
+            for name,fields,_,_ in reference_tree(f.read_text(encoding='utf-8-sig')):
+                meta = dict((k,v) for k,v,_,_ in fields)
+                body = meta.get('effect',[]) if f.parent.name=='inventions' else fields
+                for scope,values,_,_ in body:
+                    targets = units if scope=='navy_base' else [scope] if scope in units else []
+                    if not targets or not isinstance(values,list):
+                        continue
+                    cuts = [int(v) for k,v,_,_ in values if k=='build_time']
+                    if cuts:
+                        rows.append((name,int(meta.get('year',0)),scope,set(targets),cuts[-1]))
+        return files,units,rows
+
+    def test_schools_have_joint_positive_discovery_path_in_both_layers(self):
+        for layer in ['TGC','TGC_Timeline_1966']:
+            files,_,_ = self.inputs(layer)
+            f = next(f for f in files['inventions'] if f.name=='navy_inventions.txt')
+            schools = {n:dict((k,v) for k,v,_,_ in fields) for n,fields,_,_ in
+                       reference_tree(f.read_text(encoding='utf-8-sig')) if n in {'blue_water_school','brown_water_school'}}
+            self.assertEqual(len(schools),2)
+            for school in schools.values():
+                self.assertEqual([(k,v) for k,v,_,_ in school['limit']], [('blue_and_brown_water_schools','1')])
+                self.assertGreater(int(next(v for k,v,_,_ in school['chance'] if k=='base')),0)
+                # No mutual-exclusion predicate in either necessary limit;
+                # acquiring the prerequisite permits both positive base chances.
+
+    def test_scoped_late_reductions_leave_all_other_ships_unchanged(self):
+        transports = {'clipper_transport','steam_transport'}
+        for layer in ['TGC','TGC_Timeline_1966']:
+            _,units,rows = self.inputs(layer)
+            names = ['modern_naval_design'] if layer=='TGC' else ['modern_naval_design','mechanized_naval_production','automated_naval_design']
+            for name in names:
+                actual = {u:delta for n,_,_,targets,delta in rows if n==name for u in targets}
+                expected = {u:(-9 if u in transports else -10) for u in units
+                            if name=='modern_naval_design' or u not in transports}
+                self.assertEqual(actual,expected)
+                self.assertTrue(all(scope!='navy_base' for n,_,scope,_,_ in rows if n==name))
+
+    def test_positive_for_every_subset_and_early_progression_preserved(self):
+        for layer in ['TGC','TGC_Timeline_1966']:
+            _,units,rows = self.inputs(layer)
+            for u in ['clipper_transport','steam_transport']:
+                cuts = [(n,y,v) for n,y,_,targets,v in rows if u in targets]
+                # All cuts are nonpositive: all-effects is a lower bound for
+                # EVERY subset, including subsets that are not reachable.
+                self.assertTrue(all(v<=0 for _,_,v in cuts))
+                self.assertEqual(units[u],90)
+                self.assertEqual(units[u]+sum(v for _,_,v in cuts),1)
+                before = [(n,y,v) for n,y,v in cuts if y and y<1919]
+                self.assertEqual([v for _,_,v in before],[-10]*6)
+                self.assertEqual(units[u]+sum(v for _,_,v in before)-20,10)
+                self.assertEqual([v for n,_,v in cuts if n=='modern_naval_design'],[-9])
+                self.assertFalse(any(n in {'mechanized_naval_production','automated_naval_design'} for n,_,_ in cuts))
+
+    def test_old_bug_and_minimal_integer_correction_are_independent(self):
+        # Six earlier techs and two jointly discoverable schools consume 80 days.
+        # The old seventh -10 reaches zero; further -10 cuts make it negative.
+        old_core = 90 - 6*10 - 2*10 - 10
+        old_timeline = old_core - 2*10
+        self.assertEqual((old_core,old_timeline),(0,-20))
+        safe_last_cut = max(c for c in range(11) if 90-80-c>0)
+        self.assertEqual(safe_last_cut,9)
+
 
 if __name__ == '__main__':
     unittest.main()

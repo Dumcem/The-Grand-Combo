@@ -1735,7 +1735,17 @@
 		cost = 26600
 		unciv_military = yes
 
-		navy_base = { build_time = -10 }
+		# Bound transport reductions to the positive integer time budget: 90 - 80 - 9 = 1.
+		battleship = { build_time = -10 }
+		clipper_transport = { build_time = -9 }
+		commerce_raider = { build_time = -10 }
+		cruiser = { build_time = -10 }
+		dreadnought = { build_time = -10 }
+		frigate = { build_time = -10 }
+		ironclad = { build_time = -10 }
+		manowar = { build_time = -10 }
+		monitor = { build_time = -10 }
+		steam_transport = { build_time = -9 }
 
 		ai_chance = {
 			factor = 0.25

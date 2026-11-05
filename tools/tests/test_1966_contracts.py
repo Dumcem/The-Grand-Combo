@@ -307,7 +307,8 @@ class IndependentRuntimeCorpus(unittest.TestCase):
                 actual.update(effect_identity(unit,x) for x in items if x['stat'] in self.fields[unit])
         expected,_=self.oracle(files)
         self.assertEqual(actual,expected)
-        self.assertEqual(sum(expected.values()),3636)
+        # No frozen count target: scoped transport-time fixes change the corpus.
+        # Identity-by-identity comparison above remains the independent oracle.
 
     def test_twelve_fractional_origins_and_134_contributions(self):
         files=self.effective['technologies']+self.effective['inventions'];timing=a.build_year_inference(files)

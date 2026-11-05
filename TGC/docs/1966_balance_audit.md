@@ -198,7 +198,7 @@ New tests select effective files and unit identifiers independently of the rules
 using a separate token/stack inventory and controlled overlay fixtures. They
 compare individual identities, including the retained core army inventions:
 389 physical assignments / 969 expanded contributions at the audited checkpoint.
-The expanded corpus has 3,636 relevant contributions. These are observations in
+The Task 24 expanded corpus had 3,636 relevant contributions. These are observations in
 tests, never program constants or normative targets.
 
 The previous perimeter had 12 fractional organisation origins / 134 contributions.
@@ -276,3 +276,52 @@ separate recursive token reader and literal storage schema, selects the effectiv
 files without the rules, and compares every winning contribution's source and
 value, not just the six Task 25 totals. Synthetic fixtures test repeated members,
 distinct blocks, base/modifier contexts, discrete domains and consumer sensitivity.
+
+## Transport construction correction
+
+The two transports start at 90. Six engineering technologies through 1915 consume
+60 days; blue_water_school and brown_water_school each consume 10. Both inventions
+have the same positive technology limit and independent positive base chance;
+neither excludes the other. The former modern_naval_design reduction reached zero
+in core; the two additional Timeline reductions reached -20. Inventions are not
+assigned exact discovery dates. This is a possible joint path, not a prediction.
+
+Alternatives were compared before changing content:
+
+| Option | Initial/early progression | Other ships | Minimum under all reductions |
+|---|---|---|---|
+| Raise transport base 90 to 111 | Adds 21 days from the start | Unchanged | 1 in Timeline |
+| Reduce global engineering bonuses | Changes early progression | Changes every navy | Depends on chosen scale |
+| Stop transport reductions before 1919 | Preserves early progression | Can be preserved | 10 |
+| Bound only late transport cuts by integer budget | Preserves all pre-1919 progression | Preserved | 1 in core and Timeline |
+
+The last option is implemented. With 80 days already available as reductions,
+the largest remaining integer reduction satisfying `90 - 80 - reduction > 0` is
+9. modern_naval_design therefore uses scoped -9 for transports and the original
+-10 for every other effective naval unit. Timeline's 1929/1939 engineering
+reductions are scoped to non-transports. No compensating positive modifiers,
+new units, role changes, base cost changes or arbitrary positive-time target were
+introduced. One is the integer positivity boundary, NOT a validated gameplay
+duration. Subsequent contributors must continue to respect this invariant.
+
+| Research reference, assuming both schools | Old core | Old Timeline | Corrected core/Timeline |
+|---|---|---|---|
+| 1900 | 20 | 20 | 20 |
+| 1915 | 10 | 10 | 10 |
+| 1919 | 0 | 0 | 1 |
+| 1929 | 0 | -10 | 1 |
+| 1939 | 0 | -20 | 1 |
+
+All remaining time contributions are nonpositive. The full set is consequently a
+lower bound for every subset, including unreachable subsets: positivity does not
+depend on discovery order. Tests independently check both effective compositions,
+the two school limits, the maximal safe integer cut and unchanged cuts for every
+other ship. The raw relevant corpus is now 3,632 contributions; this count is
+descriptive and is not frozen as a success target in tests.
+
+This generic transport fix is a candidate upstream contribution; the Timeline
+extension remains fork-specific. Script changes use ordinary unit build_time
+modifiers and no Alice-only runtime path. Alice parser/application/consumer and
+repository static checks are covered. Exact V2 field application and both engines'
+end-to-end construction remain unverified: the live deployment and regenerated
+Alice scenario are explicitly PENDING. No old scenario certifies this revision.
