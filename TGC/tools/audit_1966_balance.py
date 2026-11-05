@@ -17,6 +17,7 @@ from lib_1966_parser import (
 )
 from lib_1966_diagnostics import Reporter
 from lib_1966_mechanics import report_consumers, report_availability
+from lib_1966_functional import ResearchDependencies, report_functional
 from lib_1966_runtime import compose_runtime, unit_definitions
 from lib_1966_semantics import (
     ALICE, V2, BASE_KNOWN, canonical_stat, effect_body,
@@ -731,8 +732,10 @@ def _run() -> int:
         assignments_by_unit_stat[unit] = grouped
 
     engine_units = {u: project_unit(unit_inputs[u], all_assignments.get(u, []), ALICE) for u in units_cfg}
-    report_consumers(unit_inputs, engine_units, rep)
+    dependencies = ResearchDependencies(scan_files)
+    report_consumers(unit_inputs, engine_units, rep, dependencies)
     report_availability(inventory, unit_inputs, engine_units, scan_files, inferred_years, rep)
+    report_functional(inventory, unit_inputs, engine_units, scan_files, inferred_years, dependencies, rep)
 
     for unit, cfg in units_cfg.items():
         historical_start_year = get_historical_relevance_start_year(cfg, default_milestone_year)

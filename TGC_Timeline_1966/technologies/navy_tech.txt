@@ -1610,7 +1610,18 @@
 		cost = 3600
 		unciv_military = yes
 
-		navy_base = { build_time = -10 }
+		aircraftcarrier = { build_time = -10 }
+		battleship = { build_time = -10 }
+		clipper_transport = { build_time = -5 }
+		commerce_raider = { build_time = -10 }
+		cruiser = { build_time = -10 }
+		dreadnought = { build_time = -10 }
+		frigate = { build_time = -10 }
+		ironclad = { build_time = -10 }
+		manowar = { build_time = -10 }
+		monitor = { build_time = -10 }
+		steam_transport = { build_time = -5 }
+		submarine = { build_time = -10 }
 
 		ai_chance = {
 			factor = 0.25
@@ -1674,7 +1685,18 @@
 		cost = 7200
 		unciv_military = yes
 
-		navy_base = { build_time = -10 }
+		aircraftcarrier = { build_time = -10 }
+		battleship = { build_time = -10 }
+		clipper_transport = { build_time = -5 }
+		commerce_raider = { build_time = -10 }
+		cruiser = { build_time = -10 }
+		dreadnought = { build_time = -10 }
+		frigate = { build_time = -10 }
+		ironclad = { build_time = -10 }
+		manowar = { build_time = -10 }
+		monitor = { build_time = -10 }
+		steam_transport = { build_time = -5 }
+		submarine = { build_time = -10 }
 		colonial_prestige = 0.2
 
 		ai_chance = {
@@ -1753,7 +1775,18 @@
 		cost = 10800
 		unciv_military = yes
 
-		navy_base = { build_time = -10 }
+		aircraftcarrier = { build_time = -10 }
+		battleship = { build_time = -10 }
+		clipper_transport = { build_time = -5 }
+		commerce_raider = { build_time = -10 }
+		cruiser = { build_time = -10 }
+		dreadnought = { build_time = -10 }
+		frigate = { build_time = -10 }
+		ironclad = { build_time = -10 }
+		manowar = { build_time = -10 }
+		monitor = { build_time = -10 }
+		steam_transport = { build_time = -5 }
+		submarine = { build_time = -10 }
 		colonial_prestige = 0.2
 
 		ai_chance = {
@@ -1832,7 +1865,18 @@
 		cost = 14400
 		unciv_military = yes
 
-		navy_base = { build_time = -10 }
+		aircraftcarrier = { build_time = -10 }
+		battleship = { build_time = -10 }
+		clipper_transport = { build_time = -5 }
+		commerce_raider = { build_time = -10 }
+		cruiser = { build_time = -10 }
+		dreadnought = { build_time = -10 }
+		frigate = { build_time = -10 }
+		ironclad = { build_time = -10 }
+		manowar = { build_time = -10 }
+		monitor = { build_time = -10 }
+		steam_transport = { build_time = -5 }
+		submarine = { build_time = -10 }
 		colonial_prestige = 0.2
 
 		ai_chance = {
@@ -1916,7 +1960,18 @@
 		cost = 18000
 		unciv_military = yes
 
-		navy_base = { build_time = -10 }
+		aircraftcarrier = { build_time = -10 }
+		battleship = { build_time = -10 }
+		clipper_transport = { build_time = -5 }
+		commerce_raider = { build_time = -10 }
+		cruiser = { build_time = -10 }
+		dreadnought = { build_time = -10 }
+		frigate = { build_time = -10 }
+		ironclad = { build_time = -10 }
+		manowar = { build_time = -10 }
+		monitor = { build_time = -10 }
+		steam_transport = { build_time = -5 }
+		submarine = { build_time = -10 }
 
 		ai_chance = {
 			factor = 0.25
@@ -1994,7 +2049,18 @@
 		cost = 21600
 		unciv_military = yes
 
-		navy_base = { build_time = -10 }
+		aircraftcarrier = { build_time = -10 }
+		battleship = { build_time = -10 }
+		clipper_transport = { build_time = -5 }
+		commerce_raider = { build_time = -10 }
+		cruiser = { build_time = -10 }
+		dreadnought = { build_time = -10 }
+		frigate = { build_time = -10 }
+		ironclad = { build_time = -10 }
+		manowar = { build_time = -10 }
+		monitor = { build_time = -10 }
+		steam_transport = { build_time = -5 }
+		submarine = { build_time = -10 }
 
 		ai_chance = {
 			factor = 0.25
@@ -2067,10 +2133,10 @@
 		cost = 26600
 		unciv_military = yes
 
-		# Bound transport reductions to the positive integer time budget: 90 - 80 - 9 = 1.
+		# Provisional production curve: transports -5 days, other ships -10.
 		aircraftcarrier = { build_time = -10 }
 		battleship = { build_time = -10 }
-		clipper_transport = { build_time = -9 }
+		clipper_transport = { build_time = -5 }
 		commerce_raider = { build_time = -10 }
 		cruiser = { build_time = -10 }
 		dreadnought = { build_time = -10 }
@@ -2078,7 +2144,7 @@
 		ironclad = { build_time = -10 }
 		manowar = { build_time = -10 }
 		monitor = { build_time = -10 }
-		steam_transport = { build_time = -9 }
+		steam_transport = { build_time = -5 }
 		submarine = { build_time = -10 }
 
 		ai_chance = {
@@ -2152,7 +2218,9 @@
 		cost = 31600
 		unciv_military = yes
 
-		# Transport time budget is exhausted; retain this reduction for warships only.
+		# Scoped transport progression: -5 days; warship reductions remain -10.
+		clipper_transport = { build_time = -5 }
+		steam_transport = { build_time = -5 }
 		aircraftcarrier = { build_time = -10 }
 		battleship = { build_time = -10 }
 		commerce_raider = { build_time = -10 }
@@ -2254,7 +2322,9 @@
 		cost = 37600
 		unciv_military = yes
 
-		# Transport time budget is exhausted; retain this reduction for warships only.
+		# Scoped transport progression: -5 days; warship reductions remain -10.
+		clipper_transport = { build_time = -5 }
+		steam_transport = { build_time = -5 }
 		aircraftcarrier = { build_time = -10 }
 		battleship = { build_time = -10 }
 		commerce_raider = { build_time = -10 }

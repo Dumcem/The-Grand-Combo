@@ -136,7 +136,18 @@
 			}
 
 			effect = {
-				navy_base = { build_time = -10 }
+				aircraftcarrier = { build_time = -10 }
+				battleship = { build_time = -10 }
+				clipper_transport = { build_time = -5 }
+				commerce_raider = { build_time = -10 }
+				cruiser = { build_time = -10 }
+				dreadnought = { build_time = -10 }
+				frigate = { build_time = -10 }
+				ironclad = { build_time = -10 }
+				manowar = { build_time = -10 }
+				monitor = { build_time = -10 }
+				steam_transport = { build_time = -5 }
+				submarine = { build_time = -10 }
 			}
 		}
 
@@ -156,7 +167,18 @@
 			}
 
 			effect = {
-				navy_base = { build_time = -10 }
+				aircraftcarrier = { build_time = -10 }
+				battleship = { build_time = -10 }
+				clipper_transport = { build_time = -5 }
+				commerce_raider = { build_time = -10 }
+				cruiser = { build_time = -10 }
+				dreadnought = { build_time = -10 }
+				frigate = { build_time = -10 }
+				ironclad = { build_time = -10 }
+				manowar = { build_time = -10 }
+				monitor = { build_time = -10 }
+				steam_transport = { build_time = -5 }
+				submarine = { build_time = -10 }
 			}
 		}
 

@@ -35,6 +35,8 @@ not inspect the live installation, launcher, scenarios or saves.
 - `lib_1966_diagnostics.py`: structured findings and cause grouping.
 - `lib_1966_mechanics.py`: conditional consumers, numerical domains and
   activation/infrastructure scenarios independent of the legacy numeric bands.
+- `lib_1966_functional.py`: necessary research dependencies, bounded Alice naval
+  AI selection scenarios and campaign-horizon diagnostics.
 - `audit_1966_balance.py`: extraction, conditional dating, raw rule comparisons,
   projections and basket indices.
 
@@ -61,7 +63,9 @@ reference resolution. In particular, core `inventions/army_inventions.txt` remai
 loaded; Timeline's `inventions/navy_inventions.txt` replaces the core counterpart.
 A source in the repository is not, by itself, evidence of loading.
 
-Common, event and decision files are inventoried as conditional/context sources.
+Common TXT/Lua, event and decision files are inventoried as conditional/context sources.
+The effective `common/defines.lua` is selected through the same layer overlay;
+only its quoted end_date is read by the targeted horizon diagnostic, not a Lua interpreter.
 National modifiers, technology metadata and production scopes are recorded outside
 the additive unit-stat model, never added universally to every unit. Leader,
 terrain, country-history, scripted grants, economic capacity and actual acquisition
@@ -277,51 +281,163 @@ files without the rules, and compares every winning contribution's source and
 value, not just the six Task 25 totals. Synthetic fixtures test repeated members,
 distinct blocks, base/modifier contexts, discrete domains and consumer sensitivity.
 
-## Transport construction correction
+## Necessary research dependencies and supply diagnostics
 
-The two transports start at 90. Six engineering technologies through 1915 consume
-60 days; blue_water_school and brown_water_school each consume 10. Both inventions
-have the same positive technology limit and independent positive base chance;
-neither excludes the other. The former modern_naval_design reduction reached zero
-in core; the two additional Timeline reductions reached -20. Inventions are not
-assigned exact discovery dates. This is a possible joint path, not a prediction.
+`consumer_domain` retains its relaxed envelope and selected applied contributions.
+For supply consumption, a second model groups contributions by owning technology
+or invention: an owner is acquired as a whole, including positive and negative
+modifier bodies. It enumerates subsets of negative-net owners and closes them
+under necessary positive references and technology predecessors in source order
+within each area. Forced positive effects are included; unselected positive owners
+can be omitted because they cannot lower the bound. Necessary NOT constraints
+reject contradictory closures. AND unions necessary atoms; OR intersects them;
+negation uses De Morgan. Alice's NOT has implicit OR children before inversion
+(all direct children must be false), as checked in
+[trigger_parsing.cpp](https://github.com/schombert/Project-Alice/blob/v1.3.0/src/parsing/trigger_parsing.cpp),
+`tr_scope_not`, `invert_trigger_internal` and `simplify_trigger`. Country scopes and unknown predicates supply no assumed
+truth. Explicit `invention = X` retains its namespace.
 
-Alternatives were compared before changing content:
+This is a conservative lower bound for **normal prefix research**, not a full
+acquisition simulator. Unknown predicates, OR alternatives, cycles and chance can
+make admitted combinations impossible; ordinary acquisition remains a subset of
+the relaxed model. Histories, scripted/console grants, copied technologies and
+arbitrary saves may bypass the model and remain unverified. Activation restrictions
+are also relaxed. At most 16 negative owners (65,536 subsets) are enumerated;
+missing owners, partial projections or the enumeration limit return unverified,
+never a technical PASS. The cap is a computational limit, not a balance threshold.
 
-| Option | Initial/early progression | Other ships | Minimum under all reductions |
-|---|---|---|---|
-| Raise transport base 90 to 111 | Adds 21 days from the start | Unchanged | 1 in Timeline |
-| Reduce global engineering bonuses | Changes early progression | Changes every navy | Depends on chosen scale |
-| Stop transport reductions before 1919 | Preserves early progression | Can be preserved | 10 |
-| Bound only late transport cuts by integer budget | Preserves all pre-1919 progression | Preserved | 1 in core and Timeline |
+The eleven real land supply cases retain their original negative relaxed endpoints.
+The prerequisite model and a separate literal-tree oracle both derive a positive
+minimum equal to the current base supply, 0.15, without using 0.15 as a rule or
+constant in the implementation. Their consumer findings become INFO with
+`classification=relaxed_violation_excluded_by_prerequisites`, retaining both views
+and per-negative-owner forced-positive provenance. Other warnings are not removed
+by this analysis. Negative prerequisite bounds remain WARN; direct invalid bases
+remain FAIL.
 
-The last option is implemented. With 80 days already available as reductions,
-the largest remaining integer reduction satisfying `90 - 80 - reduction > 0` is
-9. modern_naval_design therefore uses scoped -9 for transports and the original
--10 for every other effective naval unit. Timeline's 1929/1939 engineering
-reductions are scoped to non-transports. No compensating positive modifiers,
-new units, role changes, base cost changes or arbitrary positive-time target were
-introduced. One is the integer positivity boundary, NOT a validated gameplay
-duration. Subsequent contributors must continue to respect this invariant.
+A strict sufficient witness checker can mark `reachable_in_static_research_model`
+for acyclic chains, completely evaluated reference conditions and positive constant
+invention chances without modifiers. This is not runtime reachability, a dated
+national path or an operational unit. Unknown country/temporal conditions, cycles,
+fractional chance below one and conditional chance modifiers cannot create this
+witness. Negative fixtures verify that actual invalid paths in that restricted
+model remain visible. Findings outside its contract stay reachability-unverified.
 
-| Research reference, assuming both schools | Old core | Old Timeline | Corrected core/Timeline |
-|---|---|---|---|
-| 1900 | 20 | 20 | 20 |
-| 1915 | 10 | 10 | 10 |
-| 1919 | 0 | 0 | 1 |
-| 1929 | 0 | -10 | 1 |
-| 1939 | 0 | -20 | 1 |
+## Alice naval AI selection diagnostics
 
-All remaining time contributions are nonpositive. The full set is consequently a
-lower bound for every subset, including unreachable subsets: positivity does not
-depend on discovery order. Tests independently check both effective compositions,
-the two school limits, the maximal safe integer cut and unchanged cuts for every
-other ship. The raw relevant corpus is now 3,632 contributions; this count is
-descriptive and is not frozen as a success target in tests.
+Pinned evidence, rechecked at v1.3.0:
 
-This generic transport fix is a candidate upstream contribution; the Timeline
-extension remains fork-specific. Script changes use ordinary unit build_time
-modifiers and no Alice-only runtime path. Alice parser/application/consumer and
-repository static checks are covered. Exact V2 field application and both engines'
-end-to-end construction remain unverified: the live deployment and regenerated
-Alice scenario are explicitly PENDING. No old scenario certifies this revision.
+- [ai.cpp](https://github.com/schombert/Project-Alice/blob/v1.3.0/src/ai/ai.cpp),
+  `build_ships`, `update_ships`, `will_upgrade_ships`.
+- [military.cpp](https://github.com/schombert/Project-Alice/blob/v1.3.0/src/military/military.cpp),
+  `get_best_*`, `is_*_better`, `upgrade_ship`.
+- [military.hpp](https://github.com/schombert/Project-Alice/blob/v1.3.0/src/military/military.hpp),
+  default arguments: primary_culture=false, evaluate_shortages=true.
+- [commands.cpp](https://github.com/schombert/Project-Alice/blob/v1.3.0/src/gamestate/commands.cpp),
+  `can_start_naval_unit_construction` and `can_start_research`.
+
+`naval_ai_selection` reports explicit all-unlocked stress scenarios for domestic
+ports at the roster's requirement levels. It separates unlock, local port/overseas
+eligibility, possible new-build choices, penalties from the verified criterion,
+refit choices and actual execution (unverified). No discovery date or nation is
+inferred. No shortages are assumed in these scenarios; supplied known shortages
+can separately exclude refit candidates. Actual construction also needs ownership,
+control, disarmament checks, goods, capacity, budget and available queues.
+
+New construction chooses one unit per transport/light_ship/big_ship category by
+**base hull**, then checks ports. There is no runner-up fallback when the selected
+unit cannot use the available ports. Equal hull candidates remain a set here:
+engine unit-ID ordering is outside the repository-order contract. Carrier hull 65
+loses to battleship 70 and dreadnought 80 even at port 7. This is a conditional
+selection result, not a claim that no nation ever builds carriers.
+
+Refit uses speed/hull/gun for transports, speed/gun/hull for light ships and
+gun/hull/torpedo for big ships. It uses applied national stats only when the
+candidate's applied evasion is positive; otherwise it uses the base stats. Default
+get_best calls exclude primary-culture-only and shortage candidates. Refit and
+construction can therefore prefer different classes. The refit call does not
+apply the construction port gate. `upgrade_ship` replaces the type and sets
+strength to 0.01; recovery consumes repair resources. The AI's peace, battle,
+AI-control, transport-use and damage-fraction checks are not simulated by this
+static ranking, nor are fleet composition budgets or repeated replacement cycles.
+
+Possible workarounds remain design questions: tuning hull/gun changes combat and
+can conflict between the two selection paths; adding another big_ship cannot
+create an independent carrier allocation; scripted grants require independently
+verified engine effects and may bypass industrial construction. None is applied.
+V2 AI behavior is not inferred from these Alice functions.
+
+## Effective campaign horizon
+
+`campaign_horizon` reads the effective end_date (currently 1966.1.1), lists every
+effective technology/invention and distinguishes `reference_before_end`,
+`no_ordinary_use_window`, and `unverified`. `horizon_no_use_window` warns for a
+necessary research/eligibility reference at or beyond the boundary. Necessary
+predecessors can delay a technology beyond its own nominal year. Positive
+invention references and literal eligibility years contribute; probability-only
+years do not become gates. Missing dates remain unverified.
+
+Alice's ordinary research command requires the technology year and its preceding
+folder technology, as well as civilization and other command conditions. An
+invention additionally requires discovery, not just its limiting technology.
+A reference before the end is therefore not proof of research completion,
+discovery or useful operational time. An anchor on 1966.1.1 offers no ordinary
+research-and-use interval **before** that boundary, irrespective of end-day
+inclusion or continuation controls. This diagnostic does not execute the end-game
+decisions, simulate dates, rule out historical/scripted grants, or change any
+technology, decision or campaign date. V2 numeric/temporal implementation remains
+separate and unverified here.
+
+## Provisional transport production curve
+
+Both transports retain base time 90. Task 26 corrected the old nonpositive-time
+path: six engineering cuts and two schools of -10, followed by -10 in 1919,
+previously reached zero in core and -20 with Timeline's later cuts. Its bounded
+-9 correction yielded one day. That was an integer positivity fix, not a balance
+validation. The historical arithmetic remains tested.
+
+Task 29 adopts the explicitly authorized provisional design: each of the six
+early engineering technologies, modern_naval_design and both naval schools gives
+transports a scoped -5. Timeline additionally gives -5 at
+mechanized_naval_production and automated_naval_design. Other naval units retain
+exactly -10 per applicable owner. Global time cuts are expanded intentionally to
+the effective ten-unit core or twelve-unit Timeline roster, without compensation
+modifiers or new unit IDs. Future naval classes need an intentional scoped-time
+review when added.
+
+| Research reference | Task 26 core/Timeline | New core | New Timeline |
+|---|---:|---:|---:|
+| Base, no effects | 90 | 90 | 90 |
+| 1836 engineering, no schools | 70 | 80 | 80 |
+| 1850 engineering, no schools | 60 | 75 | 75 |
+| 1870 engineering, no schools | 50 | 70 | 70 |
+| 1875, both schools | 30 | 60 | 60 |
+| 1900, both schools | 20 | 55 | 55 |
+| 1915, both schools | 10 | 50 | 50 |
+| 1919, both schools | 1 | 45 | 45 |
+| 1929, both schools | 1 | 45 | 40 |
+| 1939 onward, both schools | 1 | 45 | 35 |
+
+School discovery dates are not guaranteed. With zero/one/two schools, add 10/5/0
+to the new post-1875 rows. All cuts are nonpositive: the full set is a lower bound
+for every subset, reachable or otherwise. Independent tests enumerate transport
+subsets, compare epochs and check every non-transport cut in both compositions.
+
+At fixed normalized cost, one completed transport per 35/45 nominal days replaces
+the former one per day per active provincial queue; goods and budget can still
+slow construction. The full daily basket demand is spread over 35/45 instead of
+one nominal day. Total construction baskets, transport capacity, supply and combat
+stats are unchanged. These endpoints are a provisional production design, not
+historically calibrated durations or a runtime balance verdict.
+
+The scripts use ordinary scoped unit build_time modifiers, with no Alice-only
+runtime path. Alice parser/application/consumer are covered statically. Exact V2
+application, local shipbuilding modifiers, end-to-end construction, economic and
+AI outcomes remain unverified. No deployment or scenario generation was performed
+for Task 29; the Task 27 live/scenario remains on the earlier source state and
+cannot certify these new bytes. A future runtime check must use the controlled
+deployment lifecycle and a scenario generated from that verified deployment.
+
+The generic positivity correction and generic tooling improvements remain
+possible upstream contributions. This new production curve is an explicit fork
+design choice; acceptance upstream is not assumed. No sync or push is involved.

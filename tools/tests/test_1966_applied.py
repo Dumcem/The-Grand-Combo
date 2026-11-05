@@ -302,12 +302,11 @@ class TransportRuntimeContracts(unittest.TestCase):
             names = ['modern_naval_design'] if layer=='TGC' else ['modern_naval_design','mechanized_naval_production','automated_naval_design']
             for name in names:
                 actual = {u:delta for n,_,_,targets,delta in rows if n==name for u in targets}
-                expected = {u:(-9 if u in transports else -10) for u in units
-                            if name=='modern_naval_design' or u not in transports}
+                expected = {u:(-5 if u in transports else -10) for u in units}
                 self.assertEqual(actual,expected)
                 self.assertTrue(all(scope!='navy_base' for n,_,scope,_,_ in rows if n==name))
 
-    def test_positive_for_every_subset_and_early_progression_preserved(self):
+    def test_positive_for_every_subset_and_provisional_progression(self):
         for layer in ['TGC','TGC_Timeline_1966']:
             _,units,rows = self.inputs(layer)
             for u in ['clipper_transport','steam_transport']:
@@ -316,12 +315,13 @@ class TransportRuntimeContracts(unittest.TestCase):
                 # EVERY subset, including subsets that are not reachable.
                 self.assertTrue(all(v<=0 for _,_,v in cuts))
                 self.assertEqual(units[u],90)
-                self.assertEqual(units[u]+sum(v for _,_,v in cuts),1)
+                self.assertEqual(units[u]+sum(v for _,_,v in cuts),45 if layer=='TGC' else 35)
                 before = [(n,y,v) for n,y,v in cuts if y and y<1919]
-                self.assertEqual([v for _,_,v in before],[-10]*6)
-                self.assertEqual(units[u]+sum(v for _,_,v in before)-20,10)
-                self.assertEqual([v for n,_,v in cuts if n=='modern_naval_design'],[-9])
-                self.assertFalse(any(n in {'mechanized_naval_production','automated_naval_design'} for n,_,_ in cuts))
+                self.assertEqual([v for _,_,v in before],[-5]*6)
+                self.assertEqual(units[u]+sum(v for _,_,v in before)-10,50)
+                self.assertEqual([v for n,_,v in cuts if n=='modern_naval_design'],[-5])
+                self.assertTrue(all(v == -5 for _,_,v in cuts))
+                self.assertEqual(len(cuts),9 if layer=='TGC' else 11)
 
     def test_old_bug_and_minimal_integer_correction_are_independent(self):
         # Six earlier techs and two jointly discoverable schools consume 80 days.

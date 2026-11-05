@@ -91,7 +91,8 @@ def compose_runtime(repo: Path, core_root: str = 'TGC', timeline_root: str = 'TG
         # Engines enumerate immediate files in these data directories, not arbitrary
         # nested repository files. Keep omitted nested inputs visible as a boundary.
         for directory in sorted(categories):
-            for f in sorted((base / directory).glob('*.txt')):
+            context_lua = list((base / directory).glob('*.lua')) if directory == 'common' else []
+            for f in sorted(list((base / directory).glob('*.txt')) + context_lua):
                 rel = directory + '/' + f.name
                 if any(k.casefold() == rel.casefold() and k != rel for k in selected):
                     raise ScriptError(f'{rel}: case-colliding runtime paths')

@@ -55,7 +55,7 @@ def projection_bounds(q: dict) -> tuple[float, float] | None:
             q['baseline'] + sum(max(0, x['value']) for x in q['assignments']))
 
 
-def report_consumers(units: dict, projections: dict, rep) -> None:
+def report_consumers(units: dict, projections: dict, rep, dependencies=None) -> None:
     factors = {}
     for unit in sorted(units):
         data = units[unit]
@@ -80,13 +80,26 @@ def report_consumers(units: dict, projections: dict, rep) -> None:
             bad_base = domain_violation(stat, q['baseline'])
             problems = [domain_violation(stat, v) for v in bounds]
             if bad_base or any(problems):
-                rep.add('FAIL' if bad_base else 'WARN',
+                dependency = dependencies.lower_bound(q) if dependencies is not None and stat == 'supply_consumption' else None
+                excluded = (not bad_base and dependency is not None and
+                            dependency['status'] == 'conditional_bound' and
+                            domain_violation(stat, dependency['lower_bound']) is None and
+                            domain_violation(stat, bounds[1]) is None)
+                rep.add('FAIL' if bad_base else 'INFO' if excluded else 'WARN',
                         f'{unit} {stat}: baseline={q["baseline"]}; relaxed bounds={bounds}; '
-                        f'{bad_base or next(p for p in problems if p)}. Bounds do not prove acquisition.',
+                        f'{bad_base or next(p for p in problems if p)}. Bounds do not prove acquisition. '
+                        + (f'Necessary-prerequisite lower bound={dependency["lower_bound"]}; '
+                           f'reachability={dependency["reachability"]}; '
+                           'relaxed violation excluded within normal prefix research only.' if excluded else
+                           f'Prerequisite status={dependency["status"]}, lower bound={dependency["lower_bound"]}, '
+                           f'reachability={dependency["reachability"]}; no runtime path asserted.' if dependency else ''),
                         code='consumer_domain', category='technical_invariant', engine=ALICE, unit=unit, stat=stat,
                         evidence='pinned_consumer_domain', uncertainty='base is direct; envelope combinations conditional',
                         basis='technical_contract' if bad_base else 'conditional_model',
-                        data={'baseline':q['baseline'], 'bounds':bounds, 'assignments':q['assignments']})
+                        data={'baseline':q['baseline'], 'bounds':bounds, 'assignments':q['assignments'],
+                              'dependency_analysis': dependency,
+                              'classification': 'relaxed_violation_excluded_by_prerequisites' if excluded else
+                                                'direct_invalid_baseline' if bad_base else 'conditional_violation'})
             if stat=='evasion' and bounds[1] == 1:
                 rep.add('WARN', f'{unit}: evasion=1 permits immunity in this consumer; requires an explicit design decision.',
                         code='evasion_immunity', category='design_question', engine=ALICE, unit=unit, stat=stat)
