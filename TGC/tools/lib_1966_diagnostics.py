@@ -20,6 +20,7 @@ class Diagnostic:
     uncertainty: str = 'not_runtime_certification'
     cause: str | None = None
     scope: str | None = None
+    data: dict | None = None
 
 
 class Reporter:

@@ -385,7 +385,7 @@ class AuditorTests(unittest.TestCase):
         with patch.object(p, "read_text", return_value=prefix + 'infantry = { ATTACK = 3 } }'):
             result = a.parse_effect_unit_assignments(file, {"infantry"}, {"attack"}, timing, {})
         self.assertEqual([(n['stat'], n['value']) for n in result['infantry']], [('attack', 3.)])
-        for body in ['attack = 2 attack = 3', 'attack = 2garbage', 'attack = { value = 2 }', 'orphan attack = 2']:
+        for body in ['attack = 2garbage', 'attack = { value = 2 }', 'orphan attack = 2']:
             with self.subTest(body=body), patch.object(p, "read_text", return_value=prefix + 'infantry = { ' + body + ' } }'):
                 with self.assertRaises(p.ScriptError):
                     a.parse_effect_unit_assignments(file, {"infantry"}, {"attack"}, timing, {})
@@ -398,7 +398,6 @@ class AuditorTests(unittest.TestCase):
         self.assertEqual(data["build_cost"], {"steel": 3.})
         self.assertEqual(data["supply_cost"], {"steel": .1})
         for changed in [text.replace('build_cost = { steel = 3 }', ''),
-                        text.replace('attack = 2', 'attack = 2 attack = 3'),
                         text.replace('steel = 3', 'steel = broken')]:
             with self.subTest(text=changed), patch.object(p, "read_text", return_value=changed):
                 with self.assertRaises(p.ScriptError):

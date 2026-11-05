@@ -89,15 +89,13 @@ def effect_body(definition: Node, kind: str) -> Node | None:
 def numeric_modifier_entries(scope: Node) -> list[tuple[Node, str, float | None]]:
     if not scope.is_group or scope.operator != '=':
         raise ScriptError(f'{scope.start}: expected assigned unit modifier group')
-    seen: set[str] = set()
     result = []
     for child in scope.children:
         if child.key is None:
             raise ScriptError(f'{child.start}: free entry in unit modifier')
         key = canonical_stat(child.key)
-        if key in seen:
-            raise ScriptError(f'{child.start}: duplicate/ambiguous unit modifier {child.key}')
-        seen.add(key)
+        # Preserve repeated numeric assignments. Alice's generated member parser
+        # assigns in source order; folding happens per physical block, not here.
         if child.operator != '=' or (child.is_group and key in VARIABLE):
             raise ScriptError(f'{child.start}: property outside scalar numeric unit-modifier contract: {child.key}')
         if child.is_group:
@@ -107,6 +105,88 @@ def numeric_modifier_entries(scope: Node) -> list[tuple[Node, str, float | None]
         else:
             result.append((child, key, number(child.value, child.start)))
     return result
+
+
+# parser_defs.txt unit_definition/unit_modifier_body; modifiers.hpp 265-289.
+# These names share storage, in BOTH parser contexts. The display name depends
+# on the unit's domain, not on the spelling used by the script author.
+SHARED_FIELDS = (('attack', 'gun_power'), ('defence', 'hull'),
+                 ('reconnaissance', 'fire_range'), ('discipline', 'evasion'),
+                 ('siege', 'torpedo_attack'))
+
+
+def applied_stat(key: str, domain: str) -> str:
+    if domain not in {'land', 'naval'}:
+        raise ValueError('unit domain required')
+    key = canonical_stat(key)
+    for land, naval in SHARED_FIELDS:
+        if key in {land, naval}:
+            return land if domain == 'land' else naval
+    return key
+
+
+def project_unit(data: dict, assignments: list[dict], engine: str = ALICE) -> dict:
+    """Fold parser members first, then add distinct modifier bodies.
+
+    RAW inventory is unchanged. Every applied, overwritten or excluded occurrence
+    retains its physical source; unknown V2 semantics never produces numbers.
+    Defaults are the zero-initialized unit_variable_stats members, not invented
+    baseline script occurrences. Float arithmetic approximates engine float32.
+    """
+    domain = data['unit_domain']
+    if engine == V2:
+        return {'engine': engine, 'stats': {}, 'status': 'unverified'}
+    if engine != ALICE:
+        raise ValueError('unknown engine')
+    keys = {applied_stat(s, domain) for s in VARIABLE}
+    keys.update(data['raw_stats'])
+    bases = {}
+    base_shadowed = {}
+    nodes = data.get('numeric_properties', list(data['property_nodes'].values()))
+    for node in nodes:
+        if node.is_group or canonical_stat(node.key) not in data['raw_stats']:
+            continue
+        key = applied_stat(node.key, domain)
+        if key in bases:
+            base_shadowed.setdefault(key, []).append(bases[key])
+        e = property_evidence(node.key, node.value, 'base', ALICE)
+        bases[key] = {'raw_stat': node.key, 'raw_value': node.value,
+                      'source': str(node.start), 'value': e.value, 'status': e.status}
+
+    # block_id is the physical scope occurrence (not just owner/scope spelling).
+    # Distinct repeated scope blocks are accumulated by culture.cpp.
+    groups = {}
+    for index, item in enumerate(assignments):
+        block = item.get('block_id', ('standalone', index))
+        key = applied_stat(item['stat'], domain)
+        groups.setdefault((block, key), []).append(item)
+        keys.add(key)
+    selected, shadowed, excluded = {}, {}, {}
+    for (_, key), occurrences in groups.items():
+        last = occurrences[-1]
+        e = property_evidence(last.get('raw_stat', last['stat']), last['raw_value'], 'modifier', ALICE)
+        winner = dict(last, source=f"{last['source_file']}:{last['line']}:{last['column']}",
+                      applied_stat=key, value=e.value, status=e.status)
+        shadowed.setdefault(key, []).extend(dict(x, applied_stat=key) for x in occurrences[:-1])
+        (selected if e.status == 'applied' else excluded).setdefault(key, []).append(winner)
+    stats = {}
+    for key in sorted(keys):
+        # Do not create a second projection under a cross-domain spelling.
+        if applied_stat(key, domain) != key:
+            continue
+        b = bases.get(key)
+        if b is None:
+            # Only variable members have verified zero defaults here.
+            b = {'value': 0., 'status': 'applied', 'source': 'engine zero default'} if key in {applied_stat(s, domain) for s in VARIABLE} else {'value': None, 'status': 'unverified', 'source': None}
+        included = selected.get(key, [])
+        omitted = excluded.get(key, [])
+        stats[key] = {'status': ('applied_subset' if omitted else 'applied') if b['status'] == 'applied' else b['status'],
+                      'baseline': b['value'],
+                      'final': b['value'] + sum(x['value'] for x in included) if b['status'] == 'applied' else None,
+                      'baseline_origin': b, 'base_superseded': base_shadowed.get(key, []),
+                      'assignments': included, 'superseded': shadowed.get(key, []),
+                      'excluded': len(omitted), 'excluded_assignments': omitted}
+    return {'engine': engine, 'stats': stats, 'status': 'static_conditional_projection'}
 
 
 def projected_stat(raw: str, stat: str, assignments: list[dict], engine: str) -> dict:

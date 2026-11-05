@@ -45,14 +45,15 @@ class CallerRegressions(unittest.TestCase):
                 {('technology', 'T'): a.YearEvidence(1900, 1900, 'direct')}, {})
         self.assertEqual([(x['stat'], x['value']) for x in out['infantry']], [('defence', 7.)])
 
-    def test_alias_duplicate_is_not_two_distinct_stats(self):
+    def test_alias_occurrences_are_preserved_before_engine_folding(self):
         with patch.object(p, 'read_text', return_value='T = { infantry = { defense = 7 defence = 8 } }'):
-            with self.assertRaises(p.ScriptError):
-                a.parse_effect_unit_assignments('fixture/technologies/t.txt', {'infantry'}, {'defence'},
-                    {('technology', 'T'): a.YearEvidence(1900, 1900, 'direct')}, {})
+            out = a.parse_effect_unit_assignments('fixture/technologies/t.txt', {'infantry'}, {'defence'},
+                {('technology', 'T'): a.YearEvidence(1900, 1900, 'direct')}, {})
+        self.assertEqual([x['value'] for x in out['infantry']], [7., 8.])
+        self.assertEqual(len({x['block_id'] for x in out['infantry']}), 1)
 
     def test_supported_numeric_group_and_bad_values_fail(self):
-        for body in ['attack = { x = 2 }', 'attack > 2', 'attack = broken', 'orphan', 'attack = 1 ATTACK = 2']:
+        for body in ['attack = { x = 2 }', 'attack > 2', 'attack = broken', 'orphan']:
             with self.subTest(body=body), patch.object(p, 'read_text', return_value='I = { effect = { infantry = { '+body+' } } }'):
                 with self.assertRaises(p.ScriptError):
                     v.validate_effect_unit_targets('fixture/inventions/i.txt', {'infantry'})

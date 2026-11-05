@@ -19,7 +19,7 @@ from lib_1966_diagnostics import Reporter
 from lib_1966_runtime import compose_runtime, unit_definitions
 from lib_1966_semantics import (
     ALICE, V2, BASE_KNOWN, canonical_stat, effect_body,
-    named_entries, numeric_modifier_entries, property_evidence, projected_stat, report_modifier_semantics,
+    named_entries, numeric_modifier_entries, property_evidence, projected_stat, project_unit, VARIABLE, report_modifier_semantics,
 )
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -175,8 +175,10 @@ def parse_unit_block(unit_file: str, unit_key: str) -> dict[str, Any]:
         raise ScriptError(f"{unit_file}: missing unit definition {unit_key}")
     node = definitions[unit_key]
     named_entries(node)
-    data: dict[str, Any] = {"stats": {}, "raw_stats": {}, "property_nodes": {}, "build_cost": {}, "supply_cost": {},
+    data: dict[str, Any] = {"stats": {}, "raw_stats": {}, "property_nodes": {}, "numeric_properties": [], "build_cost": {}, "supply_cost": {},
                             "unit_domain": scalar(node, "type", required=True).lower()}
+    data['unit_type'] = scalar(node, 'unit_type')
+    data['active'] = scalar(node, 'active') != 'no'
     if data["unit_domain"] not in {"land", "naval"}:
         raise ScriptError(f"{node.start}: unsupported unit domain {data['unit_domain']!r}")
     for field in ("build_cost", "supply_cost"):
@@ -184,7 +186,7 @@ def parse_unit_block(unit_file: str, unit_key: str) -> dict[str, Any]:
     seen: set[str] = set()
     for child in node.children:
         key = canonical_stat(child.key)
-        if key in seen:
+        if key in seen and key not in VARIABLE:
             raise ScriptError(f"{child.start}: duplicate unit property {child.key}")
         seen.add(key)
         data["property_nodes"][key] = child
@@ -199,6 +201,7 @@ def parse_unit_block(unit_file: str, unit_key: str) -> dict[str, Any]:
             if re.fullmatch(r"[+-]?(?:[0-9]+(?:\.[0-9]*)?|\.[0-9]+)(?:[eE][+-]?[0-9]+)?", child.value):
                 data["stats"][key] = number(child.value, child.start)
                 data["raw_stats"][key] = child.value
+                data['numeric_properties'].append(child)
     return data
 
 
@@ -405,6 +408,7 @@ def parse_effect_unit_assignments(
                         "source_file": rel_path, "invention": key, "line": stat.start.line,
                         "column": stat.start.column, "stat": stat_key, "value": value, "raw_value": stat.value,
                         "raw_stat": stat.key,
+                        "block_id": f'{rel_path}:{scope.start.offset}',
                         "year": timing.year, "not_before": timing.not_before, "year_source": timing.source,
                         "year_notes": timing.notes, "year_references": timing.references,
                         "probability_years": timing.probability_years,
@@ -723,6 +727,8 @@ def _run() -> int:
             grouped[stat_name].append(item)
         assignments_by_unit_stat[unit] = grouped
 
+    engine_units = {u: project_unit(unit_inputs[u], all_assignments.get(u, []), ALICE) for u in units_cfg}
+
     for unit, cfg in units_cfg.items():
         historical_start_year = get_historical_relevance_start_year(cfg, default_milestone_year)
         applicable_milestone_years = get_applicable_milestone_years(cfg, milestone_years, default_milestone_year)
@@ -738,12 +744,12 @@ def _run() -> int:
 
             stat_assignments = assignments_by_unit_stat.get(unit, {}).get(stat, [])
             raw_stat = unit_inputs[unit]['raw_stats'][stat]
-            projection = projected_stat(raw_stat, stat, stat_assignments, ALICE)
+            projection = engine_units[unit]['stats'].get(stat, projected_stat(raw_stat, stat, [], ALICE))
             engine_envelopes = {y: milestone_envelope(projection['baseline'], projection['assignments'], y)
                                 for y in milestone_years} if projection['baseline'] is not None else None
             rep.add('INFO', f'{unit} {stat}: raw_script_all_effects={estimated_final:.6g}; Alice status={projection["status"]}, baseline={projection["baseline"]}, applied_subset_final={projection["final"]}, excluded_effects={projection["excluded"]}; milestone_envelopes={engine_envelopes}; V2=unverified. No range is applied to a different engine quantity.',
                     code='engine_projection', category='engine_semantics', unit=unit, stat=stat, engine=ALICE,
-                    source=cfg['unit_file'], evidence='pinned_engine_source', uncertainty='static additive subset; conditional systems excluded')
+                    source=cfg['unit_file'], evidence='pinned_engine_source', uncertainty='static additive subset; conditional systems excluded', data=projection)
             if stat == 'supply_consumption' and projection['final'] is not None and unit in supply_indices:
                 rep.add('INFO', f'{unit}: Alice conditional supply index baseline={supply_indices[unit] * projection["baseline"]:.6g}, all_effects={supply_indices[unit] * projection["final"]:.6g}; basket at base prices x applied supply multiplier; national modifier=0, full strength, unit demand only. Prices, availability, budget and operating conditions not simulated; legacy ranges NOT applied.',
                         code='conditional_supply_index', category='economic_index', unit=unit, stat=stat, engine=ALICE,

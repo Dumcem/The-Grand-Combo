@@ -107,15 +107,26 @@ schema. Alice evidence must not be copied to V2.
 `max_strength` is not an applied unit modifier. The schema distinguishes base
 properties from technology/invention modifiers. `defense` canonicalizes to
 `defence` for Alice/raw inventory only, while preserving the spelling and V2 gap.
-Aliases cannot conceal duplicate properties in a single modifier group.
+Numeric occurrences are retained in physical source order. Alice's generated
+member parser assigns the last occurrence to its internal field in each body;
+distinct bodies then accumulate. This includes exact repeats, `defense/defence`
+and the shared pairs `attack/gun_power`, `defence/hull`,
+`reconnaissance/fire_range`, `discipline/evasion`, `siege/torpedo_attack`.
+The unit domain determines the display name, not a different storage field.
+For example `defence = 1 hull = 4` on a tank contributes 4, not 5.
+The raw diagnostic inventory still retains both occurrences. Engine projection
+JSON `data` retains the selected, superseded and excluded origins separately,
+including physical block identifiers; a numeric total alone is not its oracle.
+V2 precedence and shared storage remain unverified.
 `build_time` and `default_organisation` are integer fields. Alice's parser consumes
 the signed integer prefix without checking full token consumption: `2.5 -> 2`,
 `0.5 -> 0`; `.5` and `+2` have no accepted integer prefix. Overflow and unverified
 real-number syntax are reported without guessing application.
 
 Free entries in definition/effect/modifier bodies, duplicate effect groups,
-non-assignment effect/modifier operators, malformed known numeric values and
-conflicting canonical properties stop structural analysis. Unsupported grouped
+non-assignment effect/modifier operators and malformed known numeric values
+stop structural analysis. Repeated nonnumeric base properties remain outside
+the verified contract. Unsupported grouped
 properties such as a modifier `supply_cost` are preserved as explicit limitations,
 not converted into scalar effects and not declared invalid game data merely
 because they are outside this auditor's verified contract. The reader remains a
