@@ -83,12 +83,13 @@ def report_consumers(units: dict, projections: dict, rep, dependencies=None) -> 
                 dependency = dependencies.lower_bound(q) if dependencies is not None and stat == 'supply_consumption' else None
                 excluded = (not bad_base and dependency is not None and
                             dependency['status'] == 'conditional_bound' and
+                            dependency.get('bound_proof') == 'necessary_positive_closure_overapproximation' and
                             domain_violation(stat, dependency['lower_bound']) is None and
                             domain_violation(stat, bounds[1]) is None)
                 rep.add('FAIL' if bad_base else 'INFO' if excluded else 'WARN',
                         f'{unit} {stat}: baseline={q["baseline"]}; relaxed bounds={bounds}; '
                         f'{bad_base or next(p for p in problems if p)}. Bounds do not prove acquisition. '
-                        + (f'Necessary-prerequisite lower bound={dependency["lower_bound"]}; '
+                        + (f'Necessary-positive-prerequisite lower bound={dependency["lower_bound"]}; '
                            f'reachability={dependency["reachability"]}; '
                            'relaxed violation excluded within normal prefix research only.' if excluded else
                            f'Prerequisite status={dependency["status"]}, lower bound={dependency["lower_bound"]}, '

@@ -289,8 +289,8 @@ or invention: an owner is acquired as a whole, including positive and negative
 modifier bodies. It enumerates subsets of negative-net owners and closes them
 under necessary positive references and technology predecessors in source order
 within each area. Forced positive effects are included; unselected positive owners
-can be omitted because they cannot lower the bound. Necessary NOT constraints
-reject contradictory closures. AND unions necessary atoms; OR intersects them;
+can be omitted because they cannot lower the bound. **No negative condition rejects
+a final acquired set.** AND unions necessary atoms; OR intersects them;
 negation uses De Morgan. Alice's NOT has implicit OR children before inversion
 (all direct children must be false), as checked in
 [trigger_parsing.cpp](https://github.com/schombert/Project-Alice/blob/v1.3.0/src/parsing/trigger_parsing.cpp),
@@ -298,13 +298,21 @@ negation uses De Morgan. Alice's NOT has implicit OR children before inversion
 truth. Explicit `invention = X` retains its namespace.
 
 This is a conservative lower bound for **normal prefix research**, not a full
-acquisition simulator. Unknown predicates, OR alternatives, cycles and chance can
-make admitted combinations impossible; ordinary acquisition remains a subset of
-the relaxed model. Histories, scripted/console grants, copied technologies and
+acquisition simulator. For any real state S, take its negative-net owners N and
+their necessary positive closure C. Positive acquisition prerequisites persist,
+so C is a subset of S. Every omitted owner in S has nonnegative net effect, hence
+`base + effects(C) <= base + effects(S)`. Enumerating all subsets of negative-net
+owners therefore supplies a lower bound. Unknown predicates, OR alternatives,
+cycles and chance may admit impossible states; this weakens the bound safely.
+Negative eligibility conditions never strengthen it. Histories, scripted/console grants, copied technologies and
 arbitrary saves may bypass the model and remain unverified. Activation restrictions
 are also relaxed. At most 16 negative owners (65,536 subsets) are enumerated;
 missing owners, partial projections or the enumeration limit return unverified,
-never a technical PASS. The cap is a computational limit, not a balance threshold.
+never a technical PASS. The bound carries an explicit
+`bound_proof=necessary_positive_closure_overapproximation`; the consumer requires
+that proof and a nonnegative bound before declassifying a relaxed supply warning.
+Search outcomes alone never declassify it. These are computational limits, not
+balance thresholds.
 
 The eleven real land supply cases retain their original negative relaxed endpoints.
 The prerequisite model and a separate literal-tree oracle both derive a positive
@@ -315,13 +323,75 @@ and per-negative-owner forced-positive provenance. Other warnings are not remove
 by this analysis. Negative prerequisite bounds remain WARN; direct invalid bases
 remain FAIL.
 
-A strict sufficient witness checker can mark `reachable_in_static_research_model`
-for acyclic chains, completely evaluated reference conditions and positive constant
-invention chances without modifiers. This is not runtime reachability, a dated
-national path or an operational unit. Unknown country/temporal conditions, cycles,
-fractional chance below one and conditional chance modifiers cannot create this
-witness. Negative fixtures verify that actual invalid paths in that restricted
-model remain visible. Findings outside its contract stay reachability-unverified.
+### Temporal acquisition contract
+
+Alice v1.3.0 [discover_inventions](https://github.com/schombert/Project-Alice/blob/v1.3.0/src/culture/culture.cpp#L1133)
+tests eligibility for an invention not yet active; chance is evaluated separately.
+[apply_invention](https://github.com/schombert/Project-Alice/blob/v1.3.0/src/culture/culture.cpp#L587)
+sets its active flag and accumulates effects. Later failure of its discovery limit
+does not revoke that acquisition. Technologies and inventions are separate typed,
+persistent state members; technology predecessors gate research transitions.
+At each invention transition, AND/OR/NOT are evaluated against the **current**
+state. Already acquired inventions are never re-tested. Chance modifiers are not
+mandatory prerequisite edges. Eligibility does not guarantee discovery.
+
+The Task 30 counterexample has base supply 1.5: A requires NOT B and gives -1;
+B requires A and gives -1. A then B leaves both acquired and supply -0.5. The old
+final-set NOT filter rejected it, computed +0.5 and incorrectly emitted INFO.
+That was a tool bug, not a gameplay defect. Even a NOT technology condition can
+cease to hold after discovery without removing the invention.
+
+`acquisition_path` searches bounded states with a FIFO queue and memoization, not
+permutations. Its support includes all boolean reference alternatives (including
+OR and negative references) and technology predecessors, recursively. Omitted
+owners cannot change a modeled predicate. Typed acquired sets determine subsequent
+modeled eligibility and effects, so equivalent orders share one state. A recorded
+sequence is checked through known transitions only. There is no final-set NOT
+pruning, cycle pruning or resource-based impossibility inference.
+
+The result distinguishes:
+
+- `possibly_reachable`: a sequence exists in the restricted static model. This
+  does not guarantee discovery or establish an Alice runtime/national witness.
+- `proven_unreachable`: the complete modeled state graph was exhausted without
+  an unknown transition, or a nonnegative conservative bound excludes the
+  **negative-supply-state** goal. This is never a claim about grants or saves.
+- `unknown`: unsupported predicates/chance semantics, unresolved owners or a
+  computational limit prevent that conclusion. Unknown transitions are skipped
+  for witness construction but explicitly prevent exhaustion proving exclusion.
+
+Boolean evaluation is three-valued: false AND unknown is false; true OR unknown
+is true; unresolved remaining conditions stay unknown. Only positive constant
+chances exactly representable as binary32 and in the int32 conversion range (or
+the default chance) permit a known possible-discovery transition. Exactly
+representable sub-one chances, such as 0.5, truncate to zero. Inexact decimals
+remain unknown: rounding near 1 or INT32_MAX must not produce an exclusion based
+on Python's double precision.
+Conditional chance modifiers, country scopes and calendar predicates stay unknown.
+Positive cycles without an initial acquisition may be unreachable; an OR alternative
+can break a cycle and must be included. Mutually negative requirements can prevent
+joint acquisition, but that search result still does not tighten the bound.
+
+Defaults are 16 support definitions and 4,096 visited states. Reaching a limit
+returns UNKNOWN, retaining the independently computed positive-closure bound.
+For supply, the separate `temporal_search` goal is any negative-supply state, not
+necessarily the bound-minimizing set. A sequence and its cumulative value can mark
+`reachable_in_static_research_model`; otherwise reachability remains unverified.
+The actual TGC support exceeds the search perimeter; positive supply conclusions
+come from the closure proof and independent corpus oracle, not assumed discovery.
+
+This untimed model allows optional acquisition steps; it does not simulate monthly
+ordering, random outcomes, research duration, campaign horizon or country history.
+V2 executable behavior is not established by these Alice sources. No runtime data,
+scenario, transport curve or legacy numeric threshold is changed by this repair.
+The generic diagnostic repair is a candidate upstream tooling contribution.
+
+Independent temporal regressions in `tools/tests/test_1966_temporal.py` reproduce
+the old failure, compare small generated graphs to a separate sequence oracle,
+cover unknowns/limits and compare processes with different hash seeds/file orders.
+The real supply oracle independently selects effective files, reads land bases
+and effects, and enumerates positive prerequisite closures without NOT rejections;
+the observed 0.15 is re-derived, never an implementation constant.
 
 ## Alice naval AI selection diagnostics
 

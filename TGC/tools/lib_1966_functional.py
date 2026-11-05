@@ -5,9 +5,11 @@ commands.cpp can_start_research/can_start_naval_unit_construction;
 ai.cpp build_ships/update_ships; military.cpp is_*_better/upgrade_ship;
 culture.cpp discover_inventions. All under schombert/Project-Alice v1.3.0.
 """
-from collections import Counter
+from collections import Counter, deque
 from datetime import date
+from fractions import Fraction
 import re
+import struct
 
 from lib_1966_parser import ScriptError, member, scalar, parse_file, read_text
 from lib_1966_semantics import ALICE
@@ -47,13 +49,13 @@ def necessary_literals(nodes, definitions, *, disjunction=False, negate=False):
 class ResearchDependencies:
     """Required effects under normal prefix research; extraordinary grants excluded.
 
-    OR intersections and omitted unknown predicates relax acquisition. Bounds may
-    include impossible states, so positivity is useful; negativity alone is not a
-    runtime witness. Enumeration is bounded and fails open to an unverified result.
+    Bounds use necessary POSITIVE closure only; temporal negative conditions never
+    remove final sets. A separate bounded search checks acquisition sequences.
+    Neither uncertain transitions nor resource limits can prove exclusion.
     """
     def __init__(self, files):
         self.definitions, self.required, self.forbidden = {}, {}, {}
-        previous, predecessors = {}, {}
+        previous, self.predecessors = {}, {}
         for file in sorted(files):
             kind = 'technology' if '/technologies/' in '/' + file.replace('\\', '/') else 'invention'
             for node in parse_file(file).definitions:
@@ -63,7 +65,7 @@ class ResearchDependencies:
                 self.definitions[key] = node
                 if kind == 'technology':
                     area = scalar(node, 'area', required=True)
-                    predecessors[key] = previous.get(area)
+                    self.predecessors[key] = previous.get(area)
                     previous[area] = key
         keys = set(self.definitions)
         for key, node in self.definitions.items():
@@ -71,8 +73,8 @@ class ResearchDependencies:
             atoms = necessary_literals(limit.children if limit else (), keys)
             self.required[key] = {k for k, positive in atoms if positive}
             self.forbidden[key] = {k for k, positive in atoms if not positive}
-            if predecessors.get(key):
-                self.required[key].add(predecessors[key])
+            if self.predecessors.get(key):
+                self.required[key].add(self.predecessors[key])
         self._closures = {}
 
     def closure(self, key):
@@ -93,62 +95,158 @@ class ResearchDependencies:
         kind = 'technology' if '/technologies/' in '/' + item['source_file'].replace('\\', '/') else 'invention'
         return kind, item['invention']
 
-    def _simple_witness(self, acquired):
-        """Sufficient fixture contract, deliberately stricter than the bound model.
+    def _condition(self, nodes, acquired, op='and'):
+        """Three-valued discovery-time predicate, never a final-state invariant.
 
-        Only acyclic ordinary tech chains and fully evaluated reference limits,
-        plus inventions with a positive constant chance and no modifiers. More
-        complex country/chance/year predicates remain unverified, not impossible.
+        Known false AND unknown is false; known true OR unknown is true. Other
+        unknowns remain unknown, including country, dates and unsupported scopes.
+        This does not use necessary_literals to evaluate an entire condition.
         """
-        visiting, done = set(), set()
-        def acyclic(k):
-            if k in visiting:
-                return False
-            if k in done:
-                return True
-            visiting.add(k)
-            if not all(acyclic(r) for r in self.required[k]):
-                return False
-            visiting.remove(k)
-            done.add(k)
-            return True
-        def condition(nodes, op='and'):
-            values = []
-            for n in nodes:
-                if n.operator != '=':
-                    return None
-                if n.is_group:
-                    if n.keyword not in {'and', 'or', 'not'}:
-                        return None
-                    v = condition(n.children, 'or' if n.keyword in {'or', 'not'} else 'and')
-                    values.append(None if v is None else not v if n.keyword == 'not' else v)
-                else:
-                    atoms = necessary_literals((n,), set(self.definitions))
-                    if len(atoms) != 1:
-                        return None
-                    k, positive = next(iter(atoms))
-                    values.append((k in acquired) == positive)
-            if any(v is None for v in values):
-                return None
-            return any(values) if op == 'or' else all(values)
-        for key in sorted(acquired):
-            if not acyclic(key):
-                return False
-            if key[0] == 'invention':
-                n = self.definitions[key]
-                limit, chance = member(n, 'limit'), member(n, 'chance')
-                if condition(limit.children if limit else ()) is not True:
-                    return False
-                if chance is None or len(chance.children) != 1:
-                    return False
-                raw = scalar(chance, 'base')
-                if raw is None or not re.fullmatch(r'[0-9]+(?:\.[0-9]+)?', raw) or int(float(raw)) <= 0:
-                    return False
-        return True
+        values = []
+        for n in nodes:
+            value = None
+            if n.operator == '=':
+                if n.is_group and n.keyword in {'and', 'or', 'not'}:
+                    value = self._condition(n.children, acquired,
+                                            'or' if n.keyword in {'or', 'not'} else 'and')
+                    if n.keyword == 'not' and value is not None:
+                        value = not value
+                elif not n.is_group:
+                    key, positive = self._atom(n)
+                    if key is not None:
+                        value = (key in acquired) == positive
+            values.append(value)
+        if op == 'or':
+            return True if True in values else None if None in values else False
+        return False if False in values else None if None in values else True
 
-    def lower_bound(self, projection, *, max_negative_owners=16):
+    def _atom(self, node):
+        if node.keyword == 'invention':
+            key = ('invention', node.value)
+            return (key, True) if key in self.definitions else (None, None)
+        keys = [k for k in self.definitions if k[1] == node.key]
+        if len(keys) == 1 and node.value.lower() in {'yes', '1', 'no', '0'}:
+            return keys[0], node.value.lower() in {'yes', '1'}
+        return None, None
+
+    def _references(self, nodes):
+        """All boolean alternatives, including negative refs, for search support.
+
+        Necessary-only closure is insufficient here: an optional OR branch may
+        break a cycle. Chance modifiers are deliberately not prerequisite edges.
+        """
+        refs = set()
+        for n in nodes:
+            if n.operator != '=':
+                continue
+            if n.is_group and n.keyword in {'and', 'or', 'not'}:
+                refs.update(self._references(n.children))
+            elif not n.is_group:
+                key, _ = self._atom(n)
+                if key is not None:
+                    refs.add(key)
+        return refs
+
+    def _eligible(self, key, acquired):
+        if key[0] == 'technology':
+            prior = self.predecessors.get(key)
+            # Untimed prefix research; country/date/completion are external.
+            return prior is None or prior in acquired
+        node = self.definitions[key]
+        limit = member(node, 'limit')
+        condition = self._condition(limit.children if limit else (), acquired)
+        chance = member(node, 'chance')
+        possible_chance = None
+        if chance is None:
+            possible_chance = True  # pinned default 1; never a discovery guarantee
+        elif chance.is_group and len(chance.children) == 1:
+            raw = scalar(chance, 'base')
+            if raw is not None and re.fullmatch(r'[0-9]+(?:\.[0-9]+)?', raw):
+                value = float(raw)
+                # Only exact binary32 constants justify this int32 conversion.
+                # Decimal rounding near 1 or INT32_MAX can change eligibility;
+                # do not use host double precision to prove an edge impossible.
+                if (value < 2**31 and Fraction(value) == Fraction(raw)
+                        and struct.unpack('f', struct.pack('f', value))[0] == value):
+                    possible_chance = int(value) > 0
+        if condition is False or possible_chance is False:
+            return False
+        return True if condition is True and possible_chance is True else None
+
+    def _search(self, roots, goal, *, max_definitions=16, max_states=4096):
+        """Memoized acquisition states; unknown edges can never prove exclusion.
+
+        Roots plus all modeled references form a closed support: omitted owners
+        cannot change a modeled predicate or goal. States encode persistent techs
+        and inventions separately by typed keys. Each transition adds one owner,
+        tests its current eligibility, and never re-tests an already acquired one.
+        Only fully known edges establish a possible static sequence. If an unknown
+        edge is encountered, exhaustion is UNKNOWN rather than unreachable.
+        """
+        result = dict(status='unknown', sequence=None, acquired=None, visited_states=0,
+                      scope='untimed static acquisition model; no national/runtime discovery guarantee')
+        universe, pending = set(), list(sorted(roots))
+        while pending:
+            key = pending.pop()
+            if key not in self.definitions:
+                return dict(result, reason='unresolved acquisition owner')
+            if key in universe:
+                continue
+            universe.add(key)
+            if len(universe) > max_definitions:
+                return dict(result, reason='definition limit')
+            if key[0] == 'technology':
+                prior = self.predecessors.get(key)
+                if prior:
+                    pending.append(prior)
+            else:
+                limit = member(self.definitions[key], 'limit')
+                pending.extend(sorted(self._references(limit.children if limit else ())))
+        if max_states < 1:
+            return dict(result, reason='state limit')
+        order = sorted(universe)
+        empty = frozenset()
+        paths, queue, unknown = {empty: ()}, deque([empty]), False
+        while queue:
+            acquired = queue.popleft()
+            if goal(acquired):
+                return dict(result, status='possibly_reachable', sequence=list(paths[acquired]),
+                            acquired=sorted(acquired), visited_states=len(paths), reason='known transition sequence')
+            for key in order:
+                if key in acquired:
+                    continue
+                eligible = self._eligible(key, acquired)
+                if eligible is None:
+                    unknown = True
+                if eligible is not True:
+                    continue
+                nxt = acquired | {key}
+                if nxt in paths:
+                    continue
+                if len(paths) >= max_states:
+                    return dict(result, visited_states=len(paths), reason='state limit')
+                paths[nxt] = paths[acquired] + (key,)
+                queue.append(nxt)
+        return dict(result, status='unknown' if unknown else 'proven_unreachable',
+                    visited_states=len(paths), reason='unknown transition semantics' if unknown else
+                    'exhausted complete modeled state graph')
+
+    def acquisition_path(self, targets, *, max_definitions=16, max_states=4096):
+        """Existence of a sequence acquiring all targets, allowing support owners.
+
+        POSSIBLY_REACHABLE means possible in this static model, not guaranteed
+        discovery. PROVEN_UNREACHABLE is limited to the modeled ordinary path.
+        """
+        targets = frozenset(targets)
+        return dict(self._search(targets, lambda state: targets <= state,
+                                 max_definitions=max_definitions, max_states=max_states),
+                    goal='all_targets_acquired', targets=sorted(targets))
+
+    def lower_bound(self, projection, *, max_negative_owners=16,
+                    max_definitions=16, max_states=4096):
         result = {'status': 'unverified', 'lower_bound': None,
                   'reachability': 'unverified', 'witness': None,
+                  'bound_proof': None,
                   'scope': 'normal prefix research; histories, events, grants and saves not modelled'}
         if projection['status'] != 'applied' or projection['baseline'] is None:
             return dict(result, reason='incomplete applied projection')
@@ -163,7 +261,7 @@ class ResearchDependencies:
         negatives = sorted(k for k, value in grouped.items() if value < 0)
         if len(negatives) > max_negative_owners:
             return dict(result, reason='enumeration limit', negative_owners=len(negatives))
-        lower, best, rejected, witness = float('inf'), set(), 0, None
+        lower, best = float('inf'), set()
         provenance = []
         for key in negatives:
             closure = self.closure(key)
@@ -173,17 +271,29 @@ class ResearchDependencies:
         for mask in range(1 << len(negatives)):
             selected = [k for j, k in enumerate(negatives) if mask & (1 << j)]
             acquired = set().union(*(self.closure(k) for k in selected)) if selected else set()
-            if any(self.forbidden[k] & acquired for k in acquired):
-                rejected += 1
-                continue
+            # Positive prerequisites persist, so their effects must be included.
+            # Negative eligibility is temporal: NEVER reject a final set here.
+            # Every real state's negative owners have such a positive closure;
+            # omitted nonnegative-net owners can only raise its value. Taking the
+            # minimum of all these closures is therefore a conservative bound.
             value = projection['baseline'] + sum(grouped.get(k, 0.) for k in sorted(acquired))
             if value < lower:
                 lower, best = value, acquired
-            if value < 0 and witness is None and self._simple_witness(acquired):
-                witness = {'value': value, 'acquired': sorted(acquired)}
+        search = self._search(grouped, lambda state: projection['baseline'] +
+                              sum(grouped.get(k, 0.) for k in sorted(state)) < 0,
+                              max_definitions=max_definitions, max_states=max_states) if lower < 0 else {
+                                  'status': 'proven_unreachable', 'sequence': None, 'acquired': None,
+                                  'visited_states': 0, 'reason': 'nonnegative conservative bound',
+                                  'scope': 'normal prefix research only'}
+        search['goal'] = 'negative_supply_state'
+        witness = None
+        if search['status'] == 'possibly_reachable':
+            witness = {'value': projection['baseline'] + sum(grouped.get(k, 0.) for k in search['acquired']),
+                       'acquired': search['acquired'], 'sequence': search['sequence']}
         return dict(result, status='conditional_bound', lower_bound=lower,
+                    bound_proof='necessary_positive_closure_overapproximation',
                     minimizing_acquisition=sorted(best), enumerated_subsets=1 << len(negatives),
-                    rejected_contradictions=rejected, negative_dependencies=provenance,
+                    temporal_search=search, negative_dependencies=provenance,
                     reachability='reachable_in_static_research_model' if witness else 'unverified',
                     witness=witness)
 

@@ -72,12 +72,12 @@ class DependencyFixtures(unittest.TestCase):
             self.assertLess(r['lower_bound'],0)
             self.assertEqual(r['reachability'],'unverified')
 
-    def test_mutually_exclusive_combinations_are_rejected(self):
+    def test_mutually_exclusive_combinations_do_not_tighten_the_bound(self):
         d = dependencies('', 'A={limit={NOT={invention=B}} chance={base=3}} '
                               'B={limit={NOT={invention=A}} chance={base=3}}')
         r = d.lower_bound(projection(1.5,[('invention','A',-1),('invention','B',-1)]))
-        self.assertEqual(r['lower_bound'],.5)
-        self.assertEqual(r['rejected_contradictions'],1)
+        self.assertEqual(r['lower_bound'],-.5)
+        self.assertEqual(r['temporal_search']['status'],'proven_unreachable')
 
     def test_negated_or_and_explicit_invention_namespace(self):
         text = 'L={ NOT={ OR={ invention=A invention=B } } }'
@@ -89,8 +89,10 @@ class DependencyFixtures(unittest.TestCase):
         d=dependencies('A={area=x year=1900} B={area=y year=1900}',
                        'C={limit={NOT={A=1 B=1}} chance={base=3}}')
         self.assertEqual(d.forbidden['invention','C'],{('technology','A'),('technology','B')})
-        self.assertFalse(d._simple_witness({('technology','A'),('invention','C')}))
-        self.assertTrue(d._simple_witness({('invention','C')}))
+        # C can be discovered before A; its NOT limit is not a lasting ban.
+        r=d.acquisition_path({('technology','A'),('invention','C')})
+        self.assertEqual(r['sequence'],[('invention','C'),('technology','A')])
+        self.assertEqual(d.acquisition_path({('invention','C')})['status'],'possibly_reachable')
 
     def test_cycles_and_partial_or_large_inputs_are_not_reachability_proofs(self):
         d = dependencies('', 'A={limit={invention=B} chance={base=3}} '
@@ -226,7 +228,21 @@ class FunctionalCorpus(unittest.TestCase):
         # Independent reader, owner aggregation and direct-positive closures. Real
         # negative-supply limits use direct references; extra conditions are relaxed.
         definitions={};previous={};pred={};effects=defaultdict(dict)
-        for f in sorted(self.files):
+        # Select effective immediate files independently of compose_runtime and
+        # read unit bases independently of parse_unit_block/project_unit.
+        selected={}
+        for root in ['TGC','TGC_Timeline_1966']:
+            for directory in ['technologies','inventions','units']:
+                for f in (ROOT/root/directory).glob('*.txt'):
+                    selected[directory,f.name]=f.relative_to(ROOT).as_posix()
+        bases={}
+        for (directory,_),f in selected.items():
+            if directory=='units':
+                for name,body,_,_ in reference_tree((ROOT/f).read_text(encoding='utf-8-sig')):
+                    fields={k:v for k,v,_,_ in body}
+                    if fields['type']=='land':bases[name]=float(fields['supply_consumption'])
+        source_files=sorted(f for (directory,_),f in selected.items() if directory!='units')
+        for f in source_files:
             kind='technology' if '/technologies/' in f else 'invention'
             for name,body,_,_ in reference_tree((ROOT/f).read_text(encoding='utf-8-sig')):
                 key=kind,name;definitions[key]=body
@@ -235,7 +251,7 @@ class FunctionalCorpus(unittest.TestCase):
         for key,body in definitions.items():
             if key[0]=='invention':body=next((v for k,v,_,_ in body if k=='effect'),[])
             for scope,body0,_,_ in body:
-                targets=set(self.units)-self.naval if scope=='army_base' else {scope} if scope in self.units else set()
+                targets=set(bases) if scope=='army_base' else {scope} if scope in bases else set()
                 if not targets or not isinstance(body0,list):continue
                 vals=[float(v) for k,v,_,_ in body0 if k=='supply_consumption']
                 if vals:
@@ -255,17 +271,18 @@ class FunctionalCorpus(unittest.TestCase):
                     if r not in found:found.add(r);todo.append(r)
             return found
         dep=ResearchDependencies(self.files)
-        for u in sorted(set(self.units)-self.naval):
+        self.assertEqual(set(bases),set(self.units)-self.naval)
+        for u in sorted(bases):
             q=self.projections[u]['stats']['supply_consumption']
             negatives=sorted(k for k,v in effects[u].items() if v<0);minimum=float('inf')
             for flags in itertools.product([False,True],repeat=len(negatives)):
                 selected=[k for k,on in zip(negatives,flags) if on]
                 acquired=set().union(*(closure(k) for k in selected)) if selected else set()
                 # Omitting positive inventions is a separate, looser oracle.
-                value=q['baseline']+sum(v for k,v in effects[u].items() if k in acquired and (k[0]=='technology' or v<0))
+                value=bases[u]+sum(v for k,v in effects[u].items() if k in acquired and (k[0]=='technology' or v<0))
                 minimum=min(minimum,value)
             self.assertAlmostEqual(dep.lower_bound(q)['lower_bound'],minimum,u)
-            self.assertAlmostEqual(minimum,self.units[u]['stats']['supply_consumption'],u)
+            self.assertAlmostEqual(minimum,bases[u],u)
             self.assertGreater(minimum,0,u)
 
     def test_real_ai_and_horizon_are_conditional_and_do_not_change_data(self):
