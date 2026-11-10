@@ -8050,16 +8050,26 @@ country_event = {
 
 	option = {
 		name = "EVTOPTA99951"
-		QNG = { country_event = { id = 99952 days = 5 } }
-		treasury = 50000
-		set_country_flag = building_beiyang_fleet
+		1569 = {
+			limit = { NOT = { has_global_flag = project_alice } }
+			THIS = {
+				QNG = { country_event = { id = 99952 days = 5 } }
+				treasury = 50000
+				set_country_flag = building_beiyang_fleet
+			}
+		}
 		ai_chance = { factor = 100 }
 	}
 
 	option = {
 		name = "EVTOPTB99951"
-		prestige = -10
-		relation = { who = QNG value = -100 }
+		1569 = {
+			limit = { NOT = { has_global_flag = project_alice } }
+			THIS = {
+				prestige = -10
+				relation = { who = QNG value = -100 }
+			}
+		}
 		ai_chance = { factor = 0 }
 	}
 }
@@ -8074,8 +8084,13 @@ country_event = {
 
 	option = {
 		name = "EVTOPTA99952"
-		treasury = -80000
-		country_event = { id = 99953 days = 730 }
+		1569 = {
+			limit = { NOT = { has_global_flag = project_alice } }
+			THIS = {
+				treasury = -80000
+				country_event = { id = 99953 days = 730 }
+			}
+		}
 	}
 }
 
@@ -8090,6 +8105,7 @@ country_event = {
 	option = {
 		name = "EVTOPTA99953"
 		1569 = {
+			limit = { NOT = { has_global_flag = project_alice } }
 			sub_unit = { type = ironclad value = current }
 			sub_unit = { type = ironclad value = current }
 			sub_unit = { type = ironclad value = current }

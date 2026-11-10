@@ -498,6 +498,7 @@
 				release = SRI
 				ENG = { inherit = SRI }
 				1321 = {
+					limit = { NOT = { has_global_flag = project_alice } }
 					## 20 Manowar ##
 						sub_unit = { type = manowar value = current }
 						sub_unit = { type = manowar value = current }

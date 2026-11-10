@@ -1950,6 +1950,7 @@ rename_bourbon_island = {
 			}
 			random_owned = {
 				limit = {
+					NOT = { has_global_flag = project_alice }
 					port = yes
 					is_overseas = no
 					is_colonial = no
@@ -1967,6 +1968,17 @@ rename_bourbon_island = {
 				sub_unit = { type = steam_transport value = current }
 				sub_unit = { type = steam_transport value = current }
 				sub_unit = { type = steam_transport value = current }
+				owner = { badboy = -15 }
+			}
+			random_owned = {
+				limit = {
+					has_global_flag = project_alice
+					port = yes
+					is_overseas = no
+					is_colonial = no
+					controlled_by = THIS
+					owner = { ai = yes }
+				}
 				owner = { badboy = -15 }
 			}
 		}

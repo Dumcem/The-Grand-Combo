@@ -563,16 +563,29 @@ fingerprints. This guard is a generic TGC upstream candidate.
 [Trigger evaluation](https://github.com/schombert/Project-Alice/blob/v1.3.0/src/scripting/triggers.cpp#L3804-L3807) ·
 [Unit effects](https://github.com/schombert/Project-Alice/blob/v1.3.0/src/scripting/effects.cpp#L4365-L4380)
 
-The effective decision and event inventory includes seven additional conditional
-paths with the same `sub_unit` limitation. Their reachability and campaign
-impact remain unresolved.
+### Task 35: remaining scripted naval paths
 
-| Effective core source | Decision or event | `sub_unit` calls | Direct treasury or timed modifier in the owner block |
+Core and Timeline select the same eight files with `sub_unit` effects.
+There are 166 calls in each composition, including 59 covered by Task 34.
+Task 35 guards five of the seven additional paths in Alice. The original
+effects and their order are preserved for canonical Victoria II.
+
+| Effective core source | Decision or event | Calls | Alice 1.3.0 |
 |---|---|---:|---|
-| `decisions/France.txt` | `ai_french_west_africa` | 11 | None |
-| `decisions/JAP.txt` | `imperial_japanese_navy` | 16 | −80,000 |
-| `decisions/RUS.txt` | `russian_navy_reforms` | 20 | −100,000 and −150,000 in separate branches |
-| `decisions/SWE.txt` | `svenska_pansarbats_foreningen` | 1 | None |
-| `decisions/UncivFlavor.txt` | `conscript_fishermen` | 2 | −10,000 and `law_changed_by_force` for 3,650 days |
-| `events/China.txt` | `99953` | 7 | No direct treasury effect |
-| `events/EIC.txt` | `9990013` | 50 | No direct treasury effect |
+| `decisions/France.txt` | `ai_french_west_africa` | 11 | Skips the transport grant. Colonial events, the one-time flag and the original AI infamy reduction still apply. |
+| `decisions/JAP.txt` | `imperial_japanese_navy` | 16 | Pending a design decision. The 80,000 charge can still apply without delivery. |
+| `decisions/RUS.txt` | `russian_navy_reforms` | 20 | Pending a design decision. The AI and player charges of 100,000 and 150,000 can still apply without delivery. |
+| `decisions/SWE.txt` | `svenska_pansarbats_foreningen` | 1 | Ineligible, including the levy on POP savings. |
+| `decisions/UncivFlavor.txt` | `conscript_fishermen` | 2 | Ineligible, including the 10,000 charge and the shared 3,650-day cooldown. |
+| `decisions/China.txt`, `events/China.txt` | Beiyang chain ending in `99953` | 7 | Keeps modernization and skips the foreign contract, including the supplier's 50,000 receipt and Qing's 80,000 charge. |
+| `events/EIC.txt` | `9990013` | 50 | Keeps the transfer of Ceylon and skips the fleet. |
+
+With the corrected scripts loaded, Beiyang options also skip the contract
+effects when dispatched from an existing queue. Alice calls queued national
+events directly, so the guards sit in the options as well as in the inviting
+decision. The options use the fixed delivery province for the guard and
+`THIS` for the original national effects. They do not depend on current
+ownership of the delivery province. Existing queued events can still display
+their original text.
+Past transfers are left as recorded. These are static and source-level checks.
+[Queued event dispatch](https://github.com/schombert/Project-Alice/blob/v1.3.0/src/scripting/events.cpp#L474-L491)

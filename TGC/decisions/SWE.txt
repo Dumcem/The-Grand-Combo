@@ -44,6 +44,7 @@ political_decisions = {
 	#Description: Create a cruiser.
 	svenska_pansarbats_foreningen = {
 		potential = {
+			NOT = { has_global_flag = project_alice }
 			primary_culture = swedish
 			OR = {
 				tag = SWE

@@ -1320,6 +1320,7 @@ political_decisions = {
 	conscript_fishermen = {
 		picture = dreams_of_empire
 		potential = {
+			NOT = { has_global_flag = project_alice }
 			civilized = no
 			flintlock_rifles = 1
 			total_num_of_ports = 1

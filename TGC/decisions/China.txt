@@ -2235,6 +2235,7 @@ political_decisions = {
 			set_country_flag = beiyang_fleet_established
 			any_greater_power = {
 				limit = {
+					NOT = { has_global_flag = project_alice }
 					exists = yes
 					OR = {
 						tag = ENG
