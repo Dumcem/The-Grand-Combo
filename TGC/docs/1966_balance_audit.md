@@ -493,12 +493,10 @@ to the new post-1875 rows. All cuts are nonpositive: the full set is a lower bou
 for every subset, reachable or otherwise. Independent tests enumerate transport
 subsets, compare epochs and check every non-transport cut in both compositions.
 
-At fixed normalized cost, one completed transport per 35/45 nominal days replaces
-the former one per day per active provincial queue; goods and budget can still
-slow construction. The full daily basket demand is spread over 35/45 instead of
-one nominal day. Total construction baskets, transport capacity, supply and combat
-stats are unchanged. These endpoints are a provisional production design, not
-historically calibrated durations or a runtime balance verdict.
+At fixed required cost, the modified 45/35 days for core/Timeline spread the
+theoretical daily basket demand over 45/35 days instead of one nominal day.
+These are provisional procurement factors. The Alice delivery check below uses
+the base time and actual purchases.
 
 The scripts use ordinary scoped unit build_time modifiers, with no Alice-only
 runtime path. Alice parser/application/consumer are covered statically. Exact V2
@@ -511,3 +509,70 @@ deployment lifecycle and a scenario generated from that verified deployment.
 The generic positivity correction and generic tooling improvements remain
 possible upstream contributions. This new production curve is an explicit fork
 design choice; acceptance upstream is not assumed. No sync or push is involved.
+
+### Task 34: Alice 1.3.0 naval construction and scripted grants
+
+The audit emits an `alice_naval_construction` INFO row for each effective naval
+class in core and in core + Timeline. Each row uses the selected unit definition,
+the applied direct technology and invention effects, and the effective common
+defines files. The national all-effects value is conditional on acquisition.
+The global define `ALICE_NAVAL_UNIT_BUILD_TIME_MULT` defaults to 1 in Alice
+1.3.0 and has no override in either current composition.
+
+For a national time (N) and global multiplier (M), the theoretical daily
+rate is (1 / (N × M)) of each required material. Alice computes each
+government naval material requirement from the base basket and the provincial
+cost factor `(2 - control_ratio) / 2`. It limits demand by the available
+construction budget, the project budget limit and local prices. Market
+satisfaction and the available construction pool affect progress. The ordinary
+procurement path advances the first order in each eligible owned and controlled
+province. [Time and cost factors](https://github.com/schombert/Project-Alice/blob/v1.3.0/src/economy/construction.cpp#L186-L224) ·
+[Demand and progress](https://github.com/schombert/Project-Alice/blob/v1.3.0/src/economy/construction.cpp#L347-L420) ·
+[Queue and budget](https://github.com/schombert/Project-Alice/blob/v1.3.0/src/economy/construction.cpp#L635-L705)
+
+With `instant_navy` off, delivery requires all three conditions:
+
+1. The order is first in the provincial queue.
+2. The required materials have been purchased.
+3. The elapsed time since **enqueue** meets the unmodified unit definition's
+   `build_time`.
+
+An order can accumulate age behind another order and satisfy the calendar
+condition before reaching the head. Once at the head, it still needs the
+required materials. Clipper and steam transport have a base calendar floor of
+**90 days from enqueue** in both compositions. Their national times of **45
+days in core** and **35 days in Timeline** change the procurement rate only.
+The cruiser, for example, keeps a 240-day floor with national times of 150 and
+130 days. The audit leaves queue position, age, material completion and delivery
+eligibility unknown without observations. The contract is source-level verified
+for Alice 1.3.0. Actual delivery dates, sustained throughput and Victoria II's
+construction formula remain unresolved. [Enqueue date](https://github.com/schombert/Project-Alice/blob/v1.3.0/src/gamestate/commands.cpp#L805-L809) ·
+[Delivery conditions](https://github.com/schombert/Project-Alice/blob/v1.3.0/src/economy/economy.cpp#L4599-L4655)
+
+Core and Timeline select `TGC/decisions/3_Clean-Up.txt`. The decisions
+`ai_give_warships_steamer` and `ai_give_warships_steamer_secondary_power`
+now each have `NOT = { has_global_flag = project_alice }` at the top level
+of `potential`. Alice compiles the named trigger as always true, so the
+negation stops execution before the treasury and cooldown effects. All four
+Alice `sub_unit` handlers return without creating units. In canonical Victoria II,
+the ordinary global flag is absent and the guard preserves the original
+eligibility. The independent regression verifies all 14 original branches and
+59 calls by comparing the ordered decision blocks to their pre-change
+fingerprints. This guard is a generic TGC upstream candidate.
+[Trigger parser](https://github.com/schombert/Project-Alice/blob/v1.3.0/src/parsing/trigger_parsing.hpp#L3107-L3115) ·
+[Trigger evaluation](https://github.com/schombert/Project-Alice/blob/v1.3.0/src/scripting/triggers.cpp#L3804-L3807) ·
+[Unit effects](https://github.com/schombert/Project-Alice/blob/v1.3.0/src/scripting/effects.cpp#L4365-L4380)
+
+The effective decision and event inventory includes seven additional conditional
+paths with the same `sub_unit` limitation. Their reachability and campaign
+impact remain unresolved.
+
+| Effective core source | Decision or event | `sub_unit` calls | Direct treasury or timed modifier in the owner block |
+|---|---|---:|---|
+| `decisions/France.txt` | `ai_french_west_africa` | 11 | None |
+| `decisions/JAP.txt` | `imperial_japanese_navy` | 16 | −80,000 |
+| `decisions/RUS.txt` | `russian_navy_reforms` | 20 | −100,000 and −150,000 in separate branches |
+| `decisions/SWE.txt` | `svenska_pansarbats_foreningen` | 1 | None |
+| `decisions/UncivFlavor.txt` | `conscript_fishermen` | 2 | −10,000 and `law_changed_by_force` for 3,650 days |
+| `events/China.txt` | `99953` | 7 | No direct treasury effect |
+| `events/EIC.txt` | `9990013` | 50 | No direct treasury effect |

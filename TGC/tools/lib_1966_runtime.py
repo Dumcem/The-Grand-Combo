@@ -45,15 +45,19 @@ def _safe_path(raw: str) -> str:
     return str(path)
 
 
-def compose_runtime(repo: Path, core_root: str = 'TGC', timeline_root: str = 'TGC_Timeline_1966') -> RuntimeInventory:
+def compose_runtime(repo: Path, core_root: str = 'TGC', timeline_root: str | None = 'TGC_Timeline_1966') -> RuntimeInventory:
     selected: dict[str, Source] = {}
     replaced: list[Source] = []
-    boundaries = ['Declared core + Timeline only; optional mods, launcher, saves and scripted acquisition histories are not observed.',
+    composition = 'core + Timeline' if timeline_root is not None else 'core'
+    boundaries = [f'Declared {composition} only; optional mods, launcher, saves and scripted acquisition histories are not observed.',
                   'National/conditional modifiers, leaders, terrain, production capacity and prices are outside the additive unit-stat scenario.']
     core_name = None
     core_replaces: set[str] = set()
     categories = {'technologies', 'inventions', 'units', 'common', 'events', 'decisions'}
-    for layer, root in [('core', core_root), ('timeline', timeline_root)]:
+    layers = [('core', core_root)]
+    if timeline_root is not None:
+        layers.append(('timeline', timeline_root))
+    for layer, root in layers:
         root = _safe_path(root)
         descriptor = root + '.mod'
         doc = parse_file(str(repo / descriptor))

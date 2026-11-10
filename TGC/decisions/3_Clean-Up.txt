@@ -574,6 +574,7 @@ political_decisions = {
 
 	ai_give_warships_steamer = {
 		potential = {
+			NOT = { has_global_flag = project_alice }
 			OR = {
 				is_greater_power = yes
 				tag = EIC
@@ -833,6 +834,7 @@ political_decisions = {
 
 	ai_give_warships_steamer_secondary_power = {
 		potential = {
+			NOT = { has_global_flag = project_alice }
 			is_secondary_power = yes
 			OR = {
 				AND = {

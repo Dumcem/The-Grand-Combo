@@ -16,6 +16,7 @@ from lib_1966_parser import (
     rebase_path, scalar, unique_definitions, walk, read_json,
 )
 from lib_1966_diagnostics import Reporter
+from lib_1966_construction import report_naval_construction
 from lib_1966_mechanics import report_consumers, report_availability
 from lib_1966_functional import ResearchDependencies, report_functional
 from lib_1966_runtime import compose_runtime, unit_definitions
@@ -452,6 +453,20 @@ def check_key_goods_availability(production_types_file: str, key_goods: list[str
             rep.add("WARN", f"KEY GOODS missing production output mapping: {good}", code='production_mapping', category='economic_index', stat=good, source=production_types_file, evidence='recipe_presence_not_availability')
 
 
+def naval_construction_projections(inventory, effective_units, timing):
+    # This contract covers the effective roster independently of legacy rules.
+    inputs = {u: parse_unit_block(path, u) for u, path in effective_units.items()}
+    navy = {u for u, data in inputs.items() if data['unit_domain'] == 'naval'}
+    assignments = defaultdict(list)
+    for path in inventory.files('technologies') + inventory.files('inventions'):
+        found = parse_effect_unit_assignments(path, navy, {'build_time'}, timing,
+                                              {'army_base': set(), 'navy_base': navy},
+                                              known_units=set(inputs))
+        for unit, rows in found.items():
+            assignments[unit].extend(rows)
+    return {u: project_unit(inputs[u], assignments[u], ALICE) for u in sorted(navy)}
+
+
 def _run() -> int:
     args = parse_args()
     rules = read_rules(args.core_root, args.timeline_root)
@@ -736,6 +751,12 @@ def _run() -> int:
     report_consumers(unit_inputs, engine_units, rep, dependencies)
     report_availability(inventory, unit_inputs, engine_units, scan_files, inferred_years, rep)
     report_functional(inventory, unit_inputs, engine_units, scan_files, inferred_years, dependencies, rep)
+    core_inventory = compose_runtime(ROOT, args.core_root, timeline_root=None)
+    core_timing = build_year_inference(core_inventory.files('technologies') + core_inventory.files('inventions'))
+    report_naval_construction('core', core_inventory,
+                              naval_construction_projections(core_inventory, unit_definitions(core_inventory, ROOT), core_timing), rep)
+    report_naval_construction('core + Timeline', inventory,
+                              naval_construction_projections(inventory, effective_units, inferred_years), rep)
 
     for unit, cfg in units_cfg.items():
         historical_start_year = get_historical_relevance_start_year(cfg, default_milestone_year)
