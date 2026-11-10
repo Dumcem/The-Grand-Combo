@@ -1828,6 +1828,7 @@ political_decisions = {
 	imperial_japanese_navy = {
 		picture = "imperial_japanese_navy"
 		potential = {
+			NOT = { has_global_flag = project_alice }
 			tag = JAP
 			is_greater_power = yes
 			has_country_flag = has_line_of_advantage

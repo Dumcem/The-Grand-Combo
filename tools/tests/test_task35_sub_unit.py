@@ -1,4 +1,4 @@
-"""Static regressions for the five approved scripted naval paths."""
+"""Static regressions for the seven Task 35 scripted naval paths."""
 import hashlib
 import re
 import unittest
@@ -29,8 +29,8 @@ BASELINE = {
     'decisions/UncivFlavor.txt': (1, '320e387a49fbe1a9362ca83654a6a8bce822bae694a379eae7ae19571af668e7'),
     'events/China.txt': (4, 'ea3a1177810c94d46ee759e44610743862e64d15770315a314c42c71712fe63a'),
     'events/EIC.txt': (1, 'e8c28538980af5ee348a4601eaa3eacd221661e3c1d14da88e4d27ce0ab1eb45'),
-    'decisions/JAP.txt': (0, 'b9e5bb33bc61866ac478b313eb9cff798b35b141b781a6e0c65f933254516e97'),
-    'decisions/RUS.txt': (0, 'c43717c30d7e33b10113d3baa966ff7e4f4ce10bb36757dbcd38f2b3a02ae9e0'),
+    'decisions/JAP.txt': (1, 'b9e5bb33bc61866ac478b313eb9cff798b35b141b781a6e0c65f933254516e97'),
+    'decisions/RUS.txt': (1, 'c43717c30d7e33b10113d3baa966ff7e4f4ce10bb36757dbcd38f2b3a02ae9e0'),
 }
 
 
@@ -130,6 +130,19 @@ class ScriptedNavalPaths(unittest.TestCase):
                 decision = self.decision(file, name)
                 self.assertEqual(field(decision, 'potential')[0], FLAG[0])
                 self.assertIn(cost, list(leaves(field(decision, 'effect'))))
+
+    def test_japanese_and_russian_packages_are_blocked_at_entry(self):
+        for file, name, charges, ship_count in (
+            ('JAP', 'imperial_japanese_navy', ['-80000'], 16),
+            ('RUS', 'russian_navy_reforms', ['-100000', '-150000'], 20),
+        ):
+            with self.subTest(name=name):
+                decision = self.decision(file, name)
+                self.assertIn(FLAG[0], field(decision, 'potential'))
+                effects = list(leaves(field(decision, 'effect')))
+                self.assertEqual(fields(effects, 'treasury'), charges)
+                self.assertEqual(effects.count(('value', 'current')), ship_count)
+                self.assertTrue(fields(effects, 'activate_technology'))
 
     def test_french_colonial_effects_and_port_selection_survive(self):
         effect = field(self.decision('France', 'ai_french_west_africa'), 'effect')

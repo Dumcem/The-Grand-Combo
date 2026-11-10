@@ -567,18 +567,25 @@ fingerprints. This guard is a generic TGC upstream candidate.
 
 Core and Timeline select the same eight files with `sub_unit` effects.
 There are 166 calls in each composition, including 59 covered by Task 34.
-Task 35 guards five of the seven additional paths in Alice. The original
-effects and their order are preserved for canonical Victoria II.
+Task 35 guards the seven additional paths in Alice, bringing the total to nine
+protected paths. The original effects and their order are preserved for
+canonical Victoria II.
 
 | Effective core source | Decision or event | Calls | Alice 1.3.0 |
 |---|---|---:|---|
 | `decisions/France.txt` | `ai_french_west_africa` | 11 | Skips the transport grant. Colonial events, the one-time flag and the original AI infamy reduction still apply. |
-| `decisions/JAP.txt` | `imperial_japanese_navy` | 16 | Pending a design decision. The 80,000 charge can still apply without delivery. |
-| `decisions/RUS.txt` | `russian_navy_reforms` | 20 | Pending a design decision. The AI and player charges of 100,000 and 150,000 can still apply without delivery. |
+| `decisions/JAP.txt` | `imperial_japanese_navy` | 16 | The entire package is unavailable. The 80,000 charge and all package benefits are skipped. |
+| `decisions/RUS.txt` | `russian_navy_reforms` | 20 | The entire package is unavailable. The AI and player charges of 100,000 and 150,000 and all package benefits are skipped. |
 | `decisions/SWE.txt` | `svenska_pansarbats_foreningen` | 1 | Ineligible, including the levy on POP savings. |
 | `decisions/UncivFlavor.txt` | `conscript_fishermen` | 2 | Ineligible, including the 10,000 charge and the shared 3,650-day cooldown. |
 | `decisions/China.txt`, `events/China.txt` | Beiyang chain ending in `99953` | 7 | Keeps modernization and skips the foreign contract, including the supplier's 50,000 receipt and Qing's 80,000 charge. |
 | `events/EIC.txt` | `9990013` | 50 | Keeps the transfer of Ceylon and skips the fleet. |
+
+The approved trade-off is that Alice 1.3.0 loses both the Japanese and Russian
+naval packages, including their technology, port, diplomatic and reform
+effects where applicable. A guard in each decision's `potential` excludes
+the paid package as a whole. Ordinary research, Japan's Line of Advantage
+and the separate Russian army reform remain available on their own terms.
 
 With the corrected scripts loaded, Beiyang options also skip the contract
 effects when dispatched from an existing queue. Alice calls queued national

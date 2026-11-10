@@ -380,6 +380,7 @@ political_decisions = {
 	russian_navy_reforms = {
 		picture = "russian_naval_crimea"
 		potential = {
+			NOT = { has_global_flag = project_alice }
 			primary_culture = russian
 			OR = {
 				has_country_flag = crimean_war
