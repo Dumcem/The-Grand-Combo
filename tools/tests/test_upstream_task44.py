@@ -3,7 +3,7 @@
 import re
 import unittest
 
-from test_upstream_task42 import ROOT, decision, event
+from test_upstream_task42 import ROOT
 from lib_1966_parser import parse_script
 
 
@@ -80,10 +80,7 @@ class MapReconciliationTests(unittest.TestCase):
         self.assertFalse((core / 'history/countries/RAM - Rampur.txt').exists())
         self.assertNotRegex(read(core / 'history/diplomacy/PuppetStates.txt'), r'\bsecond\s*=\s*RAM\b')
 
-    def test_suspended_native_menu_leaves_existing_entry_points(self):
-        event('TemperanceLeague', 180)
-        for name in ('native_integration_status_on', 'native_protection_act'):
-            self.assertIsNotNone(decision('New_World', name))
+    def test_timeline_inherits_core_map_and_history(self):
         timeline = ROOT / 'TGC_Timeline_1966'
         for directory in ('map', 'history'):
             self.assertFalse(list((timeline / directory).rglob('*.txt')))

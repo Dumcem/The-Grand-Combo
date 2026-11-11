@@ -28,7 +28,7 @@ class RegionalReconciliationTests(unittest.TestCase):
                                           path.read_bytes()))
             for path in (root / 'localisation').glob('*.csv'):
                 keys.update(line.partition(b';')[0] for line in path.read_bytes().splitlines())
-        self.assertEqual(all_ids[b'100'], 0)
+        self.assertEqual(all_ids[b'100'], 1)  # Native policy menu.
         self.assertEqual(keys[b'EVTOPTB110'], 0)
         self.assertEqual(keys[b'EVTOPTB15110'], 1)  # NationalistMovements has its own label.
         for node, event_id in zip(events, ids):

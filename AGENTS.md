@@ -31,6 +31,15 @@
 - Use current project capabilities and evidence to improve or replace earlier methods where they are incomplete, weakly justified, or obsolete. The purpose of the re-baseline is to reconstruct confidence from the foundations rather than inherit it.
 - This policy is scoped to the current re-baseline phase. When the re-baseline is formally completed, review this section as part of the closing checkpoint: remove phase-specific instructions and retain or reformulate only principles that remain useful for normal ongoing development.
 
+## Upstream-first synchronization policy
+
+- Use the original TGC as the reference implementation and adopt upstream updates by default.
+- Keep fork differences only as intentional, justified fixes, improvements, extensions, compatibility adaptations, or approved customizations. A gameplay change or an existing fork difference alone does not justify excluding upstream behavior.
+- Resolve conflicts from the upstream implementation and reapply justified fork changes. Preserve verified fork fixes and upstream improvements, including in files Git combines automatically.
+- Trace intentional differences from upstream commit and behavior through the fork change, its rationale, and its verification. Demonstrate actual incompatibilities and address them where practical.
+- Preserve Victoria II and the supported Project Alice baseline unless an explicit project decision changes that policy.
+- Record synchronization outcomes and exceptions in `docs/upstream_reconciliation.md`.
+
 ## Upstream contribution policy
 
 - Confirmed bugs should be fixed and validated in this fork without waiting for acceptance by the original/upstream TGC project.

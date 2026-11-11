@@ -342,7 +342,7 @@ reactionary_rebels = {
                          plurality = -100
                          plurality = 40
 		}              
-		any_pop = { limit = { agree_with_ruling_party = yes } militancy = -4 }
+		any_pop = { limit = { agree_with_ruling_party = 0.5 } militancy = -4 }
 		country_event = 800050
 	}
 }

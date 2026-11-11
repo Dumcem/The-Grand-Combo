@@ -4688,6 +4688,7 @@ political_decisions = {
 					province_id = 975
 					#NOT = { has_province_modifier = donbass_modifier }
 				}
+				set_global_flag = yuzovka_renamed
 				change_province_name = "Yuzovka" #Perhaps split into separate decision like Melitopol
 				trade_goods = coal
 				add_province_modifier = { name = donbass_modifier duration = -1 }
@@ -5321,5 +5322,83 @@ political_decisions = {
 			}
 		}
 	}
-	
+
+	petrograd_renaming_act = {
+		picture = petrograd_city
+		potential = {
+			primary_culture = russian
+			NOT = { has_country_flag = peters_city_renamed }
+			NOT = { has_country_flag = petrograd_renaming_completed }
+			NOT = { has_country_flag = communist_gov }
+			owns = 994
+			any_greater_power = {
+				war_with = THIS
+				is_culture_group = germanic
+			}
+		}
+
+		allow = {
+			mass_politics = 1
+		}
+
+		effect = {
+			set_country_flag = petrograd_renaming_completed
+			set_country_flag = peters_city_renamed
+			994 = {
+				change_province_name = "Petrograd"
+				state_scope = { change_region_name = "Petrograd Oblast" }
+			}
+			war_exhaustion = -5
+			any_pop = {
+				limit = { is_primary_culture = yes }
+				dominant_issue = { factor = 0.1 value = jingoism }
+				militancy = -1
+			}
+		}
+
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 0
+				NOT = { war_exhaustion = 20 }
+			}
+		}
+	}
+
+	petrograd_renaming_act2 = {
+		picture = petrograd_city
+		potential = {
+			is_culture_group = germanic
+			NOT = { has_country_flag = petersburg_restoration_completed }
+			994 = {
+				owner = {
+					primary_culture = russian
+					has_country_flag = peters_city_renamed
+					NOT = { has_country_flag = communist_gov }
+					vassal_of = THIS
+				}
+			}
+		}
+
+		allow = {
+			mass_politics = 1
+		}
+
+		effect = {
+			set_country_flag = petersburg_restoration_completed
+			994 = {
+				owner = { clr_country_flag = peters_city_renamed }
+				change_province_name = "St. Petersburg"
+				state_scope = { change_region_name = "St. Petersburg" }
+			}
+			prestige = 20
+			any_pop = {
+				limit = { is_primary_culture = yes }
+				dominant_issue = { factor = 0.1 value = jingoism }
+				militancy = -1
+			}
+		}
+
+		ai_will_do = { factor = 1 }
+	}
 }

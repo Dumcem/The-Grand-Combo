@@ -79,15 +79,13 @@ class SetupAndPopReconciliationTests(unittest.TestCase):
         self.assertFalse(any(node.value == 'islamic_law' for node in walk(allow.children)))
         self.assertEqual(scalar(allow, 'colonial_nation'), 'yes')
 
-    def test_reform_keeps_fort_and_gates_its_execution_package(self):
+    def test_military_reform_executes_without_a_fort_requirement(self):
         reform, = (node for node in walk(definitions('common/issues.txt'))
                    if node.key == 'yes_military_constructions')
         execute = section(reform, 'on_execute')
-        trigger = section(section(execute, 'trigger'), 'can_build_fort_in_capital')
         effect = section(execute, 'effect')
-        fort = section(effect, 'build_fort_in_capital')
-        for node in (trigger, fort):
-            self.assertEqual(scalar(node, 'in_whole_capital_state'), 'no')
-            self.assertEqual(scalar(node, 'limit_to_world_greatest_level'), 'yes')
+        names = {node.key for node in walk(execute.children)}
+        self.assertNotIn('can_build_fort_in_capital', names)
+        self.assertNotIn('build_fort_in_capital', names)
         self.assertEqual(scalar(effect, 'treasury'), '-2000')
         self.assertEqual(scalar(effect, 'activate_technology'), 'post_napoleonic_thought')

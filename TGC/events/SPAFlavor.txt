@@ -3571,6 +3571,7 @@ country_event = {
 
 	option = {
 		name = "EVTOPTA90132"
+		set_country_flag = sale_of_cuba_refused
 		relation = {
 			who = SPA
 			value = -50

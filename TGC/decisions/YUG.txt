@@ -101,6 +101,7 @@ political_decisions = {
 			}
 			any_country = {
 				limit = {
+					ai = yes
 					war = no
 					is_culture_group = south_slavic
 					NOT = { has_country_flag = post_colonial_country }
@@ -290,6 +291,7 @@ political_decisions = {
 			war = no
 			NOT = { government = theocracy }
 			BOS = {
+				ai = yes
 				war = no
 				neighbour = YUG
 				NOT = { truce_with = THIS }
@@ -336,6 +338,7 @@ political_decisions = {
 			war = no
 			NOT = { government = theocracy }
 			CRO = {
+				ai = yes
 				war = no
 				neighbour = YUG
 				NOT = { truce_with = THIS }
@@ -382,6 +385,7 @@ political_decisions = {
 			war = no
 			NOT = { government = theocracy }
 			MCD = {
+				ai = yes
 				war = no
 				neighbour = YUG
 				NOT = { truce_with = THIS }
@@ -428,6 +432,7 @@ political_decisions = {
 			war = no
 			NOT = { government = theocracy }
 			MON = {
+				ai = yes
 				war = no
 				neighbour = YUG
 				NOT = { truce_with = THIS }
@@ -474,6 +479,7 @@ political_decisions = {
 			war = no
 			NOT = { government = theocracy }
 			SER = {
+				ai = yes
 				war = no
 				neighbour = YUG
 				NOT = { truce_with = THIS }
@@ -520,6 +526,7 @@ political_decisions = {
 			war = no
 			NOT = { government = theocracy }
 			SLO = {
+				ai = yes
 				war = no
 				neighbour = YUG
 				NOT = { truce_with = THIS }
@@ -575,6 +582,7 @@ political_decisions = {
 			citizens_rights = all_voting_pops
 			NOT = { government = theocracy }
 			ALB = {
+				ai = yes
 				war = no
 				neighbour = YUG
 				NOT = { truce_with = THIS }
@@ -623,6 +631,7 @@ political_decisions = {
 			revolution_n_counterrevolution = 1
 			NOT = { government = theocracy }
 			BUL = {
+				ai = yes
 				war = no
 				neighbour = YUG
 				NOT = { truce_with = THIS }

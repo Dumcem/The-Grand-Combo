@@ -9014,7 +9014,7 @@ country_event = {
 				reduce_pop = 1.15
 			    }
 		        }
-				any_owned_province = { limit = {
+				any_owned = { limit = {
 					is_core = GRE
 					NOT = { region = TUR_861 } #These are Bosphorus provinces
 					NOT = { region = TUR_860 }
@@ -9022,8 +9022,9 @@ country_event = {
 					NOT = { province_id = 866 }
 					NOT = { province_id = 862 }
 				}
-				relation = { who = GRE value = 200 }
+					secede_province = GRE
 				}
+				relation = { who = GRE value = 200 }
 				random_country = {
 					limit = {
 					tag = GRE

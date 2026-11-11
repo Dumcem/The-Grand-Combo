@@ -1351,7 +1351,14 @@ country_event = {
 
 	option = { #Annex French and Italian Switzerland, allow remaining cantons remain with Switzerland and reinstitute neutrality
 		name = "EVTOPTA10426"
-		SDB = { all_core = { remove_core = SDB remove_core = SWI } }
+		SDB = {
+			any_owned = {
+				limit = { is_core = SDB }
+				add_core = LTU
+				remove_core = SWI
+			}
+			all_core = { remove_core = SDB }
+		}
 		inherit = SDB
 		SWI = {
 			prestige = -50
@@ -1374,12 +1381,28 @@ country_event = {
 
 	option = { #Annex French and Italian Switzerland, annex Bern and Brig
 		name = "EVTOPTB10426"
-		SDB = { all_core = { remove_core = SDB remove_core = SWI } }
+		SDB = {
+			any_owned = {
+				limit = { is_core = SDB }
+				add_core = LTU
+				remove_core = SWI
+			}
+			all_core = { remove_core = SDB }
+		}
 		inherit = SDB
 		badboy = 6
-		3478 = { secede_province = LTU }
-		605 = { secede_province = LTU }
-		3272 = { secede_province = LTU }
+		random_country = {
+			limit = { tag = SWI owns = 3478 }
+			3478 = { secede_province = LTU }
+		}
+		random_country = {
+			limit = { tag = SWI owns = 605 }
+			605 = { secede_province = LTU }
+		}
+		random_country = {
+			limit = { tag = SWI owns = 3272 }
+			3272 = { secede_province = LTU }
+		}
 		any_owned = {
 			limit = {
 				is_core = SWI
@@ -1387,19 +1410,47 @@ country_event = {
 			}
 			add_province_modifier = { name = nationalist_agitation duration = 7200 }
 		}
-		GCF = { inherit = SWI }
+		random_country = {
+			limit = { tag = GCF exists = yes }
+			inherit = SWI
+		}
 	}
 	option = { #Annex French and Italian Switzerland, annex Luzern and Basel
 		name = "EVTOPTC10426"
-		SDB = { all_core = { remove_core = SDB remove_core = SWI } }
+		SDB = {
+			any_owned = {
+				limit = { is_core = SDB }
+				add_core = LTU
+				remove_core = SWI
+			}
+			all_core = { remove_core = SDB }
+		}
 		inherit = SDB
 		badboy = 9
-		3478 = { secede_province = LTU }
-		605 = { secede_province = LTU }
-		3272 = { secede_province = LTU }
-		604 = { secede_province = LTU }
-		606 = { secede_province = LTU }
-		GCF = { inherit = SWI }
+		random_country = {
+			limit = { tag = SWI owns = 3478 }
+			3478 = { secede_province = LTU }
+		}
+		random_country = {
+			limit = { tag = SWI owns = 605 }
+			605 = { secede_province = LTU }
+		}
+		random_country = {
+			limit = { tag = SWI owns = 3272 }
+			3272 = { secede_province = LTU }
+		}
+		random_country = {
+			limit = { tag = SWI owns = 604 }
+			604 = { secede_province = LTU }
+		}
+		random_country = {
+			limit = { tag = SWI owns = 606 }
+			606 = { secede_province = LTU }
+		}
+		random_country = {
+			limit = { tag = GCF exists = yes }
+			inherit = SWI
+		}
 		any_owned = {
 			limit = {
 				is_core = SWI
@@ -1410,7 +1461,14 @@ country_event = {
 	}
 	option = { #Annex entire Switzerland
 		name = "EVTOPTD10426"
-		SDB = { all_core = { remove_core = SDB remove_core = SWI } }
+		SDB = {
+			any_owned = {
+				limit = { is_core = SDB }
+				add_core = LTU
+				remove_core = SWI
+			}
+			all_core = { remove_core = SDB }
+		}
 		inherit = SWI
 		inherit = SDB
 		badboy = 15
@@ -1421,7 +1479,10 @@ country_event = {
 			}
 			add_province_modifier = { name = nationalist_agitation duration = 7200 }
 		}
-		3314 = { secede_province = GCF }
+		random_owned = {
+			limit = { province_id = 3314 exists = GCF }
+			secede_province = GCF
+		}
 	}
 }
 
