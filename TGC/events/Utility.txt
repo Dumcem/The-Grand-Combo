@@ -597,6 +597,7 @@
 					set_country_flag = hidden_tooltip
 					random_owned = { limit = { owner = { has_country_flag = hidden_tooltip } }
 						owner = {
+							set_country_flag = native_policy_menu_pending
 							country_event = 100
 						}
 					}
@@ -1230,6 +1231,7 @@
 					set_country_flag = hidden_tooltip
 					random_owned = { limit = { owner = { has_country_flag = hidden_tooltip } }
 						owner = {
+							set_country_flag = native_policy_menu_pending
 							country_event = 100
 						}
 					}
@@ -1993,6 +1995,7 @@
 					set_country_flag = hidden_tooltip
 					random_owned = { limit = { owner = { has_country_flag = hidden_tooltip } }
 						owner = {
+							set_country_flag = native_policy_menu_pending
 							country_event = 100
 						}
 					}

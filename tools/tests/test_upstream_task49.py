@@ -2,10 +2,10 @@
 
 import unittest
 
-from lib_1966_parser import scalar, walk
-from lib_1966_runtime import compose_runtime
 from test_upstream_task42 import ROOT, decision, definitions, section, event
 from test_upstream_task47 import option
+from lib_1966_parser import scalar, walk
+from lib_1966_runtime import compose_runtime
 
 
 def shape(nodes):
@@ -32,6 +32,12 @@ class UpstreamFirstTests(unittest.TestCase):
                          [f'EVTOPT{letter}100' for letter in 'ABCD'])
         for choice in choices:
             self.assertEqual(scalar(choice, 'clr_country_flag'), pending)
+        for choice in choices[:3]:
+            retry, = (node for node in walk(choice.children)
+                      if node.is_group and scalar(node, 'country_event') == '100')
+            self.assertEqual(shape(retry.children), [
+                ('set_country_flag', pending), ('country_event', '100'),
+            ])
 
     def test_native_ai_negates_the_full_eligibility_gate(self):
         popup = event('Utility', 100)
@@ -94,3 +100,11 @@ class UpstreamFirstTests(unittest.TestCase):
         self.assertIsNotNone(section(cbs['liberate_country'], 'allowed_countries'))
         self.assertNotIn('acquire_province', cbs)
         self.assertNotIn(b'load = ', (ROOT / 'TGC.mod').read_bytes())
+
+    def test_morocco_cleanup_matches_a_buyer_who_can_pay(self):
+        cleanup = decision('North_Africa', 'cleanup_morocco')
+        effect = section(cleanup, 'effect')
+        self.assertEqual(scalar(effect, 'set_global_flag'), 'cleanup_morocco')
+        buyer = section(section(effect, 'random_country'), 'limit')
+        self.assertEqual(scalar(buyer, 'exists'), 'yes')
+        self.assertEqual(scalar(buyer, 'money'), '75000')
