@@ -2078,7 +2078,7 @@
 				any_owned = { limit = { OR = { is_core = PEU } } secede_province = PEU }
 				any_owned = { limit = { OR = { is_core = ECU } } secede_province = ECU }
 				any_owned = { limit = { OR = { continent = africa } } secede_province = ANG }
-				any_owned = { limit = { OR = { region = BRZ_2429 region = BRZ_2428 region = BRZ_2432 } } add_core = CEQ secede_province = PNB }
+				any_owned = { limit = { OR = { is_core = PNB province_id = 2435 region = BRZ_2429 region = BRZ_2428 region = BRZ_2432 } } add_core = CEQ secede_province = PNB }
 				
 				PNB = { government = democracy clr_country_flag = 2nd_republicgov }
 				GPR = { government = democracy clr_country_flag = 2nd_republicgov }
@@ -3577,7 +3577,7 @@
 			is_triggered_only = yes
 
 			option = {
-				name = "EVTOPTB8251"
+				name = "EVTOPTA8251"
 			}
 		}
 
@@ -4951,10 +4951,6 @@
 
 		mean_time_to_happen = {
 			months = 12
-			modifier = {
-				factor = 0.75
-				has_global_flag = dreadnought_race
-			}
 		}
 
 		# Side with the black crews
@@ -5798,20 +5794,20 @@
 			random_owned = {
 				limit = { 
 					owner = { tag = VNZ } 
-					owner = { NOT = { has_country_flag = set_country_flag = amazon_conquered } }
+					owner = { NOT = { has_country_flag = amazon_conquered } }
 					3413 = { empty = yes }
 				}
-				owner = { secede_province = 3413 }
+				3413 = { secede_province = THIS }
 				owner = { set_country_flag = amazon_conquered }
 			}
 
 			random_owned = {
 				limit = { 
 					owner = { tag = VNZ } 
-					owner = { NOT = { has_country_flag = set_country_flag = amazon_conquered } }
+					owner = { NOT = { has_country_flag = amazon_conquered } }
 					1979 = { empty = yes }
 				}
-				owner = { secede_province = 1979 }
+				1979 = { secede_province = THIS }
 				owner = { set_country_flag = amazon_conquered }
 			}
 
@@ -5821,7 +5817,7 @@
 					owner = { NOT = { has_country_flag = amazon_conquered } }
 					2401 = { empty = yes }
 				}
-				owner = { secede_province = 2401 }
+				2401 = { secede_province = THIS }
 				owner = { set_country_flag = amazon_conquered }	
 			}
 

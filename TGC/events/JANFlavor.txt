@@ -3271,7 +3271,7 @@ country_event = {
 		
 		set_country_flag = hidden_tooltip
 		random_owned = { limit = { owner = { has_country_flag = hidden_tooltip } }
-						owner = { country_event = 73 }
+						owner = { country_event = 63 }
 		}
 		clr_country_flag = hidden_tooltip
 	}
@@ -3334,7 +3334,16 @@ country_event = {
 
 	option = {
 		name = "EVTOPTB64"
-		country_event = 68
+		if = {
+			limit = {
+				civilized = no
+				civilization_progress = 0.5
+				war = no
+				NOT = { has_country_modifier = national_confusion }
+				NOT = { num_of_revolts = 1 }
+			}
+			country_event = 68
+		}
 	}
 
 	option = {
@@ -3586,7 +3595,16 @@ country_event = {
 
 	option = {
 		name = "EVTOPTD67"
-		country_event = 68
+		if = {
+			limit = {
+				civilized = no
+				civilization_progress = 0.5
+				war = no
+				NOT = { has_country_modifier = national_confusion }
+				NOT = { num_of_revolts = 1 }
+			}
+			country_event = 68
+		}
 	}
 
 	option = {
