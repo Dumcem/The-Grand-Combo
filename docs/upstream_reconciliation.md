@@ -533,11 +533,49 @@ L’ultima colonna mostra gli ultimi commit locali pertinenti quando il percorso
 
 </details>
 
+## Task 50 — Merge sul branch di integrazione
+
+Il branch `codex/upstream-first-integration` parte dal `master` locale pulito a `54f1cd0619e499e145fc9f92d86488fbafc5e540`. Su GitHub `origin/master` è a `cebfc8c920fbd804f49f4e2e39e4149f65c88acc` e il ramo predefinito upstream è allo SHA fissato. Il commit di merge è `b2b00053ae7526d1c12ec13368b6063428275f8e`. I due genitori, in ordine, sono `54f1cd0619e499e145fc9f92d86488fbafc5e540` e `14f2e6ff61e7e1ea07ffef07548560da5bcc47f0`. L'ascendenza include entrambe le linee.
+
+Il merge effettivo ha confermato i 28 conflitti del Task 49. I 54 percorsi combinati automaticamente che divergevano dal candidato sono stati controllati anch'essi. Per gli 82 percorsi è stato verificato l'esito della rispettiva riga del registro, incluse le direttive DLL, i dati Extender, i file di pace, l'addon opzionale, la codifica, i selettori di mappa e le guardie degli eventi. Il confronto dell'indice e del commit attesta l'identità del tree di merge con il candidato Task 49. Gli interventi Task 50 seguono in commit distinti. Il delta successivo comprende soltanto Rotterdam, i test mirati e il registro.
+
+### Rotterdam
+
+Il commit `2f8c75fc4` adotta la proprietà di Lussemburgo 397 e Colonia 575 da `3edc1b8a9`. Per ogni paese candidato verifica nello stesso scope esistenza, guerra contro NET e stanchezza minima (PRU 99, NGF 95, GER e GCF 90). Se ci sono più candidati idonei, il gioco ne seleziona uno una sola volta con `random_country`. Il comando di pace parte da NET verso quel paese, perché Alice rimuove dalla guerra il destinatario di `end_war`. Cede soltanto le province 563 e 1743 possedute dal paese selezionato. Si conservano gli ID upstream, inclusa 1743 (Ghat), senza estendere la cessione ad altri avversari o a Stati neutrali.
+
+La rimozione dei core e l'aggiunta del core NET si applicano alle proprietà olandesi nel Reno e a 1743 se appartiene a NET. Saarbrücken 573 può alimentare il rilascio di SAA solo se è olandese e SAA è assente. Restano il modificatore, l'infamia e il flag upstream, che ora impedisce di imporre lo stesso trattato una seconda volta. I test coprono soglie al limite, neutralità, paese inesistente, scelta dell'avversario e proprietà. Sono stati verificati anche tag, mappa, testi, immagine, modificatore e composizione core/Timeline. Sono verifiche statiche sui due motori, con la direzione della pace riscontrata nel sorgente Alice e il comando di pace presente nei dati originali Victoria II. [Handler Alice](https://github.com/schombert/Project-Alice/blob/v1.3.0/src/scripting/effects.cpp#L2699-L2718) · [Applicazione della pace](https://github.com/schombert/Project-Alice/blob/v1.3.0/src/military/military.cpp#L2679-L2686)
+
+### Rollback su installazioni fittizie
+
+Il commit `2ca19ee68` corregge un difetto di diagnosi del test. Un `OSError` precedente all'interruzione prevista veniva catturato come errore atteso, perdendo lo stack originale. L'asserzione seguente vedeva `injected = False`. L'iniezione controllata di un errore anticipato alla scrittura della ricevuta riproduce la stessa asserzione sul test precedente. Il nuovo test lascia emergere l'errore originale.
+
+Le due interruzioni ora hanno fixture, Git, installazione e metadata isolati. Il test richiede l'eccezione specifica della propria iniezione, confronta i backup con il record del deploy, verifica lo stato e le ricevute al punto d'interruzione e verifica byte ripristinati, ownership e stato terminale dopo il recupero. I controlli ripetuti hanno variato l'ordine dei casi e usato due processi con installazioni distinte. Il caso concorrente sulla stessa destinazione verifica l'interleaving al lock e il rifiuto di una transazione pendente. La causa dell'errore spontaneo del Task 49 non è confermata. Il test corretto espone eventuali ricorrenze e non aggiunge tentativi automatici al deploy. Il codice operativo e il catalogo sono invariati.
+
+La suite precedente ha dato 86 passaggi e 5 skip. Il vecchio test mirato ha passato 6 ripetizioni. Sulla suite aggiornata 86 casi sono passati, 5 sono saltati per privilegi Windows relativi a link e un caso è fallito. In `test_f4_rollback_interruptions_and_retry_for_both_units` (TGC.mod, ready), Windows ha restituito `WinError 5` durante `os.replace` del journal nella fase di apply `publishing`, prima dell'interruzione di rollback prevista. Il tool ha segnalato la transazione ripristinata. Le due ripetizioni isolate di quel caso e i 30 controlli mirati in ordine variato sono passati.
+
+Tenendo aperto il journal in una fixture separata si riproduce lo stesso `WinError 5` nella stessa fase. Dopo il rilascio del file, il recupero previsto dal tool ha conservato byte precedenti e file estranei, ripristinato l'ownership e chiuso il journal senza transazioni pendenti. La prova identifica un meccanismo possibile per il rifiuto del sistema operativo. Il processo o la condizione responsabile del rifiuto spontaneo resta ignoto, e manca il traceback originale del Task 49 per attribuirgli la stessa causa. Il deployment resta sospeso.
+
+### Profilo facoltativo della PR #417
+
+Il profilo raccomandato mantiene core e Timeline comuni. Un eventuale profilo separato per Victoria II 3.04 Windows x86 deve avere un descrittore e salvataggi propri, overlay mirati e manifest separato. La release ufficiale di The Grand Loader 3.0.0, sorgente `e911c9537a32495469c94c078613981a85f62acc`, pubblica il bundle di loader, Performance Patch e Script Extender. GitHub indica per l'asset ZIP il digest `sha256:e5ca3b29c9d17870ca2235eacc9ca1759251467827c39e82ece1045d3c59dfba`. Il digest documenta la provenienza. La verifica del binario rimane aperta. Il tag non contiene un file di licenza che confermi il diritto di ridistribuire le DLL nel fork. Usare la release del produttore come dipendenza esterna, con digest e versione fissati se il profilo sarà approvato. [Release ufficiale](https://github.com/The-Grand-Combination/The-Grand-Loader/releases/tag/3.0.0) · [Sorgente e configurazione al tag](https://github.com/The-Grand-Combination/The-Grand-Loader/tree/3.0.0)
+
+Il loader usa `dinput8.dll` accanto a `v2game.exe`. Un'installazione separata è il modo raccomandato per poter tornare al percorso base senza caricare il bootstrapper. Solo il descrittore opzionale dichiarerebbe `load = "script_extender/script_extender.dll"`. Il Performance Patch si abilita separatamente per misurare la compatibilità e le prestazioni. Gli INI versionati nel progetto del loader definiscono le capacità. Le opzioni `demand_province`, `treaty`, `buildings_ai` e `income_modifiers` vanno accoppiate ai rispettivi CB, trattati, priorità, eventi sostituiti e curve economiche. I partecipanti multiplayer devono avere gli stessi componenti e impostazioni per le meccaniche che cambiano il risultato. Il ritorno al profilo base deve usare un avvio senza loader e un salvataggio del profilo base. Resta da verificare la compatibilità dei salvataggi attraversati dall'Extender. Nessuna di queste capacità è attiva nel candidato. [Configurazione dello Script Extender](https://github.com/The-Grand-Combination/The-Grand-Loader/blob/3.0.0/script_extender/README.md)
+
+### Validazione e promozione
+
+La suite cumulativa ha passato 180 test. Il validator 1966 è passato con 25 aree e 300 occorrenze tecnologiche. Il drift in entrambe le direzioni e per entrambe le basi (`54f1cd061` e `7441a4189`) dà 0 FAIL, 0 WARN e 18 INFO per esecuzione. L'auditor dà 0 FAIL, 1830 WARN e 2974 INFO. `git diff --check` è passato usando `cr-at-eol` per i file tracciati in CRLF.
+
+**PRIORITY SUMMARY**. Integrità 0, perimetro 0, semantica motore 12, invarianti 0, disponibilità 2, meccaniche 0, design 1, lacune probatorie 120, regole numeriche 156, indice economico 0.
+
+**RECOMMENDED PLAYTEST FOCUS**. Tempo di costruzione, organizzazione, potenza di fuoco, velocità e consumi della portaerei. Il rapporto indica rispettivamente 8, 9, 2, 6 e 8 riscontri su soglie non convalidate.
+
+Il branch è candidato alla promozione Git e alla pubblicazione dopo approvazione. La raccomandazione di deployment rimane sospesa per il rischio di rollback descritto sopra. Le verifiche dei motori sono statiche. Il branch `master`, il catalogo e l'installazione del Task 45 restano allo stato precedente.
+
 ## Blocchi pendenti
 
-- **Decisioni progettuali.** Rotterdam resta sospeso in attesa di confermare il perimetro delle cessioni. Il profilo Extender e l’eventuale ritiro di Performance Addon richiedono una decisione di supporto e di catalogo. Le altre eccezioni del Task 49 hanno una motivazione tecnica nel registro.
-- **Checkpoint runtime.** Dopo un merge autorizzato, verificare i due profili e i due motori, la rinomina SUA, le risorse sostituite e i salvataggi con eventi Temperance pendenti.
+- **Profilo facoltativo.** L'abilitazione dello Script Extender e il ritiro eventuale di Performance Addon richiedono una decisione di supporto e catalogo. Le altre eccezioni motivate del Task 49 restano registrate, con Rotterdam risolto nel Task 50.
+- **Deployment e checkpoint runtime.** La causa del rifiuto spontaneo di scrittura del journal Windows va chiarita prima di raccomandare un nuovo deployment. Al checkpoint autorizzato verificare i due motori e i due profili, la rinomina SUA, le risorse e i salvataggi con eventi Temperance pendenti.
 
 ## Checkpoint di chiusura
 
-Gli SHA in tabella identificano la provenienza e gli esiti sul contenuto. I lotti di implementazione sono commit locali senza acquisizione dell'ascendenza upstream. Per chiudere il ciclo, assegnare un esito a tutto il delta fissato, approvare le esclusioni e verificare il risultato nei due profili e nei due motori secondo il perimetro. Solo dopo autorizzazione, creare il merge reale di riconciliazione e marcare il checkpoint verificato con lo SHA upstream. Usare quel riferimento per il delta del ciclo successivo. L'aggiornamento della mod live passa da deployment verificato con rollback disponibile.
+Il merge di riconciliazione sul branch dedicato acquisisce la revisione upstream fissata. Usare quel riferimento per il delta upstream successivo dopo promozione autorizzata. La pubblicazione del branch e il checkpoint runtime sono decisioni distinte. La live rimane al checkpoint Task 45 e ogni aggiornamento segue il piano canonico con rollback verificabile.
