@@ -3334,15 +3334,17 @@ country_event = {
 
 	option = {
 		name = "EVTOPTB64"
-		if = {
+		random_owned = {
 			limit = {
-				civilized = no
-				civilization_progress = 0.5
-				war = no
-				NOT = { has_country_modifier = national_confusion }
-				NOT = { num_of_revolts = 1 }
+				owner = {
+					civilized = no
+					civilization_progress = 0.5
+					war = no
+					NOT = { has_country_modifier = national_confusion }
+					NOT = { num_of_revolts = 1 }
+				}
 			}
-			country_event = 68
+			owner = { country_event = 68 }
 		}
 	}
 
@@ -3595,15 +3597,17 @@ country_event = {
 
 	option = {
 		name = "EVTOPTD67"
-		if = {
+		random_owned = {
 			limit = {
-				civilized = no
-				civilization_progress = 0.5
-				war = no
-				NOT = { has_country_modifier = national_confusion }
-				NOT = { num_of_revolts = 1 }
+				owner = {
+					civilized = no
+					civilization_progress = 0.5
+					war = no
+					NOT = { has_country_modifier = national_confusion }
+					NOT = { num_of_revolts = 1 }
+				}
 			}
-			country_event = 68
+			owner = { country_event = 68 }
 		}
 	}
 

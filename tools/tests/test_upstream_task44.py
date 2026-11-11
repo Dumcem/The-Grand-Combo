@@ -81,7 +81,7 @@ class MapReconciliationTests(unittest.TestCase):
         self.assertNotRegex(read(core / 'history/diplomacy/PuppetStates.txt'), r'\bsecond\s*=\s*RAM\b')
 
     def test_suspended_native_menu_leaves_existing_entry_points(self):
-        event('TemperanceLeague', 100)
+        event('TemperanceLeague', 180)
         for name in ('native_integration_status_on', 'native_protection_act'):
             self.assertIsNotNone(decision('New_World', name))
         timeline = ROOT / 'TGC_Timeline_1966'

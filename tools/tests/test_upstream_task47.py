@@ -28,6 +28,8 @@ class RegionalReconciliationTests(unittest.TestCase):
                                           path.read_bytes()))
             for path in (root / 'localisation').glob('*.csv'):
                 keys.update(line.partition(b';')[0] for line in path.read_bytes().splitlines())
+        self.assertEqual(all_ids[b'100'], 0)
+        self.assertEqual(keys[b'EVTOPTB110'], 1)  # NationalistMovements still uses it.
         for node, event_id in zip(events, ids):
             with self.subTest(event=event_id):
                 self.assertEqual(all_ids[event_id.encode()], 1)
@@ -44,11 +46,11 @@ class RegionalReconciliationTests(unittest.TestCase):
             with self.subTest(caller=caller):
                 choice = option(event('JANFlavor', caller), label)
                 self.assertFalse(any(node.key == 'country_event' for node in choice.children))
-                conditional = section(choice, 'if')
-                limit = section(conditional, 'limit')
+                conditional = section(choice, 'random_owned')
+                limit = section(section(conditional, 'limit'), 'owner')
                 observed = [(node.key, node.value) for node in walk(limit.children) if not node.is_group]
                 self.assertEqual(observed, expected)
-                self.assertEqual(scalar(conditional, 'country_event'), '68')
+                self.assertEqual(scalar(section(conditional, 'owner'), 'country_event'), '68')
         setup = option(event('JANFlavor', 63), 'EVTOPTC63')
         self.assertEqual([node.value for node in walk(setup.children)
                           if node.key == 'country_event'], ['63'])
