@@ -16,9 +16,22 @@ La revisione upstream fissata è [14f2e6ff61e7e1ea07ffef07548560da5bcc47f0](http
 
 I controlli del Task 41 sono statici. Entrambi i profili ereditano gli stessi eventi. Le verifiche del comportamento nei motori restano da eseguire al checkpoint autorizzato. Le equivalenze parziali del Task 39 per flag Chunnel e Taiwan e per file o hunk dei commit misti vanno riutilizzate quando si riconciliano i rispettivi gruppi.
 
+## Task 42
+
+Modifiche e regressioni nel commit locale `730d3fd4696bfd9a78eee5f0b7c581242a9c7ccd`.
+
+| Gruppo | Esito e dipendenze |
+| --- | --- |
+| Texas tedesco e GEF | **Adattato.** I due flag di [`cc5f562d7`](https://github.com/The-Grand-Combination/The-Grand-Combo/commit/cc5f562d7) riattivano `800000`, i destinatari GEF e le rinomine texane esistenti. L'evento richiede un promotore ancora attivo e l'annessione USA richiede che ADV esista. Velasco è indipendente. Gli hunk AI texani di [`6741d7e73`](https://github.com/The-Grand-Combination/The-Grand-Combo/commit/6741d7e73) sono equivalenti nel comportamento perché le quattro decisioni escludono l'AI. [`28e31bd58`](https://github.com/The-Grand-Combination/The-Grand-Combo/commit/28e31bd58) riguarda la Grande Germania, i Paesi Bassi e le colonie. Resta da valutare in quel gruppo. |
+| Rivolte polacche | **Adattato.** [`cc5f562d7`](https://github.com/The-Grand-Combination/The-Grand-Combo/commit/cc5f562d7) ripristina il segnale di vittoria consumato da Cracovia e dagli eventi polacchi. Recepite la correzione di scope da [`e5fcf7bc3`](https://github.com/The-Grand-Combination/The-Grand-Combo/commit/e5fcf7bc3) e la verifica dell'esistenza di CPL nel ramo di Cracovia. Il diff russo di `cc5f562d7` e i suoi testi riguardano la crisi orientale e restano fuori dal lotto. |
+| Ridenominazioni | **Parziale.** Da [`3c16e7a2b`](https://github.com/The-Grand-Combination/The-Grand-Combo/commit/3c16e7a2b) recepiti i requisiti territoriali dell'Alsazia e la rimozione dei flag senza produttore per Bismarck e Sakhalin. Il blocco vuoto del Raj è già equivalente negli effetti. Il flag francese cambia la frequenza della ribellione algerina e resta nel gruppo Algeria. Sospese le decisioni Petrograd: il ripristino del nome rimuove il flag e può riaprire la decisione con nuovi bonus se le condizioni coesistono. [`a027796c0`](https://github.com/The-Grand-Combination/The-Grand-Combo/commit/a027796c0) e [`0e398e8a8`](https://github.com/The-Grand-Combination/The-Grand-Combo/commit/0e398e8a8) riconciliati nel risultato cumulativo, con 19 rinomine per data e tre per Iron Range. |
+| Haiti e USA | **Adattato.** [`d988356d8`](https://github.com/The-Grand-Combination/The-Grand-Combo/commit/d988356d8) sposta il modificatore da South Georgia a Port-au-Prince, applicandolo solo quando Haiti possiede la provincia. [`73504b7f`](https://github.com/The-Grand-Combination/The-Grand-Combo/commit/73504b7f) consente l'offerta per Môle Saint-Nicolas fuori dalla sfera del proponente e impedisce di chiedere aiuto al leader di sfera quando è un belligerante avversario. Il ramo di cessione dopo la guerra conserva i suoi requisiti. Il seguito `530011` conserva il CB separato indirizzato specificamente a USA. |
+
+I tre lotti coprono rimozione USS, deduplicazione territoriale, Sonderbund, Velasco e le parti indicate dei quattro gruppi del Task 42. Sei commit sorgente sono riconciliati nel contenuto e altri due hanno un risultato già presente. I commit misti sono contabilizzati per hunk. I controlli dei due profili e dei due motori restano statici fino al checkpoint runtime.
+
 ## Blocchi pendenti
 
-- **Catene storiche ed eventi comuni.** Texas tedesco, rivolta polacca, Haiti–USA, Temperance League, rinomina, crisi orientale e altre catene regionali. Trattare flag, effetti e testi insieme.
+- **Catene storiche ed eventi comuni.** Restano Grande Germania e Paesi Bassi, crisi orientale, Algeria, Temperance League, le altre rinomine del delta e le catene regionali ancora da valutare. Petrograd e alfabetizzazione cinese restano sospese per le ragioni indicate sopra.
 - **Mappa e storia.** Opzioni indigene [#416](https://github.com/The-Grand-Combination/The-Grand-Combo/pull/416), rimozione di tag, storie provinciali e terreni. Verificare selettori e riferimenti attivi.
 - **Setup, riforme, POP e progressione.** Valutare scelte di gameplay e carrier `00_Setup.txt` della Timeline.
 - **Diplomazia e CB ordinari.** Trattato di Londra, CB precedenti all'Extender, neutralità e formazione jugoslava.
@@ -27,4 +40,4 @@ I controlli del Task 41 sono statici. Entrambi i profili ereditano gli stessi ev
 
 ## Checkpoint di chiusura
 
-Gli SHA in tabella identificano la provenienza e gli esiti sul contenuto. I due lotti sono commit locali senza acquisizione dell'ascendenza upstream. Per chiudere il ciclo, assegnare un esito a tutto il delta fissato, approvare le esclusioni e verificare il risultato nei due profili e nei due motori secondo il perimetro. Solo dopo autorizzazione, creare il merge reale di riconciliazione e marcare il checkpoint verificato con lo SHA upstream. Usare quel riferimento per il delta del ciclo successivo. L'aggiornamento della mod live passa da deployment verificato con rollback disponibile.
+Gli SHA in tabella identificano la provenienza e gli esiti sul contenuto. I tre lotti sono commit locali senza acquisizione dell'ascendenza upstream. Per chiudere il ciclo, assegnare un esito a tutto il delta fissato, approvare le esclusioni e verificare il risultato nei due profili e nei due motori secondo il perimetro. Solo dopo autorizzazione, creare il merge reale di riconciliazione e marcare il checkpoint verificato con lo SHA upstream. Usare quel riferimento per il delta del ciclo successivo. L'aggiornamento della mod live passa da deployment verificato con rollback disponibile.
