@@ -42,10 +42,23 @@ Modifiche e regressioni nel commit locale `c4ec3456328d2c731c22f136092ad12f0beb1
 
 Copertura cumulativa dei Task 40–43. Sette commit sorgente sono riconciliati nel contenuto e altri due hanno già l'esito finale nel fork. Il Trattato di Londra, la crisi orientale e i CB ordinari hanno ora esiti espliciti per hunk. La scelta del destinatario e dei territori nel ramo anatolico senza Bosforo va registrata come anomalia da valutare, senza aprire un intervento separato nel lotto.
 
+## Task 44
+
+Modifiche e regressioni nel commit locale `9b2f2a47bee4d95e3f881c39d53d302aeed30461`.
+
+| Gruppo | Esito e dipendenze |
+| --- | --- |
+| Opzioni indigene [#416](https://github.com/The-Grand-Combination/The-Grand-Combo/pull/416) | **Sospeso il menu** di `3b9e5658d` e `432900323`, ricostruito dal merge `2f74af937`. L'ID `100` collide con Temperance League nel fork. Anche risolta la collisione, la Protezione perde costo e requisito di pace, cambia le soglie politiche e permette di riaprire il menu senza un blocco per paese mentre il dialogo è pendente. Occorre decidere quali regole preservare prima di sostituire le decisioni. Gli eventi BRZ `8502` e `8503` non hanno chiamanti nel delta fissato e restano sospesi. [`fb4f8347`](https://github.com/The-Grand-Combination/The-Grand-Combo/commit/fb4f8347) è già equivalente perché la decisione temporanea `good_governance` è assente. |
+| Tag, capitali e storia | **Parziale.** Da [`81f56b379`](https://github.com/The-Grand-Combination/The-Grand-Combo/commit/81f56b379) recepite 41 capitali possedute, controllate e con core al 1836. Rimossi i file di `3604`, `3662`, `3663`, tutti fuori dal limite della mappa e privi di definizione, e ritirato RAM dalla tabella tag, dalla storia paese e dal vassallaggio. Mandi è già equivalente. Conservato `D01`, consumato da decisioni francesi. Sospeso LAN: Inuvik è l'unica proprietà iniziale di Lanfang e la scelta richiede chiarire la rappresentazione geografica. |
+| Regioni, terreni e clima | **Terreni riconciliati.** [`1abd0f188`](https://github.com/The-Grand-Combination/The-Grand-Combo/commit/1abd0f188) elimina 25 categorie senza riferimenti attivi o assegnazioni nella tavolozza. Conservate geometria e regioni, incluse le deduplicazioni del Task 40. Conservato `harsh_climate` per Paracatu `2444`: il gruppo tropicale Aw è coerente con la classificazione locale. Le due categorie climatiche hanno oggi gli stessi valori. I materiali in `map/references` restano da valutare come risorse di lavoro. [Classificazione locale](https://sistemas.meioambiente.mg.gov.br/reunioes/uploads/VFDR5LCSwCye3gpUZVqYewaekT-SVOSP.pdf) |
+| Localizzazione e risorse | **Parziale.** `french_schooling_tool_tip` è già definito e localizzato nel fork. I testi del menu, i selettori vuoti associati e `native_americans.dds` restano con il menu sospeso. Conservata la grafia `Rio de Janeiro`, alterata dal diff PR. `.vscode/settings.json` escluso per istruzione esplicita. |
+
+Copertura cumulativa dei Task 40–44. Otto commit sorgente sono riconciliati nel contenuto e altri tre hanno già l'esito finale nel fork. `81f56b379` resta parziale e la PR #416 non è riconciliata. Le anomalie del menu, di LAN e di D01 sono registrate qui per il riesame. Le verifiche territoriali dei due profili sono statiche.
+
 ## Blocchi pendenti
 
 - **Catene storiche ed eventi comuni.** Restano Algeria, Temperance League, le altre rinomine del delta e le catene regionali ancora da valutare, tra cui Tobago e Great Game. Restano sospesi Petrograd, alfabetizzazione cinese e il ramo anatolico senza Bosforo.
-- **Mappa e storia.** Opzioni indigene [#416](https://github.com/The-Grand-Combination/The-Grand-Combo/pull/416), rimozione di tag, storie provinciali e terreni. Verificare selettori e riferimenti attivi.
+- **Mappa e storia.** Restano le decisioni su LAN e D01, i materiali di riferimento e il menu indigeno [#416](https://github.com/The-Grand-Combination/The-Grand-Combo/pull/416) con le sue dipendenze.
 - **Setup, riforme, POP e progressione.** Valutare scelte di gameplay e carrier `00_Setup.txt` della Timeline.
 - **Diplomazia e CB ordinari.** Eccezioni globali di `liberate_country`, termini di pace di `take_puppet`, destinatari di `free_peoples`, neutralità e formazione jugoslava.
 - **Localizzazione, UI, GFX e submod opzionali.** Verificare codifica, chiavi, asset indipendenti e perimetro dei submod. La rimozione di `TGCPerformanceAddon` resta sospesa perché il deployment lo gestisce ancora.
@@ -53,4 +66,4 @@ Copertura cumulativa dei Task 40–43. Sette commit sorgente sono riconciliati n
 
 ## Checkpoint di chiusura
 
-Gli SHA in tabella identificano la provenienza e gli esiti sul contenuto. I quattro lotti sono commit locali senza acquisizione dell'ascendenza upstream. Per chiudere il ciclo, assegnare un esito a tutto il delta fissato, approvare le esclusioni e verificare il risultato nei due profili e nei due motori secondo il perimetro. Solo dopo autorizzazione, creare il merge reale di riconciliazione e marcare il checkpoint verificato con lo SHA upstream. Usare quel riferimento per il delta del ciclo successivo. L'aggiornamento della mod live passa da deployment verificato con rollback disponibile.
+Gli SHA in tabella identificano la provenienza e gli esiti sul contenuto. I cinque lotti sono commit locali senza acquisizione dell'ascendenza upstream. Per chiudere il ciclo, assegnare un esito a tutto il delta fissato, approvare le esclusioni e verificare il risultato nei due profili e nei due motori secondo il perimetro. Solo dopo autorizzazione, creare il merge reale di riconciliazione e marcare il checkpoint verificato con lo SHA upstream. Usare quel riferimento per il delta del ciclo successivo. L'aggiornamento della mod live passa da deployment verificato con rollback disponibile.
