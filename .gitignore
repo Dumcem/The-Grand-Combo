@@ -80,3 +80,7 @@
 
 **/__pycache__/
 *.pyc
+
+# Local assistant configuration
+/TGC/.mcp.json
+/TGC/.claude/
