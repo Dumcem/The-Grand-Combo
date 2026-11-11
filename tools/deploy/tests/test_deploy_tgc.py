@@ -869,32 +869,50 @@ class DeploymentTests(unittest.TestCase):
         self.rollback(first["transaction_id"])
         self.assertFalse((self.game / "mod/TGC").exists())
 
-    def test_f4_retry_after_state_and_terminal_receipts(self):
-        for point in ("after-state", "after-receipts"):
-            with self.subTest(point=point):
-                self.legacy()
-                old = d.snapshot(self.game / "mod")
-                m = self.apply(adopt=True)
-                tx, state_dir = self.tx_paths(m["transaction_id"])
-                real_write = d.write_json
-                injected = False
-                def write(path, value):
-                    nonlocal injected
-                    if not injected and point == "after-receipts" and Path(path) == tx / "journal.json" and value.get("status") == "rolled-back":
-                        injected = True
-                        raise OSError("before terminal journal")
-                    result = real_write(path, value)
-                    if not injected and point == "after-state" and Path(path) == state_dir / "state.json":
-                        injected = True
-                        raise OSError("after restored state")
-                    return result
-                with mock.patch.object(d, "write_json", side_effect=write), self.assertRaises(OSError):
-                    self.rollback(m["transaction_id"])
-                self.assertTrue(injected)
-                self.assertEqual(old, d.snapshot(self.game / "mod"))
-                self.rollback(m["transaction_id"])
-                self.assertFalse(self.pending())
-                self.assert_foreign()
+    def check_f4_terminal_interruption(self, *, after_receipts):
+        class InjectedInterruption(OSError):
+            pass
+
+        self.legacy()
+        old = d.snapshot(self.game / "mod")
+        txid = self.apply(adopt=True)["transaction_id"]
+        tx, state_dir = self.tx_paths(txid)
+        journal_path = tx / "journal.json"
+        record = d.validate_journal(d.read_json(journal_path), self.game, self.catalog, state_dir)
+        backup = tx / "backup"
+        expected_backups = {unit["name"]: unit["old"] for unit in record["units"]}
+        real_write = d.write_json
+
+        def write(path, value):
+            if after_receipts and Path(path) == journal_path and value.get("status") == "rolled-back":
+                raise InjectedInterruption("before terminal journal")
+            real_write(path, value)
+            if not after_receipts and Path(path) == state_dir / "state.json":
+                raise InjectedInterruption("after restored state")
+
+        with mock.patch.object(d, "write_json", side_effect=write):
+            with self.assertRaises(InjectedInterruption):
+                self.rollback(txid)
+        self.assertEqual(old, d.snapshot(self.game / "mod"))
+        self.assertEqual(self.pending(), [txid])
+        self.assertEqual(d.read_state(state_dir, self.game)["components"], {})
+        self.assertEqual(d.receipt(self.game, state_dir, record, "restored") is not None, after_receipts)
+        self.assertEqual({name: d.snapshot(backup / name) for name in expected_backups}, expected_backups)
+
+        self.rollback(txid)
+        self.assertFalse(self.pending())
+        self.assertEqual(old, d.snapshot(self.game / "mod"))
+        self.assertEqual(d.read_state(state_dir, self.game)["components"], {})
+        self.assertEqual(d.ownership_ledger(self.game, state_dir, self.catalog), {})
+        self.assertEqual(d.read_json(journal_path)["status"], "rolled-back")
+        self.assertEqual({name: d.snapshot(backup / name) for name in expected_backups}, expected_backups)
+        self.assert_foreign()
+
+    def test_f4_retry_after_restored_state(self):
+        self.check_f4_terminal_interruption(after_receipts=False)
+
+    def test_f4_retry_after_terminal_receipts(self):
+        self.check_f4_terminal_interruption(after_receipts=True)
 
     def test_f5_owned_lock_does_not_hide_incomplete_journal(self):
         folder = self.game / ".tgc-deploy/transactions" / ("a" * 32)
