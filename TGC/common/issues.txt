@@ -822,7 +822,6 @@ party_issues = {
 						has_global_flag = berlin_conference
 						has_country_flag = theocracy_gov
 					}
-					NOT = { has_country_flag = islamic_law }
 				}
 			}
 
@@ -937,7 +936,7 @@ party_issues = {
 					NOT = { num_of_substates = 1 }
 					OR = {
 						is_cultural_union = no
-						has_country_flag = france
+						has_country_flag = french_content
 					}
 					NOT = { has_country_flag = dual_monarchy }
 				}

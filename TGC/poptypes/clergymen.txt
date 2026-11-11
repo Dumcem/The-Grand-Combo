@@ -1676,14 +1676,14 @@ ideologies = {
 				factor = 2
 				country = {
 					government = fascist_dictatorship
-					NOT = { has_country_flag = totalitarian_government }
+					NOT = { has_country_modifier = totalitarian_system }
 				}
 			}
 			modifier = {
 				factor = 2.5
 				country = {
 					government = fascist_dictatorship
-					has_country_flag = totalitarian_government
+					has_country_modifier = totalitarian_system
 				}
 			}
 
@@ -5353,7 +5353,7 @@ ideologies = {
 			factor = 3
 			country = {
 				has_country_flag = communist_gov
-				has_country_flag = totalitarian_government
+				has_country_modifier = totalitarian_system
 			}
 		}
 
@@ -7695,7 +7695,7 @@ issues = {
 						NOT = { political_parties = secret_ballots }
 						NOT = { wage_reform = good_minimum_wage }
 						public_meetings = no_meeting
-						NOT = { country = { has_country_flag = central_bank_instituted } }
+						NOT = { country = { has_country_modifier = central_bank_established } }
 						state_scope = { is_colonial = yes }
 						NOT = { is_ideology_enabled = socialist }
 						NOT = { literacy = 0.7 }
