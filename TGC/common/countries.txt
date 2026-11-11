@@ -363,7 +363,6 @@
 		PAL		= "countries/Palanpur.txt"
 		PNJ		= "countries/Panjab.txt"
 		PTL		= "countries/Patiala.txt"
-		RAM 	= "countries/Rampur.txt"
 		RAJ		= "countries/Rajputana.txt"
 		REW		= "countries/Rewah.txt"
 		RJK		= "countries/Rajkot.txt"
