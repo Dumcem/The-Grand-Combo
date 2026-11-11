@@ -22,12 +22,12 @@ FRENCH_ALICE_PORT = re.compile(
     re.MULTILINE | re.DOTALL
 )
 # Whole-file fingerprints at 3dadb6622, with line endings normalized.
-# The Russian fixture includes the reconciled Sakhalin and Eastern Crisis hunks.
+# Later baselines include the reconciled Russian, French and UncivFlavor hunks.
 BASELINE = {
     'decisions/China.txt': (1, '0071e8b893410f110c849ccda3a58d0d97659ba0fbe7e7d12b72373f4911728a'),
-    'decisions/France.txt': (1, 'c428c57dadf014fc843f3d50025b4a3866756899cd6b043f360fe3dc94ca3930'),
+    'decisions/France.txt': (1, '7da32585362cd8eef4b18bfb2fee06f4da322c65698477de570b8cdc57350713'),
     'decisions/SWE.txt': (1, '3d717656dc57cf98cf8e7e8e445985cad723bf2c9352d681a185938491e12869'),
-    'decisions/UncivFlavor.txt': (1, '320e387a49fbe1a9362ca83654a6a8bce822bae694a379eae7ae19571af668e7'),
+    'decisions/UncivFlavor.txt': (1, '25d4497eb404b13d3264c4d9961f78245e0bbb1e622f31af6a8aee6328905db4'),
     'events/China.txt': (4, 'ea3a1177810c94d46ee759e44610743862e64d15770315a314c42c71712fe63a'),
     'events/EIC.txt': (1, 'e8c28538980af5ee348a4601eaa3eacd221661e3c1d14da88e4d27ce0ab1eb45'),
     'decisions/JAP.txt': (1, 'b9e5bb33bc61866ac478b313eb9cff798b35b141b781a6e0c65f933254516e97'),
