@@ -571,11 +571,37 @@ La suite cumulativa ha passato 180 test. Il validator 1966 è passato con 25 are
 
 Il branch è candidato alla promozione Git e alla pubblicazione dopo approvazione. La raccomandazione di deployment rimane sospesa per il rischio di rollback descritto sopra. Le verifiche dei motori sono statiche. Il branch `master`, il catalogo e l'installazione del Task 45 restano allo stato precedente.
 
+## Task 51 — Consolidamento e journal Windows
+
+Il candidato parte da `4f6853d9a51bbcb40ba8ec02d72bc13dc8ae1a87` su `codex/upstream-first-integration`, con `master` a `54f1cd0619e499e145fc9f92d86488fbafc5e540` e `origin/master` a `cebfc8c920fbd804f49f4e2e39e4149f65c88acc`. Il commit `b2b00053ae7526d1c12ec13368b6063428275f8e` conserva i due genitori registrati nel Task 50 e lo stesso tree del candidato Task 49. La verifica del candidato conferma la politica di AGENTS.md, tutti i 63 commit e 244 percorsi dell'inventario, il contenuto di gioco del Task 50 e l'assenza di percorsi in conflitto. La scansione della storia da pubblicare non ha rilevato credenziali, percorsi macchina-specifici, backup, DLL o file temporanei.
+
+### Journal Windows e recuperabilità
+
+Il guasto osservato è il rifiuto di `os.replace` sul journal già esistente. La scrittura completa e il flush del file temporaneo precedono la chiusura del suo handle e la sostituzione. Il lock di destinazione coordina i writer del tool. I lettori di preflight e processi esterni possono comunque aprire il journal. Un secondo processo con un handle senza condivisione della cancellazione ha riprodotto `WinError 5`. Il processo o la condizione che provocò il rifiuto spontaneo restano ignoti. [Condivisione degli handle Windows](https://learn.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-createfilew)
+
+Il commit `c5cc6fd91` limita la ripetizione ai codici Windows 5 e 32. Sono ammessi al massimo sei tentativi con 775 ms complessivi di attesa programmata per singola sostituzione. Ogni tentativo ricontrolla i percorsi e usa lo stesso file temporaneo già scritto e chiuso. Un rifiuto persistente risale al chiamante e conserva l'ID della transazione e l'errore originale anche quando il journal di recupero non è scrivibile. La logica di `plan → apply → verify`, la verifica dell'ownership e l'autorità delle ricevute restano quelle documentate.
+
+Le prove includono rifiuto transitorio reale, budget esaurito, errore estraneo alla condivisione, perdita del checkpoint prima e dopo la pubblicazione e dopo una rinomina di rollback. Dopo il rilascio del file, i casi con journal durevole e ricevute concordanti si ripristinano con il rollback del relativo ID. Il journal iniziale mancante lascia intatta la destinazione. Una ricevuta presente in una sola copia blocca nuove operazioni e richiede ispezione manuale. Le prove di guasto alla copia locale delle ricevute hanno confermato backup corrispondenti al record, blocco dell'automatismo e preservazione dei file estranei. [Procedura canonica](deployment/local_deployment.md)
+
+Due esecuzioni complete della suite di deployment hanno passato 92 test ciascuna con 5 skip già previsti per i privilegi Windows sui link. La prima ha usato l'ordine standard e la seconda ha eseguito tutti i 97 casi in ordine invertito, distribuiti fra tre processi con fixture distinte. Passati anche i sette test mirati, inclusi i due punti terminali del Task 50, e la prova con un lettore indipendente.
+
+La suite cumulativa ha passato 180 test. Validator 1966 passato. Drift bidirezionale con 0 FAIL, 0 WARN e 18 INFO per direzione sulle basi `7441a4189`, `54f1cd061` e `cebfc8c92`. Auditor con 0 FAIL, 1830 WARN e 2974 INFO. I controlli di connettività Git e di whitespace sono passati.
+
+**PRIORITY SUMMARY**. Integrità 0, perimetro 0, semantica motore 12, invarianti 0, disponibilità 2, meccaniche 0, design 1, lacune probatorie 120, regole numeriche 156, indice economico 0.
+
+**RECOMMENDED PLAYTEST FOCUS**. Tempo di costruzione, organizzazione, potenza di fuoco, velocità e consumi della portaerei, con soglie ancora da convalidare.
+
+### PR #417 e checkpoint runtime
+
+L'ascendenza upstream è acquisita. Le funzionalità dipendenti dallo Script Extender restano inattive nel profilo condiviso. Rimangono la separazione del profilo facoltativo documentata nel Task 50, Performance Addon nel catalogo e i percorsi compatibili di Victoria II originale e Project Alice 1.3.0. Nessuna DLL è stata installata o attivata. Le verifiche dei motori sono statiche.
+
+Il candidato può passare a un checkpoint runtime autorizzato separatamente, con un piano esaminato e privo di blocchi, verificando la disponibilità dei backup prima di procedere. Un diniego persistente può ancora interrompere l'operazione. Se rimane una transazione pendente, seguire la procedura di recupero prima di applicare un altro piano. L'installazione live e lo scenario Alice restano al checkpoint precedente.
+
 ## Blocchi pendenti
 
-- **Profilo facoltativo.** L'abilitazione dello Script Extender e il ritiro eventuale di Performance Addon richiedono una decisione di supporto e catalogo. Le altre eccezioni motivate del Task 49 restano registrate, con Rotterdam risolto nel Task 50.
-- **Deployment e checkpoint runtime.** La causa del rifiuto spontaneo di scrittura del journal Windows va chiarita prima di raccomandare un nuovo deployment. Al checkpoint autorizzato verificare i due motori e i due profili, la rinomina SUA, le risorse e i salvataggi con eventi Temperance pendenti.
+- **Profilo facoltativo.** L'abilitazione dello Script Extender e il ritiro eventuale di Performance Addon richiedono una decisione di supporto e catalogo.
+- **Checkpoint runtime.** Al checkpoint autorizzato verificare i due motori e i due profili, la rinomina SUA, le risorse e i salvataggi con eventi Temperance pendenti. Rimane il rischio di un diniego persistente di Windows. Conservare i backup e seguire la procedura canonica di recupero in caso di transazione pendente.
 
 ## Checkpoint di chiusura
 
-Il merge di riconciliazione sul branch dedicato acquisisce la revisione upstream fissata. Usare quel riferimento per il delta upstream successivo dopo promozione autorizzata. La pubblicazione del branch e il checkpoint runtime sono decisioni distinte. La live rimane al checkpoint Task 45 e ogni aggiornamento segue il piano canonico con rollback verificabile.
+Il merge di riconciliazione acquisisce la revisione upstream fissata. Usare quella revisione per calcolare il delta upstream successivo. La promozione Git del candidato e il checkpoint runtime sono verifiche distinte. La live rimane al checkpoint Task 45.
