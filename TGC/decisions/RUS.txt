@@ -2317,103 +2317,6 @@ political_decisions = {
 		ai_will_do = { factor = 1 }
 	}
 
-	turks_defy_congress = { #this should not exist, as turks already defied one congress before that caused the war in the first place, the constantinople conference.
-		picture = "eastern_crisis_dismantle_ottomans"
-		potential = {
-			tag = RUS
-			has_global_flag = constantinople_conference
-			has_country_flag = oe_refused_congress
-			TUR = { has_country_flag = lost_russo_turkish_war }
-			truce_with = TUR
-			has_country_flag = started_the_great_eastern_crisis
-			has_global_flag = the_treaty_of_san_stefano
-			NOT = { has_country_flag = turks_defy_congress }
-		}
-
-		allow = {
-			war = no
-			truce_with = TUR
-		}
-
-		effect = {
-			set_country_flag = turks_defy_congress
-			prestige = 200
-			badboy = -2
-			war = {
-				target = TUR
-				attacker_goal = { casus_belli = cut_down_to_size_ottoman }
-				call_ally = yes
-			}
-		}
-
-		ai_will_do = { factor = 1 }
-	}
-
-    #So this is if Turks defy Congress of Berlin, previously have lost Russo-Turkish War (player, because AI will never say no to Congress otherwise), or Russo-Turkish war hasn't happened
-	dismantle_ottomans_berlin_congress_rejected = {
-		picture = "eastern_crisis_dismantle_ottomans"
-		potential = {
-			tag = RUS
-			#TUR = { has_country_flag = lost_russo_turkish_war }
-			truce_with = TUR
-			has_country_flag = turks_defy_congress
-			NOT = { has_global_flag = treaty_of_paris_russia } #failsafe this somehow doesn't get unlocked if Russia won in 1st war
-			NOT = { has_global_flag = dismantle_ottomans }
-		}
-
-		allow = {
-			war = no
-			truce_with = TUR
-		}
-
-		effect = {
-			set_global_flag = dismantle_ottomans
-			badboy = 10
-			prestige = 30
-			any_pop = {
-				limit = {
-					has_pop_religion = orthodox
-				}
-				militancy = -10
-				consciousness = -10
-			}
-			TUR = {
-				any_pop = {
-					limit = {
-						location = {
-							OR = {
-								is_core = ROM
-								is_core = BUL
-								is_core = SER
-								is_core = BOS
-								is_core = GRE
-								is_core = MON
-								is_core = ARM
-								is_core = CLC
-							}
-						}
-						is_culture_group = turko_semitic
-					}
-					reduce_pop = 0.8
-				}
-			}
-			TUR = {
-				any_pop = {
-					limit = {
-						location = { province_id = 860 }
-						is_culture_group = turko_semitic
-					}
-					reduce_pop = 0.8
-				}
-			}
-			TUR = {
-			country_event = { id = 99832 days = 10 }
-			}
-		}
-
-		ai_will_do = { factor = 1 }
-	}
-
 	#Russia Won Crimea, Won GEC, Compromised with other GPs
 	dismantle_ottomans = {
 		picture = "eastern_crisis_dismantle_ottomans"
@@ -2607,7 +2510,7 @@ political_decisions = {
 		potential = {
 			tag = TUR
 			truce_with = RUS
-			has_country_flag = eastern_crisis_dismantle_ottomans
+			RUS = { has_country_flag = eastern_crisis_dismantle_ottomans }
 			has_global_flag = russia_isolated_gec
 			NOT = { has_global_flag = kick_russians_out_oe }
 			NOT = { year = 1885 } #Idk how else not to have this pop up if Russia loses a war later on but they WP'd on escalated GEC

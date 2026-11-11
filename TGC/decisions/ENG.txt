@@ -3815,10 +3815,7 @@ political_decisions = {
 			potential = {
 				tag = ENG
 				is_disarmed = no
-				OR = {
-					TUR = { has_country_flag = ottomans_to_turks }
-					has_country_flag = turks_defy_congress
-				}
+				TUR = { has_country_flag = ottomans_to_turks }
 				TUR = {
 					is_greater_power = no
 					is_secondary_power = no
@@ -3885,10 +3882,7 @@ political_decisions = {
 			potential = {
 				tag = ENG
 				is_disarmed = no
-				OR = {
-					TUR = { has_country_flag = ottomans_to_turks }
-					has_country_flag = turks_defy_congress
-				}
+				TUR = { has_country_flag = ottomans_to_turks }
 				TUR = {
 					is_greater_power = no
 					is_secondary_power = no
