@@ -564,52 +564,93 @@ political_decisions = {
 		potential = {
 			tag = NET
 			ai = no
-			has_global_flag = dutch_rename_luxemburg
-			NOT = { has_global_flag = extra_flavour_disabled }
-			has_global_flag = dutch_rename_rhine
+			owns = 397
+			owns = 575
+			NOT = {
+				has_global_flag = extra_flavour_disabled
+				has_global_flag = treaty_of_rotterdam
+			}
 		}
 
 		allow = {
-			OR = {
-				war_with = PRU
-				war_with = NGF
-				war_with = GER
-				war_with = GCF
-			}
-			OR = {
-				PRU = { war_exhaustion = 99 }
-				NGF = { war_exhaustion = 95 }
-				GER = { war_exhaustion = 90 }
-				GCF = { war_exhaustion = 90 }
+			any_country = {
+				exists = yes
+				war_with = THIS
+				OR = {
+					AND = { tag = PRU war_exhaustion = 99 }
+					AND = { tag = NGF war_exhaustion = 95 }
+					AND = { tag = GER war_exhaustion = 90 }
+					AND = { tag = GCF war_exhaustion = 90 }
+				}
 			}
 		}
 
 		effect = {
-			set_global_flag = treaty_of_rotterdam
-			set_country_flag = Thicc-Niederlands
-			PRU_575 = { remove_core = GER }
-			PRU_575 = { remove_core = PRU }
-			PRU_575 = { remove_core = NGF }
-			PRU_575 = { remove_core = GCF }
-			PRU_575 = { remove_core = RHI }
-			PRU_575 = { remove_core = LUX }
-			PRU_575 = { remove_core = OLD }
-			PRU_575 = { add_core = NET }
-			563 = { secede_province = NET }
-			1743 = { secede_province = NET }
-			1743 = { remove_core = GER }
-			1743 = { remove_core = PRU }
-			1743 = { remove_core = HAN }
-			1743 = { remove_core = NGF }
-			1743 = { remove_core = GCF }
-			1743 = { add_core = NET }
-			573 = { add_core = SAA }
-			release_vassal = SAA
-			add_country_modifier = {
-				name = till_the_rhine
-				duration = -1
+			# Select exactly one opponent. Use the same scope for both the peace and the cessions.
+			random_country = {
+				limit = {
+					exists = yes
+					war_with = THIS
+					OR = {
+						AND = { tag = PRU war_exhaustion = 99 }
+						AND = { tag = NGF war_exhaustion = 95 }
+						AND = { tag = GER war_exhaustion = 90 }
+						AND = { tag = GCF war_exhaustion = 90 }
+					}
+				}
+				# End the war from NET's side. Alice removes the target of end_war.
+				random_owned = {
+					limit = { owned_by = PRU }
+					NET = { end_war = PRU }
+				}
+				random_owned = {
+					limit = { owned_by = NGF }
+					NET = { end_war = NGF }
+				}
+				random_owned = {
+					limit = { owned_by = GER }
+					NET = { end_war = GER }
+				}
+				random_owned = {
+					limit = { owned_by = GCF }
+					NET = { end_war = GCF }
+				}
+				any_owned = {
+					limit = { OR = { province_id = 563 province_id = 1743 } }
+					secede_province = THIS
+				}
+				NET = {
+					set_global_flag = treaty_of_rotterdam
+					set_country_flag = Thicc-Niederlands
+					any_owned = {
+						limit = { region = PRU_575 }
+						remove_core = GER
+						remove_core = PRU
+						remove_core = NGF
+						remove_core = GCF
+						remove_core = RHI
+						remove_core = LUX
+						remove_core = OLD
+						add_core = NET
+					}
+					random_owned = {
+						limit = { province_id = 1743 }
+						remove_core = GER
+						remove_core = PRU
+						remove_core = HAN
+						remove_core = NGF
+						remove_core = GCF
+						add_core = NET
+					}
+					random_owned = {
+						limit = { province_id = 573 owner = { NOT = { exists = SAA } } }
+						add_core = SAA
+						owner = { release_vassal = SAA }
+					}
+					add_country_modifier = { name = till_the_rhine duration = -1 }
+					badboy = 10
+				}
 			}
-			badboy = 10
 		}
 		ai_will_do = { factor = 1 }
 	}
