@@ -15,6 +15,7 @@ political_decisions = {
 		}
 
 		effect = {
+			set_country_flag = pahang_declare_independence
 			prestige = 10
 			JOH = {
 				release_vassal = PHG
@@ -97,7 +98,6 @@ political_decisions = {
 				foreign_artillery = no_foreign_artillery
 				foreign_training = no_foreign_training
 			}
-			NOT = { has_country_flag = sarawak_rangers }
 		}
 
 		allow = {

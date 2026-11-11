@@ -4497,6 +4497,7 @@ political_decisions = {
 					NOT = { owns = 1910 }
 				}
 				NOT = { has_country_flag = gold_coast_treaty }
+				NOT = { has_global_flag = gold_coast_treaty }
 			}
 
 			allow = {
@@ -4509,7 +4510,7 @@ political_decisions = {
 			}
 
 			effect = {
-				set_country_flag = gold_coast_treaty
+				set_global_flag = gold_coast_treaty
 				treasury = -10000
 				1909 = { owner = { country_event = 36960 } }
 			}
@@ -4781,7 +4782,6 @@ political_decisions = {
 						average_militancy = 6
 					}
 					EGY = { vassal_of = THIS }
-					has_global_flag = egyptian_revolution
 					year = 1919
 				}
 			}
@@ -5368,7 +5368,6 @@ political_decisions = {
 						has_country_flag = constitutional_monarchy_gov
 						OR = {
 							has_global_flag = british_dismantled
-							has_global_flag = british_flee_to_canada
 						}
 						has_global_flag = france_dismantled
 						FRA = { has_country_flag = communist_gov }

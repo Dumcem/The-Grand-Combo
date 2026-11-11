@@ -1822,7 +1822,7 @@
 				year = 1855
 				NOT = {
 					has_country_flag = california_boom_flag
-					has_global_flag = california_global_boom_flag
+					has_global_flag = california_boom_global_flag
 				}
 				war = no
 				any_owned_province = { region = MEX_85 }

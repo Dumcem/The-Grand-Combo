@@ -29,7 +29,8 @@ class RegionalReconciliationTests(unittest.TestCase):
             for path in (root / 'localisation').glob('*.csv'):
                 keys.update(line.partition(b';')[0] for line in path.read_bytes().splitlines())
         self.assertEqual(all_ids[b'100'], 0)
-        self.assertEqual(keys[b'EVTOPTB110'], 1)  # NationalistMovements still uses it.
+        self.assertEqual(keys[b'EVTOPTB110'], 0)
+        self.assertEqual(keys[b'EVTOPTB15110'], 1)  # NationalistMovements has its own label.
         for node, event_id in zip(events, ids):
             with self.subTest(event=event_id):
                 self.assertEqual(all_ids[event_id.encode()], 1)
@@ -38,19 +39,19 @@ class RegionalReconciliationTests(unittest.TestCase):
                 for label in labels:
                     self.assertEqual(keys[label.encode()], 1)
 
-    def test_both_menu_routes_apply_the_national_value_event_gate(self):
+    def test_menu_checks_national_value_requirements_and_border_menu_returns(self):
         target = event('JANFlavor', 68)
         trigger = section(target, 'trigger')
         expected = [(node.key, node.value) for node in walk(trigger.children) if not node.is_group]
-        for caller, label in ((64, 'EVTOPTB64'), (67, 'EVTOPTD67')):
-            with self.subTest(caller=caller):
-                choice = option(event('JANFlavor', caller), label)
-                self.assertFalse(any(node.key == 'country_event' for node in choice.children))
-                conditional = section(choice, 'random_owned')
-                limit = section(section(conditional, 'limit'), 'owner')
-                observed = [(node.key, node.value) for node in walk(limit.children) if not node.is_group]
-                self.assertEqual(observed, expected)
-                self.assertEqual(scalar(section(conditional, 'owner'), 'country_event'), '68')
+        choice = option(event('JANFlavor', 64), 'EVTOPTB64')
+        self.assertFalse(any(node.key == 'country_event' for node in choice.children))
+        conditional = section(choice, 'random_owned')
+        limit = section(section(conditional, 'limit'), 'owner')
+        observed = [(node.key, node.value) for node in walk(limit.children) if not node.is_group]
+        self.assertEqual(observed, expected)
+        self.assertEqual(scalar(section(conditional, 'owner'), 'country_event'), '68')
+        back = option(event('JANFlavor', 67), 'EVTOPTD67')
+        self.assertEqual(scalar(back, 'country_event'), '66')
         setup = option(event('JANFlavor', 63), 'EVTOPTC63')
         self.assertEqual([node.value for node in walk(setup.children)
                           if node.key == 'country_event'], ['63'])

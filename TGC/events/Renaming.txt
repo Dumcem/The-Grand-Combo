@@ -2020,8 +2020,8 @@ country_event = { # DEVNOTE: Many of the Lithuanian renames and other renames fo
 
 					# 633
 						any_land_province = { limit = { province_id = 633 owner = { OR = { is_culture_group = hungarian_culture_group AND = { is_culture_group = germanic accepted_culture = hungarian NOT = { accepted_culture = slovak } } } } } change_province_name = "Pozsony" }
-						any_land_province = { limit = { province_id = 633 owner = { OR = { is_culture_group = czecho_slovak_culture_group AND = { is_culture_group = germanic accepted_culture = slovak } } NOT = { has_global_flag = bratislava_renamed } } } change_province_name = "Prešporok" }
-						any_land_province = { limit = { province_id = 633 owner = { OR = { is_culture_group = czecho_slovak_culture_group AND = { is_culture_group = germanic accepted_culture = slovak } } has_global_flag = bratislava_renamed } } change_province_name = "Bratislava" }
+						any_land_province = { limit = { province_id = 633 owner = { OR = { is_culture_group = czecho_slovak_culture_group AND = { is_culture_group = germanic accepted_culture = slovak } } NOT = { has_global_flag = czechoslovakia_formed } } } change_province_name = "Prešporok" }
+						any_land_province = { limit = { province_id = 633 owner = { OR = { is_culture_group = czecho_slovak_culture_group AND = { is_culture_group = germanic accepted_culture = slovak } } has_global_flag = czechoslovakia_formed } } change_province_name = "Bratislava" }
 						any_land_province = { limit = { province_id = 633 owner = { is_culture_group = germanic NOT = { accepted_culture = hungarian } NOT = { accepted_culture = slovak } } } change_province_name = "Preßburg" }
 
 					# 636
