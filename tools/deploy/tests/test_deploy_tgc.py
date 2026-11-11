@@ -781,6 +781,134 @@ class DeploymentTests(unittest.TestCase):
         self.assertEqual(predictable.read_bytes(), b"preserve")
         self.assertEqual(set(self.base.glob("safe.json.*.tmp")), set())
 
+    @staticmethod
+    def windows_replace_error(code=5):
+        error = PermissionError("simulated Windows metadata replacement failure")
+        error.winerror = code
+        return error
+
+    def test_metadata_replace_retries_only_windows_access_and_sharing_errors(self):
+        final = self.base / "metadata.json"
+        for code in (5, 32, 87):
+            with self.subTest(code=code):
+                final.write_bytes(b"old")
+                real_replace = d.os.replace
+                calls = []
+
+                def replace(source, target):
+                    calls.append(source)
+                    if len(calls) == 1:
+                        raise self.windows_replace_error(code)
+                    real_replace(source, target)
+
+                with mock.patch.object(d.os, "replace", side_effect=replace), mock.patch.object(d.time, "sleep") as sleep:
+                    if code == 87:
+                        with self.assertRaises(PermissionError):
+                            d.write_json(final, {"new": True})
+                        self.assertEqual(final.read_bytes(), b"old")
+                        sleep.assert_not_called()
+                        self.assertEqual(len(calls), 1)
+                    else:
+                        d.write_json(final, {"new": True})
+                        self.assertEqual(d.read_json(final), {"new": True})
+                        self.assertEqual(len(calls), 2)
+                        self.assertEqual(calls[0], calls[1])
+                        sleep.assert_called_once_with(0.025)
+                self.assertFalse(list(self.base.glob("metadata.json.*.tmp")))
+
+    def test_metadata_replace_exhausts_budget_without_overwriting_old_bytes(self):
+        final = self.base / "metadata.json"
+        final.write_bytes(b"old")
+        error = self.windows_replace_error()
+        with mock.patch.object(d.os, "replace", side_effect=error) as replace, mock.patch.object(d.time, "sleep") as sleep:
+            with self.assertRaises(PermissionError) as caught:
+                d.write_json(final, {"new": True})
+        self.assertIs(caught.exception, error)
+        self.assertEqual(replace.call_count, 6)
+        self.assertEqual(sleep.call_args_list, [mock.call(t) for t in (0.025, 0.05, 0.1, 0.2, 0.4)])
+        self.assertEqual(final.read_bytes(), b"old")
+        self.assertFalse(list(self.base.glob("metadata.json.*.tmp")))
+
+    def test_apply_retries_a_transient_journal_handle_and_verifies(self):
+        self.legacy()
+        real_replace = d.os.replace
+        blocked = []
+
+        def replace(source, target):
+            target = Path(target)
+            if not blocked and target.name == "journal.json" and d.read_json(source)["status"] == "publishing":
+                blocked.append(target)
+                if os.name == "nt":
+                    with target.open("rb"):
+                        return real_replace(source, target)
+                raise self.windows_replace_error()
+            return real_replace(source, target)
+
+        with mock.patch.object(d.os, "replace", side_effect=replace), mock.patch.object(d.time, "sleep") as sleep:
+            manifest = self.apply(adopt=True)
+        sleep.assert_called_once_with(0.025)
+        self.assertEqual(self.verify()["TGC"]["transaction_id"], manifest["transaction_id"])
+        self.assertFalse(self.pending())
+        self.assert_foreign()
+
+    def test_apply_preserves_backups_when_journal_stays_blocked_after_publication(self):
+        self.legacy()
+        before = d.snapshot(self.game / "mod")
+        real_replace = d.os.replace
+        blocked = []
+
+        def replace(source, target):
+            target = Path(target)
+            if target.name == "journal.json" and (target.parent / "backup/TGC").is_dir():
+                blocked.append(target)
+                raise self.windows_replace_error()
+            return real_replace(source, target)
+
+        with mock.patch.object(d.os, "replace", side_effect=replace), mock.patch.object(d.time, "sleep"):
+            with self.assertRaisesRegex(d.DeploymentError, "Recovery required.*could not persist recovery status") as caught:
+                self.apply(adopt=True)
+        self.assertIsInstance(caught.exception.__cause__, PermissionError)
+        self.assertEqual(len(blocked), 18)  # apply, recovery, and recovery-status writes
+        tx = blocked[0].parent
+        txid = tx.name
+        self.assertEqual(self.pending(), [txid])
+        backup = d.snapshot(tx / "backup/TGC")
+        self.assertEqual(backup, d.read_json(tx / "record.json")["units"][0]["old"])
+        self.rollback(txid)
+        self.assertEqual(d.snapshot(self.game / "mod"), before)
+        self.assertEqual(d.snapshot(tx / "backup/TGC"), backup)
+        self.assertFalse(self.pending())
+        self.assert_foreign()
+
+    def test_rollback_resumes_when_journal_was_blocked_after_restore_rename(self):
+        self.legacy()
+        before = d.snapshot(self.game / "mod")
+        txid = self.apply(adopt=True)["transaction_id"]
+        tx, state_dir = self.tx_paths(txid)
+        journal_path = tx / "journal.json"
+        backup = d.snapshot(tx / "backup")
+        real_replace = d.os.replace
+        blocked = []
+
+        def replace(source, target):
+            if Path(target) == journal_path and (blocked or "published" in d.read_json(source).get("rollback_units", {}).values()):
+                blocked.append(target)
+                raise self.windows_replace_error(32)
+            return real_replace(source, target)
+
+        with mock.patch.object(d.os, "replace", side_effect=replace), mock.patch.object(d.time, "sleep"):
+            with self.assertRaisesRegex(d.DeploymentError, "Recovery required.*could not persist recovery status"):
+                self.rollback(txid)
+        self.assertEqual(len(blocked), 12)
+        self.assertEqual(self.pending(), [txid])
+        self.assertEqual(d.snapshot(tx / "backup"), backup)
+        self.rollback(txid)
+        self.assertEqual(d.snapshot(self.game / "mod"), before)
+        self.assertEqual(d.snapshot(tx / "backup"), backup)
+        self.assertEqual(d.ownership_ledger(self.game, state_dir, self.catalog), {})
+        self.assertFalse(self.pending())
+        self.assert_foreign()
+
     def test_f4_rollback_interruptions_and_retry_for_both_units(self):
         for name in ("TGC", "TGC.mod"):
             for point in ("partial-copy", "ready", "after-displace", "after-publish", "before-verification"):

@@ -16,11 +16,13 @@ import stat as statmod
 import subprocess
 import sys
 import tempfile
+import time
 import uuid
 
 SCHEMA = 1
 EXPECTED_ORIGIN = "https://github.com/Dumcem/The-Grand-Combo.git"
 INCOMPLETE = {"planned", "staging", "publishing", "verifying", "rolling-back", "recovery-required"}
+METADATA_REPLACE_DELAYS = (0, 0.025, 0.05, 0.1, 0.2, 0.4)
 
 
 class DeploymentError(RuntimeError):
@@ -65,17 +67,30 @@ def write_json(path, value):
             stream.write("\n")
             stream.flush()
             os.fsync(stream.fileno())
-        no_links(path)
-        os.replace(temporary, path)
+        for attempt, delay in enumerate(METADATA_REPLACE_DELAYS, start=1):
+            if delay:
+                time.sleep(delay)
+            no_links(temporary)
+            no_links(path)
+            try:
+                os.replace(temporary, path)
+                break
+            except OSError as exc:
+                # Windows can report either code while a reader denies delete sharing.
+                if getattr(exc, "winerror", None) not in (5, 32) or attempt == len(METADATA_REPLACE_DELAYS):
+                    raise
         if os.name != "nt":
             directory = os.open(path.parent, os.O_RDONLY | getattr(os, "O_DIRECTORY", 0))
             try:
                 os.fsync(directory)
             finally:
                 os.close(directory)
-    finally:
-        if temporary.exists():
-            temporary.unlink()
+    except BaseException as exc:
+        try:
+            temporary.unlink(missing_ok=True)
+        except OSError as cleanup:
+            exc.add_note(f"Cannot remove this write's temporary {temporary}: {cleanup}")
+        raise
 
 
 def no_links(path):
@@ -908,8 +923,12 @@ def apply_plan(plan, root, game, catalog_path, state_base=None, adopt_existing=F
                 restore_transaction(journal, game, state_dir, catalog)
             except BaseException as recovery:
                 journal["recovery_error"] = str(recovery)
-                record("recovery-required")
-                raise DeploymentError(f"Recovery required for {txid}: {recovery}") from exc
+                message = f"Recovery required for {txid}: {recovery} (original error: {exc})"
+                try:
+                    record("recovery-required")
+                except (OSError, DeploymentError) as checkpoint:
+                    message += f"; could not persist recovery status: {checkpoint}"
+                raise DeploymentError(message) from exc
             raise DeploymentError(f"Transaction {txid} rolled back: {exc}") from exc
 
 
@@ -982,7 +1001,12 @@ def rollback(root, game, catalog_path, txid, state_base=None, recover_lock=False
             if journal.get("rollback_started"):
                 journal["status"] = "recovery-required"
                 journal["recovery_error"] = str(exc)
-                write_json(journal_path, journal)
+                try:
+                    write_json(journal_path, journal)
+                except (OSError, DeploymentError) as checkpoint:
+                    raise DeploymentError(
+                        f"Recovery required for {txid}: {exc}; could not persist recovery status: {checkpoint}"
+                    ) from exc
             raise
     return {"transaction_id": txid, "status": "rolled-back"}
 

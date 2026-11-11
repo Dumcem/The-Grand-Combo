@@ -225,6 +225,16 @@ Inspection failure and PID reuse are handled conservatively.
 JSON writes use a unique same-directory temporary created exclusively, complete
 writing, flush, file fsync, close, then os.replace. Preexisting temporary files
 are not reused or cleaned up. Only the current call's temporary is cleaned up.
+Windows metadata replacement retries only access denied and sharing violations
+(WinError 5 and 32). It rechecks both paths before each of at most six attempts,
+with at most 775 ms of scheduled wait per replacement. Each attempt uses the
+same fully written, closed temporary. A reader that denies delete sharing can
+block replacement even while the target lock excludes other deployment writers.
+Other errors surface immediately. A persistent denial follows the existing
+rollback or recovery path. If the denial also prevents persisting recovery
+status, the command reports the transaction ID and original error. The last
+durable journal and the backups remain the recovery evidence. Release the lock
+on the affected file before retrying the documented rollback for that ID.
 Directory fsync is attempted outside Windows; Windows has no portable
 standard-library directory flush here. Individual replacements/renames do not
 guarantee power-loss atomicity across multiple metadata files or hardware.
