@@ -3229,7 +3229,6 @@ political_decisions = {
 				}
 			}
 			NOT = {
-				has_global_flag = japanese_sakhalin
 				has_country_flag = fought_for_sakhalin
 			}
 		}

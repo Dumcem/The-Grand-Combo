@@ -148,6 +148,8 @@ political_decisions = {
 
 		effect = {
 			set_global_flag = german_texas
+			set_global_flag = aquire_texas
+			set_country_flag = German-Texas
 			money = -300000
 			133 = {
 				change_province_name = "Friedrichsburg"
@@ -281,6 +283,7 @@ political_decisions = {
 		picture = abolish_slavery_romania
 		potential = {
 			tag = USA
+			exists = ADV
 			has_global_flag = texan_question
 			NOT = { has_global_flag = extra_flavour_disabled }
 			NOT = { has_global_flag = usa_seize_texas }

@@ -22,6 +22,7 @@ FRENCH_ALICE_PORT = re.compile(
     re.MULTILINE | re.DOTALL
 )
 # Whole-file fingerprints at 3dadb6622, with line endings normalized.
+# The Russian fixture additionally includes the approved Sakhalin hunk of 3c16e7a2b.
 BASELINE = {
     'decisions/China.txt': (1, '0071e8b893410f110c849ccda3a58d0d97659ba0fbe7e7d12b72373f4911728a'),
     'decisions/France.txt': (1, 'c428c57dadf014fc843f3d50025b4a3866756899cd6b043f360fe3dc94ca3930'),
@@ -30,7 +31,7 @@ BASELINE = {
     'events/China.txt': (4, 'ea3a1177810c94d46ee759e44610743862e64d15770315a314c42c71712fe63a'),
     'events/EIC.txt': (1, 'e8c28538980af5ee348a4601eaa3eacd221661e3c1d14da88e4d27ce0ab1eb45'),
     'decisions/JAP.txt': (1, 'b9e5bb33bc61866ac478b313eb9cff798b35b141b781a6e0c65f933254516e97'),
-    'decisions/RUS.txt': (1, 'c43717c30d7e33b10113d3baa966ff7e4f4ce10bb36757dbcd38f2b3a02ae9e0'),
+    'decisions/RUS.txt': (1, '86f67bed687bbd084fa6630146b00ffb34fe0c5f766a89984b0f3ebb394d5b53'),
 }
 
 
