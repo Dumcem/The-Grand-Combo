@@ -3,14 +3,20 @@ from configparser import ConfigParser
 import hashlib
 import json
 from pathlib import Path
+import re
+import subprocess
 import sys
 import unittest
+from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[3]
 CORE = ROOT / "TGC"
 EXTENDED = ROOT / "TGCScriptExtender"
 sys.path.insert(0, str(CORE / "tools"))
+sys.path.insert(0, str(ROOT / "tools" / "deploy"))
+from deploy_tgc import load_catalog, payload_sources
 from lib_1966_parser import parse_script, scalar, walk
+from lib_1966_runtime import compose_runtime
 
 
 def script(path):
@@ -38,6 +44,44 @@ def localisation_keys(path):
 
 
 class ExtenderProfileTests(unittest.TestCase):
+    def test_profiles_inherit_upstream_event_modifiers_without_legacy_income(self):
+        path = "common/event_modifiers.txt"
+        upstream, previous = (
+            subprocess.check_output(["git", "show", f"{ref}:TGC/{path}"], cwd=ROOT)
+            .replace(b"\r\n", b"\n")
+            for ref in ("14f2e6ff61e7e1ea07ffef07548560da5bcc47f0",
+                        "d744bb2d73c69928587b58cc7b3607262baa6149")
+        )
+        income = re.compile(rb"^[ \t]*(?:rich|middle|poor)_income_modifier[ \t]*=")
+        before = previous.splitlines(keepends=True)
+        self.assertEqual(sum(bool(income.match(line)) for line in before), 15)
+        self.assertEqual(b"".join(line for line in before if not income.match(line)), upstream)
+
+        manifest_path = "tools/deploy/extender_overlay.json"
+        manifest = json.loads((ROOT / manifest_path).read_bytes())
+        # Include the full overlay so the production selector can validate its pins.
+        relevant = {manifest_path, f"TGC/{path}"}
+        relevant.update(f"{root}/{name}" for root in ("TGC", EXTENDED.name)
+                        for name in (*manifest, path))
+        tracked = subprocess.check_output(
+            ["git", "ls-files", "-z", "--", *sorted(relevant)], cwd=ROOT
+        ).split(b"\0")
+        catalog = load_catalog(ROOT / "tools/deploy/components_extender.json")
+        # This test checks file selection. Link auditing is covered by deployment tests.
+        with patch("deploy_tgc.snapshot"):
+            extender = payload_sources(ROOT, catalog["components"][0],
+                                       [p.decode() for p in tracked if p], catalog)
+        sources = {
+            "core": ROOT / compose_runtime(ROOT, timeline_root=None).require(path),
+            "core+1966": ROOT / compose_runtime(ROOT).require(path),
+            "core+extender": extender[path],
+        }
+        for profile, source in sources.items():
+            with self.subTest(profile=profile):
+                self.assertEqual(source, CORE / path)
+                actual = source.read_bytes().replace(b"\r\n", b"\n")
+                self.assertEqual(actual, upstream)
+
     def test_declared_overlay_and_descriptor(self):
         manifest = json.loads((ROOT / "tools/deploy/extender_overlay.json").read_bytes())
         files = {p.relative_to(EXTENDED).as_posix() for p in EXTENDED.rglob("*") if p.is_file()}

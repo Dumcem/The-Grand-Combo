@@ -80,10 +80,10 @@ paese proprietario della provincia. Lascia invariati importi non positivi e
 chiamate estranee ai sette siti di reddito (vendite artigiane, fabbriche,
 RGO, pensioni e disoccupazione). Il fondo per gli input artigiani ha fattore
 uno. I modificatori preesistenti si sommano negli stessi accumulatori di
-provincia e paese. Esempio con `state_n_government` e
-`international_zone_modifier` nazionale (5/10/25%) e nessun contributo
-provinciale: 100 netti diventano 110 / 112,5 / 126. Con un ulteriore +10%
-provinciale ai poveri diventano 120 / 112,5 / 126. [Sorgente redditi](https://github.com/The-Grand-Combination/The-Grand-Loader/blob/3.0.0/script_extender/src/features/income_modifiers.cpp#L10-L76)
+provincia e paese. Prima del Task 63,
+`international_zone_modifier` aggiungeva 5/10/25% al reddito nazionale.
+Nel profilo corrente quel contributo è stato rimosso. Con il solo
+`state_n_government`, 100 netti diventano 105 / 102,5 / 101. [Sorgente redditi](https://github.com/The-Grand-Combination/The-Grand-Loader/blob/3.0.0/script_extender/src/features/income_modifiers.cpp#L10-L76)
 
 Il Task 56 ha osservato la ricorrenza di 53. Il confronto strutturale mostra
 la rimozione dei sei blocchi `any_country` di trasferimento POP. Restano
