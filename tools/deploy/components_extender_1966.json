@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "runtime_policy_version": 1,
+  "profiles": {
+    "core+extender+1966": ["TGCScriptExtender1966"]
+  },
+  "components": [
+    {
+      "id": "TGCScriptExtender1966",
+      "name": "TGC - Script Extender + Timeline 1966",
+      "source_dir": "TGCScriptExtender",
+      "source_descriptor": "TGCScriptExtender.mod",
+      "destination_dir": "TGCScriptExtender1966",
+      "destination_descriptor": "TGCScriptExtender1966.mod",
+      "dependencies": [],
+      "class": "core",
+      "profiles": ["core+extender+1966"],
+      "runtime_policy": {
+        "files": "git-tracked-working-copy-bytes",
+        "roots": ["common", "events", "localisation", "map"]
+      },
+      "exclusions": [],
+      "extends": "TGC",
+      "overlay_manifest": "tools/deploy/extender_overlay.json",
+      "timeline_overrides": "tools/deploy/extender_1966_overrides.json"
+    }
+  ]
+}

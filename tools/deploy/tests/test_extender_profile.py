@@ -16,7 +16,9 @@ EXTENDED = ROOT / "TGCScriptExtender"
 UPSTREAM = "14f2e6ff61e7e1ea07ffef07548560da5bcc47f0"
 sys.path.insert(0, str(CORE / "tools"))
 sys.path.insert(0, str(ROOT / "tools" / "deploy"))
-from deploy_tgc import DeploymentError, check_descriptor, load_catalog, payload_sources
+from deploy_tgc import (EXTENDER_TIMELINE_COMPONENT, DeploymentError, check_descriptor,
+                        component_descriptor, descriptor_values, load_catalog, payload_sources,
+                        selected_components)
 from lib_1966_parser import parse_script, scalar, walk
 from lib_1966_runtime import compose_runtime
 
@@ -46,6 +48,72 @@ def localisation_keys(path):
 
 
 class ExtenderProfileTests(unittest.TestCase):
+    def test_four_profiles_select_canonical_content_and_preserve_engine_boundaries(self):
+        tracked = subprocess.check_output(["git", "ls-files", "-z"], cwd=ROOT).decode().split("\0")[:-1]
+        configurations = {
+            "core": ("components.json", ["TGC"]),
+            "core+1966": ("components.json", ["TGC", "TGC_Timeline_1966"]),
+            "core+extender": ("components_extender.json", [EXTENDED.name]),
+            "core+extender+1966": ("components_extender_1966.json", [EXTENDER_TIMELINE_COMPONENT]),
+        }
+        inventories, descriptors = {}, {}
+        # Full-tree link and staging checks are exercised by the deployment tests.
+        with patch("deploy_tgc.snapshot"):
+            for profile, (catalog_file, ids) in configurations.items():
+                catalog = load_catalog(ROOT / "tools/deploy" / catalog_file)
+                components = selected_components(catalog, profile, ())
+                self.assertEqual([component["id"] for component in components], ids)
+                files = {}
+                for component in components:
+                    files.update(payload_sources(ROOT, component, tracked, catalog))
+                    source = component_descriptor(ROOT, component, catalog, tracked)
+                    data = source if isinstance(source, bytes) else source.read_bytes()
+                    descriptors[component["id"]] = data.decode("utf-8-sig")
+                inventories[profile] = files
+
+        core, shared_1966, extender, combined = inventories.values()
+        timeline = {name: source for name, source in shared_1966.items() if core.get(name) != source}
+        overlay = {name: source for name, source in extender.items() if core.get(name) != source}
+        map_path = "map/default.map"
+        combined_map = overlay[map_path].read_bytes().replace(
+            b"../mod/TGCScriptExtender/map/", b"../mod/TGCScriptExtender1966/map/"
+        )
+        self.assertEqual(combined, {**core, **timeline, **overlay, map_path: combined_map})
+        self.assertFalse(timeline.keys() & overlay.keys())
+        self.assertEqual(combined["map/definition.csv"], core["map/definition.csv"])
+        self.assertEqual(combined["map/region.txt"], core["map/region.txt"])
+        self.assertIn("end_date = '1966.1.1'", combined["common/defines.lua"].read_text(encoding="cp1252"))
+        self.assertNotEqual(combined["common/defines.lua"], extender["common/defines.lua"])
+        for directory in ("technologies", "inventions", "units", "localisation"):
+            self.assertTrue(any(name.startswith(directory + "/") for name in timeline), directory)
+
+        # The Timeline replaces building levels. The scheduler's named buildings still match exactly.
+        buildings = definitions(combined["common/buildings.txt"])
+        original_buildings = definitions(extender["common/buildings.txt"])
+        scheduled = definitions(combined["common/buildings_ai.txt"])
+        self.assertEqual(list(buildings), list(original_buildings))
+        for name in scheduled:
+            self.assertEqual(shape(buildings[name].children), shape(original_buildings[name].children), name)
+        for name in ("fort", "naval_base", "railroad"):
+            self.assertEqual(scalar(buildings[name], "max_level"), "8")
+
+        for cid in ("TGC", "TGC_Timeline_1966"):
+            self.assertEqual(descriptor_values(descriptors[cid], "load"), [])
+        # The Alice-specific rules in runtime scripts remain visible in both shared profiles.
+        for name, source in core.items():
+            if name.startswith(("common/", "decisions/", "events/")) and name.endswith(".txt"):
+                if b"project_alice" in source.read_bytes():
+                    self.assertEqual(shared_1966[name], source, name)
+        base_loader = descriptors[EXTENDED.name]
+        combined_loader = descriptors[EXTENDER_TIMELINE_COMPONENT]
+        self.assertEqual(descriptor_values(combined_loader, "load"), descriptor_values(base_loader, "load"))
+        self.assertEqual(descriptor_values(combined_loader, "replace_path"),
+                         descriptor_values(descriptors["TGC"], "replace_path"))
+        self.assertEqual(descriptor_values(combined_loader, "path"), ["mod/TGCScriptExtender1966"])
+        self.assertEqual(descriptor_values(combined_loader, "user_dir"), ["TGCScriptExtender1966"])
+        self.assertEqual(descriptor_values(base_loader, "user_dir"), ["TGCScriptExtender"])
+        self.assertNotIn("dependencies", combined_loader)
+
     def test_profiles_inherit_upstream_event_modifiers_without_legacy_income(self):
         path = "common/event_modifiers.txt"
         upstream, previous = (

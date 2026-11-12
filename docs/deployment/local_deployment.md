@@ -7,14 +7,17 @@ the production target. Never use the Steam installation as a working copy.
 
 ## Profiles and runtime policy
 
-- `core`: `TGC` and `TGC.mod` only.
-- `core+1966`: core plus `TGC_Timeline_1966` and its descriptor.
-- `core+extender`: a single assembled `TGCScriptExtender` component for a
-  separate Victoria II 3.04 Windows installation with The Grand Loader, Script
-  Extender and Performance Patch. See the
-  [Loader profile](script_extender_profile.md) for the runtime prerequisites.
-- `--optional ID` may be repeated for explicitly selected entries in the shared
-  catalog. The Extender catalog accepts only its dedicated profile.
+| Profile | Engine and prerequisites | Launcher selection |
+| --- | --- | --- |
+| `core` | Project Alice 1.3.0, or original Victoria II | **TGC - The Grand Combination** |
+| `core+1966` | Project Alice 1.3.0, or original Victoria II | **TGC - The Grand Combination** and **TGC Timeline 1966** |
+| `core+extender` | Victoria II 3.04 x86 with Loader 3.0.0 and both plugins | **TGC - Script Extender** |
+| `core+extender+1966` | Victoria II 3.04 x86 with Loader 3.0.0 and both plugins | **TGC - Script Extender + Timeline 1966** |
+
+`--optional ID` may be repeated for entries in the shared catalog. Each
+Loader profile publishes its own directory and descriptor as a single pair.
+See the [Loader profile](script_extender_profile.md) for the external bundle
+and the assembly rules.
 
 The catalog lists eight optional root components and six niche components.
 `TGCPastelMap` selects a root map skin. `TGCOrganizedStacks` reads its nested
@@ -56,12 +59,14 @@ python -B tools/deploy/deploy_tgc.py plan --game-root "$gameRoot" --profile 'cor
 python -B tools/deploy/deploy_tgc.py plan --game-root "$gameRoot" --profile core --optional TGCOrganizedStacks
 ```
 
-For the dedicated installation, pass `--profile 'core+extender'` on all four
-commands, including `apply`, `verify` and `rollback`. This selects the dedicated
-catalog without changing the catalog digest used by shared-profile transactions.
-Planning rejects Extender targets under `steamapps` or containing the shared
-core or Timeline pair. Shared plans reject a target containing the Extender
-pair. The transaction still manages only the selected directory and descriptor.
+For each dedicated installation, pass its `--profile` on all four commands,
+including `apply`, `verify` and `rollback`. The Loader profiles use
+`components_extender.json` and `components_extender_1966.json` respectively.
+Existing transactions keep their catalog bindings. Each Loader profile needs
+its own game root outside `steamapps`. The tool rejects mixed Loader or shared
+pairs, and rejects links to another root's generated plugin CB file. The
+transaction manages the selected directory and descriptor. Both plugins,
+their INIs and the generated CB file remain external to the transaction.
 
 `plan` emits JSON to stdout and creates no state, backup, staging, probe, log or
 installation file. It reports changes, ownership/adoption, preserved root
@@ -306,8 +311,10 @@ Project Alice 1.3.0 remains the supported baseline. If Alice shares the same
 installation/mod directory, deployment uses the same files. The tool does not
 locate/install Alice, rebuild scenarios, activate mods or claim old scenarios
 match updated files. Runtime compatibility and playtesting are separate steps.
-This tooling changes no runtime data and does not assess 1966 validity/balance;
-the 1966 validator and balance audit are not run for tooling-only changes.
+Changes to the 1966 composition are checked with the validator, balance audit
+and drift checks in `AGENTS.md`. The Loader Timeline profile also checks its
+effective file inventory separately because the 1966 tools use the canonical
+core and Timeline descriptors.
 
 ## Simulated tests
 

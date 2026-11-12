@@ -10,21 +10,34 @@ controlli del plugin e definisce la sessione per le prove residue.
 
 ## Composizione e caricamento
 
-Il tool di deployment usa il catalogo dedicato `components_extender.json` per
-assemblare una sola coppia `mod/TGCScriptExtender` e `mod/TGCScriptExtender.mod`.
-La base usa gli stessi file tracciati ed esclusioni di `core`. L'overlay aggiunge
-cinque file e ne sostituisce sei. L'override di `map/default.map` fa puntare
-Victoria II al `definition.csv` della coppia installata in
-`mod/TGCScriptExtender`. `extender_overlay.json` elenca i percorsi ammessi
+| Profilo | Coppia runtime sotto `mod/` | Selezione in launcher | `user_dir` |
+| --- | --- | --- | --- |
+| `core+extender` | `TGCScriptExtender` e `TGCScriptExtender.mod` | **TGC - Script Extender** | `TGCScriptExtender` |
+| `core+extender+1966` | `TGCScriptExtender1966` e `TGCScriptExtender1966.mod` | **TGC - Script Extender + Timeline 1966** | `TGCScriptExtender1966` |
+
+Entrambi usano gli stessi file tracciati ed esclusioni di `core`. L'overlay
+Extender aggiunge cinque file e ne sostituisce sei. `extender_overlay.json` elenca i percorsi ammessi
 e gli SHA-256 dei sei originali, calcolati normalizzando CRLF a LF.
 Aggiornare consapevolmente ciascun override e il relativo hash se cambia la
 base. Il piano e lo staging verificano i byte effettivi da pubblicare. Il
 manifest delle sorgenti è distinto dal catalogo delle transazioni, così una
 revisione degli override consente ancora il rollback di un deployment precedente.
 
-Il descrittore riprende i `replace_path` di TGC e usa `user_dir = "TGCScriptExtender"`
-per salvataggi e dati utente separati. La selezione prevista è il solo
-**TGC - Script Extender**. Il Loader legge le direttive `load` dai descrittori
+Nel profilo 1966 il deployer usa la Timeline canonica. Il manifest
+`extender_1966_overrides.json` elenca i 18 percorsi in cui la Timeline
+sostituisce il core. L'assemblaggio richiede una decisione esplicita su ogni
+nuova collisione fra Timeline ed Extender. Oggi i due overlay hanno percorsi
+distinti. Il file Timeline `common/buildings.txt` conserva le definizioni di
+banca e università usate da `buildings_ai.txt` e porta forti, basi navali e
+ferrovie al livello 8. Gli altri override Timeline conservano orizzonte,
+setup, interfaccia e contenuti estesi. I file Extender per CB, eventi, redditi,
+localizzazioni, partizioni e interessi IA restano quelli del profilo base.
+Il deployer genera il descrittore 1966 dal modello Extender e riscrive
+`map/default.map` per il `definition.csv` della coppia assemblata. I byte
+generati entrano nelle impronte di piano, staging e verifica come gli altri file.
+
+Il descrittore riprende i `replace_path` di TGC. Selezionare soltanto la
+voce del profilo desiderato. Il Loader legge le direttive `load` dai descrittori
 passati con `-mod=` e carica nell'ordine Script Extender e Performance Patch,
 come nel descrittore TGC upstream fissato a `14f2e6ff`. Entrambi i percorsi
 sono relativi a `mod/`. L'Extender cerca `cb_types.txt`, `buildings_ai.txt`,
@@ -34,7 +47,11 @@ quello del gioco ricevono gli stessi contenuti senza fare affidamento sulla
 precedenza fra descrittori. L'Extender legge i propri CB di trattato, l'interfaccia,
 le risorse grafiche e le localizzazioni dalla cartella ufficiale del plugin.
 Il plugin genera `common/se_cb_types.generated.txt` nella propria cartella
-unendo i CB del mod e i suoi CB. La cartella deve quindi essere scrivibile.
+unendo i CB del mod e i suoi CB. Ciascun profilo Loader richiede una cartella
+di gioco separata, con una copia privata e scrivibile della cartella
+`mod/script_extender`. Il deployment rifiuta una cartella di gioco che
+contiene l'altro profilo o un alias del file generato. Rollback e recovery
+operano sulla coppia gestita e lasciano il file generato al plugin.
 Verificare al primo avvio il percorso registrato per i CB, i file ausiliari e
 l'effettiva separazione di salvataggi e cache.
 [Selezione dei plugin](https://github.com/The-Grand-Combination/The-Grand-Loader/blob/3.0.0/launcher/README.md) ·
@@ -80,8 +97,8 @@ Sono conservati i percorsi di migrazione del fork. La PR #417 sostituisce
 i trasferimenti di reddito dell'evento 53. Non introduce un sostituto per
 le politiche migratorie di TGC. Le decisioni diagnostiche `SE_Test` sono
 assenti come nella revisione upstream `14f2e6ff6`. Le funzioni generiche
-del plugin per mappa, costruzione del giocatore, sfondi e flag provinciali
-restano disattivate nel primo profilo di verifica.
+del plugin per mappa, costruzione del giocatore, sfondi, flag provinciali e
+colori dei vassalli sono attive in entrambi i profili Loader.
 [Documentazione funzionale del plugin](https://github.com/The-Grand-Combination/The-Grand-Loader/blob/3.0.0/script_extender/README.md)
 
 Gli adattamenti alla PR sono circoscritti. La chiusura 96094 si basa sui due
@@ -116,7 +133,7 @@ flag possono rendere incompatibile un salvataggio passato per l'Extender.
    isolare la cartella di gioco e partire da salvataggi di prova.
 2. Esaminare il piano pulito e usare il ciclo `plan → apply → verify` della
    [procedura di deployment](local_deployment.md), con
-   `--profile core+extender` su ogni comando. Verificare ownership, SHA del
+   il profilo scelto su ogni comando. Verificare ownership, SHA del
    commit e contenuto della coppia. Per annullare la transazione usare
    `rollback` con lo stesso profilo e l'ID registrato. Il rollback gestisce
    i file TGC pubblicati, mentre bundle e salvataggi restano separati.

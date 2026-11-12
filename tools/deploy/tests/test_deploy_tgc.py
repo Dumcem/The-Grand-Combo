@@ -126,6 +126,126 @@ class DeploymentTests(unittest.TestCase):
         return d.build_plan(self.root, game or self.game, catalog, d.EXTENDER_PROFILE,
                             optional, self.state_base)
 
+    def extender_timeline_catalog(self):
+        self.extender_catalog()
+        catalog = self.root / "components_extender_1966.json"
+        self.put(catalog, (TOOL / catalog.name).read_bytes())
+        core_map = b'definitions = "../mod/TGC/map/definition.csv"\r\n'
+        self.put(self.root / "TGC/map/default.map", core_map)
+        self.put(self.root / "TGC/map/definition.csv", b"province fixture")
+        self.put(self.root / d.EXTENDER_COMPONENT / "map/default.map",
+                 core_map.replace(b"/TGC/", b"/TGCScriptExtender/"))
+        pins = self.root / "tools/deploy/extender_overlay.json"
+        overlay = d.read_json(pins)
+        overlay["map/default.map"] = d.hashlib.sha256(core_map.replace(b"\r\n", b"\n")).hexdigest()
+        self.put(pins, json.dumps(overlay).encode())
+        manifest = self.root / "tools/deploy/extender_1966_overrides.json"
+        self.put(manifest, b'["common/payload.txt"]')
+        self.put(self.root / d.TIMELINE_COMPONENT / "units/timeline.txt", b"1966 only")
+        self.commit()
+        return catalog
+
+    def extender_timeline_plan(self, catalog):
+        return d.build_plan(self.root, self.game, catalog, d.EXTENDER_TIMELINE_PROFILE, (), self.state_base)
+
+    def test_extender_timeline_plan_apply_verify_rollback(self):
+        catalog = self.extender_timeline_catalog()
+        cid = d.EXTENDER_TIMELINE_COMPONENT
+        generated = self.game / "mod/script_extender/common/se_cb_types.generated.txt"
+        self.put(generated, b"private plugin file")
+        before = d.snapshot(self.game / "mod")
+        plan = self.extender_timeline_plan(catalog)
+        self.assertEqual([unit["name"] for unit in plan["units"]], [cid, cid + ".mod"])
+        self.assertFalse((self.game / ".tgc-deploy").exists())
+        result = d.apply_plan(plan, self.root, self.game, catalog, self.state_base)
+        runtime = self.game / "mod" / cid
+        self.assertEqual((runtime / "common/payload.txt").read_bytes(), b"TGC_Timeline_1966\r\n")
+        self.assertEqual((runtime / "common/empty.txt").read_bytes(), b"extended\r\n")
+        self.assertEqual((runtime / "units/timeline.txt").read_bytes(), b"1966 only")
+        self.assertEqual((runtime / "map/default.map").read_bytes(),
+                         f'definitions = "../mod/{cid}/map/definition.csv"\r\n'.encode())
+        descriptor = runtime.with_suffix(".mod").read_text(encoding="utf-8")
+        self.assertEqual(d.descriptor_values(descriptor, "user_dir"), [cid])
+        self.assertEqual(d.descriptor_values(descriptor, "load"), d.LOADER_PLUGINS)
+        self.assertNotIn("dependencies", descriptor)
+        self.assertEqual(set(d.verify_target(self.root, self.game, catalog, self.state_base)), {cid})
+        self.assertEqual(self.extender_timeline_plan(catalog)["components"][0]["ownership"], "owned")
+        with self.assertRaisesRegex(d.DeploymentError, "separate game roots"):
+            self.extender_plan(catalog.with_name("components_extender.json"))
+        with self.assertRaisesRegex(d.DeploymentError, "separate target"):
+            self.plan("core+1966")
+        # Runtime may regenerate plugin data independently of TGC ownership.
+        self.put(generated, b"regenerated")
+        d.verify_target(self.root, self.game, catalog, self.state_base)
+        d.rollback(self.root, self.game, catalog, result["transaction_id"], self.state_base)
+        self.assertEqual(generated.read_bytes(), b"regenerated")
+        self.put(generated, b"private plugin file")
+        self.assertEqual(d.snapshot(self.game / "mod"), before)
+
+    def test_extender_timeline_recovers_after_descriptor_rename(self):
+        catalog = self.extender_timeline_catalog()
+        cid = d.EXTENDER_TIMELINE_COMPONENT
+        before = d.snapshot(self.game / "mod")
+        real_move = d.move
+
+        def interrupt(source, destination):
+            real_move(source, destination)
+            if "staging" in Path(source).parts and Path(source).name == cid + ".mod":
+                raise OSError("interrupt after descriptor publication")
+
+        plan = self.extender_timeline_plan(catalog)
+        with mock.patch.object(d, "move", side_effect=interrupt), mock.patch.object(
+                d, "restore_transaction", side_effect=OSError("recovery unavailable")):
+            with self.assertRaisesRegex(d.DeploymentError, "Recovery required.*interrupt after descriptor"):
+                d.apply_plan(plan, self.root, self.game, catalog, self.state_base)
+        tx, = (self.game / ".tgc-deploy/transactions").iterdir()
+        self.assertTrue((self.game / "mod" / (cid + ".mod")).is_file())
+        self.assertIn("recovery required", " ".join(self.extender_timeline_plan(catalog)["blockers"]))
+        d.rollback(self.root, self.game, catalog, tx.name, self.state_base)
+        self.assertEqual(d.snapshot(self.game / "mod"), before)
+        self.assertFalse(self.extender_timeline_plan(catalog)["blockers"])
+
+    def test_extender_timeline_refuses_stale_sources_and_undeclared_collisions(self):
+        catalog = self.extender_timeline_catalog()
+        plan = self.extender_timeline_plan(catalog)
+        timeline = self.root / d.TIMELINE_COMPONENT
+        self.put(timeline / "units/timeline.txt", b"changed")
+        with self.assertRaisesRegex(d.DeploymentError, "Plan stale/tampered"):
+            d.apply_plan(plan, self.root, self.game, catalog, self.state_base)
+        self.put(timeline / "common/empty.txt", b"would mask Extender")
+        self.commit()
+        with self.assertRaisesRegex(d.DeploymentError, "Timeline/Extender collision"):
+            self.extender_timeline_plan(catalog)
+        (timeline / "common/empty.txt").unlink()
+        self.put(self.root / "tools/deploy/extender_1966_overrides.json", b"[]")
+        self.commit()
+        with self.assertRaisesRegex(d.DeploymentError, "Timeline/core overrides differ"):
+            self.extender_timeline_plan(catalog)
+        descriptor = self.root / (d.TIMELINE_COMPONENT + ".mod")
+        self.put(descriptor, descriptor.read_bytes() + b'\nreplace_path = "common"\n')
+        with self.assertRaisesRegex(d.DeploymentError, "explicit assembly rule"):
+            self.extender_timeline_plan(catalog)
+
+    def test_extender_timeline_refuses_other_profile(self):
+        catalog = self.extender_timeline_catalog()
+        sibling = self.game / "mod" / (d.EXTENDER_COMPONENT.upper() + ".MOD")
+        self.put(sibling, b"another Loader profile")
+        with self.assertRaisesRegex(d.DeploymentError, "separate game roots"):
+            self.extender_timeline_plan(catalog)
+
+    def test_extender_timeline_refuses_aliased_plugin_file(self):
+        catalog = self.extender_timeline_catalog()
+        external = self.base / "external-generated-cbs"
+        self.put(external, b"another installation's generated file")
+        generated = self.game / "mod/script_extender/common/se_cb_types.generated.txt"
+        generated.parent.mkdir(parents=True)
+        try:
+            os.link(external, generated)
+        except OSError as exc:
+            self.skipTest(f"Hardlink creation unavailable: {exc}")
+        with self.assertRaisesRegex(d.DeploymentError, "generated CB must be a private file"):
+            self.extender_timeline_plan(catalog)
+
     def test_extender_composes_and_rolls_back_one_component(self):
         catalog = self.extender_catalog()
         plugins = {

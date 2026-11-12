@@ -1,0 +1,20 @@
+[
+  "common/buildings.txt",
+  "common/defines.lua",
+  "decisions/00_Setup.txt",
+  "gfx/interface/military_build_unit_bg.dds",
+  "gfx/interface/province_fort_strip.dds",
+  "gfx/interface/province_infra_strip.dds",
+  "gfx/interface/province_navalbase_strip.dds",
+  "interface/backend.gui",
+  "interface/buildings.gfx",
+  "interface/combat.gfx",
+  "interface/country_technology.gui",
+  "interface/province_interface.gfx",
+  "inventions/navy_inventions.txt",
+  "technologies/army_tech.txt",
+  "technologies/commerce_tech.txt",
+  "technologies/culture_tech.txt",
+  "technologies/industry_tech.txt",
+  "technologies/navy_tech.txt"
+]

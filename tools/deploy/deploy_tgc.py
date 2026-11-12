@@ -23,6 +23,14 @@ SCHEMA = 1
 EXPECTED_ORIGIN = "https://github.com/Dumcem/The-Grand-Combo.git"
 EXTENDER_PROFILE = "core+extender"
 EXTENDER_COMPONENT = "TGCScriptExtender"
+EXTENDER_TIMELINE_PROFILE = "core+extender+1966"
+EXTENDER_TIMELINE_COMPONENT = "TGCScriptExtender1966"
+EXTENDER_PROFILES = {EXTENDER_PROFILE: EXTENDER_COMPONENT,
+                     EXTENDER_TIMELINE_PROFILE: EXTENDER_TIMELINE_COMPONENT}
+EXTENDER_CATALOGS = {EXTENDER_PROFILE: "components_extender.json",
+                     EXTENDER_TIMELINE_PROFILE: "components_extender_1966.json"}
+TIMELINE_COMPONENT = "TGC_Timeline_1966"
+LOADER_PLUGINS = ["script_extender/script_extender.dll", "performance_patch/performance_patch.dll"]
 PRE_RETIREMENT_CATALOG_DIGEST = "ac278a9baa07090b10020b3f7e0cd5bfe08ed17ee6ab6399e67df97e7db535b6"
 INCOMPLETE = {"planned", "staging", "publishing", "verifying", "rolling-back", "recovery-required"}
 METADATA_REPLACE_DELAYS = (0, 0.025, 0.05, 0.1, 0.2, 0.4)
@@ -232,15 +240,28 @@ def load_catalog(path):
         require(set(selected) <= ids and len(selected) == len(set(selected)), f"Invalid profile {profile}")
     for component in catalog["components"]:
         require(set(component["dependencies"]) <= ids, "Unknown dependency")
-    if EXTENDER_PROFILE in catalog["profiles"]:
-        require(path.name == "components_extender.json"
-                and catalog["profiles"] == {EXTENDER_PROFILE: [EXTENDER_COMPONENT]}
-                and ids == {EXTENDER_COMPONENT}, "Extender requires its own catalog")
+    loader_profiles = catalog["profiles"].keys() & EXTENDER_PROFILES.keys()
+    if loader_profiles:
+        profile = next(iter(loader_profiles))
+        cid = EXTENDER_PROFILES[profile]
+        require(path.name == EXTENDER_CATALOGS[profile]
+                and catalog["profiles"] == {profile: [cid]}
+                and ids == {cid}, "Extender requires its own catalog")
         component = catalog["components"][0]
         require(component["extends"] == "TGC", "Invalid Extender base")
         relative(component["overlay_manifest"])
         shared = load_catalog(path.with_name("components.json"))
-        catalog["base_component"] = next(c for c in shared["components"] if c["id"] == "TGC")
+        shared_components = {c["id"]: c for c in shared["components"]}
+        catalog["base_component"] = shared_components["TGC"]
+        if profile == EXTENDER_TIMELINE_PROFILE:
+            template = load_catalog(path.with_name(EXTENDER_CATALOGS[EXTENDER_PROFILE]))["components"][0]
+            require(component == dict(template, id=cid, name="TGC - Script Extender + Timeline 1966",
+                                      destination_dir=cid, destination_descriptor=cid + ".mod",
+                                      profiles=[profile], timeline_overrides=component["timeline_overrides"]),
+                    "Invalid Extender Timeline component")
+            relative(component["timeline_overrides"])
+            catalog["template_component"] = template
+            catalog["timeline_component"] = shared_components[TIMELINE_COMPONENT]
     return catalog
 
 
@@ -252,8 +273,8 @@ def selected_components(catalog, profile, optional):
         require(cid in mapping and mapping[cid]["class"] == "optional", f"Not an optional mod: {cid}")
         if cid not in selected:
             selected.append(cid)
-    if profile == EXTENDER_PROFILE:
-        require(selected == [EXTENDER_COMPONENT], "Extender must be selected alone")
+    if profile in EXTENDER_PROFILES:
+        require(selected == [EXTENDER_PROFILES[profile]], "Extender must be selected alone")
     else:
         require("TGC" in selected, "Core profile required")
     for cid in selected:
@@ -261,21 +282,53 @@ def selected_components(catalog, profile, optional):
     return [mapping[cid] for cid in selected]
 
 
+def descriptor_values(text, field):
+    return re.findall(r'^[ \t]*' + field + r'[ \t]*=[ \t]*"([^"\r\n]+)"', text, re.M)
+
+
 def check_descriptor(root, component, mapping):
     descriptor = no_links(root / component["source_descriptor"])
     text = descriptor.read_text(encoding="utf-8-sig")
-    def values(field):
-        return re.findall(r'^\s*' + field + r'\s*=\s*"([^"\r\n]+)"', text, re.M)
-    require(values("name") == [component["name"]], "Descriptor name inconsistent")
-    require(values("path") == ["mod/" + component["destination_dir"]], "Descriptor path inconsistent")
+    require(descriptor_values(text, "name") == [component["name"]], "Descriptor name inconsistent")
+    require(descriptor_values(text, "path") == ["mod/" + component["destination_dir"]],
+            "Descriptor path inconsistent")
     blocks = re.findall(r"^\s*dependencies\s*=\s*\{([^}]*)\}", text, re.M)
     dependencies = [x for block in blocks for x in re.findall(r'"([^"\r\n]+)"', block)]
     require(dependencies == [mapping[c]["name"] for c in component["dependencies"]],
             "Descriptor dependencies inconsistent")
     if component["id"] == EXTENDER_COMPONENT:
-        require(values("load") == ["script_extender/script_extender.dll",
-                                   "performance_patch/performance_patch.dll"]
-                and values("user_dir") == [EXTENDER_COMPONENT], "Extender descriptor inconsistent")
+        require(descriptor_values(text, "load") == LOADER_PLUGINS
+                and descriptor_values(text, "user_dir") == [EXTENDER_COMPONENT],
+                "Extender descriptor inconsistent")
+    elif component["id"] in ("TGC", TIMELINE_COMPONENT):
+        require(not descriptor_values(text, "load"), "Shared descriptor cannot load Loader plugins")
+    return text
+
+
+def component_descriptor(root, component, catalog, tracked):
+    require(component["source_descriptor"] in tracked, "Descriptor is not tracked")
+    source = root / component["source_descriptor"]
+    if component["id"] != EXTENDER_TIMELINE_COMPONENT:
+        check_descriptor(root, component, {c["id"]: c for c in catalog["components"]})
+        return source
+
+    core, timeline = catalog["base_component"], catalog["timeline_component"]
+    shared = {c["id"]: c for c in (core, timeline)}
+    require(all(c["source_descriptor"] in tracked for c in shared.values()),
+            "Shared descriptors are not tracked")
+    core_text = check_descriptor(root, core, shared)
+    timeline_text = check_descriptor(root, timeline, shared)
+    # Flatten only a folder overlay with a dependency and no other load rules.
+    require(re.fullmatch(r'\s*name\s*=\s*"[^"\n]+"\s*path\s*=\s*"[^"\n]+"'
+                         r'\s*dependencies\s*=\s*\{\s*"[^"\n]+"\s*\}\s*', timeline_text),
+            "Timeline descriptor needs an explicit assembly rule")
+    text = check_descriptor(root, catalog["template_component"], {})
+    require(descriptor_values(text, "replace_path") == descriptor_values(core_text, "replace_path"),
+            "Extender replace paths differ from core")
+    for field, value in (("name", component["name"]), ("path", "mod/" + component["destination_dir"]),
+                         ("user_dir", component["id"])):
+        text = re.sub(r'^[ \t]*' + field + r'[ \t]*=.*$', lambda _: f'{field} = "{value}"', text, flags=re.M)
+    return text.encode("utf-8")
 
 
 def source_files(root, component, tracked):
@@ -302,7 +355,7 @@ def source_files(root, component, tracked):
 
 def payload_sources(root, component, tracked, catalog):
     overlay = source_files(root, component, tracked)
-    if component["id"] != EXTENDER_COMPONENT:
+    if component["id"] not in EXTENDER_PROFILES.values():
         return overlay
     manifest = component["overlay_manifest"]
     require(manifest in tracked, "Extender overlay manifest is not tracked")
@@ -319,11 +372,52 @@ def payload_sources(root, component, tracked, catalog):
             require(base_name == name, f"Missing or differently cased core override: {name}")
             data = no_links(files[name]).read_bytes().replace(b"\r\n", b"\n")
             require(hashlib.sha256(data).hexdigest() == base_hash, f"Refresh Extender override: {name}")
+    if component["id"] == EXTENDER_TIMELINE_COMPONENT:
+        timeline = source_files(root, catalog["timeline_component"], tracked)
+        timeline_names = {name.casefold(): name for name in timeline}
+        require(not timeline_names.keys() & {name.casefold() for name in overlay},
+                "Timeline/Extender collision requires an explicit merge")
+        overlap = timeline_names.keys() & base_names.keys()
+        require(all(timeline_names[name] == base_names[name] for name in overlap),
+                "Timeline/core path case collision")
+        manifest = component["timeline_overrides"]
+        require(manifest in tracked, "Timeline override manifest is not tracked")
+        require(read_json(root / manifest) == sorted(base_names[name] for name in overlap),
+                "Timeline/core overrides differ from the declared paths")
+        map_path = "map/default.map"
+        definition = "map/definition.csv"
+        require(map_path in overlay and definition in files, "Extender Timeline map files missing")
+        data = no_links(overlay[map_path]).read_bytes()
+        source = f'definitions = "../mod/{EXTENDER_COMPONENT}/{definition}"'.encode()
+        definitions = re.findall(rb"^[ \t]*definitions[ \t]*=[^\r\n]*", data, re.M)
+        require(definitions == [source], "Extender map definition path changed")
+        target = f'definitions = "../mod/{component["destination_dir"]}/{definition}"'.encode()
+        overlay[map_path] = data.replace(source, target)
+        files.update(timeline)
     return {**files, **overlay}
 
 
 def source_payload(sources):
-    return payload_snapshot({rel: file_info(path) for rel, path in sources.items()})
+    return payload_snapshot({rel: source_file_info(source) for rel, source in sources.items()})
+
+
+def source_file_info(source):
+    if isinstance(source, bytes):
+        return {"size": len(source), "sha256": hashlib.sha256(source).hexdigest()}
+    return file_info(source)
+
+
+def copy_source(source, target):
+    if isinstance(source, bytes):
+        target.write_bytes(source)
+    else:
+        shutil.copyfile(no_links(source), target)
+
+
+def descriptor_snapshot(source):
+    if isinstance(source, bytes):
+        return {"kind": "file", "files": {"": source_file_info(source)}, "dirs": []}
+    return snapshot(source)
 
 
 def target_paths(root, game, state_base=None):
@@ -401,33 +495,42 @@ def delta(old, new):
             "modify": sorted(k for k in a.keys() & b.keys() if a[k] != b[k])}
 
 
-def build_plan(root, game, catalog_path, profile, optional=(), state_base=None, owned_lock=None):
-    root, game, state_dir = target_paths(root, game, state_base)
-    catalog = load_catalog(catalog_path)
-    identity = git_identity(root)
-    state = read_state(state_dir, game)
-    validate_ownership(state, game, state_dir, catalog)
-    tracked = [os.fsdecode(p) for p in git(root, "ls-files", "-z").split(b"\0") if p]
-    mapping = {c["id"]: c for c in catalog["components"]}
-    selected = selected_components(catalog, profile, optional)
+def check_profile_target(game, profile):
     names = {entry.name.casefold() for entry in (game / "mod").iterdir()}
-    if profile == EXTENDER_PROFILE:
+    loader_pairs = {cid: {cid.casefold(), cid.casefold() + ".mod"} for cid in EXTENDER_PROFILES.values()}
+    if profile in EXTENDER_PROFILES:
         require(not any(p.casefold() == "steamapps" for p in game.parts),
                 "Extender requires a separate installation outside steamapps")
         require(not names & {"tgc", "tgc.mod", "tgc_timeline_1966", "tgc_timeline_1966.mod"},
                 "Extender target already contains the shared profile")
+        other = set().union(*(pair for cid, pair in loader_pairs.items() if cid != EXTENDER_PROFILES[profile]))
+        require(not names & other, "Extender profiles require separate game roots")
+        # The plugin rewrites this file outside user_dir. Refuse aliases into another game root.
+        generated = no_links(game / "mod/script_extender/common/se_cb_types.generated.txt")
+        if generated.exists():
+            require(generated.is_file() and generated.stat().st_nlink == 1,
+                    "Extender generated CB must be a private file in this game root")
     else:
-        require(not names & {EXTENDER_COMPONENT.casefold(), EXTENDER_COMPONENT.casefold() + ".mod"},
+        require(not names & set().union(*loader_pairs.values()),
                 "Shared profiles require a separate target from Extender")
+
+
+def build_plan(root, game, catalog_path, profile, optional=(), state_base=None, owned_lock=None):
+    root, game, state_dir = target_paths(root, game, state_base)
+    catalog = load_catalog(catalog_path)
+    identity = git_identity(root)
+    selected = selected_components(catalog, profile, optional)
+    check_profile_target(game, profile)
+    state = read_state(state_dir, game)
+    validate_ownership(state, game, state_dir, catalog)
+    tracked = [os.fsdecode(p) for p in git(root, "ls-files", "-z").split(b"\0") if p]
     blockers = [] if identity["clean"] else ["Working tree dirty: plan is diagnostic only; apply refused"]
     if pending(game, state_dir, catalog, owned_lock):
         blockers.append("Incomplete transaction/lock: recovery required")
     units, components = [], []
     for component in selected:
-        check_descriptor(root, component, mapping)
-        require(component["source_descriptor"] in tracked, "Descriptor is not tracked")
+        descriptor = descriptor_snapshot(component_descriptor(root, component, catalog, tracked))
         payload = source_payload(payload_sources(root, component, tracked, catalog))
-        descriptor = snapshot(root / component["source_descriptor"])
         cid = component["id"]
         own = state["components"].get(cid)
         entries = []
@@ -555,7 +658,7 @@ def transaction_paths(game, state_dir, txid):
 
 
 def historical_catalog(catalog, catalog_digest):
-    if catalog_digest != PRE_RETIREMENT_CATALOG_DIGEST or EXTENDER_PROFILE in catalog["profiles"]:
+    if catalog_digest != PRE_RETIREMENT_CATALOG_DIGEST or catalog["profiles"].keys() & EXTENDER_PROFILES.keys():
         return catalog
     addon = "TGCPerformanceAddon"
     retired = {
@@ -889,6 +992,7 @@ def apply_plan(plan, root, game, catalog_path, state_base=None, adopt_existing=F
             "Existing unowned live requires --adopt-existing")
     root, game, state_dir = target_paths(root, game, state_base)
     catalog = load_catalog(catalog_path)
+    require(digest(catalog) == plan["catalog_digest"], "Catalog changed before apply")
     require(not any(getattr((game / "mod" / u["name"]).stat(), "st_file_attributes", 0) & 1
                     for u in plan["units"] if (game / "mod" / u["name"]).is_file()), "Read-only descriptor refused")
     writable_files(plan["units"], game)
@@ -938,13 +1042,14 @@ def apply_plan(plan, root, game, catalog_path, state_base=None, adopt_existing=F
             record("planned")
             write_json(state_dir / "plans" / (txid + ".json"), plan)
             record("staging")
+            mapping = {c["id"]: c for c in catalog["components"]}
+            tracked = [os.fsdecode(p) for p in git(root, "ls-files", "-z").split(b"\0") if p]
             for unit in journal["units"]:
                 destination = tx / "staging" / unit["name"]
                 source = root / unit["source"]
+                comp = mapping[unit["component"]]
                 if unit["new"]["kind"] == "directory":
-                    if unit["component"] == EXTENDER_COMPONENT:
-                        comp = next(c for c in catalog["components"] if c["id"] == EXTENDER_COMPONENT)
-                        tracked = [os.fsdecode(p) for p in git(root, "ls-files", "-z").split(b"\0") if p]
+                    if unit["component"] in EXTENDER_PROFILES.values():
                         sources = payload_sources(root, comp, tracked, catalog)
                     else:
                         sources = {rel: source / rel for rel in unit["new"]["files"]}
@@ -952,22 +1057,22 @@ def apply_plan(plan, root, game, catalog_path, state_base=None, adopt_existing=F
                     for rel, original in sources.items():
                         target = destination / rel
                         target.parent.mkdir(parents=True, exist_ok=True)
-                        shutil.copyfile(no_links(original), target)
+                        copy_source(original, target)
                 else:
                     destination.parent.mkdir(parents=True, exist_ok=True)
-                    no_links(source)
-                    shutil.copyfile(source, destination)
+                    copy_source(component_descriptor(root, comp, catalog, tracked), destination)
                 require(snapshot(destination) == unit["new"], "Staging verification failed")
             require(git_identity(root) == plan["identity"], "Git changed during staging")
             for unit in journal["units"]:
                 require(snapshot(game / "mod" / unit["name"]) == unit["old"], "Live changed during staging")
+                comp = mapping[unit["component"]]
                 if unit["new"]["kind"] == "file":
-                    require(snapshot(root / unit["source"]) == unit["new"], "Source changed during staging")
+                    require(descriptor_snapshot(component_descriptor(root, comp, catalog, tracked)) == unit["new"],
+                            "Source changed during staging")
                 else:
-                    comp = next(c for c in catalog["components"] if c["id"] == unit["component"])
-                    tracked = [os.fsdecode(p) for p in git(root, "ls-files", "-z").split(b"\0") if p]
                     require(source_payload(payload_sources(root, comp, tracked, catalog)) == unit["new"],
                             "Source changed during staging")
+            check_profile_target(game, plan["profile"])
             writable_files(plan["units"], game)
             record("publishing")
             for unit in journal["units"]:
@@ -1024,6 +1129,7 @@ def verify_target(root, game, catalog_path, state_base=None):
     result = {}
     for cid, owned in state["components"].items():
         record = load_record(game, state_dir, catalog, owned["transaction_id"])
+        check_profile_target(game, record["plan"]["profile"])
         manifest = validated_manifest(game, state_dir, record)
         for name, value in owned["snapshots"].items():
             require(snapshot(game / "mod" / name) == value, f"Live differs from verified manifest: {name}")
@@ -1099,15 +1205,14 @@ def main(argv=None):
     parser.add_argument("--game-root", required=True, type=Path)
     parser.add_argument("--repo-root", type=Path, default=Path(__file__).resolve().parents[2])
     parser.add_argument("--state-root", type=Path, help="Override local metadata base; useful for simulations")
-    parser.add_argument("--profile", choices=("core", "core+1966", EXTENDER_PROFILE), default="core")
+    parser.add_argument("--profile", choices=("core", "core+1966", *EXTENDER_PROFILES), default="core")
     parser.add_argument("--optional", action="append", default=[])
     parser.add_argument("--plan-file", type=Path, help="apply input; plan always emits JSON to stdout")
     parser.add_argument("--adopt-existing", action="store_true")
     parser.add_argument("--transaction-id")
     parser.add_argument("--recover-lock", action="store_true", help="Rollback only: remove lock if its PID is demonstrably gone")
     args = parser.parse_args(argv)
-    catalog = Path(__file__).with_name(
-        "components_extender.json" if args.profile == EXTENDER_PROFILE else "components.json")
+    catalog = Path(__file__).with_name(EXTENDER_CATALOGS.get(args.profile, "components.json"))
     try:
         if args.command == "plan":
             result = build_plan(args.repo_root, args.game_root, catalog, args.profile, args.optional, args.state_root)
