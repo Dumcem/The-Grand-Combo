@@ -24,7 +24,8 @@
         "roots": [
           "common",
           "events",
-          "localisation"
+          "localisation",
+          "map"
         ]
       },
       "exclusions": [],

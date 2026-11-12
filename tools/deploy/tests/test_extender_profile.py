@@ -61,6 +61,19 @@ class ExtenderProfileTests(unittest.TestCase):
             self.assertEqual(shape(n for n in script(EXTENDED.with_suffix(".mod")) if n.key == key),
                              shape(n for n in script(ROOT / "TGC.mod") if n.key == key))
 
+    def test_map_definition_resolves_to_the_deployed_component(self):
+        catalog = json.loads((ROOT / "tools/deploy/components_extender.json").read_bytes())
+        component = catalog["components"][0]
+        path = "map/default.map"
+        core = (CORE / path).read_bytes().replace(b"\r\n", b"\n")
+        extended = (EXTENDED / path).read_bytes().replace(b"\r\n", b"\n")
+        original = b'definitions = "../mod/TGC/map/definition.csv"'
+        target = f'definitions = "../mod/{component["destination_dir"]}/map/definition.csv"'.encode()
+        self.assertEqual(core.count(original), 1)
+        self.assertEqual(extended.rstrip(b"\n"), core.replace(original, target).rstrip(b"\n"))
+        self.assertIn("map", component["runtime_policy"]["roots"])
+        self.assertTrue((CORE / "map/definition.csv").is_file())
+
     def test_province_and_forced_treaty_are_isolated(self):
         path = "common/cb_types.txt"
         core = definitions(CORE / path)

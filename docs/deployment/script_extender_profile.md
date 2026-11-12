@@ -12,8 +12,10 @@ restano da verificare.
 Il tool di deployment usa il catalogo dedicato `components_extender.json` per
 assemblare una sola coppia `mod/TGCScriptExtender` e `mod/TGCScriptExtender.mod`.
 La base usa gli stessi file tracciati ed esclusioni di `core`. L'overlay aggiunge
-cinque file e ne sostituisce cinque. `extender_overlay.json` elenca i percorsi
-ammessi e gli SHA-256 dei cinque originali, calcolati normalizzando CRLF a LF.
+cinque file e ne sostituisce sei. L'override di `map/default.map` fa puntare
+Victoria II al `definition.csv` della coppia installata in
+`mod/TGCScriptExtender`. `extender_overlay.json` elenca i percorsi ammessi
+e gli SHA-256 dei sei originali, calcolati normalizzando CRLF a LF.
 Aggiornare consapevolmente ciascun override e il relativo hash se cambia la
 base. Il piano e lo staging verificano i byte effettivi da pubblicare. Il
 manifest delle sorgenti è distinto dal catalogo delle transazioni, così una

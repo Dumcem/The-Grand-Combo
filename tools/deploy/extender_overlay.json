@@ -8,5 +8,6 @@
   "events/Great War.txt": "c93340a0647b5ef201a6d624f9f5d0dac78b4533e5fa1005bddfd2eba15c482f",
   "events/JANFlavor.txt": "a6d6f8fb8f0385aec5865a7108ac71626a155fec52c1847afa92099d91c3d2e9",
   "localisation/00_poor_income.csv": null,
-  "localisation/00_se_acquire_province.csv": null
+  "localisation/00_se_acquire_province.csv": null,
+  "map/default.map": "d86669f315bb975d00b527670e116714541be935f4fb607a0cef59657ac82d59"
 }
