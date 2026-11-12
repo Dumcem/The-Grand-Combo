@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "runtime_policy_version": 1,
+  "profiles": {
+    "core+extender": [
+      "TGCScriptExtender"
+    ]
+  },
+  "components": [
+    {
+      "id": "TGCScriptExtender",
+      "name": "TGC - Script Extender",
+      "source_dir": "TGCScriptExtender",
+      "source_descriptor": "TGCScriptExtender.mod",
+      "destination_dir": "TGCScriptExtender",
+      "destination_descriptor": "TGCScriptExtender.mod",
+      "dependencies": [],
+      "class": "core",
+      "profiles": [
+        "core+extender"
+      ],
+      "runtime_policy": {
+        "files": "git-tracked-working-copy-bytes",
+        "roots": [
+          "common",
+          "events",
+          "localisation"
+        ]
+      },
+      "exclusions": [],
+      "extends": "TGC",
+      "overlay_manifest": "tools/deploy/extender_overlay.json"
+    }
+  ]
+}

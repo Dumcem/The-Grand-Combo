@@ -9,7 +9,11 @@ the production target. Never use the Steam installation as a working copy.
 
 - `core`: `TGC` and `TGC.mod` only.
 - `core+1966`: core plus `TGC_Timeline_1966` and its descriptor.
-- `--optional ID` may be repeated for explicitly selected catalog entries.
+- `core+extender`: a single assembled `TGCScriptExtender` component for a
+  separate Victoria II 3.04 Windows installation. See the
+  [Script Extender profile](script_extender_profile.md) for the runtime prerequisites.
+- `--optional ID` may be repeated for explicitly selected entries in the shared
+  catalog. The Extender catalog accepts only its dedicated profile.
 
 The catalog lists nine optional root components and six niche components.
 `TGCPastelMap` selects a root map skin. `TGCOrganizedStacks` reads its nested
@@ -46,6 +50,13 @@ python -B tools/deploy/deploy_tgc.py plan --game-root "$gameRoot" --profile core
 python -B tools/deploy/deploy_tgc.py plan --game-root "$gameRoot" --profile 'core+1966'
 python -B tools/deploy/deploy_tgc.py plan --game-root "$gameRoot" --profile core --optional TGCOrganizedStacks
 ```
+
+For the dedicated installation, pass `--profile 'core+extender'` on all four
+commands, including `apply`, `verify` and `rollback`. This selects the dedicated
+catalog without changing the catalog digest used by shared-profile transactions.
+Planning rejects Extender targets under `steamapps` or containing the shared
+core or Timeline pair. Shared plans reject a target containing the Extender
+pair. The transaction still manages only the selected directory and descriptor.
 
 `plan` emits JSON to stdout and creates no state, backup, staging, probe, log or
 installation file. It reports changes, ownership/adoption, preserved root

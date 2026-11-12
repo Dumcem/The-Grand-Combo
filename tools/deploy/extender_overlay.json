@@ -1,0 +1,12 @@
+{
+  "common/ai_interests.txt": null,
+  "common/buildings_ai.txt": null,
+  "common/cb_types.txt": "6406b3c3c30543f131402ebe51e81bd0b862734a006b479cf7c2d93f2c91136b",
+  "common/se_partitions.txt": null,
+  "common/triggered_modifiers.txt": "bfd2881ea8be96a91f5d0ea57b69f1139cd5f481f7167a1340fddbe0b631837e",
+  "events/BanksAndUniversities.txt": "6dbb7c1d055980ea5b2edcc3a8937adb8287c6d9e0e09f11abfeaf4cde8116c9",
+  "events/Great War.txt": "c93340a0647b5ef201a6d624f9f5d0dac78b4533e5fa1005bddfd2eba15c482f",
+  "events/JANFlavor.txt": "a6d6f8fb8f0385aec5865a7108ac71626a155fec52c1847afa92099d91c3d2e9",
+  "localisation/00_poor_income.csv": null,
+  "localisation/00_se_acquire_province.csv": null
+}

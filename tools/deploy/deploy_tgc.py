@@ -21,6 +21,8 @@ import uuid
 
 SCHEMA = 1
 EXPECTED_ORIGIN = "https://github.com/Dumcem/The-Grand-Combo.git"
+EXTENDER_PROFILE = "core+extender"
+EXTENDER_COMPONENT = "TGCScriptExtender"
 INCOMPLETE = {"planned", "staging", "publishing", "verifying", "rolling-back", "recovery-required"}
 METADATA_REPLACE_DELAYS = (0, 0.025, 0.05, 0.1, 0.2, 0.4)
 
@@ -229,6 +231,15 @@ def load_catalog(path):
         require(set(selected) <= ids and len(selected) == len(set(selected)), f"Invalid profile {profile}")
     for component in catalog["components"]:
         require(set(component["dependencies"]) <= ids, "Unknown dependency")
+    if EXTENDER_PROFILE in catalog["profiles"]:
+        require(path.name == "components_extender.json"
+                and catalog["profiles"] == {EXTENDER_PROFILE: [EXTENDER_COMPONENT]}
+                and ids == {EXTENDER_COMPONENT}, "Extender requires its own catalog")
+        component = catalog["components"][0]
+        require(component["extends"] == "TGC", "Invalid Extender base")
+        relative(component["overlay_manifest"])
+        shared = load_catalog(path.with_name("components.json"))
+        catalog["base_component"] = next(c for c in shared["components"] if c["id"] == "TGC")
     return catalog
 
 
@@ -240,7 +251,10 @@ def selected_components(catalog, profile, optional):
         require(cid in mapping and mapping[cid]["class"] == "optional", f"Not an optional mod: {cid}")
         if cid not in selected:
             selected.append(cid)
-    require("TGC" in selected, "Core profile required")
+    if profile == EXTENDER_PROFILE:
+        require(selected == [EXTENDER_COMPONENT], "Extender must be selected alone")
+    else:
+        require("TGC" in selected, "Core profile required")
     for cid in selected:
         require(set(mapping[cid]["dependencies"]) <= set(selected), f"Missing dependency: {cid}")
     return [mapping[cid] for cid in selected]
@@ -257,9 +271,12 @@ def check_descriptor(root, component, mapping):
     dependencies = [x for block in blocks for x in re.findall(r'"([^"\r\n]+)"', block)]
     require(dependencies == [mapping[c]["name"] for c in component["dependencies"]],
             "Descriptor dependencies inconsistent")
+    if component["id"] == EXTENDER_COMPONENT:
+        require(values("load") == ["script_extender/script_extender.dll"]
+                and values("user_dir") == [EXTENDER_COMPONENT], "Extender descriptor inconsistent")
 
 
-def source_payload(root, component, tracked):
+def source_files(root, component, tracked):
     source = no_links(root / component["source_dir"])
     require(source.is_dir(), f"Source directory missing: {source}")
     # Inspect even excluded/ignored entries for links; never follow them.
@@ -277,8 +294,34 @@ def source_payload(root, component, tracked):
         top = rel.split("/")[0]
         require(top in component["runtime_policy"]["roots"], f"Uncatalogued runtime root: {rel}")
         require((source / rel).is_file(), f"Tracked runtime missing: {rel}")
-        files[rel] = file_info(source / rel)
-    return payload_snapshot(files)
+        files[rel] = source / rel
+    return files
+
+
+def payload_sources(root, component, tracked, catalog):
+    overlay = source_files(root, component, tracked)
+    if component["id"] != EXTENDER_COMPONENT:
+        return overlay
+    manifest = component["overlay_manifest"]
+    require(manifest in tracked, "Extender overlay manifest is not tracked")
+    expected = read_json(root / manifest)
+    require(overlay.keys() == expected.keys(), "Extender overlay differs from declared files")
+    files = source_files(root, catalog["base_component"], tracked)
+    base_names = {name.casefold(): name for name in files}
+    for name, base_hash in expected.items():
+        base_name = base_names.get(name.casefold())
+        if base_hash is None:
+            require(base_name is None, f"Extender addition conflicts with core: {name}")
+        else:
+            require(re.fullmatch(r"[a-f0-9]{64}", base_hash), f"Invalid overlay base hash: {name}")
+            require(base_name == name, f"Missing or differently cased core override: {name}")
+            data = no_links(files[name]).read_bytes().replace(b"\r\n", b"\n")
+            require(hashlib.sha256(data).hexdigest() == base_hash, f"Refresh Extender override: {name}")
+    return {**files, **overlay}
+
+
+def source_payload(sources):
+    return payload_snapshot({rel: file_info(path) for rel, path in sources.items()})
 
 
 def target_paths(root, game, state_base=None):
@@ -365,6 +408,15 @@ def build_plan(root, game, catalog_path, profile, optional=(), state_base=None, 
     tracked = [os.fsdecode(p) for p in git(root, "ls-files", "-z").split(b"\0") if p]
     mapping = {c["id"]: c for c in catalog["components"]}
     selected = selected_components(catalog, profile, optional)
+    names = {entry.name.casefold() for entry in (game / "mod").iterdir()}
+    if profile == EXTENDER_PROFILE:
+        require(not any(p.casefold() == "steamapps" for p in game.parts),
+                "Extender requires a separate installation outside steamapps")
+        require(not names & {"tgc", "tgc.mod", "tgc_timeline_1966", "tgc_timeline_1966.mod"},
+                "Extender target already contains the shared profile")
+    else:
+        require(not names & {EXTENDER_COMPONENT.casefold(), EXTENDER_COMPONENT.casefold() + ".mod"},
+                "Shared profiles require a separate target from Extender")
     blockers = [] if identity["clean"] else ["Working tree dirty: plan is diagnostic only; apply refused"]
     if pending(game, state_dir, catalog, owned_lock):
         blockers.append("Incomplete transaction/lock: recovery required")
@@ -372,7 +424,7 @@ def build_plan(root, game, catalog_path, profile, optional=(), state_base=None, 
     for component in selected:
         check_descriptor(root, component, mapping)
         require(component["source_descriptor"] in tracked, "Descriptor is not tracked")
-        payload = source_payload(root, component, tracked)
+        payload = source_payload(payload_sources(root, component, tracked, catalog))
         descriptor = snapshot(root / component["source_descriptor"])
         cid = component["id"]
         own = state["components"].get(cid)
@@ -866,12 +918,17 @@ def apply_plan(plan, root, game, catalog_path, state_base=None, adopt_existing=F
                 destination = tx / "staging" / unit["name"]
                 source = root / unit["source"]
                 if unit["new"]["kind"] == "directory":
+                    if unit["component"] == EXTENDER_COMPONENT:
+                        comp = next(c for c in catalog["components"] if c["id"] == EXTENDER_COMPONENT)
+                        tracked = [os.fsdecode(p) for p in git(root, "ls-files", "-z").split(b"\0") if p]
+                        sources = payload_sources(root, comp, tracked, catalog)
+                    else:
+                        sources = {rel: source / rel for rel in unit["new"]["files"]}
                     destination.mkdir(parents=True)
-                    for rel in unit["new"]["files"]:
+                    for rel, original in sources.items():
                         target = destination / rel
                         target.parent.mkdir(parents=True, exist_ok=True)
-                        no_links(source / rel)
-                        shutil.copyfile(source / rel, target)
+                        shutil.copyfile(no_links(original), target)
                 else:
                     destination.parent.mkdir(parents=True, exist_ok=True)
                     no_links(source)
@@ -885,7 +942,8 @@ def apply_plan(plan, root, game, catalog_path, state_base=None, adopt_existing=F
                 else:
                     comp = next(c for c in catalog["components"] if c["id"] == unit["component"])
                     tracked = [os.fsdecode(p) for p in git(root, "ls-files", "-z").split(b"\0") if p]
-                    require(source_payload(root, comp, tracked) == unit["new"], "Source changed during staging")
+                    require(source_payload(payload_sources(root, comp, tracked, catalog)) == unit["new"],
+                            "Source changed during staging")
             writable_files(plan["units"], game)
             record("publishing")
             for unit in journal["units"]:
@@ -1017,14 +1075,15 @@ def main(argv=None):
     parser.add_argument("--game-root", required=True, type=Path)
     parser.add_argument("--repo-root", type=Path, default=Path(__file__).resolve().parents[2])
     parser.add_argument("--state-root", type=Path, help="Override local metadata base; useful for simulations")
-    parser.add_argument("--profile", choices=("core", "core+1966"), default="core")
+    parser.add_argument("--profile", choices=("core", "core+1966", EXTENDER_PROFILE), default="core")
     parser.add_argument("--optional", action="append", default=[])
     parser.add_argument("--plan-file", type=Path, help="apply input; plan always emits JSON to stdout")
     parser.add_argument("--adopt-existing", action="store_true")
     parser.add_argument("--transaction-id")
     parser.add_argument("--recover-lock", action="store_true", help="Rollback only: remove lock if its PID is demonstrably gone")
     args = parser.parse_args(argv)
-    catalog = Path(__file__).with_name("components.json")
+    catalog = Path(__file__).with_name(
+        "components_extender.json" if args.profile == EXTENDER_PROFILE else "components.json")
     try:
         if args.command == "plan":
             result = build_plan(args.repo_root, args.game_root, catalog, args.profile, args.optional, args.state_root)

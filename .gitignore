@@ -61,6 +61,8 @@
 !TGCDirectImmigration.mod
 !/TGCPerformanceAddon/
 !TGCPerformanceAddon.mod
+!/TGCScriptExtender/
+!/TGCScriptExtender.mod
 !/TGC Niche Submods/*
 !TGCCountriesEndonymicLocalization
 !TGCCountriesEndonymicLocalization.mod

@@ -105,6 +105,79 @@ class DeploymentTests(unittest.TestCase):
         self.apply(self.plan("core+1966"))
         self.assertEqual(set(self.verify()), {"TGC", "TGC_Timeline_1966"})
 
+    def extender_catalog(self):
+        self.put(self.root / "components.json", self.catalog_path.read_bytes())
+        catalog = self.root / "components_extender.json"
+        self.put(catalog, (TOOL / catalog.name).read_bytes())
+        component = d.EXTENDER_COMPONENT
+        self.put(self.root / f"{component}.mod", (TOOL.parents[1] / f"{component}.mod").read_bytes())
+        self.put(self.root / component / "common/empty.txt", b"extended\r\n")
+        self.put(self.root / component / "common/added.txt", b"")
+        self.put(self.root / "tools/deploy/extender_overlay.json", json.dumps({
+            "common/empty.txt": d.hashlib.sha256(b"").hexdigest(),
+            "common/added.txt": None,
+        }).encode())
+        self.commit()
+        return catalog
+
+    def extender_plan(self, catalog, optional=(), game=None):
+        return d.build_plan(self.root, game or self.game, catalog, d.EXTENDER_PROFILE,
+                            optional, self.state_base)
+
+    def test_extender_composes_and_rolls_back_one_component(self):
+        catalog = self.extender_catalog()
+        plugin = self.game / "mod/script_extender/fixture.txt"
+        self.put(plugin, b"preserve")
+        plan = self.extender_plan(catalog)
+        self.assertFalse((self.game / ".tgc-deploy").exists())
+        self.assertEqual([c["id"] for c in plan["components"]], [d.EXTENDER_COMPONENT])
+        manifest = d.apply_plan(plan, self.root, self.game, catalog, self.state_base)
+        runtime = self.game / "mod" / d.EXTENDER_COMPONENT
+        self.assertEqual((runtime / "common/empty.txt").read_bytes(), b"extended\r\n")
+        self.assertEqual((runtime / "common/added.txt").read_bytes(), b"")
+        self.assertEqual((runtime / "common/payload.txt").read_bytes(), b"TGC\r\n")
+        self.assertFalse((runtime / "tools").exists())
+        self.assertFalse((self.game / "mod/TGC.mod").exists())
+        self.assertEqual(set(d.verify_target(self.root, self.game, catalog, self.state_base)),
+                         {d.EXTENDER_COMPONENT})
+        with self.assertRaises(d.DeploymentError):
+            self.plan()
+        # Source-only manifest changes must not invalidate a prior transaction's recovery.
+        pins = self.root / "tools/deploy/extender_overlay.json"
+        self.put(pins, b"{}")
+        self.commit()
+        d.rollback(self.root, self.game, catalog, manifest["transaction_id"], self.state_base)
+        self.assertFalse(runtime.exists())
+        self.assertEqual(plugin.read_bytes(), b"preserve")
+
+    def test_extender_rejects_shared_steam_and_optional_selection(self):
+        catalog = self.extender_catalog()
+        with self.assertRaisesRegex(d.DeploymentError, "Not an optional mod"):
+            self.extender_plan(catalog, ["TGCPerformanceAddon"])
+        with self.assertRaisesRegex(d.DeploymentError, "Not an optional mod"):
+            self.plan(optional=[d.EXTENDER_COMPONENT])
+        steam_game = self.base / "steamapps" / "Victoria II"
+        for name in ("mod", "common", "history", "map"):
+            (steam_game / name).mkdir(parents=True)
+        self.put(steam_game / "v2game.exe", b"simulation only")
+        with self.assertRaisesRegex(d.DeploymentError, "outside steamapps"):
+            self.extender_plan(catalog, game=steam_game)
+        self.put(self.game / "mod/TGC_Timeline_1966.mod", b"timeline descriptor")
+        with self.assertRaisesRegex(d.DeploymentError, "contains the shared profile"):
+            self.extender_plan(catalog)
+
+    def test_extender_rejects_stale_or_undeclared_overrides(self):
+        catalog = self.extender_catalog()
+        core = self.root / "TGC/common/empty.txt"
+        self.put(core, b"new shared behavior")
+        with self.assertRaisesRegex(d.DeploymentError, "Refresh Extender override"):
+            self.extender_plan(catalog)
+        self.put(core, b"")
+        self.put(self.root / d.EXTENDER_COMPONENT / "common/undeclared.txt", b"unexpected")
+        self.commit()
+        with self.assertRaisesRegex(d.DeploymentError, "differs from declared files"):
+            self.extender_plan(catalog)
+
     def test_optional_root(self):
         self.apply(self.plan(optional=["TGCFantasyFormables"]))
         self.assertIn("TGCFantasyFormables", self.verify())

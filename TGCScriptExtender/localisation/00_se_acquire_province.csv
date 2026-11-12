@@ -1,0 +1,4 @@
+acquire_province;Acquire province;Prendre province;Provinz erwerben;;;;;;;;;;;x
+acquire_province_desc;Acquire one §Yprovince§W of an enemy state;;;;;;;;;;;;;x
+acquire_province_setup;Acquire a province of $STATE$ from $RECIPIENT$;;;;;;;;;;;;;x
+acquire_province_short;Acquire a province of $STATE$;;;;;;;;;;;;;x
