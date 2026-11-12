@@ -23,6 +23,7 @@
 
 ## Re-baseline verification policy — temporary
 
+- The upstream synchronization checkpoint is closed. The general technical and balance re-baseline continues. Use `docs/upstream_reconciliation.md` for the handoff and `docs/rebaseline_backlog.md` for residual work.
 - Treat existing fork changes, prior fixes, audit conclusions, validation results, documentation claims, and legacy AI-generated work as evidence to be re-evaluated, not as proof of correctness.
 - During the re-baseline, validate the implementation from first principles where practical. Do not preserve a previous conclusion solely because it is already implemented, documented, tested, or reported as passing.
 - Audit the audit tooling itself. Review validator and audit code, parsing assumptions, rulesets, coverage, thresholds, reference values, balance targets, and other parameters used to decide whether content is valid or plausible.

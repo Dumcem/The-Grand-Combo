@@ -15,7 +15,7 @@ the production target. Never use the Steam installation as a working copy.
 - `--optional ID` may be repeated for explicitly selected entries in the shared
   catalog. The Extender catalog accepts only its dedicated profile.
 
-The catalog lists nine optional root components and six niche components.
+The catalog lists eight optional root components and six niche components.
 `TGCPastelMap` selects a root map skin. `TGCOrganizedStacks` reads its nested
 source under `TGC Niche Submods` and installs the pair directly under `mod` as
 its descriptor requires. The container is never copied. `TGCLowRam` is a cache
@@ -33,6 +33,10 @@ to play the extension. Updating `core` after `core+1966` preserves Timeline,
 its ownership and its prior commit; disable it in the launcher for core-only
 play. There is no implicit uninstall operation. Optional-mod compatibility
 with Timeline or other options is not certified by the deployment tool.
+
+Task 58 retired the legacy Performance Addon. An existing unowned copy in
+`mod` is preserved outside the selected scope. See the
+[reconciliation checkpoint](../upstream_reconciliation.md#task-58--checkpoint-di-chiusura).
 
 ## Target configuration and commands
 
@@ -127,8 +131,11 @@ roots, generation, profile and exact selected pairs, source identity, catalog
 digest/policy, old/new snapshots, previous state and adoption intent. The plan
 fingerprint and previous-state digest are checked again. Operational paths are
 rebuilt from the configured target, validated transaction ID and catalog.
-Catalog changes stop historical recovery until a matching catalog is restored
-or reviewed; old mappings are not silently reinterpreted.
+Historical verification and recovery require the exact catalog digest from the
+record. For the Task 58 retirement, the tool can reconstruct the previous
+shared catalog during record validation and still requires its exact digest.
+New plans always use the current catalog. Future catalog changes require a
+review of the historical records they affect.
 
 The journal repeats the record authority fields and digest, which must match.
 Mutable fields describe intent, per-unit progress and diagnostic errors.

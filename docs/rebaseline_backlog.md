@@ -26,6 +26,7 @@ La baseline supportata è **Project Alice 1.3.0**, insieme a **Victoria II origi
 | [Ricerca, economia e unità](#ricerca-economia-e-unità) | TECH_AI, SCHOOL, TEXTILE, NAV_ORG, BLOCKADE, NAV_ATTR, UNIT_BASKET, UNIT_MORALE, UNIT_REINF, UNIT_STRENGTH, UNIT_WEIGHT, STEAM, ARTILLERY |
 | [Workaround navali](#workaround-navali) | SUB_AI_GP, SUB_AI_SP, SUB_FRA, SUB_SWE, SUB_FISH, SUB_BEIYANG, SUB_EIC, SUB_JAP, SUB_RUS |
 | [Questioni rinviate](#questioni-rinviate) | NAVAL_AI, NAVAL_TIMING, ALICE_REMAINING, BALANCE, CRASH_1949 |
+| [Residui della riconciliazione](#residui-della-riconciliazione) | Candidati upstream, simulazione condivisa, JIT Alice, Loader e prestazioni |
 | [Manutenzione e chiusura](#manutenzione-e-chiusura) | Regole per aggiornamenti, revisioni del motore e chiusura |
 
 ## Provenienza del Task 37
@@ -326,6 +327,19 @@ Origine delle guardie nei commit [3dadb6622](https://github.com/Dumcem/The-Grand
 | ALICE_REMAINING · compatibilità residua dei campi | Media · No · P2 · Aperta | **Sorgenti e Dati**, Alice 1.3.0, entrambe. Oltre ai campi già schedati in UNIT_STRENGTH e UNIT_WEIGHT, lo schema scarta silenziosamente `priority` in 21 unità core e 23 con Timeline, e `limit_per_port` in 10 e 12. Altri casi e limiti di rappresentazione sono nell’audit tecnico. Riesaminare durante il workstream unità/AI o quando cambiano parser e consumatori. Verificare l’ambito V2 prima di scegliere equivalenti e collegare qui eventuali nuovi riscontri della stessa causa. [Schema Alice](https://github.com/schombert/Project-Alice/blob/v1.3.0/src/parsing/parser_defs.txt#L512-L542) · [Contratto applicato](../TGC/docs/1966_balance_audit.md#raw-values-versus-engine-applied-values) |
 | BALANCE · bilanciamento 1836–1966 | Da stimare · No · P2 · Rinviata | **Dati**, entrambi i motori e le composizioni. Le soglie legacy sono diagnostiche normative senza validazione. Il workstream deve fondare ruoli, progressione, infrastrutture e logistica e confrontare i valori effettivamente applicati. Riesaminare quando si definiscono obiettivi e misure della progressione. Le violazioni di uno stesso criterio restano raggruppate. [Contratto legacy](../TGC/docs/1966_balance_audit.md#legacy-normative-contract) |
 | CRASH_1949 · stabilità di campagna | Alta · Condizionale · P1 · Rinviata | **Aperta**. Il Project Hub registra un crash riproducibile verso fine aprile 1949. Motore, composizione, salvataggio di riferimento e causa restano da accertare nel workstream stabilità. Blocca la verifica di una campagna che lo riproduce e deve superare quella data. Riesaminare quando si recuperano condizioni minime di riproduzione o quando una verifica corrente richiede quel tratto di campagna. Fonte interna del progetto, sezione «Questioni aperte». |
+
+## Residui della riconciliazione
+
+Le voci sono aperte nei rispettivi workstream, con blocco No per il checkpoint upstream fissato.
+
+| Classe Task 58 | Area e provenienza | Questione e riferimento |
+| --- | --- | --- |
+| B | Upstream TGC | Restano da valutare i delta `88604963d` e `b865278ff` nei CB ordinari insieme al ramo Bhutan del Great Game. Per i candidati generici del fork, isolare le patch sulle guardie di pace e sulle partizioni preservandone le evidenze. [Candidati e motivazioni](upstream_reconciliation.md#task-55--preparazione-del-profilo-script-extender) |
+| B | Fork e percorso condiviso | Simulazione oltre l'avvio e salvataggi con eventi Temperance pendenti ancora da verificare. [Task 52](upstream_reconciliation.md#task-52--checkpoint-runtime) |
+| B | Deployment Windows | Un handle esterno persistente può impedire la sostituzione del journal. Conservare le ricevute e applicare il recupero per ID se si presenta il caso. [Procedura di recupero](deployment/local_deployment.md#rollback-and-interrupted-publication) |
+| B | Alice | Guasto intermittente JIT Windows osservato anche prima del merge. La diagnosi e la prova prolungata restano nel workstream Alice 1.3.0. [Task 53](upstream_reconciliation.md#task-53--diagnosi-del-crash-alice) |
+| B | Loader e integrazione Extender | Identità e causa della clausola ottomana aperte. Pagamenti POP e 1990, costo di guerra, 96021/96094 e singoli effetti dell'evento 53 richiedono il collaudo mirato. [Task 57](deployment/script_extender_task57.md) |
+| C | Bilanciamento e prestazioni | La re-baseline normativa prosegue come in BALANCE. Un confronto del Performance Patch richiede una prova dedicata. [Profilo Extender](deployment/script_extender_profile.md) |
 
 ## Manutenzione e chiusura
 

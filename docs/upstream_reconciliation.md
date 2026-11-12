@@ -1,5 +1,7 @@
 # Riconciliazione upstream TGC
 
+Per riprendere il lavoro, partire dal [checkpoint Task 58](#task-58--checkpoint-di-chiusura).
+
 La revisione upstream fissata è [14f2e6ff61e7e1ea07ffef07548560da5bcc47f0](https://github.com/The-Grand-Combination/The-Grand-Combo/commit/14f2e6ff61e7e1ea07ffef07548560da5bcc47f0). Il Task 39 ha inventariato 63 commit esclusivi upstream e 243 file nel [delta dalla base comune ea0392ff](https://github.com/The-Grand-Combination/The-Grand-Combo/compare/ea0392ff668851c916cd86688452e99f406ed861...14f2e6ff61e7e1ea07ffef07548560da5bcc47f0). Il fork era a `7441a4189253183dca61d6d71efb610fd4184e03` prima del primo lotto.
 
 ## Esiti registrati
@@ -110,7 +112,7 @@ I commit locali sono `9bea5ea93772b86f40f641a4726090dc3dc08c62` per catene e fla
 | `90106a7bf`, `64739eccc`, `da591f8a0`, `1f9380a84`, `cf528e977`, `f82cd4928`, `9320e4a42`, `ff0a99ef5`, `88604963d`, `b865278ff`, `07b3cca45` | **Integrati** solo i selettori del Brasile e gli esiti equivalenti già registrati. **Sospesi** alfabetizzazione, forte, disattivazione della migrazione, soglia di civilizzazione, assetto svizzero, neutralità, annessioni jugoslave solo AI, CB ordinari e ribilanciamento dell'Apocalypse 1836. Gli hunk numerici o territoriali rimangono differenze esplicite, anche quando i due motori possono eseguirli. |
 | `3b9e5658d`, `432900323`, `2f74af937`, `fb4f83473` | **Sospeso** il sistema PR #416, compresi menu, eventi BRZ, tooltip e immagine. `good_governance` è già assente. Conservati i testi e le decisioni core del fork e la grafia Rio de Janeiro. Esclusa l'impostazione editor specifica `victorianTools.activeMods`, che indica soltanto il core. |
 | `cc9d98ca2`, `a4fb7c806`, `6f0e39c74`, `2ac5466c4`, `4c5149943`, `bcc7349ed`, `2a159ef6d`, `0443db95a`, `9a24bd649`, `14f2e6ff6` | **Dipendenze architetturali.** `po_demand_province`, trattati imposti, flag `se_treaty_dismantled`, partizioni, interessi AI, edifici AI e redditi POP sono accoppiati all'Extender. Gli script legacy di pace, banche, università e redditi restano attivi. Il CB di test e i file `SE_Test` sono assenti come nel risultato finale. Il testo UI indipendente è già trattato sopra. |
-| `b127972a3`, `bda780249` | **Sospesa** la rimozione di Performance Addon, ancora componente opzionale del catalogo canonico. **Confrontato** il merge `bda780249` sul suo risultato nel delta fissato. Nessuna acquisizione locale di ascendenza upstream in questa fase. |
+| `b127972a3`, `bda780249` | **Sospesa** la rimozione di Performance Addon, allora componente opzionale del catalogo canonico. **Confrontato** il merge `bda780249` sul suo risultato nel delta fissato. Nessuna acquisizione locale di ascendenza upstream in questa fase. |
 
 ### Decisioni per la chiusura
 
@@ -159,7 +161,7 @@ Il lavoro parte da `6e0d1c976b25ea4b55d74d4982fbb37f3daa0d62` su `master`, con w
 - **Geografia e testi.** Il mantenimento di Paracatu `2444` nel clima tropicale Aw segue la fonte territoriale del Task 44, con valori identici fra i due gruppi attuali. `PROV2447` conserva Rio de Janeiro. Il file editor conserva la configurazione locale invece di fissare un solo profilo. Le correzioni di encoding mantengono i nomi e le traduzioni recuperate.
 - **Protezioni tecniche del fork.** Restano le guardie di proprietà di Haiti e di esistenza NET/GEF, il flag globale Gold Rush prodotto da MEX e letto anche se il titolare di San Francisco è cambiato, l'invito Sonderbund per paese, i flag polacchi di salvataggio, il costo negativo della proclamazione in `Political.txt`, i fallback navali Alice, il supporto agli Stati schiavisti dove disponibile e i controlli `has_factories` al posto della pseudo-costruzione `factory`. Le regressioni dei Task 41–48 e il test navale rivisto verificano i percorsi interessati. Conservati anche i ribelli confessionali e i carrier Timeline già presenti nel fork.
 - **Compatibilità dei salvataggi.** Restano i lettori di `WilhelmIV_king` e dei colori dei vassalli per salvataggi precedenti, senza nuovi produttori. Il menu 100 tratta il vecchio flag di apertura e Temperance conserva 180–191. Gli eventi già pendenti in salvataggi antecedenti alla rinumerazione rimangono da verificare nel checkpoint runtime.
-- **Performance Addon, `b127972a3`.** La cancellazione upstream comprende il descrittore e 31 file, incluso l'override di rinomine e giornali. Il catalogo corrente lo installa ancora come opzione. La raccomandazione da approvare è mantenere l'addon per il merge corrente e decidere insieme al profilo DLL l'eventuale migrazione di catalogo, ownership e rollback. La cancellazione Git automatica da sola produrrebbe una sorgente canonica incompleta.
+- **Performance Addon, `b127972a3`.** La cancellazione upstream comprende il descrittore e 31 file, incluso l'override di rinomine e giornali. Il catalogo del candidato lo installava come opzione. La raccomandazione da approvare è mantenere l'addon per il merge corrente e decidere insieme al profilo DLL l'eventuale migrazione di catalogo, ownership e rollback. La cancellazione Git automatica da sola produrrebbe una sorgente canonica incompleta.
 
 Candidati a contributo upstream, da isolare dal resto del fork. Comprendono la negazione completa delle condizioni AI del menu 100 e blocco delle riaperture, proprietà delle cessioni svizzere, scope di relazione e cessione del ramo anatolico, premi ripetibili di Petrograd e selezione di un compratore marocchino solvibile. Le regressioni sono nei commit di contenuto.
 
@@ -498,38 +500,38 @@ L’ultima colonna mostra gli ultimi commit locali pertinenti quando il percorso
 | `TGCApocalypse1836/inventions/Apocalypse 1836.txt` | [07b3cca45](https://github.com/The-Grand-Combination/The-Grand-Combo/commit/07b3cca45) | Adottato / equivalente. Blob identico. | 0 | — |
 | `TGCFantasyFormables/Decisions/ByzantineExpansion.txt` | [3edc1b8a9](https://github.com/The-Grand-Combination/The-Grand-Combo/commit/3edc1b8a9) | **Adottato.** Quattro decisioni relocate, spazi finali rimossi. | 6 | `837a451a0` |
 | `TGCFantasyFormables/localisation/decisions.csv` | [3edc1b8a9](https://github.com/The-Grand-Combination/The-Grand-Combo/commit/3edc1b8a9) | Adottato / equivalente. Blob identico. | 0 | — |
-| `TGCPerformanceAddon.mod` | [b127972a3](https://github.com/The-Grand-Combination/The-Grand-Combo/commit/b127972a3) | **Architettura.** Rimozione upstream sospesa. Componente opzionale nel catalogo canonico. | 1 | base comune |
-| `TGCPerformanceAddon/decisions/Renaming-Decisions-Americas.txt` | [b127972a3](https://github.com/The-Grand-Combination/The-Grand-Combo/commit/b127972a3) | **Architettura.** Rimozione upstream sospesa. Componente opzionale nel catalogo canonico. | file | base comune |
-| `TGCPerformanceAddon/decisions/Renaming-Decisions-Asia.txt` | [b127972a3](https://github.com/The-Grand-Combination/The-Grand-Combo/commit/b127972a3) | **Architettura.** Rimozione upstream sospesa. Componente opzionale nel catalogo canonico. | file | base comune |
-| `TGCPerformanceAddon/decisions/Renaming-Decisions-Colonies.txt` | [b127972a3](https://github.com/The-Grand-Combination/The-Grand-Combo/commit/b127972a3) | **Architettura.** Rimozione upstream sospesa. Componente opzionale nel catalogo canonico. | file | base comune |
-| `TGCPerformanceAddon/decisions/Renaming-Decisions-Eastern-Europe.txt` | [b127972a3](https://github.com/The-Grand-Combination/The-Grand-Combo/commit/b127972a3) | **Architettura.** Rimozione upstream sospesa. Componente opzionale nel catalogo canonico. | file | base comune |
-| `TGCPerformanceAddon/decisions/Renaming-Decisions-Europe.txt` | [b127972a3](https://github.com/The-Grand-Combination/The-Grand-Combo/commit/b127972a3) | **Architettura.** Rimozione upstream sospesa. Componente opzionale nel catalogo canonico. | file | base comune |
-| `TGCPerformanceAddon/decisions/Renaming-Decisions-TUR.txt` | [b127972a3](https://github.com/The-Grand-Combination/The-Grand-Combo/commit/b127972a3) | **Architettura.** Rimozione upstream sospesa. Componente opzionale nel catalogo canonico. | file | base comune |
-| `TGCPerformanceAddon/news/news_ai_afraid_of.txt` | [b127972a3](https://github.com/The-Grand-Combination/The-Grand-Combo/commit/b127972a3) | **Architettura.** Rimozione upstream sospesa. Componente opzionale nel catalogo canonico. | file | base comune |
-| `TGCPerformanceAddon/news/news_ai_likes_very_much.txt` | [b127972a3](https://github.com/The-Grand-Combination/The-Grand-Combo/commit/b127972a3) | **Architettura.** Rimozione upstream sospesa. Componente opzionale nel catalogo canonico. | 1 | base comune |
-| `TGCPerformanceAddon/news/news_battle_over.txt` | [b127972a3](https://github.com/The-Grand-Combination/The-Grand-Combo/commit/b127972a3) | **Architettura.** Rimozione upstream sospesa. Componente opzionale nel catalogo canonico. | 1 | base comune |
-| `TGCPerformanceAddon/news/news_battle_over_historical.txt` | [b127972a3](https://github.com/The-Grand-Combination/The-Grand-Combo/commit/b127972a3) | **Architettura.** Rimozione upstream sospesa. Componente opzionale nel catalogo canonico. | 1 | base comune |
-| `TGCPerformanceAddon/news/news_construction_complete.txt` | [b127972a3](https://github.com/The-Grand-Combination/The-Grand-Combo/commit/b127972a3) | **Architettura.** Rimozione upstream sospesa. Componente opzionale nel catalogo canonico. | 1 | base comune |
-| `TGCPerformanceAddon/news/news_crisis_backer.txt` | [b127972a3](https://github.com/The-Grand-Combination/The-Grand-Combo/commit/b127972a3) | **Architettura.** Rimozione upstream sospesa. Componente opzionale nel catalogo canonico. | 1 | base comune |
-| `TGCPerformanceAddon/news/news_crisis_resolved.txt` | [b127972a3](https://github.com/The-Grand-Combination/The-Grand-Combo/commit/b127972a3) | **Architettura.** Rimozione upstream sospesa. Componente opzionale nel catalogo canonico. | 1 | base comune |
-| `TGCPerformanceAddon/news/news_crisis_side_joined.txt` | [b127972a3](https://github.com/The-Grand-Combination/The-Grand-Combo/commit/b127972a3) | **Architettura.** Rimozione upstream sospesa. Componente opzionale nel catalogo canonico. | 1 | base comune |
-| `TGCPerformanceAddon/news/news_crisis_started.txt` | [b127972a3](https://github.com/The-Grand-Combination/The-Grand-Combo/commit/b127972a3) | **Architettura.** Rimozione upstream sospesa. Componente opzionale nel catalogo canonico. | 1 | base comune |
-| `TGCPerformanceAddon/news/news_decisions.txt` | [b127972a3](https://github.com/The-Grand-Combination/The-Grand-Combo/commit/b127972a3) | **Architettura.** Rimozione upstream sospesa. Componente opzionale nel catalogo canonico. | 1 | base comune |
-| `TGCPerformanceAddon/news/news_fake_default.txt` | [b127972a3](https://github.com/The-Grand-Combination/The-Grand-Combo/commit/b127972a3) | **Architettura.** Rimozione upstream sospesa. Componente opzionale nel catalogo canonico. | 1 | base comune |
-| `TGCPerformanceAddon/news/news_game_event_default.txt` | [b127972a3](https://github.com/The-Grand-Combination/The-Grand-Combo/commit/b127972a3) | **Architettura.** Rimozione upstream sospesa. Componente opzionale nel catalogo canonico. | 1 | base comune |
-| `TGCPerformanceAddon/news/news_goods_prices.txt` | [b127972a3](https://github.com/The-Grand-Combination/The-Grand-Combo/commit/b127972a3) | **Architettura.** Rimozione upstream sospesa. Componente opzionale nel catalogo canonico. | 1 | base comune |
-| `TGCPerformanceAddon/news/news_invention.txt` | [b127972a3](https://github.com/The-Grand-Combination/The-Grand-Combo/commit/b127972a3) | **Architettura.** Rimozione upstream sospesa. Componente opzionale nel catalogo canonico. | 1 | base comune |
-| `TGCPerformanceAddon/news/news_layout.txt` | [b127972a3](https://github.com/The-Grand-Combination/The-Grand-Combo/commit/b127972a3) | **Architettura.** Rimozione upstream sospesa. Componente opzionale nel catalogo canonico. | 1 | base comune |
-| `TGCPerformanceAddon/news/news_new_gp.txt` | [b127972a3](https://github.com/The-Grand-Combination/The-Grand-Combo/commit/b127972a3) | **Architettura.** Rimozione upstream sospesa. Componente opzionale nel catalogo canonico. | 1 | base comune |
-| `TGCPerformanceAddon/news/news_new_party.txt` | [b127972a3](https://github.com/The-Grand-Combination/The-Grand-Combo/commit/b127972a3) | **Architettura.** Rimozione upstream sospesa. Componente opzionale nel catalogo canonico. | 1 | base comune |
-| `TGCPerformanceAddon/news/news_peace_offer_accept_default.txt` | [b127972a3](https://github.com/The-Grand-Combination/The-Grand-Combo/commit/b127972a3) | **Architettura.** Rimozione upstream sospesa. Componente opzionale nel catalogo canonico. | 1 | base comune |
-| `TGCPerformanceAddon/news/news_peace_offer_accept_historicals.txt` | [b127972a3](https://github.com/The-Grand-Combination/The-Grand-Combo/commit/b127972a3) | **Architettura.** Rimozione upstream sospesa. Componente opzionale nel catalogo canonico. | 1 | base comune |
-| `TGCPerformanceAddon/news/news_prov_controller.txt` | [b127972a3](https://github.com/The-Grand-Combination/The-Grand-Combo/commit/b127972a3) | **Architettura.** Rimozione upstream sospesa. Componente opzionale nel catalogo canonico. | 1 | base comune |
-| `TGCPerformanceAddon/news/news_prov_owner.txt` | [b127972a3](https://github.com/The-Grand-Combination/The-Grand-Combo/commit/b127972a3) | **Architettura.** Rimozione upstream sospesa. Componente opzionale nel catalogo canonico. | 1 | base comune |
-| `TGCPerformanceAddon/news/news_rebel_break_country.txt` | [b127972a3](https://github.com/The-Grand-Combination/The-Grand-Combo/commit/b127972a3) | **Architettura.** Rimozione upstream sospesa. Componente opzionale nel catalogo canonico. | 1 | base comune |
-| `TGCPerformanceAddon/news/news_research_complete.txt` | [b127972a3](https://github.com/The-Grand-Combination/The-Grand-Combo/commit/b127972a3) | **Architettura.** Rimozione upstream sospesa. Componente opzionale nel catalogo canonico. | 1 | base comune |
-| `TGCPerformanceAddon/news/news_war_declared.txt` | [b127972a3](https://github.com/The-Grand-Combination/The-Grand-Combo/commit/b127972a3) | **Architettura.** Rimozione upstream sospesa. Componente opzionale nel catalogo canonico. | 1 | base comune |
-| `TGCPerformanceAddon/news/on_collection.txt` | [b127972a3](https://github.com/The-Grand-Combination/The-Grand-Combo/commit/b127972a3) | **Architettura.** Rimozione upstream sospesa. Componente opzionale nel catalogo canonico. | 1 | base comune |
+| `TGCPerformanceAddon.mod` | [b127972a3](https://github.com/The-Grand-Combination/The-Grand-Combo/commit/b127972a3) | **Architettura.** Rimozione sospesa al merge, adottata nel Task 58. | 1 | base comune |
+| `TGCPerformanceAddon/decisions/Renaming-Decisions-Americas.txt` | [b127972a3](https://github.com/The-Grand-Combination/The-Grand-Combo/commit/b127972a3) | **Architettura.** Rimozione sospesa al merge, adottata nel Task 58. | file | base comune |
+| `TGCPerformanceAddon/decisions/Renaming-Decisions-Asia.txt` | [b127972a3](https://github.com/The-Grand-Combination/The-Grand-Combo/commit/b127972a3) | **Architettura.** Rimozione sospesa al merge, adottata nel Task 58. | file | base comune |
+| `TGCPerformanceAddon/decisions/Renaming-Decisions-Colonies.txt` | [b127972a3](https://github.com/The-Grand-Combination/The-Grand-Combo/commit/b127972a3) | **Architettura.** Rimozione sospesa al merge, adottata nel Task 58. | file | base comune |
+| `TGCPerformanceAddon/decisions/Renaming-Decisions-Eastern-Europe.txt` | [b127972a3](https://github.com/The-Grand-Combination/The-Grand-Combo/commit/b127972a3) | **Architettura.** Rimozione sospesa al merge, adottata nel Task 58. | file | base comune |
+| `TGCPerformanceAddon/decisions/Renaming-Decisions-Europe.txt` | [b127972a3](https://github.com/The-Grand-Combination/The-Grand-Combo/commit/b127972a3) | **Architettura.** Rimozione sospesa al merge, adottata nel Task 58. | file | base comune |
+| `TGCPerformanceAddon/decisions/Renaming-Decisions-TUR.txt` | [b127972a3](https://github.com/The-Grand-Combination/The-Grand-Combo/commit/b127972a3) | **Architettura.** Rimozione sospesa al merge, adottata nel Task 58. | file | base comune |
+| `TGCPerformanceAddon/news/news_ai_afraid_of.txt` | [b127972a3](https://github.com/The-Grand-Combination/The-Grand-Combo/commit/b127972a3) | **Architettura.** Rimozione sospesa al merge, adottata nel Task 58. | file | base comune |
+| `TGCPerformanceAddon/news/news_ai_likes_very_much.txt` | [b127972a3](https://github.com/The-Grand-Combination/The-Grand-Combo/commit/b127972a3) | **Architettura.** Rimozione sospesa al merge, adottata nel Task 58. | 1 | base comune |
+| `TGCPerformanceAddon/news/news_battle_over.txt` | [b127972a3](https://github.com/The-Grand-Combination/The-Grand-Combo/commit/b127972a3) | **Architettura.** Rimozione sospesa al merge, adottata nel Task 58. | 1 | base comune |
+| `TGCPerformanceAddon/news/news_battle_over_historical.txt` | [b127972a3](https://github.com/The-Grand-Combination/The-Grand-Combo/commit/b127972a3) | **Architettura.** Rimozione sospesa al merge, adottata nel Task 58. | 1 | base comune |
+| `TGCPerformanceAddon/news/news_construction_complete.txt` | [b127972a3](https://github.com/The-Grand-Combination/The-Grand-Combo/commit/b127972a3) | **Architettura.** Rimozione sospesa al merge, adottata nel Task 58. | 1 | base comune |
+| `TGCPerformanceAddon/news/news_crisis_backer.txt` | [b127972a3](https://github.com/The-Grand-Combination/The-Grand-Combo/commit/b127972a3) | **Architettura.** Rimozione sospesa al merge, adottata nel Task 58. | 1 | base comune |
+| `TGCPerformanceAddon/news/news_crisis_resolved.txt` | [b127972a3](https://github.com/The-Grand-Combination/The-Grand-Combo/commit/b127972a3) | **Architettura.** Rimozione sospesa al merge, adottata nel Task 58. | 1 | base comune |
+| `TGCPerformanceAddon/news/news_crisis_side_joined.txt` | [b127972a3](https://github.com/The-Grand-Combination/The-Grand-Combo/commit/b127972a3) | **Architettura.** Rimozione sospesa al merge, adottata nel Task 58. | 1 | base comune |
+| `TGCPerformanceAddon/news/news_crisis_started.txt` | [b127972a3](https://github.com/The-Grand-Combination/The-Grand-Combo/commit/b127972a3) | **Architettura.** Rimozione sospesa al merge, adottata nel Task 58. | 1 | base comune |
+| `TGCPerformanceAddon/news/news_decisions.txt` | [b127972a3](https://github.com/The-Grand-Combination/The-Grand-Combo/commit/b127972a3) | **Architettura.** Rimozione sospesa al merge, adottata nel Task 58. | 1 | base comune |
+| `TGCPerformanceAddon/news/news_fake_default.txt` | [b127972a3](https://github.com/The-Grand-Combination/The-Grand-Combo/commit/b127972a3) | **Architettura.** Rimozione sospesa al merge, adottata nel Task 58. | 1 | base comune |
+| `TGCPerformanceAddon/news/news_game_event_default.txt` | [b127972a3](https://github.com/The-Grand-Combination/The-Grand-Combo/commit/b127972a3) | **Architettura.** Rimozione sospesa al merge, adottata nel Task 58. | 1 | base comune |
+| `TGCPerformanceAddon/news/news_goods_prices.txt` | [b127972a3](https://github.com/The-Grand-Combination/The-Grand-Combo/commit/b127972a3) | **Architettura.** Rimozione sospesa al merge, adottata nel Task 58. | 1 | base comune |
+| `TGCPerformanceAddon/news/news_invention.txt` | [b127972a3](https://github.com/The-Grand-Combination/The-Grand-Combo/commit/b127972a3) | **Architettura.** Rimozione sospesa al merge, adottata nel Task 58. | 1 | base comune |
+| `TGCPerformanceAddon/news/news_layout.txt` | [b127972a3](https://github.com/The-Grand-Combination/The-Grand-Combo/commit/b127972a3) | **Architettura.** Rimozione sospesa al merge, adottata nel Task 58. | 1 | base comune |
+| `TGCPerformanceAddon/news/news_new_gp.txt` | [b127972a3](https://github.com/The-Grand-Combination/The-Grand-Combo/commit/b127972a3) | **Architettura.** Rimozione sospesa al merge, adottata nel Task 58. | 1 | base comune |
+| `TGCPerformanceAddon/news/news_new_party.txt` | [b127972a3](https://github.com/The-Grand-Combination/The-Grand-Combo/commit/b127972a3) | **Architettura.** Rimozione sospesa al merge, adottata nel Task 58. | 1 | base comune |
+| `TGCPerformanceAddon/news/news_peace_offer_accept_default.txt` | [b127972a3](https://github.com/The-Grand-Combination/The-Grand-Combo/commit/b127972a3) | **Architettura.** Rimozione sospesa al merge, adottata nel Task 58. | 1 | base comune |
+| `TGCPerformanceAddon/news/news_peace_offer_accept_historicals.txt` | [b127972a3](https://github.com/The-Grand-Combination/The-Grand-Combo/commit/b127972a3) | **Architettura.** Rimozione sospesa al merge, adottata nel Task 58. | 1 | base comune |
+| `TGCPerformanceAddon/news/news_prov_controller.txt` | [b127972a3](https://github.com/The-Grand-Combination/The-Grand-Combo/commit/b127972a3) | **Architettura.** Rimozione sospesa al merge, adottata nel Task 58. | 1 | base comune |
+| `TGCPerformanceAddon/news/news_prov_owner.txt` | [b127972a3](https://github.com/The-Grand-Combination/The-Grand-Combo/commit/b127972a3) | **Architettura.** Rimozione sospesa al merge, adottata nel Task 58. | 1 | base comune |
+| `TGCPerformanceAddon/news/news_rebel_break_country.txt` | [b127972a3](https://github.com/The-Grand-Combination/The-Grand-Combo/commit/b127972a3) | **Architettura.** Rimozione sospesa al merge, adottata nel Task 58. | 1 | base comune |
+| `TGCPerformanceAddon/news/news_research_complete.txt` | [b127972a3](https://github.com/The-Grand-Combination/The-Grand-Combo/commit/b127972a3) | **Architettura.** Rimozione sospesa al merge, adottata nel Task 58. | 1 | base comune |
+| `TGCPerformanceAddon/news/news_war_declared.txt` | [b127972a3](https://github.com/The-Grand-Combination/The-Grand-Combo/commit/b127972a3) | **Architettura.** Rimozione sospesa al merge, adottata nel Task 58. | 1 | base comune |
+| `TGCPerformanceAddon/news/on_collection.txt` | [b127972a3](https://github.com/The-Grand-Combination/The-Grand-Combo/commit/b127972a3) | **Architettura.** Rimozione sospesa al merge, adottata nel Task 58. | 1 | base comune |
 
 </details>
 
@@ -593,7 +595,7 @@ La suite cumulativa ha passato 180 test. Validator 1966 passato. Drift bidirezio
 
 ### PR #417 e checkpoint runtime
 
-L'ascendenza upstream è acquisita. Le funzionalità dipendenti dallo Script Extender restano inattive nel profilo condiviso. Rimangono la separazione del profilo facoltativo documentata nel Task 50, Performance Addon nel catalogo e i percorsi compatibili di Victoria II originale e Project Alice 1.3.0. Nessuna DLL è stata installata o attivata. Le verifiche dei motori sono statiche.
+A questo checkpoint l'ascendenza upstream era acquisita, l'addon era ancora nel catalogo e le verifiche dei motori erano statiche. Il profilo condiviso conservava i percorsi Victoria II originale e Project Alice 1.3.0 senza direttive DLL. I risultati successivi sono nel checkpoint Task 58.
 
 Il candidato può passare a un checkpoint runtime autorizzato separatamente, con un piano esaminato e privo di blocchi, verificando la disponibilità dei backup prima di procedere. Un diniego persistente può ancora interrompere l'operazione. Se rimane una transazione pendente, seguire la procedura di recupero prima di applicare un altro piano. L'installazione live e lo scenario Alice restano al checkpoint precedente.
 
@@ -625,8 +627,8 @@ assembla un solo mod con una cartella utente dedicata. Il catalogo comune e i
 payload core, Timeline e Performance Addon conservano i byte di partenza.
 La matrice PR #417 registra il recupero e gli adattamenti agli eventi di pace
 e alla mappa. Il Loader e il plugin restano dipendenze esterne della release
-3.0.0. L'avvio con il bundle, i salvataggi e il comportamento delle meccaniche
-restano da verificare in un'installazione separata.
+3.0.0. L'avvio isolato, i salvataggi e le meccaniche osservate dopo questo checkpoint
+sono nel [Task 56](deployment/script_extender_task56.md).
 [Profilo e condizioni del test](deployment/script_extender_profile.md)
 
 Le regressioni comuni hanno passato 180 test. Il drift in entrambe le direzioni
@@ -648,14 +650,43 @@ il test usa il percorso risolto da `target_paths`.
 di 96094 possono essere estratte come patch indipendente. Anche la pulizia
 della tabella delle partizioni è generica per la revisione fissata. I due file
 della mappa usati nel controllo, `map/definition.csv` e `map/region.txt`, sono
-identici a quelli di `14f2e6ff6`. Entrambe le correzioni sono verificate
-staticamente e restano da esercitare con il plugin.
+identici a quelli di `14f2e6ff6`. Il Task 56 ha esercitato la partizione di Ceylon e la chiusura belga
+con flag predisposti. La catena completa di pace resta nel piano Task 57.
 
-## Blocchi pendenti
+## Task 58 · Checkpoint di chiusura
 
-- **Profilo facoltativo.** Contenuti e deployment separato predisposti. Restano la verifica del bundle e l'autorizzazione di una seconda installazione per il test runtime. Il Performance Addon rimane un'opzione del profilo condiviso.
-- **Checkpoint runtime.** Rimangono il crash intermittente di Alice con Timeline 1966, la verifica della simulazione e la compatibilità dei salvataggi con eventi Temperance pendenti. Rimane il rischio di un diniego persistente di Windows durante un futuro deployment. Conservare i backup e seguire la procedura canonica di recupero in caso di transazione pendente.
+**CHIUSO CON LIMITI DOCUMENTATI.** Il repository canonico è `Dumcem/The-Grand-Combo`, branch `master`. Il merge effettivo `b2b00053ae7526d1c12ec13368b6063428275f8e` ha come genitori il fork pre-merge `54f1cd0619e499e145fc9f92d86488fbafc5e540` e l'upstream `14f2e6ff61e7e1ea07ffef07548560da5bcc47f0`. Usare quest'ultimo come base per il prossimo delta upstream. Il commit di chiusura si ricava con `git log -1 --format=%H -- docs/upstream_reconciliation.md` sul checkpoint. Al momento della verifica GitHub `master` era ancora a `9f88e758572515e69ca8ff79e116b9924fee5c4a`. I commit `fabb6434a`, `798eaab6e` e `3e2a8bd66` sono presenti nella storia locale. [Riferimento remoto verificato](https://github.com/Dumcem/The-Grand-Combo/commit/9f88e758572515e69ca8ff79e116b9924fee5c4a)
 
-## Checkpoint di chiusura
+### Decisioni e profili
 
-Il merge di riconciliazione acquisisce la revisione upstream fissata. Usare quella revisione per calcolare il delta upstream successivo. Il deployment live corrisponde al Task 52. Il checkpoint runtime è parziale.
+- **A · Allineamento.** `98eeb8773` adotta la rimozione upstream `b127972a3`, inizialmente sospesa. Ritirati dal repository il descrittore, sei override di rinomina e 25 file di giornale, la voce del catalogo e le due eccezioni di `.gitignore`. I file si recuperano da Git a `3e2a8bd66`. Il tool ricostruisce il catalogo storico solo per il suo digest esatto e continua a verificare record, manifest e ricevute. La regressione simula un addon posseduto prima del ritiro, un deployment successivo e i due rollback. I test generali sono conservati. La prova di rifiuto di un'opzione comune in Extender ora usa `TGCPastelMap`.
+- **Differenze deliberate.** L'inventario di questo registro documenta i conflitti e gli adattamenti, inclusi le guardie del fork per la pace e la conservazione della Timeline. Il fix Rotterdam `2f8c75fc4` è successivo al merge. I contenuti e descrittori di core e Timeline coincidono con la baseline live `864c81fe8`. La PR #417 è recuperata nel solo overlay Extender per mantenere i percorsi comuni di Victoria II e Alice. Il Performance Patch del Loader rimane disattivato.
+- **`core` e `core+1966`.** Il Task 52 ha verificato l'avvio di Victoria II originale e generato entrambi gli scenari Alice 1.3.0. Il core Alice ha raggiunto la finestra responsiva. Con Timeline il caricamento resta esposto al guasto intermittente JIT Windows, riprodotto anche sui controlli. Il checkpoint JIT è in `ed3e2ad17`. [Task 52](#task-52--checkpoint-runtime) · [Task 53](#task-53--diagnosi-del-crash-alice)
+- **`core+extender`.** Profilo facoltativo su Victoria II 3.04 x86. Il Task 56 ha verificato caricamento, cessione volontaria e salvataggio, trattati forzati, partizioni, interessi territoriali e ordini edilizi AI. Il Task 57 ha verificato i contratti statici e fissato le prove residue. Il bundle resta una dipendenza esterna fissata per versione e hash. [Profilo](deployment/script_extender_profile.md) · [Task 56](deployment/script_extender_task56.md) · [Task 57](deployment/script_extender_task57.md)
+- **B/C · Lavori separati.** La rivalidazione della clausola ottomana, le misure economiche, il CB in guerra e gli eventi residui del Task 57 restano prove del profilo facoltativo. JIT Alice, simulazione condivisa, salvataggi Temperance, bilanciamento e misure prestazionali seguono il [registro della re-baseline](rebaseline_backlog.md#residui-della-riconciliazione). La chiusura dell'allineamento riguarda la revisione upstream fissata.
+
+### Live, evidenze locali e procedura
+
+La verifica in sola lettura con il catalogo di chiusura conferma `core+1966` su Steam, commit `864c81fe8369e2a1db08b65e14f4be0990a80f6f`, transazione `31b39469717340668eb6553a1373dfca`, digest `6eec69877f35c3578d245c6819d6add53f0fe84d48cd6bfd132062f44855a89a`. Le sei transazioni osservate sono `verified`, con ricevute concordanti e senza lock o transazioni pendenti. `mod/TGCPerformanceAddon` e `mod/TGCPerformanceAddon.mod` sono ancora nella live Steam, fuori dall'ownership, per 32 file e 289 byte logici. Restano in sede. L'eventuale ritiro dalla live richiede una decisione separata che identifichi la coppia e la sua provenienza. Nessuna modifica alla live o agli scenari Alice.
+
+Gli archivi seguenti sono sotto `C:\Users\thoma\.codex\.chatgpt-projects\g-p-6825a7a014648191916975de34a36f0d`. I conteggi sono byte logici per file ordinari. Conservare gli scenari di confronto e le evidenze con le rispettive decisioni di conservazione. Gli elementi di proprietà incerta richiedono classificazione prima di un'eventuale rimozione.
+
+| Percorso relativo | Byte | Trattamento |
+| --- | ---: | --- |
+| `Alice-1.3.0-preflight`, `alice-scenario-1966-20261003`, `task45-checkpoint` | 3.900.195 / 43.355.433 / 18.017.539 | Conservare preflight e scenari di confronto locali. |
+| `deployment-live-dbbcb7c-20261003`, `deployment-plan-dbbcb7c-20261003` | 28.933.949 / 38.362.724 | Conservare gli archivi storici finché non sia definita la loro conservazione. |
+| `task52-apply.json`, `task52-plan.json`, `task52-runtime` | 11.921.166 / 5.998.352 / 100.725 | Conservare la traccia della baseline e i risultati di avvio. |
+| `task53-llvm`, `task54-jit` | 164.065 / 1.446.688.137 | Conservare i log diagnostici. La seconda directory contiene copie diagnostiche Alice. Valutarne l'archiviazione o il ritiro solo nel workstream JIT con inventario e decisione esplicita. |
+| `sources` | 0 | Directory senza file ordinari nell'inventario. Conservata perché preesistente. |
+
+La seconda installazione `TGC-Task56-isolated` è assente. Gli scenari e i dati locali restano disponibili soltanto sulla macchina che li conserva. I rapporti canonici contengono gli esiti e gli hash utili all'handoff. In `Victoria 2/.tgc-deploy` restano 2.039.896.195 byte logici di backup e 176.383.074 di metadati. In `%LOCALAPPDATA%/TGCDeployment` restano 281.930.699 byte logici di metadati. L'inventario non ha rilevato file ordinari in staging o dislocati. Tutti questi dati preesistenti restano protetti dalla procedura di recupero.
+
+Per una nuova validazione partire da [AGENTS.md](../AGENTS.md), applicare i trigger del validator e dell'auditor 1966 e usare il drift bidirezionale dopo la sincronizzazione. Per un deployment autorizzato seguire [plan → apply → verify e recupero](deployment/local_deployment.md) e generare eventuali scenari Alice dal deployment verificato. La verifica e il rollback della live esistente richiedono accesso a entrambi gli alberi delle ricevute. Gli eseguibili e gli scenari Alice, il bundle Loader e i salvataggi non sono distribuiti con questo checkpoint.
+
+### Verifiche e pubblicazione
+
+Il drift dalla base pre-merge `54f1cd061` con `--fail-on-warn` dà **0 FAIL, 0 WARN e 18 INFO per direzione**. Cataloghi, descrittori e connettività Git sono verificati. I file di core e Timeline coincidono con quelli di `864c81fe8`. Per validator e auditor 1966 si riutilizza la verifica del Task 51, dato che il Task 58 cambia deployment e documentazione e lascia invariati i dati del perimetro. Validator PASS, auditor 0 FAIL / 1.830 WARN / 2.974 INFO. Priorità e focus di playtest restano nel [checkpoint Task 51](#task-51--consolidamento-e-journal-windows).
+
+Deployment e overlay coprono 109 casi. La suite completa ha registrato 103 successi, 5 skip per collegamenti Windows e un errore nel descrittore simulato del nuovo caso storico. Corretto il descrittore della fixture e rieseguito quel caso con esito PASS, per un totale di 104 casi riusciti e 5 skip tra le due esecuzioni. Gli 8 casi overlay sono riusciti nella suite completa. Le directory delle fixture Task 58 sono assenti dopo le prove.
+
+Per la pubblicazione, riesaminare la serie di commit locali rispetto a `origin/master` e autorizzare il push separatamente. I tag esistenti non identificano il merge fissato o il checkpoint di chiusura. Proposta di tag annotato `upstream-sync-14f2e6ff` sul commit di chiusura, con upstream, merge, ritiro del vecchio addon, baseline Steam e rinvii runtime nella nota. Nessun tag creato o pubblicato in questa fase.

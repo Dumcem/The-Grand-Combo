@@ -86,23 +86,12 @@ delle partizioni sono rimossi 20 riferimenti agli ID assenti dalla mappa
 del core `3603`, `3605`, `3649–3652`, `3661`, `4018`, `4019`.
 Gli altri riferimenti sono conservati.
 
-## Performance Addon e ritorno al profilo condiviso
+## Ritorno al profilo condiviso
 
-Il vecchio `TGCPerformanceAddon` resta selezionabile nel catalogo condiviso.
-Disabilita sei file di decisioni di rinomina tramite file vuoti e sopprime
-contenuti di giornale. Il Performance Patch può ridurre le valutazioni
-di decisioni ed eventi e intervenire su attese, memoria, stabilità e
-multiplayer. L'area di costo delle decisioni è comune ai due approcci.
-L'addon cambia i contenuti disponibili, mentre il Patch ottimizza percorsi
-del motore e ha anche proprie impostazioni che incidono sul multiplayer.
-Nella configurazione del tag non risulta un equivalente per la soppressione
-del giornale. L'overlay Extender non sostituisce alcun file dell'addon.
-Il descrittore dell'addon dipende però dal nome del TGC condiviso e
-il deployment esteso rifiuta la combinazione. L'Extender cambia costruzione,
-economia e diplomazia e riduce un carico dell'evento 53. Nessun confronto
-di prestazioni in partita giustifica il ritiro dell'addon. Il Performance
-Patch resta un'opzione per una prova successiva e separata del profilo esteso,
-tramite il proprio descrittore ufficiale.
+Il Task 58 ha ritirato il vecchio addon, che modificava decisioni di
+rinomina e contenuti di giornale. Il Performance Patch del Loader interviene
+su percorsi del motore e rimane disattivato nel profilo collaudato. Un
+eventuale confronto delle prestazioni richiede una prova separata.
 [Opzioni del Performance Patch](https://github.com/The-Grand-Combination/The-Grand-Loader/blob/3.0.0/docs/README.md)
 
 Il profilo condiviso continua a usare `core` o `core+1966` su Victoria II
