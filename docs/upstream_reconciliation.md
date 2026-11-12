@@ -636,6 +636,21 @@ esteso e il deployment. La verifica della compatibilità dei profili condivisi
 si basa su regressioni e identità dei contenuti con la base. Lo scenario Alice
 resta quello del checkpoint precedente.
 
+Al commit di implementazione `fe2333416` il piano Extender su destinazione
+fittizia ha selezionato 16.439 file nella sola coppia gestita, senza blocchi.
+La suite completa di deployment e overlay ha passato 105 casi, con 2 skip
+per i privilegi Windows sui link simbolici. L'esecuzione con percorsi
+reindirizzati aveva prodotto errori nel confronto dei percorsi delle fixture.
+Lo stesso caso fallisce con il tool di partenza e risulta concluso quando
+il test usa il percorso risolto da `target_paths`.
+
+**Candidati per upstream.** La protezione di 96021 e la condizione di chiusura
+di 96094 possono essere estratte come patch indipendente. Anche la pulizia
+della tabella delle partizioni è generica per la revisione fissata. I due file
+della mappa usati nel controllo, `map/definition.csv` e `map/region.txt`, sono
+identici a quelli di `14f2e6ff6`. Entrambe le correzioni sono verificate
+staticamente e restano da esercitare con il plugin.
+
 ## Blocchi pendenti
 
 - **Profilo facoltativo.** Contenuti e deployment separato predisposti. Restano la verifica del bundle e l'autorizzazione di una seconda installazione per il test runtime. Il Performance Addon rimane un'opzione del profilo condiviso.
