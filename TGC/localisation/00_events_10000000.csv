@@ -351,36 +351,36 @@ EVTNAME500007;The Future of Poland;;;;;;;;;;;;;x
 EVTDESC500007;Our struggle has reached a turning point. We must now decide the future course of Poland.;;;;;;;;;;;;;x
 EVTNAME203903;Polish Uprising;;;;;;;;;;;;;x
 EVTDESC203903;The uprising gains momentum. We must decide how to respond before events spiral out of control.;;;;;;;;;;;;;x
-EVTNAME10000106;A New General Arrives;;;;;;;;;;;;;x
-EVTDESC10000106;A foreign officer has accepted our offer and joined our armed forces.;;;;;;;;;;;;;x
-EVTNAME10000107;A New General Arrives;;;;;;;;;;;;;x
-EVTDESC10000107;A foreign officer has accepted our offer and joined our armed forces.;;;;;;;;;;;;;x
-EVTNAME10000108;A New General Arrives;;;;;;;;;;;;;x
-EVTDESC10000108;A foreign officer has accepted our offer and joined our armed forces.;;;;;;;;;;;;;x
-EVTNAME10000109;A New General Arrives;;;;;;;;;;;;;x
-EVTDESC10000109;A foreign officer has accepted our offer and joined our armed forces.;;;;;;;;;;;;;x
-EVTNAME10000110;A New General Arrives;;;;;;;;;;;;;x
-EVTDESC10000110;A foreign officer has accepted our offer and joined our armed forces.;;;;;;;;;;;;;x
-EVTNAME10000111;A New General Arrives;;;;;;;;;;;;;x
-EVTDESC10000111;A foreign officer has accepted our offer and joined our armed forces.;;;;;;;;;;;;;x
-EVTNAME10000112;A New General Arrives;;;;;;;;;;;;;x
-EVTDESC10000112;A foreign officer has accepted our offer and joined our armed forces.;;;;;;;;;;;;;x
-EVTNAME10000113;A New General Arrives;;;;;;;;;;;;;x
-EVTDESC10000113;A foreign officer has accepted our offer and joined our armed forces.;;;;;;;;;;;;;x
-EVTNAME10000114;A New General Arrives;;;;;;;;;;;;;x
-EVTDESC10000114;A foreign officer has accepted our offer and joined our armed forces.;;;;;;;;;;;;;x
-EVTNAME10000115;A New General Arrives;;;;;;;;;;;;;x
-EVTDESC10000115;A foreign officer has accepted our offer and joined our armed forces.;;;;;;;;;;;;;x
-EVTNAME10000116;A New General Arrives;;;;;;;;;;;;;x
-EVTDESC10000116;A foreign officer has accepted our offer and joined our armed forces.;;;;;;;;;;;;;x
-EVTNAME10000117;A New General Arrives;;;;;;;;;;;;;x
-EVTDESC10000117;A foreign officer has accepted our offer and joined our armed forces.;;;;;;;;;;;;;x
-EVTNAME10000118;A New General Arrives;;;;;;;;;;;;;x
-EVTDESC10000118;A foreign officer has accepted our offer and joined our armed forces.;;;;;;;;;;;;;x
-EVTNAME10000119;A New General Arrives;;;;;;;;;;;;;x
-EVTDESC10000119;A foreign officer has accepted our offer and joined our armed forces.;;;;;;;;;;;;;x
-EVTNAME10000120;A New General Arrives;;;;;;;;;;;;;x
-EVTDESC10000120;A foreign officer has accepted our offer and joined our armed forces.;;;;;;;;;;;;;x
+EVTNAME10000106;A New General;;;;;;;;;;;;;x
+EVTDESC10000106;A new general has joined our army: Kiwi.;;;;;;;;;;;;;x
+EVTNAME10000107;A New General;;;;;;;;;;;;;x
+EVTDESC10000107;A new general has joined our army: Wyrm.;;;;;;;;;;;;;x
+EVTNAME10000108;A New General;;;;;;;;;;;;;x
+EVTDESC10000108;A new general has joined our army: Koba.;;;;;;;;;;;;;x
+EVTNAME10000109;A New General;;;;;;;;;;;;;x
+EVTDESC10000109;A new general has joined our army: Pixelaes.;;;;;;;;;;;;;x
+EVTNAME10000110;A New General;;;;;;;;;;;;;x
+EVTDESC10000110;A new general has joined our army: Gelre.;;;;;;;;;;;;;x
+EVTNAME10000111;A New Admiral;;;;;;;;;;;;;x
+EVTDESC10000111;A new admiral has joined our navy: Ryan 'Rennes' Gosling.;;;;;;;;;;;;;x
+EVTNAME10000112;A New General;;;;;;;;;;;;;x
+EVTDESC10000112;A new general has joined our army: Napoleon I.;;;;;;;;;;;;;x
+EVTNAME10000113;A New General;;;;;;;;;;;;;x
+EVTDESC10000113;A new general has joined our army: Helmuth von Moltke.;;;;;;;;;;;;;x
+EVTNAME10000114;A New General;;;;;;;;;;;;;x
+EVTDESC10000114;A new general has joined our army: Albrecht von Roon.;;;;;;;;;;;;;x
+EVTNAME10000115;A New General;;;;;;;;;;;;;x
+EVTDESC10000115;A new general has joined our army: Josef Radetzky.;;;;;;;;;;;;;x
+EVTNAME10000116;A New General;;;;;;;;;;;;;x
+EVTDESC10000116;A new general has joined our army: Winfield Scott.;;;;;;;;;;;;;x
+EVTNAME10000117;A New General;;;;;;;;;;;;;x
+EVTDESC10000117;A new general has joined our army: Ulysses S. Grant.;;;;;;;;;;;;;x
+EVTNAME10000118;A New General;;;;;;;;;;;;;x
+EVTDESC10000118;A new general has joined our army: William Tecumseh Sherman.;;;;;;;;;;;;;x
+EVTNAME10000119;A New General;;;;;;;;;;;;;x
+EVTDESC10000119;A new general has joined our army: John.;;;;;;;;;;;;;x
+EVTNAME10000120;A New Admiral;;;;;;;;;;;;;x
+EVTDESC10000120;A new admiral has joined our navy: Jane.;;;;;;;;;;;;;x
 EVTNAME993528;The Thorbecke Constitution;;;;;;;;;;;;;x
 EVTDESC993528;Political reformers push for constitutional changes in the Netherlands.;;;;;;;;;;;;;x
 EVTNAME993529;The Negenmannen;;;;;;;;;;;;;x

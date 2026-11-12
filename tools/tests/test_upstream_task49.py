@@ -1,5 +1,6 @@
 """Static contracts for the upstream-first reconciliation."""
 
+from collections import defaultdict
 import unittest
 
 from test_upstream_task42 import ROOT, decision, definitions, section, event
@@ -13,6 +14,48 @@ def shape(nodes):
 
 
 class UpstreamFirstTests(unittest.TestCase):
+    def test_officer_notifications_name_the_officer_and_match_the_effect(self):
+        names = (
+            'Kiwi', 'Wyrm', 'Koba', 'Pixelaes', 'Gelre', "Ryan 'Rennes' Gosling",
+            'Napoleon I', 'Helmuth von Moltke', 'Albrecht von Roon', 'Josef Radetzky',
+            'Winfield Scott', 'Ulysses S. Grant', 'William Tecumseh Sherman', 'John', 'Jane',
+        )
+        officers = dict(enumerate(names, start=10000106))
+        keys = {f'EVT{kind}{event_id}'.encode() for event_id in officers for kind in ('NAME', 'DESC')}
+        layers = {}
+        for root in ('TGC', 'TGC_Timeline_1966', 'TGCScriptExtender'):
+            rows = defaultdict(list)
+            for path in (ROOT / root / 'localisation').glob('*.csv'):
+                for line in path.read_bytes().splitlines():
+                    key, _, fields = line.partition(b';')
+                    if key in keys:
+                        rows[key].append(fields.partition(b';')[0].decode('latin-1'))
+            layers[root] = rows
+
+        for event_id, name in officers.items():
+            notification = event('Military', event_id)
+            title_key, desc_key = f'EVTNAME{event_id}', f'EVTDESC{event_id}'
+            admiral = event_id in (10000111, 10000120)
+            rank, branch = ('admiral', 'navy') if admiral else ('general', 'army')
+            with self.subTest(event=event_id):
+                self.assertEqual(scalar(notification, 'title'), title_key)
+                self.assertEqual(scalar(notification, 'desc'), desc_key)
+                officer, = (node for node in walk(notification.children)
+                            if node.key in ('define_general', 'define_admiral'))
+                self.assertEqual(officer.key, f'define_{rank}')
+                self.assertIn(name, scalar(officer, 'name', required=True))
+            for profile, overlay in (('core', None), ('core+1966', 'TGC_Timeline_1966'),
+                                     ('core+extender', 'TGCScriptExtender')):
+                with self.subTest(event=event_id, profile=profile):
+                    expected = {
+                        title_key: f'A New {rank.title()}',
+                        desc_key: f'A new {rank} has joined our {branch}: {name}.',
+                    }
+                    for key, value in expected.items():
+                        key = key.encode()
+                        matches = layers['TGC'][key] + (layers[overlay][key] if overlay else [])
+                        self.assertEqual(matches, [value])
+
     def test_ruling_party_support_threshold_after_rebel_victory(self):
         # Upstream 81f56b379 sets these six POP filters to 0.5.
         rebels = ('reactionary', 'fascist', 'communist', 'carlist', 'christino', 'socialist')
