@@ -128,6 +128,18 @@ flag possono rendere incompatibile un salvataggio passato per l'Extender.
 
 ## Condizioni per un test runtime separato
 
+Per ripetere il collaudo del Task 66, usare la modalità finestra con
+`fullScreen=no` e `borderless=no` nelle impostazioni di **Victoria II**.
+Nel test sono stati preparati i file `settings.txt` della copia di gioco,
+della radice utente indicata da `userdir.txt` e della sottocartella del
+profilo. Con gli INI ufficiali del bundle 3.0.0, entrambi i profili hanno
+avviato la campagna, aperto l'editor dei trattati e riaperto un salvataggio
+dopo l'avanzamento. Nei due primi avvii a freddo a schermo intero, invece,
+`v2game.exe` si è arrestato con `0xC0000005` all'offset `0x0041AC6B`
+durante l'inizializzazione della mappa. Il confronto ha verificato la
+mitigazione in finestra sulla macchina di prova. La causa del crash resta
+da isolare.
+
 1. Autorizzare esplicitamente il percorso della seconda installazione e l'uso
    del bundle ufficiale verificato. Confermare Victoria II 3.04 Windows x86,
    isolare la cartella di gioco e partire da salvataggi di prova.
