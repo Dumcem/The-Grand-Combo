@@ -153,7 +153,7 @@ class DeploymentTests(unittest.TestCase):
     def test_extender_rejects_shared_steam_and_optional_selection(self):
         catalog = self.extender_catalog()
         with self.assertRaisesRegex(d.DeploymentError, "Not an optional mod"):
-            self.extender_plan(catalog, ["TGCPerformanceAddon"])
+            self.extender_plan(catalog, ["TGCPastelMap"])
         with self.assertRaisesRegex(d.DeploymentError, "Not an optional mod"):
             self.plan(optional=[d.EXTENDER_COMPONENT])
         steam_game = self.base / "steamapps" / "Victoria II"
@@ -165,6 +165,32 @@ class DeploymentTests(unittest.TestCase):
         self.put(self.game / "mod/TGC_Timeline_1966.mod", b"timeline descriptor")
         with self.assertRaisesRegex(d.DeploymentError, "contains the shared profile"):
             self.extender_plan(catalog)
+
+    def test_retired_addon_catalog_preserves_historical_transactions(self):
+        current = self.catalog_path.read_bytes()
+        old = d.historical_catalog(self.catalog, d.PRE_RETIREMENT_CATALOG_DIGEST)
+        self.assertEqual(d.digest(old), d.PRE_RETIREMENT_CATALOG_DIGEST)
+        addon = next(c for c in old["components"] if c["id"] == "TGCPerformanceAddon")
+        self.put(self.root / addon["source_dir"] / "news/old.txt", b"historic addon")
+        descriptor = f'name = "{addon["name"]}"\npath = "mod/{addon["destination_dir"]}"\n'
+        core_name = next(c["name"] for c in old["components"] if c["id"] == "TGC")
+        descriptor += f'dependencies = {{ "{core_name}" }}\n'
+        self.put(self.root / addon["source_descriptor"], descriptor.encode())
+        self.catalog_path.write_text(json.dumps(old))
+        self.commit()
+        original = self.apply(self.plan(optional=[addon["id"]]))
+
+        self.catalog_path.write_bytes(current)
+        self.commit()
+        self.assertIn(addon["id"], self.verify())
+        with self.assertRaisesRegex(d.DeploymentError, "Not an optional mod"):
+            self.plan(optional=[addon["id"]])
+        self.assertIn(addon["destination_dir"], self.plan()["preserved"])
+        successor = self.apply()
+        self.rollback(successor["transaction_id"])
+        self.assertEqual(self.verify()[addon["id"]]["transaction_id"], original["transaction_id"])
+        self.rollback(original["transaction_id"])
+        self.assertFalse((self.game / "mod" / addon["destination_dir"]).exists())
 
     def test_extender_rejects_stale_or_undeclared_overrides(self):
         catalog = self.extender_catalog()

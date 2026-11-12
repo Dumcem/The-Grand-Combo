@@ -23,6 +23,7 @@ SCHEMA = 1
 EXPECTED_ORIGIN = "https://github.com/Dumcem/The-Grand-Combo.git"
 EXTENDER_PROFILE = "core+extender"
 EXTENDER_COMPONENT = "TGCScriptExtender"
+PRE_RETIREMENT_CATALOG_DIGEST = "ac278a9baa07090b10020b3f7e0cd5bfe08ed17ee6ab6399e67df97e7db535b6"
 INCOMPLETE = {"planned", "staging", "publishing", "verifying", "rolling-back", "recovery-required"}
 METADATA_REPLACE_DELAYS = (0, 0.025, 0.05, 0.1, 0.2, 0.4)
 
@@ -552,6 +553,25 @@ def transaction_paths(game, state_dir, txid):
             no_links(state_dir / "records" / (txid + ".json")))
 
 
+def historical_catalog(catalog, catalog_digest):
+    if catalog_digest != PRE_RETIREMENT_CATALOG_DIGEST or EXTENDER_PROFILE in catalog["profiles"]:
+        return catalog
+    addon = "TGCPerformanceAddon"
+    retired = {
+        "id": addon, "name": "TGC Submod - Performance Addon",
+        "source_dir": addon, "source_descriptor": addon + ".mod",
+        "destination_dir": addon, "destination_descriptor": addon + ".mod",
+        "dependencies": ["TGC"], "class": "optional", "profiles": [], "exclusions": [],
+        "runtime_policy": {"files": "git-tracked-working-copy-bytes", "roots": ["decisions", "news"]},
+    }
+    components = catalog["components"].copy()
+    for index, component in enumerate(components):
+        if component["id"] == "TGCCountriesEndonymicLocalization":
+            components.insert(index, retired)
+            return dict(catalog, components=components)
+    return catalog
+
+
 def load_record(game, state_dir, catalog, txid):
     """Independent copies bind authority; neither journal nor state supplies paths."""
     tx, local = transaction_paths(game, state_dir, txid)
@@ -565,6 +585,9 @@ def load_record(game, state_dir, catalog, txid):
         plan = record["plan"]
         unsigned = {k: v for k, v in plan.items() if k != "fingerprint"}
         require(digest(unsigned) == plan["fingerprint"], "Immutable plan integrity mismatch")
+        if plan["catalog_digest"] != digest(catalog):
+            # Only the exact catalog bound to the record can authorize historical operations.
+            catalog = historical_catalog(catalog, plan["catalog_digest"])
         require(plan["target"] == str(game) and plan["state_dir"] == str(state_dir)
                 and plan["schema"] == SCHEMA and plan["catalog_digest"] == digest(catalog)
                 and plan["runtime_policy"] == catalog["runtime_policy_version"]

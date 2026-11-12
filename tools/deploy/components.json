@@ -272,27 +272,6 @@
       ]
     },
     {
-      "id": "TGCPerformanceAddon",
-      "name": "TGC Submod - Performance Addon",
-      "source_dir": "TGCPerformanceAddon",
-      "source_descriptor": "TGCPerformanceAddon.mod",
-      "destination_dir": "TGCPerformanceAddon",
-      "destination_descriptor": "TGCPerformanceAddon.mod",
-      "dependencies": [
-        "TGC"
-      ],
-      "class": "optional",
-      "profiles": [],
-      "runtime_policy": {
-        "files": "git-tracked-working-copy-bytes",
-        "roots": [
-          "decisions",
-          "news"
-        ]
-      },
-      "exclusions": []
-    },
-    {
       "id": "TGCCountriesEndonymicLocalization",
       "name": "TGC Submod - Endonymic Localization",
       "source_dir": "TGC Niche Submods/TGCCountriesEndonymicLocalization",
