@@ -330,7 +330,9 @@ Origine delle guardie nei commit [3dadb6622](https://github.com/Dumcem/The-Grand
 
 ## Residui della riconciliazione
 
-Le voci sono aperte nei rispettivi workstream, con blocco No per il checkpoint upstream fissato.
+**Blocco di allineamento da sottoporre a decisione.** In `TGC/localisation/00_events_10000000.csv` le 15 descrizioni `EVTDESC10000106`–`EVTDESC10000120` della revisione fissata identificano per nome l'ufficiale e distinguono l'ammiraglio Jane. Il fork mostra lo stesso testo generico per tutti. I nomi rimangono nelle definizioni degli ufficiali in `TGC/events/Military.txt`, ma l'informazione è assente dalle notifiche. Il registro spiega che i testi preesistenti del fork furono conservati. La scelta va riesaminata prima della certificazione. La descrizione upstream di `10000111` chiama Ryan generale, mentre l'evento crea un ammiraglio in entrambi gli alberi. [Descrizioni upstream](https://github.com/The-Grand-Combination/The-Grand-Combo/blob/14f2e6ff61e7e1ea07ffef07548560da5bcc47f0/TGC/localisation/00_events_10000000.csv)
+
+Le voci della tabella seguono i rispettivi workstream senza bloccare il checkpoint upstream fissato.
 
 | Classe Task 58 | Area e provenienza | Questione e riferimento |
 | --- | --- | --- |
