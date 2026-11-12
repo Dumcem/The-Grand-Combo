@@ -273,7 +273,8 @@ def check_descriptor(root, component, mapping):
     require(dependencies == [mapping[c]["name"] for c in component["dependencies"]],
             "Descriptor dependencies inconsistent")
     if component["id"] == EXTENDER_COMPONENT:
-        require(values("load") == ["script_extender/script_extender.dll"]
+        require(values("load") == ["script_extender/script_extender.dll",
+                                   "performance_patch/performance_patch.dll"]
                 and values("user_dir") == [EXTENDER_COMPONENT], "Extender descriptor inconsistent")
 
 

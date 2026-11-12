@@ -128,8 +128,12 @@ class DeploymentTests(unittest.TestCase):
 
     def test_extender_composes_and_rolls_back_one_component(self):
         catalog = self.extender_catalog()
-        plugin = self.game / "mod/script_extender/fixture.txt"
-        self.put(plugin, b"preserve")
+        plugins = {
+            self.game / f"mod/{name}/{name}.ini": b"external settings"
+            for name in ("script_extender", "performance_patch")
+        }
+        for plugin, settings in plugins.items():
+            self.put(plugin, settings)
         plan = self.extender_plan(catalog)
         self.assertFalse((self.game / ".tgc-deploy").exists())
         self.assertEqual([c["id"] for c in plan["components"]], [d.EXTENDER_COMPONENT])
@@ -140,6 +144,8 @@ class DeploymentTests(unittest.TestCase):
         self.assertEqual((runtime / "common/payload.txt").read_bytes(), b"TGC\r\n")
         self.assertFalse((runtime / "tools").exists())
         self.assertFalse((self.game / "mod/TGC.mod").exists())
+        descriptor = self.game / "mod" / f"{d.EXTENDER_COMPONENT}.mod"
+        self.assertEqual(descriptor.read_bytes(), (self.root / descriptor.name).read_bytes())
         self.assertEqual(set(d.verify_target(self.root, self.game, catalog, self.state_base)),
                          {d.EXTENDER_COMPONENT})
         with self.assertRaises(d.DeploymentError):
@@ -150,7 +156,8 @@ class DeploymentTests(unittest.TestCase):
         self.commit()
         d.rollback(self.root, self.game, catalog, manifest["transaction_id"], self.state_base)
         self.assertFalse(runtime.exists())
-        self.assertEqual(plugin.read_bytes(), b"preserve")
+        for plugin, settings in plugins.items():
+            self.assertEqual(plugin.read_bytes(), settings)
 
     def test_extender_rejects_shared_steam_and_optional_selection(self):
         catalog = self.extender_catalog()

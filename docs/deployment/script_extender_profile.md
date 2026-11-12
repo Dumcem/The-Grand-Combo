@@ -1,4 +1,4 @@
-# Profilo facoltativo TGC con Script Extender
+# Profilo Victoria II con The Grand Loader
 
 `core+extender` prepara i contenuti della [PR #417](https://github.com/The-Grand-Combination/The-Grand-Combo/pull/417)
 che dipendono da Script Extender. Il profilo è destinato a **Victoria II 3.04
@@ -25,7 +25,9 @@ revisione degli override consente ancora il rollback di un deployment precedente
 Il descrittore riprende i `replace_path` di TGC e usa `user_dir = "TGCScriptExtender"`
 per salvataggi e dati utente separati. La selezione prevista è il solo
 **TGC - Script Extender**. Il Loader legge le direttive `load` dai descrittori
-passati con `-mod=`. L'Extender cerca `cb_types.txt`, `buildings_ai.txt`,
+passati con `-mod=` e carica nell'ordine Script Extender e Performance Patch,
+come nel descrittore TGC upstream fissato a `14f2e6ff`. Entrambi i percorsi
+sono relativi a `mod/`. L'Extender cerca `cb_types.txt`, `buildings_ai.txt`,
 `se_partitions.txt` e `ai_interests.txt` nel primo percorso di mod che
 fornisce ciascun file. Con un solo descrittore TGC, il lettore del plugin e
 quello del gioco ricevono gli stessi contenuti senza fare affidamento sulla
@@ -48,16 +50,22 @@ Il digest pubblicato da GitHub è
 Confrontarlo con l'asset effettivo prima di un test autorizzato. Il sorgente
 del bundle dichiara Script Extender 0.1.0 e Performance Patch 1.0.0. Il tag
 consultato non fornisce una licenza di ridistribuzione per le DLL. Il repository
-e il tool consegnano solo contenuti TGC. Il bootstrapper `dinput8.dll` e
-l'intera cartella esterna `mod/script_extender` sono prerequisiti per l'avvio
-dedicato. La direttiva del profilo carica già il plugin.
+e il tool consegnano solo contenuti TGC. Il bootstrapper `dinput8.dll` accanto
+a `v2game.exe` e le cartelle esterne `mod/script_extender` e
+`mod/performance_patch` sono prerequisiti per l'avvio dedicato. Il descrittore
+TGC contiene entrambe le direttive, quindi basta selezionare quel descrittore.
 [Release ufficiale](https://github.com/The-Grand-Combination/The-Grand-Loader/releases/tag/3.0.0) ·
 [Sorgenti e configurazione](https://github.com/The-Grand-Combination/The-Grand-Loader/tree/3.0.0)
 
-Applicare le chiavi del [file di opzioni](script_extender_options.ini)
-all'INI **ufficiale** accanto alla DLL nel solo ambiente dedicato. Conservare
-gli altri valori del bundle. I valori pubblicati nel file INI fanno fede per
-il test, anche dove il README elenca default diversi.
+Usare entrambi gli INI completi del bundle accanto alle rispettive DLL. Per
+aggiornare un ambiente di prova precedente, ripristinare i due INI originali
+per recuperare anche i valori diagnostici e i parametri dei trattati. Il
+[file di opzioni](script_extender_options.ini) elenca gli interruttori
+attivi dello Script Extender come riferimento. Il bundle imposta
+`treaty_dismantle_gp = 250`, mentre il README riporta 200. Conservare
+`oos_log = 1` del Performance Patch e lasciare spenti i profiler,
+`oos_test_button`, `network_log`, `buildings_ai_log` e
+`treaty_dismantle_log`.
 
 | Funzione | Input nel profilo | Dipendenza e differenza rispetto al condiviso |
 | --- | --- | --- |
@@ -89,9 +97,9 @@ Gli altri riferimenti sono conservati.
 ## Ritorno al profilo condiviso
 
 Il Task 58 ha ritirato il vecchio addon, che modificava decisioni di
-rinomina e contenuti di giornale. Il Performance Patch del Loader interviene
-su percorsi del motore e rimane disattivato nel profilo collaudato. Un
-eventuale confronto delle prestazioni richiede una prova separata.
+rinomina e contenuti di giornale. Il Task 64 abilita il Performance Patch
+del Loader nel profilo dedicato con i valori del bundle. Le prove runtime
+del Task 56 riguardavano il solo Script Extender con quattro funzioni attive.
 [Opzioni del Performance Patch](https://github.com/The-Grand-Combination/The-Grand-Loader/blob/3.0.0/docs/README.md)
 
 Il profilo condiviso continua a usare `core` o `core+1966` su Victoria II
@@ -112,8 +120,8 @@ flag possono rendere incompatibile un salvataggio passato per l'Extender.
    commit e contenuto della coppia. Per annullare la transazione usare
    `rollback` con lo stesso profilo e l'ID registrato. Il rollback gestisce
    i file TGC pubblicati, mentre bundle e salvataggi restano separati.
-3. Avviare col solo descrittore TGC esteso e con le quattro opzioni richieste.
-   Controllare log del Loader, inizializzazione delle funzioni, origine dei
+3. Avviare col solo descrittore TGC esteso e con entrambi gli INI originali.
+   Controllare nel log del Loader l'inizializzazione di entrambi i plugin, l'origine dei
    CB e delle tabelle, interfaccia dei trattati e `user_dir` distinto.
 4. Verificare una cessione di singola provincia e il costo in pace, un trattato
    volontario e uno forzato con vincitori umano e AI, una partizione, la

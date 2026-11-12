@@ -6,15 +6,17 @@ from pathlib import Path
 import re
 import subprocess
 import sys
+from tempfile import TemporaryDirectory
 import unittest
 from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[3]
 CORE = ROOT / "TGC"
 EXTENDED = ROOT / "TGCScriptExtender"
+UPSTREAM = "14f2e6ff61e7e1ea07ffef07548560da5bcc47f0"
 sys.path.insert(0, str(CORE / "tools"))
 sys.path.insert(0, str(ROOT / "tools" / "deploy"))
-from deploy_tgc import load_catalog, payload_sources
+from deploy_tgc import DeploymentError, check_descriptor, load_catalog, payload_sources
 from lib_1966_parser import parse_script, scalar, walk
 from lib_1966_runtime import compose_runtime
 
@@ -49,7 +51,7 @@ class ExtenderProfileTests(unittest.TestCase):
         upstream, previous = (
             subprocess.check_output(["git", "show", f"{ref}:TGC/{path}"], cwd=ROOT)
             .replace(b"\r\n", b"\n")
-            for ref in ("14f2e6ff61e7e1ea07ffef07548560da5bcc47f0",
+            for ref in (UPSTREAM,
                         "d744bb2d73c69928587b58cc7b3607262baa6149")
         )
         income = re.compile(rb"^[ \t]*(?:rich|middle|poor)_income_modifier[ \t]*=")
@@ -99,7 +101,6 @@ class ExtenderProfileTests(unittest.TestCase):
         self.assertNotIn("load", base)
         self.assertNotIn("load", definitions(ROOT / "TGC_Timeline_1966.mod"))
         self.assertEqual(ext["user_dir"].value, "TGCScriptExtender")
-        self.assertEqual(ext["load"].value, "script_extender/script_extender.dll")
         self.assertNotIn("dependencies", ext)
         for key in ("replace_path", "github", "current_release"):
             self.assertEqual(shape(n for n in script(EXTENDED.with_suffix(".mod")) if n.key == key),
@@ -245,11 +246,39 @@ class ExtenderProfileTests(unittest.TestCase):
         reschedule = section(section(ext_events["53"], "option"), "country_event")
         self.assertEqual(shape(reschedule.children), [("id", "53"), ("days", "1")])
 
-    def test_config_enables_the_four_required_features_only(self):
+    def test_loader_descriptor_matches_upstream_and_requires_both_plugins(self):
+        upstream = subprocess.check_output(
+            ["git", "show", f"{UPSTREAM}:TGC.mod"], cwd=ROOT
+        ).decode("utf-8")
+        expected = shape(node for node in parse_script(upstream, file="TGC.mod").nodes
+                         if node.key == "load")
+        self.assertEqual(expected, [
+            ("load", "script_extender/script_extender.dll"),
+            ("load", "performance_patch/performance_patch.dll"),
+        ])
+        catalog = load_catalog(ROOT / "tools/deploy/components_extender.json")
+        component = catalog["components"][0]
+        descriptor = ROOT / component["source_descriptor"]
+        self.assertEqual(shape(node for node in script(descriptor) if node.key == "load"), expected)
+        mapping = {component["id"]: component}
+        check_descriptor(ROOT, component, mapping)
+        with TemporaryDirectory() as tmp:
+            target = Path(tmp) / descriptor.name
+            for _, dll in expected:
+                with self.subTest(missing=dll):
+                    target.write_text(descriptor.read_text(encoding="utf-8").replace(
+                        f'load = "{dll}"', ""
+                    ), encoding="utf-8")
+                    with self.assertRaisesRegex(DeploymentError, "Extender descriptor inconsistent"):
+                        check_descriptor(Path(tmp), component, mapping)
+
+    def test_config_preserves_all_enabled_upstream_extender_switches(self):
         config = ConfigParser()
-        config.read_string("[extender]\n" + (ROOT / "docs/deployment/script_extender_options.ini").read_text())
-        self.assertEqual({key for key in config["extender"] if config["extender"].getboolean(key)},
-                         {"demand_province", "treaty", "buildings_ai", "income_modifiers"})
-        self.assertEqual(set(config["extender"]) - {"demand_province", "treaty", "buildings_ai", "income_modifiers"},
-                         {"building_map_mode", "vassal_map_color", "country_upgrade", "event_background",
-                          "province_flags"})
+        config.read_string("[extender]\n" + (ROOT / "docs/deployment/script_extender_options.ini").read_text(
+            encoding="utf-8"
+        ))
+        self.assertEqual(dict(config["extender"]), dict.fromkeys((
+            "demand_province", "treaty", "buildings_ai", "income_modifiers",
+            "building_map_mode", "country_upgrade", "event_background", "province_flags",
+            "vassal_map_color", "treaty_infamy",
+        ), "1"))

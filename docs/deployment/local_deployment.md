@@ -10,8 +10,9 @@ the production target. Never use the Steam installation as a working copy.
 - `core`: `TGC` and `TGC.mod` only.
 - `core+1966`: core plus `TGC_Timeline_1966` and its descriptor.
 - `core+extender`: a single assembled `TGCScriptExtender` component for a
-  separate Victoria II 3.04 Windows installation. See the
-  [Script Extender profile](script_extender_profile.md) for the runtime prerequisites.
+  separate Victoria II 3.04 Windows installation with The Grand Loader, Script
+  Extender and Performance Patch. See the
+  [Loader profile](script_extender_profile.md) for the runtime prerequisites.
 - `--optional ID` may be repeated for explicitly selected entries in the shared
   catalog. The Extender catalog accepts only its dedicated profile.
 
