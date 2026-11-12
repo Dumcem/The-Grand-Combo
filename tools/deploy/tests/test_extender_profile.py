@@ -81,7 +81,10 @@ class ExtenderProfileTests(unittest.TestCase):
         self.assertEqual(extended.keys() - core.keys(), {"acquire_province"})
         for name in core.keys() - {"peace_order", "dismantle_cb", "dismantle_cb_add", "great_war_penalty_cb"}:
             self.assertEqual(shape(extended[name].children), shape(core[name].children), name)
-        self.assertEqual(scalar(extended["acquire_province"], "po_demand_province"), "yes")
+        province_cb = extended["acquire_province"]
+        for field, value in (("po_demand_province", "yes"), ("is_triggered_only", "yes"),
+                             ("badboy_factor", "1.0"), ("peace_cost_factor", "1")):
+            self.assertEqual(scalar(province_cb, field), value, field)
         peace_order = [n.value for n in extended["peace_order"].children]
         self.assertEqual(peace_order[peace_order.index("acquire_state") + 1], "acquire_province")
         self.assertEqual(localisation_keys(EXTENDED / "localisation/00_se_acquire_province.csv"),
@@ -167,18 +170,26 @@ class ExtenderProfileTests(unittest.TestCase):
         path = "common/triggered_modifiers.txt"
         core = definitions(CORE / path)
         ext = definitions(EXTENDED / path)
-        added = set(ext) - set(core)
-        self.assertEqual(len(added), 6)
+        technologies = ("state_n_government", "nationalism_n_imperialism",
+                        "revolution_n_counterrevolution", "mass_politics", "the_police_state")
+        guards = [[(tech, "1"), ("NOT", [(following, "1")])]
+                  for tech, following in zip(technologies, technologies[1:])]
+        guards.extend(([(technologies[-1], "1"), ("NOT", [("year", "1990")])],
+                       [(technologies[-1], "1"), ("year", "1990")]))
+        strata_values = ((.05, .025, .01), (.10, .05, .025), (.15, .10, .05),
+                         (.25, .15, .10), (.40, .25, .15), (.50, .40, .25))
+        names = ["poor_income_" + suffix for suffix in (*technologies, "the_police_state_1990")]
+        self.assertEqual(set(ext) - set(core), set(names))
         for name in core:
             self.assertEqual(shape(ext[name].children), shape(core[name].children))
         keys = localisation_keys(EXTENDED / "localisation/00_poor_income.csv")
-        for name in added:
-            self.assertTrue(name.startswith("poor_income_"))
-            self.assertTrue({name, "desc_" + name} <= keys)
-            self.assertTrue(section(ext[name], "trigger").children)
-            for stratum in ("poor", "middle", "rich"):
-                self.assertGreater(float(scalar(ext[name], stratum + "_income_modifier")), 0)
-        self.assertEqual(scalar(section(ext["poor_income_the_police_state_1990"], "trigger"), "year"), "1990")
+        for name, guard, values in zip(names, guards, strata_values, strict=True):
+            with self.subTest(modifier=name):
+                self.assertTrue({name, "desc_" + name} <= keys)
+                self.assertEqual(shape(section(ext[name], "trigger").children), guard)
+                actual = tuple(float(scalar(ext[name], stratum + "_income_modifier"))
+                               for stratum in ("poor", "middle", "rich"))
+                self.assertEqual(actual, values)
         path = "events/JANFlavor.txt"
         core_events, ext_events = events(CORE / path), events(EXTENDED / path)
         self.assertEqual(core_events.keys(), ext_events.keys())
@@ -187,7 +198,8 @@ class ExtenderProfileTests(unittest.TestCase):
         before, after = (section(e["53"], "option").children for e in (core_events, ext_events))
         self.assertEqual(len(before) - len(after), 6)
         self.assertEqual(shape(n for n in before if n.key != "any_country"), shape(after))
-        self.assertIn(("days", "1"), shape(section(section(ext_events["53"], "option"), "country_event").children))
+        reschedule = section(section(ext_events["53"], "option"), "country_event")
+        self.assertEqual(shape(reschedule.children), [("id", "53"), ("days", "1")])
 
     def test_config_enables_the_four_required_features_only(self):
         config = ConfigParser()

@@ -4,8 +4,9 @@
 che dipendono da Script Extender. Il profilo è destinato a **Victoria II 3.04
 Windows x86** in una seconda installazione, fuori da `steamapps`. Il Task 55
 verifica contenuti e deployment staticamente e su installazioni simulate.
-Caricamento effettivo, comportamento in partita e compatibilità dei salvataggi
-restano da verificare.
+Il [rapporto del Task 56](script_extender_task56.md) documenta le prove in partita
+su Victoria II 3.04. Il [Task 57](script_extender_task57.md) ricostruisce i
+controlli del plugin e definisce la sessione per le prove residue.
 
 ## Composizione e caricamento
 
