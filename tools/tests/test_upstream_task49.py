@@ -4,7 +4,7 @@ import unittest
 
 from test_upstream_task42 import ROOT, decision, definitions, section, event
 from test_upstream_task47 import option
-from lib_1966_parser import scalar, walk
+from lib_1966_parser import member, parse_script, scalar, walk
 from lib_1966_runtime import compose_runtime
 
 
@@ -13,6 +13,25 @@ def shape(nodes):
 
 
 class UpstreamFirstTests(unittest.TestCase):
+    def test_ruling_party_support_threshold_after_rebel_victory(self):
+        # Upstream 81f56b379 sets these six POP filters to 0.5.
+        rebels = ('reactionary', 'fascist', 'communist', 'carlist', 'christino', 'socialist')
+        path = 'common/rebel_types.txt'
+        for timeline in (None, 'TGC_Timeline_1966'):
+            source = compose_runtime(ROOT, timeline_root=timeline).require(path)
+            data = (ROOT / source).read_bytes().decode('latin-1')
+            rebel_definitions = parse_script(data, file=source).definitions
+            for name in rebels:
+                with self.subTest(profile=timeline or 'core', rebels=name):
+                    definition, = (node for node in rebel_definitions if node.key == f'{name}_rebels')
+                    effect = section(definition, 'demands_enforced_effect')
+                    threshold, = (
+                        member(section(pop, 'limit'), 'agree_with_ruling_party', required=True)
+                        for pop in effect.children
+                        if pop.key == 'any_pop' and scalar(pop, 'militancy') == '-4'
+                    )
+                    self.assertEqual((threshold.operator, threshold.value), ('=', '0.5'))
+
     def test_native_menu_uses_a_country_pending_flag_until_any_response(self):
         pending = 'native_policy_menu_pending'
         menu = decision('New_World', 'native_integration_status_on')

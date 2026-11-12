@@ -334,7 +334,7 @@ Le voci sono aperte nei rispettivi workstream, con blocco No per il checkpoint u
 
 | Classe Task 58 | Area e provenienza | Questione e riferimento |
 | --- | --- | --- |
-| B | Upstream TGC | Restano da valutare i delta `88604963d` e `b865278ff` nei CB ordinari insieme al ramo Bhutan del Great Game. Per i candidati generici del fork, isolare le patch sulle guardie di pace e sulle partizioni preservandone le evidenze. [Candidati e motivazioni](upstream_reconciliation.md#task-55--preparazione-del-profilo-script-extender) |
+| B | Upstream TGC | I CB ordinari di `88604963d` e `b865278ff` e la rimozione del ramo Bhutan in `great_game_cb` sono recepiti nel core e in Extender. Restano da isolare le patch candidate sulle guardie di pace e sulle partizioni, preservandone le evidenze. [Candidati e motivazioni](upstream_reconciliation.md#task-55--preparazione-del-profilo-script-extender) |
 | B | Fork e percorso condiviso | Simulazione oltre l'avvio e salvataggi con eventi Temperance pendenti ancora da verificare. [Task 52](upstream_reconciliation.md#task-52--checkpoint-runtime) |
 | B | Deployment Windows | Un handle esterno persistente può impedire la sostituzione del journal. Conservare le ricevute e applicare il recupero per ID se si presenta il caso. [Procedura di recupero](deployment/local_deployment.md#rollback-and-interrupted-publication) |
 | B | Alice | Guasto intermittente JIT Windows osservato anche prima del merge. La diagnosi e la prova prolungata restano nel workstream Alice 1.3.0. [Task 53](upstream_reconciliation.md#task-53--diagnosi-del-crash-alice) |

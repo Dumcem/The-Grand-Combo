@@ -3581,7 +3581,7 @@ fascist_rebels = {
                          plurality = 40
 		}
 
-		any_pop = { limit = { agree_with_ruling_party = yes } militancy = -4 }
+		any_pop = { limit = { agree_with_ruling_party = 0.5 } militancy = -4 }
 		country_event = 800051
 	}
 }
@@ -3913,7 +3913,7 @@ communist_rebels = {
                          plurality = -100
                          plurality = 40
 		}                
-		any_pop = { limit = { agree_with_ruling_party = yes } militancy = -4 }
+		any_pop = { limit = { agree_with_ruling_party = 0.5 } militancy = -4 }
 		country_event = 800052
 	}
 }
@@ -5499,7 +5499,7 @@ carlist_rebels = {
                          plurality = 40
                            
 		}
-		any_pop = { limit = { agree_with_ruling_party = yes } militancy = -4 }
+		any_pop = { limit = { agree_with_ruling_party = 0.5 } militancy = -4 }
 		country_event = 37710
 	}
 }
@@ -5769,7 +5769,7 @@ christino_rebels = {
                          plurality = 40
                            
 		}
-		any_pop = { limit = { agree_with_ruling_party = yes } militancy = -4 }
+		any_pop = { limit = { agree_with_ruling_party = 0.5 } militancy = -4 }
 		country_event = 37716
 	}
 }
@@ -8574,7 +8574,7 @@ socialist_rebels = {
                          plurality = 40
                            
 		}
-		any_pop = { limit = { agree_with_ruling_party = yes } militancy = -4 }
+		any_pop = { limit = { agree_with_ruling_party = 0.5 } militancy = -4 }
 		country_event = 810056
 	}
 }
