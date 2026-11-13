@@ -51,7 +51,9 @@
 ## Upstream contribution policy
 
 - Confirmed bugs should be fixed and validated in this fork without waiting for acceptance by the original/upstream TGC project.
-- When a confirmed fix is generic to TGC rather than specific to this fork, retain the validated fix locally and separately mark it as a candidate upstream contribution.
+- For every change, consider whether it could also benefit the original/upstream TGC independently of this fork's customizations. This includes confirmed bug fixes, typo and localization corrections, consistency fixes, and generally applicable improvements; upstream relevance is not limited to functional defects.
+- When a change is generic to TGC rather than specific to this fork, retain the validated change locally and separately mark it as a candidate upstream contribution.
+- For each plausible candidate, explicitly assess whether preparing an upstream pull request is worthwhile, briefly stating the recommendation and any reasons to defer or decline. Assessment alone does not authorize creating or submitting an upstream pull request; obtain explicit user approval first.
 - Previously implemented generic fixes must be re-evaluated during the re-baseline before being proposed upstream; prior implementation alone is not evidence that the fix is correct.
 - Prepare upstream contributions as minimal, clean patches separated from fork-specific customization whenever practical.
 - Upstream review or acceptance must not block continued use of a validated fix in this fork. If upstream later implements the same fix independently, compare the implementations deliberately rather than merging or duplicating them blindly.
