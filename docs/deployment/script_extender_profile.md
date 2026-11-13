@@ -140,6 +140,21 @@ durante l'inizializzazione della mappa. Il confronto ha verificato la
 mitigazione in finestra sulla macchina di prova. La causa del crash resta
 da isolare.
 
+Il collaudo ha verificato la riapertura dei salvataggi del 3 gennaio 1836
+nel profilo base e del 2 gennaio 1836 nel profilo 1966. I log hanno
+confermato l'inizializzazione di entrambi i plugin e l'uso di cache
+separate. La prova breve non misura il guadagno del Performance Patch né
+certifica la stabilità su una campagna lunga. Le verifiche funzionali
+residue sono elencate nel [backlog](../rebaseline_backlog.md#residui-della-riconciliazione).
+
+Per Project Alice 1.3.0, il Task 66 ha verificato staticamente entrambi i
+profili condivisi. Su Windows la versione 1.3.0 usa la cartella Documenti
+di sistema per scenari e salvataggi anche quando si copia l'eseguibile.
+In assenza di un ambiente separato, il Task 66 non ha rigenerato scenari
+né avviato Alice. Il guasto JIT intermittente già documentato resta
+distinto dal crash a schermo intero di Victoria II.
+[Percorsi utente di Alice 1.3.0](https://github.com/schombert/Project-Alice/blob/v1.3.0/src/filesystem/simple_fs_win.cpp)
+
 1. Autorizzare esplicitamente il percorso della seconda installazione e l'uso
    del bundle ufficiale verificato. Confermare Victoria II 3.04 Windows x86,
    isolare la cartella di gioco e partire da salvataggi di prova.
