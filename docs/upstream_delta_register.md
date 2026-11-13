@@ -69,6 +69,10 @@ Le due esclusioni di contenuto (campagne e BRZ) restano decisioni di progetto. P
 
 ### Proposte del Task 70
 
+La revisione del Task 70B ha prodotto dieci branch locali con un solo commit ciascuno sulla base `14f2e6ff6`. Le bozze e i riferimenti dei branch sono in `task70-upstream/review70b.md`. La pubblicazione è sospesa dopo il rifiuto del controllo automatico sul push. Nessuna PR è stata aperta.
+
+La selezione finale esclude le affermazioni non verificate della guida Low Ram e il commento USA che attribuisce a Cuba una decisione sulle Filippine. Il fix della propaganda resta locale perché il requisito di cassa della fascia inferiore può ancora rendere disponibile la decisione sopra i dieci milioni di POP. Il menu indigeno, le cessioni svizzere e anatoliche, lo sprite e la scelta di testo Direct Immigration richiedono ulteriori verifiche prima della pubblicazione.
+
 Pronte per revisione locale sulla punta effettiva upstream `14f2e6ff6`, con patch indipendenti e descrizioni in inglese. I nomi corrispondono ai materiali nella cartella di consegna `task70-upstream`.
 
 | Stato | Contributi |
