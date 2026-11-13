@@ -21,11 +21,19 @@ Upstream `14f2e6ff61e7e1ea07ffef07548560da5bcc47f0`, fork censito `3110dacbc1d6e
 
 A ogni sincronizzazione confrontare il vecchio upstream con il nuovo, poi il candidato fork direttamente con il nuovo upstream. Controllare gli hunk risolti automaticamente e i file misti. Per ogni voce ricontrollare l'effetto a valle e il profilo che lo carica, ritirare le differenze assorbite e indicare l'evidenza mancante per quelle aperte. L'[inventario storico](upstream_reconciliation.md#inventario-del-delta-fissato) conserva la provenienza degli hunk, il [backlog](rebaseline_backlog.md) le verifiche residue.
 
-## Esito del Task 69
+## Criterio di allineamento
 
-Il confronto senza rilevamento delle rinomine con upstream `14f2e6ff6` passa da **355 a 294 percorsi** rispetto al checkpoint `5cd6260f9` (−61, circa 17%). **62 percorsi riallineati integralmente** e **1 nuova differenza**, il refuso della campagna nel CSV. Il delta residuo comprende 181 aggiunte, 109 modifiche e 4 rimozioni. I percorsi sono verificabili con `git diff --no-renames --name-status 14f2e6ff6`; la tabella storica sopra si riferisce a `3110dacbc`.
+Valutare le singole modifiche per correttezza, chiarezza, compatibilità e utilità. I conteggi Git servono a orientare il confronto storico.
 
-- **Eliminate.** Commenti, spaziature e riscritture editoriali isolate in decisioni, eventi, unità, GUI e guide dei submod. Il confronto dei dati attivi preserva soglie, effetti, valori delle unità e ID di Temperance. Il carrier di setup Timeline conserva la propria soglia 1966. Ripristinato anche il clear di `election_suffled` presente upstream: nessun produttore o lettore attivo nel progetto, e il clear può ripulire lo stato di un salvataggio esterno.
+- **Differenza ingiustificata.** Candidata all’eliminazione quando l’allineamento preserva le garanzie e la qualità del contenuto.
+- **Correzione valida trasferibile.** Mantenere nel fork e candidare upstream, comprese le correzioni editoriali e di codifica.
+- **Estensione intenzionale.** Mantenere con motivazione, profili interessati e condizioni di riesame.
+- **Differenza dubbia.** Conservare provvisoriamente e documentare la verifica mancante.
+
+## Esito della revisione del Task 69
+
+- **Recupero editoriale.** Ripristinati refusi corretti, commenti leggibili, intestazioni delle unità e prosa delle guide. Conservate le codifiche per file: Windows-1252 per gli accenti nei commenti legacy e UTF-8 per `Düsseldorf` in `events/Archaeology.txt`, dove era presente il carattere sostitutivo U+FFFD. Verificati anche `Michoacán`, `Plombières` e l’apostrofo di `We'll`, correggendo le forme imprecise del checkpoint precedente. Il commento di Mameli sul flag di partecipazione resta utile. Il carrier di setup Timeline contiene già la grafia corretta e conserva la soglia 1966.
+- **Spaziatura e istruzioni attive.** I soli cambi di spaziatura in countries, Temperance e Fantasy Formables restano allineati a upstream. Il clear di `election_suffled` in 14005 è un effetto attivo. Era l’unico riferimento già nel commit di introduzione e lo è nei profili correnti. Conserviamo il clear upstream, che ripulisce il flag se presente in uno stato importato. L’esistenza di salvataggi con quel flag resta da dimostrare.
 - **Corrette.** Direct Immigration legge ora i due modificatori persistenti già scritti e rimossi dal menu 70, con i coefficienti dell’overlay invariati. La correzione vale anche per una campagna già attiva in un salvataggio caricato con l’overlay. Il core, la Timeline e il Loader condividono i lettori del core. Il Loader conserva la propria copia del menu e dell’addebito. Corretto il testo inglese dell’opzione di arresto.
 - **Confermate.** Victoria II e Alice condividono i CB ordinari già adottati. Nel Loader la guardia su 96021 impedisce al percorso ordinario di consumare lo stato richiesto da 96094. Le tabelle di partizione e interessi restano nell’overlay e richiedono ID presenti nella mappa. Per Rotterdam resta la correlazione fra avversario, stanchezza e pace. Per Svizzera e Anatolia restano i limiti di proprietà e gli scope delle cessioni. Per Petrograd i nomi rimangono reversibili e i premi sono una tantum. Per il Marocco il filtro di solvibilità precede il trasferimento. La riforma militare segue già upstream: costo e attivazione tecnologica sono indipendenti dalla possibilità di costruire il forte. Il ripristino della fortificazione reintrodurrebbe la dipendenza rimossa oppure richiederebbe un disegno diverso.
 - **Guardie condivise.** Il comando di disabilitazione delle unioni come vassallo è una scelta esplicita del menu. Ogni esclusione della formazione jugoslava come vassallo e ogni esclusione del golpe 152009873 blocca il rispettivo ingresso. Alice 1.3.0 compila già il `NOT` upstream con più figli come negazione di una disgiunzione, quindi i raggruppamenti sono equivalenti su Alice. In Victoria II si conserva la forma esplicita e verificabile staticamente; la parità con il raggruppamento upstream resta da dimostrare sul motore originale. Le annessioni jugoslave ai soli paesi AI, i costi dell’uscita dalla neutralità e i pesi AI già adottati coincidono con upstream. [Negazione Alice](https://github.com/schombert/Project-Alice/blob/v1.3.0/src/parsing/trigger_parsing.cpp#L760-L827)
@@ -59,6 +67,17 @@ Le due esclusioni di contenuto (campagne e BRZ) restano decisioni di progetto. P
 
 ## Candidati upstream
 
+### Commenti, istruzioni e localizzazione
+
+| Gruppo | Perimetro trasferibile |
+| --- | --- |
+| Commenti di script e GUI | Ortografia e grammatica nei commenti delle decisioni, degli eventi, delle unità, di Direct Immigration e di Screenshot Mode. Conservare gli identificatori scriptati, compreso `agressive_tag`. |
+| Guide dei submod | Correzioni di prosa nelle istruzioni dei Niche Submods, di Low Ram e di Pastel Map. Le indicazioni operative e i valori riportati restano quelli delle guide di partenza. |
+| Accenti e codifica | Sostituire U+FFFD in `events/Archaeology.txt` e correggere `Michoacán`, `Plombières` e l’apostrofo di `We'll` nei rispettivi commenti. Gli altri accenti esaminati erano già leggibili come Windows-1252 nel riferimento fissato e restano nei byte originali. Verificare la codifica del file di destinazione prima di applicare gli hunk. |
+| Testi localizzati | Refuso della chiave `override_less_emigration_remove_title`, grado di Ryan e grafia di San Pietroburgo. Trasferire le sole righe interessate. |
+
+### Difetti funzionali
+
 | Caso da riprodurre | Modifica minima trasferibile |
 | --- | --- |
 | Direct Immigration legge flag assenti durante una campagna attiva | Sostituire i due lettori in `TGCDirectImmigration/common/pop_types.txt` con `has_country_modifier`. Conservare coefficienti, menu e addebiti. Coordinare con la decisione upstream sulle campagne del core. |
@@ -89,6 +108,6 @@ Verifica del Task 68 con `unittest discover` nelle due directory. `tools/tests` 
 | Milestone | Criterio verificabile | Stato |
 | --- | --- | --- |
 | 68 | Delta Git riconciliato, oracoli rivisti, documentazione aggiornata ed esiti delle suite registrati | Conclusa |
-| 69 | Riduzione misurata, correzione Direct Immigration e regressioni; decisioni di contenuto documentate | Verifica statica, decisioni di progetto aperte |
+| 69 / 69R | Correzione Direct Immigration, recupero editoriale e candidature separate per tipo di intervento | Verifica statica, decisioni di progetto aperte |
 | 70 | Patch generiche minime con caso difettoso e prova ripetibile, refusi verificati | Da avviare |
 | 71 | Registro e backlog aggiornati al checkpoint finale, verifiche applicabili concluse e condizioni di riesame esplicite | Da avviare |

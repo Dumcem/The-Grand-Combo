@@ -56,6 +56,9 @@ class SetupAndPopReconciliationTests(unittest.TestCase):
                     self.assertEqual(scalar(producer, 'duration'), '-1')
                     self.assertTrue(any(node.key == 'remove_country_modifier' and
                                         node.value == name for node in event_nodes))
+                    reset = option(by_id['69'], 'EVTOPTA69')
+                    self.assertTrue(any(node.key == 'remove_country_modifier' and
+                                        node.value == name for node in reset.children))
                     updater = tuple(walk(by_id['53'].children))
                     billing, = (node for node in updater if node.key == 'any_country'
                                 and any(child.key == 'limit' and
