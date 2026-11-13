@@ -69,7 +69,20 @@ Le due esclusioni di contenuto (campagne e BRZ) restano decisioni di progetto. P
 
 ### Proposte del Task 70
 
-La revisione del Task 70B ha prodotto dieci branch locali con un solo commit ciascuno sulla base `14f2e6ff6`. Le bozze e i riferimenti dei branch sono in `task70-upstream/review70b.md`. La pubblicazione è sospesa dopo il rifiuto del controllo automatico sul push. Nessuna PR è stata aperta.
+Il Task 70B ha pubblicato dieci PR normali verso `master`, con un solo commit ciascuna sulla base `14f2e6ff6`. GitHub ha confermato base, repository e commit sorgente, descrizioni e file. Al termine della verifica non risultavano controlli CI. Le verifiche statiche e i riferimenti dei branch sono in `task70-upstream/review70b.md`.
+
+| PR | Contributo |
+| --- | --- |
+| [#418](https://github.com/The-Grand-Combination/The-Grand-Combo/pull/418) | Commenti e pulizia mirata in Byzantine Expansion |
+| [#419](https://github.com/The-Grand-Combination/The-Grand-Combo/pull/419) | Guide Niche Submods e Pastel Map |
+| [#420](https://github.com/The-Grand-Combination/The-Grand-Combo/pull/420) | Testi di eventi e toponimi |
+| [#421](https://github.com/The-Grand-Combination/The-Grand-Combo/pull/421) | Fascia intermedia dei pagamenti vassalli |
+| [#422](https://github.com/The-Grand-Combination/The-Grand-Combo/pull/422) | Flag della scuola industriale di Moresnet |
+| [#423](https://github.com/The-Grand-Combination/The-Grand-Combo/pull/423) | Trigger delle fabbriche negli eventi socialisti |
+| [#424](https://github.com/The-Grand-Combination/The-Grand-Combo/pull/424) | Solvibilità del compratore a Tangeri |
+| [#425](https://github.com/The-Grand-Combination/The-Grand-Combo/pull/425) | Dipendenza di Content Creator Mode |
+| [#426](https://github.com/The-Grand-Combination/The-Grand-Combo/pull/426) | Lettori scout ed emergenza di Apocalypse |
+| [#427](https://github.com/The-Grand-Combination/The-Grand-Combo/pull/427) | ID di provincia nelle partizioni Loader |
 
 La selezione finale esclude le affermazioni non verificate della guida Low Ram e il commento USA che attribuisce a Cuba una decisione sulle Filippine. Il fix della propaganda resta locale perché il requisito di cassa della fascia inferiore può ancora rendere disponibile la decisione sopra i dieci milioni di POP. Il menu indigeno, le cessioni svizzere e anatoliche, lo sprite e la scelta di testo Direct Immigration richiedono ulteriori verifiche prima della pubblicazione.
 
