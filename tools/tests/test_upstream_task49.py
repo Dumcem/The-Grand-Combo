@@ -1,12 +1,16 @@
 """Static contracts for the upstream-first reconciliation."""
 
 from collections import defaultdict
+import re
 import unittest
 
 from test_upstream_task42 import ROOT, decision, definitions, section, event
 from test_upstream_task47 import option
 from lib_1966_parser import member, parse_script, scalar, walk
 from lib_1966_runtime import compose_runtime
+
+
+NATIVE_MENU_ID = re.compile(rb'(?m)^\s*id\s*=\s*100[ \t]*(?:#.*)?\r?$')
 
 
 def shape(nodes):
@@ -118,6 +122,12 @@ class UpstreamFirstTests(unittest.TestCase):
             inventory = compose_runtime(ROOT, 'TGC', timeline)
             for path in ('events/Utility.txt', 'decisions/New_World.txt'):
                 self.assertEqual(inventory.require(path), f'TGC/{path}')
+            menu_ids = sum(
+                len(NATIVE_MENU_ID.findall((ROOT / source.file).read_bytes()))
+                for path, source in inventory.selected.items()
+                if path.startswith('events/')
+            )
+            self.assertEqual(menu_ids, 1)
         root = ROOT / 'TGC'
         self.assertFalse((ROOT / 'TGC_Timeline_1966/map/region.txt').exists())
         self.assertIn(b'cant_do_because = {}', (root / 'map/region.txt').read_bytes())

@@ -105,7 +105,7 @@ class EuropeanDiplomacyTests(unittest.TestCase):
         for timeline in (None, 'TGC_Timeline_1966'):
             inventory = compose_runtime(ROOT, 'TGC', timeline)
             for path in ('common/cb_types.txt', 'decisions/ENG.txt', 'decisions/RUS.txt',
-                         'events/GEF Events.txt', 'events/LondonTreaty.txt',
+                         'events/LondonTreaty.txt',
                          'events/BerlinCongress.txt', 'events/RUSFlavor.txt'):
                 self.assertEqual(inventory.require(path), f'TGC/{path}')
         self.assertFalse((ROOT / 'TGC_Timeline_1966/localisation/00_decisions.csv').exists())

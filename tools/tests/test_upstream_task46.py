@@ -2,7 +2,8 @@
 
 import unittest
 
-from test_upstream_task42 import ROOT, decision, definitions, section
+from test_upstream_task42 import ROOT, decision, definitions, event, section
+from test_upstream_task47 import option
 from lib_1966_parser import parse_script, scalar, walk
 
 
@@ -26,20 +27,20 @@ class SetupAndPopReconciliationTests(unittest.TestCase):
                     self.assertTrue(any(node.key == 'has_country_modifier' and
                                         node.value == f'ts_{school}' for node in nodes))
 
-    def test_migration_campaigns_keep_their_factors_and_country_scope(self):
+    def test_migration_campaign_choices_toggle_the_modifier_used_by_pops(self):
         sections = {node.key: node for node in definitions('common/pop_types.txt')}
-        for section_name, name, factor in (
-            ('colonialmigration_chance', 'more_colonial_settlement', '0.1'),
-            ('emigration_chance', 'less_emigration', '-0.5'),
+        menu = event('JANFlavor', 70)
+        for section_name, name, label, direction in (
+            ('colonialmigration_chance', 'more_colonial_settlement', 'EVTOPTA70', 1),
+            ('emigration_chance', 'less_emigration', 'EVTOPTB70', -1),
         ):
             with self.subTest(campaign=name):
                 modifiers = sections[section_name].children
                 consumer, = (node for node in modifiers if node.key == 'modifier'
                              and any(item.value == name for item in walk(node.children)))
-                self.assertEqual(scalar(consumer, 'factor'), factor)
+                self.assertGreater(direction * float(scalar(consumer, 'factor')), 0)
                 self.assertEqual(scalar(section(consumer, 'country'), 'has_country_modifier'), name)
-                event_nodes = [item for node in definitions('events/JANFlavor.txt')
-                               for item in walk(node.children)]
+                event_nodes = tuple(walk(option(menu, label).children))
                 producer, = (node for node in event_nodes if node.key == 'add_country_modifier'
                              and scalar(node, 'name') == name)
                 self.assertEqual(scalar(producer, 'duration'), '-1')

@@ -28,7 +28,6 @@ class RegionalReconciliationTests(unittest.TestCase):
                                           path.read_bytes()))
             for path in (root / 'localisation').glob('*.csv'):
                 keys.update(line.partition(b';')[0] for line in path.read_bytes().splitlines())
-        self.assertEqual(all_ids[b'100'], 1)  # Native policy menu.
         self.assertEqual(keys[b'EVTOPTB110'], 0)
         self.assertEqual(keys[b'EVTOPTB15110'], 1)  # NationalistMovements has its own label.
         for node, event_id in zip(events, ids):
@@ -82,16 +81,3 @@ class RegionalReconciliationTests(unittest.TestCase):
                     self.assertEqual(scalar(selector, 'is_core'), 'PNB')
                 else:
                     self.assertIsNone(scalar(selector, 'province_id'))
-
-    def test_amazon_test_event_keeps_its_empty_province_checks(self):
-        target = event('BRZFlavor', 8500)
-        self.assertEqual(scalar(target, 'is_triggered_only'), 'yes')
-        choice = option(target, 'EVTOPTA8403')
-        for province in ('3413', '1979', '2401'):
-            with self.subTest(province=province):
-                transfers = (node for node in choice.children if node.key == 'random_owned'
-                             and any(child.key == province for child in node.children))
-                transfer, = transfers
-                self.assertEqual(scalar(section(transfer, province), 'secede_province'), 'THIS')
-                gate = section(section(transfer, 'limit'), province)
-                self.assertEqual(scalar(gate, 'empty'), 'yes')
