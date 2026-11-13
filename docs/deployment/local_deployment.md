@@ -38,9 +38,10 @@ its ownership and its prior commit; disable it in the launcher for core-only
 play. There is no implicit uninstall operation. Optional-mod compatibility
 with Timeline or other options is not certified by the deployment tool.
 
-Task 58 retired the legacy Performance Addon. An existing unowned copy in
-`mod` is preserved outside the selected scope. See the
-[reconciliation checkpoint](../upstream_reconciliation.md#task-58--checkpoint-di-chiusura).
+Task 58 retired the legacy Performance Addon. Task 67 removed the residual
+unowned pair `mod/TGCPerformanceAddon` and `mod/TGCPerformanceAddon.mod`
+from Steam. Historical deployment records remain recoverable through the
+digest-specific catalog described under [local state](#transaction-manifests-and-local-state).
 
 ## Target configuration and commands
 

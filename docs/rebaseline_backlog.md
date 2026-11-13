@@ -330,6 +330,8 @@ Origine delle guardie nei commit [3dadb6622](https://github.com/Dumcem/The-Grand
 
 ## Residui della riconciliazione
 
+Per le differenze ancora presenti nel fork, le relative decisioni e i candidati upstream usare il [registro delle differenze upstream](upstream_delta_register.md).
+
 **Blocco notifiche ufficiali chiuso.** Ripristinate le 15 notifiche nominative e allineati i testi al grado effettivo. La correzione di Ryan è registrata come candidata upstream nel [registro di riconciliazione](upstream_reconciliation.md#inventario-del-delta-fissato).
 
 Le voci della tabella seguono i rispettivi workstream senza bloccare il checkpoint upstream fissato.
