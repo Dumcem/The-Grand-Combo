@@ -13,6 +13,13 @@
 - After upstream TGC synchronization, consider Project Alice compatibility as part of the mandatory regression review together with core/1966 synchronization.
 - If preserving both engines would require a substantive gameplay or design compromise, do not choose one silently: report the conflict and obtain a project decision before proceeding.
 
+## External engine research references
+
+- When an investigation depends on Victoria II engine behavior, Project Alice compatibility, or other opaque mechanics, consider relevant public technical research when it can materially improve accuracy or avoid duplicating work. This may include reverse-engineering studies, engine-extension or patch projects, diagnostic tooling, and reproducible experiments.
+- Initial non-exhaustive references are [Victoria2-Reverse-Engineering](https://github.com/maxioten/Victoria2-Reverse-Engineering) and [CreatineCore / V2DLL](https://github.com/artyom-kuznetsov/V2DLL_Victoria-2-Extension). Discover and assess other relevant projects as they appear; inclusion here is not an endorsement or a permanent assertion of validity.
+- Before relying on external findings, check their provenance, evidence quality, applicable executable/version and patch state, maintenance and reproducibility. Separate observations of original `v2game.exe` from modified engines, third-party patches, Project Alice behavior, inference, and unresolved hypotheses. Revalidate material conclusions for the supported runtime targets as appropriate.
+- Consultation does not authorize installing or incorporating external binaries, DLLs, patches, or code. Respect applicable licenses and legal constraints; keep proprietary game binaries out of the repository. Record consequential findings, citations, uncertainties, and applicability in the relevant technical documentation.
+
 ## Local deployment policy
 
 - The Git working copy is the authoritative edit surface. Do not develop or maintain managed TGC components by editing the live Victoria II installation directly.
