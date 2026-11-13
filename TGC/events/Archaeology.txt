@@ -334,7 +334,7 @@
 
 		trigger = {
 			is_greater_power = yes
-			OR = { # Düsseldorf
+			OR = { # D�sseldorf
 				owns = 578
 				578 = { owner = { in_sphere = THIS } }
 			}

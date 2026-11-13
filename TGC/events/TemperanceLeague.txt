@@ -4,7 +4,7 @@ country_event = {
 	title = "EVTNAME180"
 	desc = "EVTDESC180"
 	picture = "TemperanceLeague"
-	
+
 	trigger = {
 		civilized = yes
 		OR = {
@@ -17,7 +17,7 @@ country_event = {
 			poor_strata_everyday_needs = 0.8
 		}
 	}
-	
+
 	mean_time_to_happen = {
 		months = 500
 		modifier = {
@@ -75,7 +75,7 @@ country_event = {
 			duration = -1
 		}
 	}
-	
+
 	option = {
 		name = "EVTOPTB180"
 		add_country_modifier = {
@@ -91,7 +91,7 @@ country_event = {
 	title = "EVTNAME181"
 	desc = "EVTDESC181"
 	picture = "Prohibition"
-	
+
 	trigger = {
 		civilized = yes
 		OR = {
@@ -106,7 +106,7 @@ country_event = {
 			NOT = { has_province_modifier = beer_halls }
 		}
 	}
-	
+
 	mean_time_to_happen = {
 		months = 300
 		modifier = {
@@ -130,7 +130,7 @@ country_event = {
 			has_country_modifier = libertine_culture
 		}
 	}
-	
+
 	option = {
 		name = "EVTOPTA181"
 		random_owned = {
@@ -143,7 +143,7 @@ country_event = {
 			}
 		}
 	}
-	
+
 	option = {
 		name = "EVTOPTB181"
 		random_state = {
@@ -159,7 +159,7 @@ country_event = {
 
 #Drunken Riots
 province_event = {
-			
+
 	id = 182
 	title = "EVTNAME182"
 	desc = "EVTDESC182"
@@ -190,7 +190,7 @@ province_event = {
 			owner = { has_country_modifier = libertine_culture }
 		}
 	}
-	
+
 	option = {
 		name = "EVTOPTA182"
 		poor_strata = {
@@ -200,14 +200,14 @@ province_event = {
 	}
 }
 
-#Poverty & Destitution 
+#Poverty & Destitution
 province_event = {
-			
+
 	id = 183
 	title = "EVTNAME183"
 	desc = "EVTDESC183"
 	picture = "prov_famine"
-	
+
 	trigger = {
 		has_province_modifier = beer_halls
 		state_scope = {
@@ -246,7 +246,7 @@ province_event = {
 			owner = { has_country_modifier = libertine_culture }
 		}
 	}
-	
+
 	option = {
 		name = "EVTOPTA183"
 		remove_province_modifier = beer_halls
@@ -256,7 +256,7 @@ province_event = {
 			}
 		}
 	}
-	
+
 	option = {
 		name = "EVTOPTB183"
 		state_scope = {
@@ -277,12 +277,12 @@ province_event = {
 
 #Saloon Picketed
 province_event = {
-			
+
 	id = 184
 	title = "EVTNAME184"
 	desc = "EVTDESC184"
 	picture = "prov_drunks"
-		
+
 	trigger = {
 		has_province_modifier = beer_halls
 	}
@@ -319,7 +319,7 @@ province_event = {
 				has_country_modifier = libertine_culture
 			}
 		}
-		
+
 		modifier = {
 			factor = 1.5
 			NOT = {
@@ -327,7 +327,7 @@ province_event = {
 			}
 		}
 	}
-	
+
 	option = {
 		name = "EVTOPTA184"
 		remove_province_modifier = beer_halls
@@ -339,7 +339,7 @@ province_event = {
 			militancy = -1
 		}
 	}
-	
+
 	option = {
 		name = "EVTOPTB184"
 		middle_strata = {
@@ -372,7 +372,7 @@ country_event = {
 		moralism = 10
 		conservative = 20
 	}
-	
+
 	mean_time_to_happen = {
 		months = 200
 		modifier = {
@@ -398,7 +398,7 @@ country_event = {
 			religious_policy = moralism
 		}
 	}
-	
+
 	option = {
 		name = "EVTOPTA185"
 		random_state = {
@@ -413,7 +413,7 @@ country_event = {
 			}
 		}
 	}
-	
+
 	option = {
 		name = "EVTOPTB185"
 		random_state = {
@@ -426,14 +426,14 @@ country_event = {
 		}
 	}
 }
-	
+
 #Licensing Act
 country_event = {
 	id = 186
 	title = "EVTNAME186"
 	desc = "EVTDESC186"
 	picture = "liquor"
-		
+
 	trigger = {
 		civilized = yes
 		OR = {
@@ -463,7 +463,7 @@ country_event = {
 			average_militancy = 5
 		}
 	}
-	
+
 	option = {
 		name = "EVTOPTA186"
 		random_state = {
@@ -482,7 +482,7 @@ country_event = {
 			}
 		}
 	}
-	
+
 	option = {
 		name = "EVTOPTB186"
 		random_state = {
@@ -505,8 +505,8 @@ country_event = {
 	id = 187
 	title = "EVTNAME187"
 	desc = "EVTDESC187"
-	picture = "Demonstration"	
-	
+	picture = "Demonstration"
+
 	trigger = {
 		civilized = yes
 		OR = {
@@ -539,7 +539,7 @@ country_event = {
 			}
 		}
 	}
-	
+
 	option = {
 		name = "EVTOPTA187"
 		random_state = {
@@ -553,7 +553,7 @@ country_event = {
 			}
 		}
 	}
-	
+
 	option = {
 		name = "EVTOPTB187"
 		random_state = {
@@ -575,7 +575,7 @@ country_event = {
 	title = "EVTNAME188"
 	desc = "EVTDESC188"
 	picture = "Spies"
-		
+
 	trigger = {
 		has_country_modifier = liquor_prohibition
 	}
@@ -601,7 +601,7 @@ country_event = {
 			}
 		}
 	}
-	
+
 	option = {
 		name = "EVTOPTA188"
 		random_state = {
@@ -611,7 +611,7 @@ country_event = {
 			}
 		}
 	}
-	
+
 	option = {
 		name = "EVTOPTB188"
 		random_state = {
@@ -629,7 +629,7 @@ country_event = {
 	title = "EVTNAME189"
 	desc = "EVTDESC189"
 	picture = "TemperanceLeague"
-	
+
 	trigger = {
 		has_country_modifier = temperance_league
 		biologism = 1
@@ -639,7 +639,7 @@ country_event = {
 			has_country_flag = prohibition_repealed
 		}
 	}
-	
+
 	mean_time_to_happen = {
 		months = 200
 		modifier = {
@@ -659,7 +659,7 @@ country_event = {
 			liberal = 30
 		}
 	}
-	
+
 	option = {
 		name = "EVTOPTA189"
 		any_pop = {
@@ -681,9 +681,9 @@ country_event = {
 				}
 			}
 		}
-				
+
 	}
-	
+
 	option = {
 		name = "EVTOPTB189"
 		random_state = {
@@ -716,11 +716,11 @@ country_event = {
 	title = "EVTNAME190"
 	desc = "EVTDESC190"
 	picture = "TemperanceLeague"
-	
+
 	trigger = {
 		has_country_modifier = libertine_culture
 	}
-	
+
 	mean_time_to_happen = {
 		months = 300
 		modifier = {
@@ -756,7 +756,7 @@ country_event = {
 			moralism = 20
 		}
 	}
-	
+
 	option = {
 		name = "EVTOPTA190"
 		any_pop = {
@@ -773,7 +773,7 @@ country_event = {
 			}
 		}
 	}
-	
+
 	option = {
 		name = "EVTOPTB190"
 		remove_country_modifier = libertine_culture
@@ -799,7 +799,7 @@ country_event = {
 	title = "EVTNAME191"
 	desc = "EVTDESC191"
 	picture = "meeting3"
-	
+
 	trigger = {
 		has_country_modifier = temperance_league
 		liberal = 20
@@ -832,7 +832,7 @@ country_event = {
 			liberal = 40
 		}
 	}
-	
+
 	option = {
 		name = "EVTOPTA191"
 		remove_country_modifier = temperance_league

@@ -42,7 +42,7 @@ cuirassier = {
 	}
 	
 
-	#Land Abilities
+	#Land Abilties
 	reconnaissance = 0
 	attack = 6
 	defence = 4

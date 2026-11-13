@@ -1041,7 +1041,7 @@
 				}
 			}
 
-			#Description: Inno Mameli - fÃ¼r Ã–sterreich
+			#Description: Inno Mameli - für Österreich
 			country_event = {
 
 				id = 202037
@@ -1077,6 +1077,7 @@
 					year = 1859
 					NOT = { year = 1900 }
 					has_global_flag = Mameli
+					#TO DO: atworldfair is never set, the World Fair system has no attendance tracking, so this event never fires
 					ITA = { has_country_flag = atworldfair }
 					FRA = { has_country_flag = atworldfair }
 					ENG = { has_country_flag = atworldfair }
@@ -1311,7 +1312,7 @@
 			}
 		}
 
-		#Description: The Worldâ€™s Greatest Tenor - gain prestige
+		#Description: The World’s Greatest Tenor - gain prestige
 		country_event = {
 
 			id = 35301
@@ -1640,7 +1641,7 @@
 
 ## Unification ##
 
-	#Description: The Pact of PlombiÃ©res - triggered for France
+	#Description: The Pact of Plombiéres - triggered for France
 	country_event = {
 
 		id = 90038
@@ -5677,7 +5678,7 @@ country_event = {
 
 ## San Marino ##
 
-	#Description: When Italy forms they get can choose whether to annex San Marino or leave them as independent and neutral.
+	#Description: When Italy forms they get can choose whether to annex San Marino or leave them as indepentent and neutral.
 	country_event = {
 		id = 330403
 		title = "EVTNAME330403"

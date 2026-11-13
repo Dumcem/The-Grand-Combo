@@ -155,7 +155,7 @@
 		}
 	}
 
-## Banat and SiebenbÃ¼rgen Government set up ##
+## Banat and Siebenbürgen Government set up ##
 
 	country_event = {
 		id = 2000000003
@@ -176,7 +176,7 @@
 		}
 	}
 
-## Freistaat SiebenbÃ¼rgen introduction ##
+## Freistaat Siebenbürgen introduction ##
 
 	country_event = {
 		id = 2000000004
@@ -616,7 +616,7 @@
 		}
 	}
 
-## Explanation of the Great Hungarian Game ##
+## Explaination of the Great Hungarian Game ##
 
 	country_event = {
 		id = 2000000019
@@ -1026,7 +1026,7 @@
 		}
 	}
 
-## Negotiations break down SiebenbÃ¼rgen ##
+## Negotiations break down Siebenbürgen ##
 
 	country_event = {
 		id = 2000000102

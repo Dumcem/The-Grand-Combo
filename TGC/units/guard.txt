@@ -36,7 +36,7 @@ guard = {
 	}
 	
 
-	#Land Abilities
+	#Land Abilties
 	reconnaissance = 0
 	attack = 8
 	defence = 5

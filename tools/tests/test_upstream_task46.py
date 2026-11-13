@@ -2,7 +2,7 @@
 
 import unittest
 
-from test_upstream_task42 import ROOT, decision, definitions, event, section
+from test_upstream_task42 import ROOT, decision, definitions, evaluate, event, section
 from test_upstream_task47 import option
 from lib_1966_parser import parse_script, scalar, walk
 
@@ -28,24 +28,43 @@ class SetupAndPopReconciliationTests(unittest.TestCase):
                                         node.value == f'ts_{school}' for node in nodes))
 
     def test_migration_campaign_choices_toggle_the_modifier_used_by_pops(self):
-        sections = {node.key: node for node in definitions('common/pop_types.txt')}
-        menu = event('JANFlavor', 70)
+        path = 'common/pop_types.txt'
+        direct = ROOT / 'TGCDirectImmigration' / path
+        consumers = (definitions(path),
+                     parse_script(direct.read_text(encoding='latin-1'), file=str(direct)).definitions)
+        loader = ROOT / 'TGCScriptExtender/events/JANFlavor.txt'
+        loader_events = parse_script(loader.read_text(encoding='latin-1'), file=str(loader)).definitions
+        event_profiles = tuple(
+            {scalar(node, 'id'): node for node in events if node.key == 'country_event'}
+            for events in (definitions('events/JANFlavor.txt'), loader_events)
+        )
         for section_name, name, label, direction in (
             ('colonialmigration_chance', 'more_colonial_settlement', 'EVTOPTA70', 1),
             ('emigration_chance', 'less_emigration', 'EVTOPTB70', -1),
         ):
             with self.subTest(campaign=name):
-                modifiers = sections[section_name].children
-                consumer, = (node for node in modifiers if node.key == 'modifier'
-                             and any(item.value == name for item in walk(node.children)))
-                self.assertGreater(direction * float(scalar(consumer, 'factor')), 0)
-                self.assertEqual(scalar(section(consumer, 'country'), 'has_country_modifier'), name)
-                event_nodes = tuple(walk(option(menu, label).children))
-                producer, = (node for node in event_nodes if node.key == 'add_country_modifier'
-                             and scalar(node, 'name') == name)
-                self.assertEqual(scalar(producer, 'duration'), '-1')
-                self.assertTrue(any(node.key == 'remove_country_modifier' and
-                                    node.value == name for node in event_nodes))
+                for pop_sections in consumers:
+                    migration, = (node for node in pop_sections if node.key == section_name)
+                    consumer, = (node for node in migration.children if node.key == 'modifier'
+                                 and any(item.value == name for item in walk(node.children)))
+                    self.assertGreater(direction * float(scalar(consumer, 'factor')), 0)
+                    self.assertEqual(scalar(section(consumer, 'country'), 'has_country_modifier'), name)
+                for by_id in event_profiles:
+                    event_nodes = tuple(walk(option(by_id['70'], label).children))
+                    producer, = (node for node in event_nodes if node.key == 'add_country_modifier'
+                                 and scalar(node, 'name') == name)
+                    self.assertEqual(scalar(producer, 'duration'), '-1')
+                    self.assertTrue(any(node.key == 'remove_country_modifier' and
+                                        node.value == name for node in event_nodes))
+                    updater = tuple(walk(by_id['53'].children))
+                    billing, = (node for node in updater if node.key == 'any_country'
+                                and any(child.key == 'limit' and
+                                        scalar(child, 'has_country_modifier') == name
+                                        for child in node.children))
+                    self.assertEqual(scalar(section(billing, 'limit'), 'ai'), 'no')
+                    charge, = (node for node in walk(billing.children)
+                               if node.key == 'add_tax_relative_income')
+                    self.assertLess(float(charge.value), 0)
 
     def test_pop_conditions_use_the_modifiers_assigned_by_the_decisions(self):
         pop_types = ('aristocrats', 'artisans', 'bureaucrats', 'capitalists', 'clergymen',
@@ -79,6 +98,42 @@ class SetupAndPopReconciliationTests(unittest.TestCase):
         allow = section(civilizing, 'allow')
         self.assertFalse(any(node.value == 'islamic_law' for node in walk(allow.children)))
         self.assertEqual(scalar(allow, 'colonial_nation'), 'yes')
+
+    def test_each_yugoslav_puppet_formation_exclusion_blocks_the_decision(self):
+        potential = section(decision('YUG', 'create_yugoslavia'), 'potential')
+        gates = tuple(node for node in potential.children if node.key == 'NOT')
+        blocked = (
+            ('exists', 'YUG'),
+            ('is_culture_group', 'south_slavic'),
+            ('has_global_flag', 'yugoslavia_formed'),
+            ('has_global_flag', 'disable_unite_as_puppet'),
+            *(('tag', tag) for tag in ('TUR', 'AUS', 'KUK', 'DNB', 'HUN', 'GCF', 'GER')),
+        )
+        self.assertTrue(evaluate(gates, lambda node: False))
+        for key, value in blocked:
+            with self.subTest(key=key, value=value):
+                self.assertFalse(evaluate(gates, lambda node: (node.key, node.value) == (key, value)))
+
+    def test_each_military_coup_exclusion_blocks_the_event(self):
+        trigger = section(event('Military', 152009873), 'trigger')
+        gates = tuple(node for node in trigger.children if node.key == 'NOT')
+        blocked = (
+            ('has_country_modifier', 'national_confusion'),
+            ('has_country_modifier', 'military_strife'),
+            ('continent', 'europe'),
+            ('is_culture_group', 'american_cultures'),
+            ('is_culture_group', 'neo_european_cultures'),
+            ('literacy', '0.50'),
+        )
+        self.assertTrue(evaluate(gates, lambda node: False))
+        for key, value in blocked:
+            with self.subTest(key=key, value=value):
+                def predicate(node):
+                    if node.key == 'capital_scope':
+                        return (key, value) == ('continent', scalar(node, 'continent'))
+                    return (node.key, node.value) == (key, value)
+
+                self.assertFalse(evaluate(gates, predicate))
 
     def test_military_reform_executes_without_a_fort_requirement(self):
         reform, = (node for node in walk(definitions('common/issues.txt'))

@@ -42,7 +42,7 @@ hussar = {
 	}
 	
 
-	#Land Abilities
+	#Land Abilties
 	reconnaissance = 2
 	attack = 3
 	defence = 3

@@ -41,7 +41,7 @@ monitor = {
 		coal = 1
 	}
 	
-	#Naval Abilities
+	#Naval Abilties
 	hull = 10
 	gun_power = 20
 	fire_range = 0.6

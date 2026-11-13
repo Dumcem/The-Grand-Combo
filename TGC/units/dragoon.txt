@@ -41,7 +41,7 @@ dragoon = {
 	}
 	
 
-	#Land Abilities
+	#Land Abilties
 	reconnaissance = 1
 	attack = 4
 	defence = 3

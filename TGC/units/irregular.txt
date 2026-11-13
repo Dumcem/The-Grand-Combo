@@ -30,7 +30,7 @@ irregular = {
 
 
 
-	#Land Abilities
+	#Land Abilties
 	reconnaissance = 0
 	attack = 2
 	defence = 2

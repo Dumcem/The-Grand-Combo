@@ -41,7 +41,7 @@
 		}
 	}
 
-	#Description: Recognizing Paraguayâ€™s Independence - Triggered for the Argentinian states when Paraguay declares independence.
+	#Description: Recognizing Paraguay’s Independence - Triggered for the Argentinian states when Paraguay declares independence.
 	country_event = {
 		id = 700013
 		title = "EVTNAME700013"
@@ -662,7 +662,7 @@
 		}
 	}
 
-	#Description: USA doesn't get access - Ignore Uruguay or back off
+	#Description: USA doesnt get access - Ignore Uruguay or back off
 	country_event = {
 		id = 700007
 		title = "EVTNAME700007"
@@ -994,7 +994,7 @@
 			}
 		}
 
-		# WeÂ´ll have to decline.
+		# We´ll have to decline.
 		option = {
 			name = "EVTOPTB24601"
 
@@ -1020,7 +1020,7 @@
 
 ## Flavor ##
 
-	#Description: The Fortress of HumaitÃ¡ - pay for a level 2 fort in Asuncion
+	#Description: The Fortress of Humaitá - pay for a level 2 fort in Asuncion
 	country_event = { #original VIP event by Pimparel
 		id = 146500
 		title = "EVTNAME146500"

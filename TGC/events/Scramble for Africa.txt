@@ -137,7 +137,7 @@ country_event = {
 	}
 }
 
-#Candidate for Removal
+#Canditate for Removal
 country_event = {
 
 	id = 95503
