@@ -345,6 +345,29 @@ Le voci della tabella seguono i rispettivi workstream senza bloccare il checkpoi
 | B | Loader e integrazione Extender | Entrambi i profili hanno superato avvio, breve simulazione, editor dei trattati, salvataggio e riapertura in finestra. Resta da isolare il crash a schermo intero. Restano aperti anche pagamenti POP e transizione del 1990, clausola ottomana, costo di guerra, eventi 96021/96094 e singoli effetti dell’evento 53. [Profili Loader](deployment/script_extender_profile.md) · [Task 57](deployment/script_extender_task57.md) |
 | C | Bilanciamento e prestazioni | La re-baseline normativa prosegue come in BALANCE. Un confronto del Performance Patch richiede una prova dedicata. [Profilo Extender](deployment/script_extender_profile.md) |
 
+## Collaudi funzionali post-deployment (Task 71E–71F)
+
+**Stato della milestone: PARZIALE, non bloccante per l'integrità delle installazioni.**
+Il checkpoint locale installato e verificato dal deployer è
+`608d1867d429004d9e1acae98c67ecf7de6757d4`. Per Steam e i due
+Loader permanenti, le ricevute originali risultano integre e non sono state
+segnalate transazioni pendenti. Le verifiche strutturali non equivalgono a
+certificazione funzionale. [Stato e limiti del deployment](deployment/local_deployment.md#post-deployment-status--tasks-71d71f).
+
+| ID e ambiente | Stato verificato sul checkpoint | Condizione concreta per riprendere |
+| --- | --- | --- |
+| DEPLOY_STEAM · Victoria II classico, core e Timeline | Contenuti e ownership verificati sul disco; nessun avvio dei due profili in Task 71E–71F. | Area utente di prova isolata, controllo osservabile della finestra, poi avvio e caricamento di entrambi i profili senza toccare salvataggi personali. |
+| DEPLOY_LOADER · `core+extender` e `core+extender+1966` | Avvio in finestra; i log attestano entrambi i plugin e CB della rispettiva composizione. Cache e CB generati risultano distinti. Per questo checkpoint non sono stati verificati avanzamento, salvataggio e riapertura; i collaudi storici del Task 66 non sostituiscono quelli correnti. | Metodo affidabile di cattura/attivazione e controllo degli input su finestra identificata, con salvataggi di prova nelle due aree isolate. Nessuna ripetizione di input alla cieca. |
+| DEPLOY_ALICE · Project Alice 1.3.0 | Otto scenari preesistenti e `scenario_errors.txt` preservati, con hash invariati; i due scenari core e core+1966 per il checkpoint corrente non sono stati generati. `-outputScenario` non isola gli altri percorsi di scrittura Windows. | Ambiente isolato o procedura di conservazione e recupero verificata per Documenti, AppData e ogni altro output, prima di generare e caricare i due scenari dalla versione live verificata. |
+| DEPLOY_BILLING · Task 71B | Correzione presente nel payload installato; soltanto evidenze statiche e di composizione, non del comportamento economico in partita. | Ambiente di prova osservabile per controllare addebiti con servizi concorrenti, ripristino mensile di `override_campaigns`, spegnimento dopo l'ultimo servizio e assenza di duplicazioni. |
+
+**Decisione di arresto.** Non reiterare i collaudi con gli stessi limiti
+dell'ambiente di automazione e non chiedere playtest a Thomas. Nessuna
+regressione runtime nuova è stata dimostrata in questi task; riprendere
+soltanto se una delle condizioni specifiche sopra diventa verificabile.
+Restano invariati i workstream più ampi (inclusi crash fullscreen Loader
+e JIT intermittente Alice).
+
 ## Manutenzione e chiusura
 
 1. Cercare la causa prima di assegnare un ID. Accorpare le occorrenze e i sintomi della stessa causa, mantenendo gli ID esistenti e i riferimenti agli eventuali gruppi storici. Conservare nei documenti tecnici la dimostrazione estesa, con un collegamento dal registro.
