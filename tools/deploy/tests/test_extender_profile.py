@@ -72,6 +72,11 @@ class ExtenderProfileTests(unittest.TestCase):
                 inventories[profile] = files
 
         core, shared_1966, extender, combined = inventories.values()
+        jan = "events/JANFlavor.txt"
+        self.assertEqual(core[jan], CORE / jan)
+        self.assertEqual(shared_1966[jan], core[jan])
+        self.assertEqual(extender[jan], EXTENDED / jan)
+        self.assertEqual(combined[jan], extender[jan])
         timeline = {name: source for name, source in shared_1966.items() if core.get(name) != source}
         overlay = {name: source for name, source in extender.items() if core.get(name) != source}
         map_path = "map/default.map"

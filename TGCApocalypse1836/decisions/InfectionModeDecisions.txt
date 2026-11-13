@@ -166,18 +166,6 @@ political_decisions = {
 
 		effect = {
 			clr_country_flag = scouts_activated
-			clr_global_flag = override_campaigns
-			any_country = { limit = { OR = { has_country_modifier = infamy_removal 
-												has_country_modifier = more_colonial_settlement
-												has_country_modifier = tourism_campaign
-												has_country_modifier = less_emigration
-												has_country_modifier = research_campaign
-												has_country_modifier = birthrate_push_low
-												has_country_modifier = birthrate_push_medium
-												has_country_modifier = birthrate_push_high
-												has_country_flag = direct_immigration } } 
-							set_global_flag = override_campaigns
-			}
 		}
 		ai_will_do = { factor = 0 }
 	}

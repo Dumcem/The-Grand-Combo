@@ -25,6 +25,7 @@ political_decisions = {
 
 		effect = {
 			set_country_flag = direct_immigration
+			set_global_flag = override_campaigns
 			treasury = -30000
 			badboy = 0.5
 			add_country_modifier = { name = direct_immigration_program duration = -1 }
