@@ -7,6 +7,15 @@ the production target. Never use the Steam installation as a working copy.
 
 ## Profiles and runtime policy
 
+Keep all supported configurations usable with the fewest installations that
+preserve compatibility, stability, data isolation and recovery. The current
+layout uses Steam for TGC core and Timeline 1966, two dedicated game roots
+for the Loader profiles, and Project Alice 1.3.0 as an alternate engine using
+the shared content. Reassess the need for separate roots when the mod,
+Loader or deployment tooling changes. Consolidate only after demonstrating
+that every profile still works, writable generated files and caches remain
+isolated, and migration preserves saves, backups and functionality.
+
 | Profile | Engine and prerequisites | Launcher selection |
 | --- | --- | --- |
 | `core` | Project Alice 1.3.0, or original Victoria II | **TGC - The Grand Combination** |

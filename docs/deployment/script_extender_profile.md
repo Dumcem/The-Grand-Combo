@@ -10,6 +10,15 @@ controlli del plugin e definisce la sessione per le prove residue.
 
 ## Composizione e caricamento
 
+L'assetto corrente usa Steam per core e Timeline 1966, due installazioni
+dedicate per i profili Loader e Project Alice 1.3.0 come motore alternativo
+per i contenuti condivisi. L'obiettivo è mantenere tutte le configurazioni
+supportate con il minor numero di installazioni compatibile con stabilità,
+isolamento e recuperabilità. Rivalutare le installazioni dedicate quando
+cambiano mod, Loader o deployer. Un consolidamento richiede la verifica di
+tutti i profili, dell'isolamento dei file generati e delle cache e della
+conservazione di salvataggi, backup e funzionalità.
+
 | Profilo | Coppia runtime sotto `mod/` | Selezione in launcher | `user_dir` |
 | --- | --- | --- | --- |
 | `core+extender` | `TGCScriptExtender` e `TGCScriptExtender.mod` | **TGC - Script Extender** | `TGCScriptExtender` |
