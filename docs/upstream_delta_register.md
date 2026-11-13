@@ -1,6 +1,8 @@
 # Registro delle differenze upstream
 
-Upstream `14f2e6ff61e7e1ea07ffef07548560da5bcc47f0`, fork censito `3110dacbc1d6e442c25ac005a06511b70c1c5c1d`. Entrambi verificati su GitHub. L'upstream fissato è antenato del fork. Motori supportati: Victoria II 3.04 e Project Alice 1.3.0. [Upstream](https://github.com/The-Grand-Combination/The-Grand-Combo/commit/14f2e6ff61e7e1ea07ffef07548560da5bcc47f0) · [Fork](https://github.com/Dumcem/The-Grand-Combo/commit/3110dacbc1d6e442c25ac005a06511b70c1c5c1d)
+Il Task 71C integra upstream `8f106a7f0ec5690d3fe67429a37986506ad5218b`, con tutte le PR #418–427, a partire dal fork `aa958b0fc` (Task 71B). Le correzioni accettate erano già presenti nella composizione del fork. Il merge conserva le guardie navali Alice, la localizzazione con chiavi univoche, i carrier Timeline, la separazione Loader e la riconciliazione mensile degli addebiti. Le partizioni corrette dalla #427 restano nell'overlay Loader. Motori supportati: Victoria II 3.04 e Project Alice 1.3.0. [Upstream](https://github.com/The-Grand-Combination/The-Grand-Combo/commit/8f106a7f0ec5690d3fe67429a37986506ad5218b)
+
+Restano aperte la ripetibilità delle rinomine di Petrograd (decisione di gameplay), la misura di costo e impatto demografico delle campagne, l'ordine fra firma e chiusura Loader quando si sovrappongono più guerre e il crash a schermo intero. Riaprire il caso Loader con una riproduzione che mostri flag pendenti o una chiusura prima della firma. Riaprire il crash se ricorre in finestra o se lo schermo intero diventa un requisito. Il backlog generale conserva il proprio perimetro.
 
 ## Copertura storica del Task 68
 
