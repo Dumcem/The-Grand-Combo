@@ -22,7 +22,7 @@ La baseline supportata è **Project Alice 1.3.0**, insieme a **Victoria II origi
 | Area | Voci |
 | --- | --- |
 | [Ordini di battaglia e storia](#ordini-di-battaglia-e-storia) | OOB_NO_POP, OOB_OWNER, OOB_SEARCH, DEAD_OOB, INVALID_HISTORY |
-| [Eventi, decisioni e mappa](#eventi-decisioni-e-mappa) | OPTIONS_AID, OPTIONS_CANAL, CANAL_CONTROL, BATTLE_EVENT, EVENT_REF, LITERACY, REG_MOD, SANTA_MOD, EVENT_ORPHAN, EVENT_DEBUG, EVENT_MILITARY, PICTURE, EMPTY_ALLOW, FACTORY_STATE, CARRINGTON_SCHEDULING, CARRINGTON_RECIPIENTS, GREAT_WAR_ALLIANCE |
+| [Eventi, decisioni e mappa](#eventi-decisioni-e-mappa) | OPTIONS_AID, OPTIONS_CANAL, CANAL_CONTROL, BATTLE_EVENT, EVENT_REF, LITERACY, REG_MOD, SANTA_MOD, EVENT_ORPHAN, EVENT_DEBUG, EVENT_MILITARY, PICTURE, EMPTY_ALLOW, FACTORY_STATE, CARRINGTON_SCHEDULING, CARRINGTON_RECIPIENTS, GREAT_WAR_ALLIANCE, LTU_CORE_CLEANUP |
 | [Ricerca, economia e unità](#ricerca-economia-e-unità) | TECH_AI, SCHOOL, TEXTILE, NAV_ORG, BLOCKADE, NAV_ATTR, UNIT_BASKET, UNIT_MORALE, UNIT_REINF, UNIT_STRENGTH, UNIT_WEIGHT, STEAM, ARTILLERY |
 | [Workaround navali](#workaround-navali) | SUB_AI_GP, SUB_AI_SP, SUB_FRA, SUB_SWE, SUB_FISH, SUB_BEIYANG, SUB_EIC, SUB_JAP, SUB_RUS |
 | [Questioni rinviate](#questioni-rinviate) | NAVAL_AI, NAVAL_TIMING, ALICE_REMAINING, BALANCE, CRASH_1949 |
@@ -206,6 +206,14 @@ Decisioni. Riesaminare se cambia il consumatore di allow. Stato Registrata.
 ### GREAT_WAR_ALLIANCE — Lettore senza scrittore verificato
 
 **Rinviata · entrambi i motori, core e Timeline, incluso il carrier Loader.** L'evento 96025 ha chiamanti attivi. Nel fork legge `great_war_temp_alliance` nel selettore dei paesi, senza uno scrittore attivo individuato nei dati ispezionati. Riaprire se emerge un produttore esterno, uno storico o un salvataggio con il flag. [Evento core](https://github.com/Dumcem/The-Grand-Combo/blob/b5423ec1b79ce7a7c44c28d11a5c4e874c04b91b/TGC/events/Great%20War.txt#L1796-L1825)
+
+### LTU_CORE_CLEANUP — Ordine della pulizia SIC e PAP
+
+**Irrisolta · core e Timeline · Victoria II 3.04 e Alice 1.3.0.** La decisione LTU `question_of_language` chiama 10417. Nell'opzione C, il ramo globale per SIC assente visita le province con core SIC e rimuove invece PAP, anche quando PAP esiste. La variante fork `0500fc93e` rimuove SIC ma lo fa prima del ramo che usa quel core per assegnare un core LTU alle province possedute. Il ramo globale adiacente per PAP assente può già eliminare allo stesso modo l'input della conversione PAP.
+
+Il modello statico ha confrontato 24 casi con core solo SIC, solo PAP o sovrapposti, proprietà LTU o di terzi, e ciascun tag presente o assente. La sostituzione fork cambia sette esiti nel modello. Per esempio, con SIC assente una provincia LTU con solo core SIC perde il titolo senza ricevere il core LTU. Su territorio terzo con entrambi i core e PAP presente, upstream toglie PAP mentre la variante fork conserva PAP e toglie SIC. Alice usa identità anche per tag senza terra e copia la lista dei core prima di applicare gli effetti. Gli script originali Victoria II mostrano `all_core` con `remove_core`. Resta da confermare l'esecuzione del ramo con tag senza terra in 3.04. Nessuna prova in gioco è stata eseguita.
+
+Prima di correggere il fork o proporre una PR, definire quali core sulle province LTU vanno convertiti prima della pulizia globale e quali core in territorio terzo devono sopravvivere. Verificare poi l'ordine sia per SIC sia per PAP, sui due motori e con i casi di sovrapposizione e assenza dei tag. La modifica di una sola riga non è una correzione verificata. [Decisione](https://github.com/The-Grand-Combination/The-Grand-Combo/blob/4661c1b5a7d24f6b658e14caf69245e6043355ee/TGC/decisions/FranceExtra.txt#L1264-L1287) · [Evento](https://github.com/The-Grand-Combination/The-Grand-Combo/blob/4661c1b5a7d24f6b658e14caf69245e6043355ee/TGC/events/FRAFlavourExtra.txt#L802-L937) · [Iterazione Alice](https://github.com/schombert/Project-Alice/blob/v1.3.0/src/scripting/effects.cpp#L970-L1015)
 
 ## Ricerca, economia e unità
 
