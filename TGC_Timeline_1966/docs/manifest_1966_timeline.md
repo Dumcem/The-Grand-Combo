@@ -95,13 +95,19 @@ and frame counts.
 
 ## Maintenance guardrails
 
+The drift checker reads the Markdown table above. Keep each full override or
+carrier in a row with backticked Timeline and core paths in the first two
+columns and an `override` or `carrier` label in the remaining cells. Check
+both the table and the actual source paths when an inventory entry changes.
+
+
 - Review the full override/carrier inventory whenever the corresponding
   `TGC/` file changes. A core-only fix can be hidden by the submod while the
   1966 layer is active.
 - Run `TGC/tools/check_1966_submod_drift.py` after relevant core edits and
   `TGC/tools/check_1966_submod_drift.py --reverse` after relevant submod edits.
-- Run `TGC/tools/validate_1966_extension.py` after changes that affect the
-  declared 1966 runtime scope.
+- Follow the [validation triggers](../../AGENTS.md#validation-trigger-policy)
+  and the [validator reference](../../TGC/docs/1966_extension_validator.md).
 - Keep balance changes separate from organizational cleanup. Technology,
   invention, unit, building, and UI values in the runtime files affect gameplay
   or loading behavior and should not be changed as part of documentation work.

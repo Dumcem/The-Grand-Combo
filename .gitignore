@@ -75,6 +75,7 @@
 
 !/docs/
 /docs/*
+!/docs/README.md
 !/docs/deployment/
 !/docs/deployment/**
 

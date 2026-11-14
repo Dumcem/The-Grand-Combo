@@ -4,7 +4,7 @@
 
 Durante la re-baseline, i difetti scoperti incidentalmente vengono registrati e classificati. Si interviene immediatamente soltanto quando compromettono il lavoro corrente, l’integrità della baseline o una verifica necessaria per procedere. Gli altri vengono rinviati al workstream appropriato.
 
-La baseline supportata è **Project Alice 1.3.0**, insieme a **Victoria II originale**. «Entrambe» indica il core e il profilo core + Timeline. L’evidenza del Task 37 proviene dal secondo profilo. Per i file core condivisi, il perimetro «entrambe» descrive la presenza dei dati, mentre frequenza ed esiti del core da solo restano da verificare. Per le voci del triage, il comportamento riportato è quello di Alice 1.3.0 e la parità con Victoria II rimane aperta. «Dati» indica una causa nei dati TGC, potenzialmente condivisa dai motori. «Motore» indica un limite verificato di Alice. «Misto» indica un’interazione fra i due.
+La baseline supportata è **Project Alice 1.3.0**, insieme a **Victoria II originale**. «Entrambe» indica il core e il profilo core + Timeline. L’evidenza del triage proviene dal secondo profilo. Per i file core condivisi, il perimetro «entrambe» descrive la presenza dei dati, mentre frequenza ed esiti del core da solo restano da verificare. Per le voci del triage, il comportamento riportato è quello di Alice 1.3.0 e la parità con Victoria II rimane aperta. «Dati» indica una causa nei dati TGC, potenzialmente condivisa dai motori. «Motore» indica un limite verificato di Alice. «Misto» indica un’interazione fra i due.
 
 ## Criteri
 
@@ -26,12 +26,12 @@ La baseline supportata è **Project Alice 1.3.0**, insieme a **Victoria II origi
 | [Ricerca, economia e unità](#ricerca-economia-e-unità) | TECH_AI, SCHOOL, TEXTILE, NAV_ORG, BLOCKADE, NAV_ATTR, UNIT_BASKET, UNIT_MORALE, UNIT_REINF, UNIT_STRENGTH, UNIT_WEIGHT, STEAM, ARTILLERY |
 | [Workaround navali](#workaround-navali) | SUB_AI_GP, SUB_AI_SP, SUB_FRA, SUB_SWE, SUB_FISH, SUB_BEIYANG, SUB_EIC, SUB_JAP, SUB_RUS |
 | [Questioni rinviate](#questioni-rinviate) | NAVAL_AI, NAVAL_TIMING, ALICE_REMAINING, BALANCE, CRASH_1949 |
-| [Residui della riconciliazione](#residui-della-riconciliazione) | Candidati upstream, simulazione condivisa, JIT Alice, Loader e prestazioni |
+| [Verifiche runtime](#verifiche-runtime) | Profili installati, JIT Alice, salvataggi, Loader e prestazioni |
 | [Manutenzione e chiusura](#manutenzione-e-chiusura) | Regole per aggiornamenti, revisioni del motore e chiusura |
 
-## Provenienza del Task 37
+## Provenienza della diagnostica Alice
 
-Il [checkpoint Task 36](https://github.com/Dumcem/The-Grand-Combo/commit/8ccb9326db0bbeef603b17405a9bf84e6e2abe7b) ha generato e caricato fino alla schermata iniziale lo scenario con avvio 1836, profilo core + Timeline. Il Task 37 ha ricondotto **197 errori non fatali e 314 warning**, 466 dal core e 45 dalla Timeline, a **31 gruppi**. Il confronto con il Task 32 ha confermato tre soli spostamenti di riga, due per `literacy` in Cina e uno per `allow` vuoto in Russia. Il caricamento costituisce evidenza runtime per lo scenario. Le singole meccaniche conservano il grado di evidenza indicato sotto.
+Il [checkpoint Task 36](https://github.com/Dumcem/The-Grand-Combo/commit/8ccb9326db0bbeef603b17405a9bf84e6e2abe7b) ha generato e caricato fino alla schermata iniziale lo scenario con avvio 1836, profilo core + Timeline. Il Task 37 ha ricondotto **197 errori non fatali e 314 warning**, 466 dal core e 45 dalla Timeline, a **31 gruppi**. Il catalogo locale conserva per ogni occorrenza messaggio, riga del log, file effettivo e ambito. I 197/314 sono storici. La [riconciliazione](upstream_reconciliation.md#evidenza-runtime-e-di-recupero) registra anche i conteggi del successivo checkpoint a `864c81fe8`. Il caricamento costituisce evidenza runtime per lo scenario. Le singole meccaniche conservano il grado di evidenza indicato sotto.
 
 I riferimenti `log` indicano righe fisiche, a partire da 1 e con le intestazioni incluse, di `scenario_errors.txt` del Task 36, SHA-256 `be28104b020207a61e2749cb9038d7e7847020089a0bf1051ff9d6e7b4cc9a9d`. Gli intervalli sono inclusivi. Ogni occorrenza appartiene a una scheda. Una rigenerazione può produrre ordine o numeri diversi. Per confrontarla usare firma, file, ID o ambito della scheda, mantenendo il riferimento al log storico.
 
@@ -314,7 +314,7 @@ Unità terrestri. Riesaminare solo se cambia il criterio di selezione o il consu
 | SUB_RUS · `russian_navy_reforms` in [RUS](../TGC/decisions/RUS.txt) | 20 | Esclusi pacchetto, costi e benefici. Restano ricerca ordinaria e riforma autonoma dell’esercito. | Conservato il pacchetto originale. Verificare rami AI/giocatore, costi di 100.000/150.000, tecnologie, benefici e riforma indipendente. |
 | **Totale per composizione** | **166** | **Nove percorsi** | Il profilo Timeline usa gli stessi file core. |
 
-Origine delle guardie nei commit [3dadb6622](https://github.com/Dumcem/The-Grand-Combo/commit/3dadb66229261876b8b5eba463f52d8e21d9d9fe), [7696c503a](https://github.com/Dumcem/The-Grand-Combo/commit/7696c503a9a984aa6e48a6b02ebfa4a8f9418613) e [8ccb9326d](https://github.com/Dumcem/The-Grand-Combo/commit/8ccb9326db0bbeef603b17405a9bf84e6e2abe7b). Il contratto e la distinzione fra guardie d’ingresso e guardie nelle opzioni sono descritti nell’[audit tecnico](../TGC/docs/1966_balance_audit.md#task-34-alice-130-naval-construction-and-scripted-grants). [Handler Alice 1.3.0](https://github.com/schombert/Project-Alice/blob/v1.3.0/src/scripting/effects.cpp#L4365-L4380)
+Origine delle guardie nei commit [3dadb6622](https://github.com/Dumcem/The-Grand-Combo/commit/3dadb66229261876b8b5eba463f52d8e21d9d9fe), [7696c503a](https://github.com/Dumcem/The-Grand-Combo/commit/7696c503a9a984aa6e48a6b02ebfa4a8f9418613) e [8ccb9326d](https://github.com/Dumcem/The-Grand-Combo/commit/8ccb9326db0bbeef603b17405a9bf84e6e2abe7b). Il contratto e la distinzione fra guardie d’ingresso e guardie nelle opzioni sono descritti nell’[audit tecnico](../TGC/docs/1966_balance_audit.md#alice-130-naval-construction-and-scripted-grants). [Handler Alice 1.3.0](https://github.com/schombert/Project-Alice/blob/v1.3.0/src/scripting/effects.cpp#L4365-L4380)
 
 **Condizione comune di riesame per ogni percorso.** L’implementazione effettiva di `sub_unit` o di un equivalente può rendere superflua la guardia. Verificare quantità, tipi, provincia, proprietario, scope, fallimenti parziali e comportamento con gli eventi già in coda. Confrontare i rami V2 con i blocchi pre-guardia e ripetere le regressioni dei [Task 34](../tools/tests/test_task34_naval.py) e [Task 35](../tools/tests/test_task35_sub_unit.py) in entrambe le composizioni, con controlli drift e validator/auditor dove richiesti da [AGENTS.md](../AGENTS.md). Dopo deployment controllato, rigenerare lo scenario Alice della baseline adottata e verificare caricamento e semantica dei percorsi. Il ripristino resta candidato e richiede una decisione esplicita per ciascun ramo.
 
@@ -323,52 +323,37 @@ Origine delle guardie nei commit [3dadb6622](https://github.com/Dumcem/The-Grand
 | ID e area | Gravità, blocco e priorità | Evidenza, decisione aperta e condizione di riesame |
 | --- | --- | --- |
 | NAVAL_AI · portaerei e selezione AI | Alta condizionata allo scenario di ricerca · No · P2 · Rinviata | **Sorgenti**, Alice 1.3.0, criterio in entrambe le composizioni e concorrenza della portaerei nella Timeline. Per le nuove costruzioni Alice sceglie una classe per categoria usando lo scafo base e poi verifica il porto, senza un secondo candidato. Nello scenario con tutte le classi attive, scafo 65 perde contro 70 e 80 anche con porto 7. Il refit usa criteri diversi. La composizione delle flotte in partita e il confronto V2 restano aperti. Riesaminare nel workstream navale o quando cambia la selezione, con una decisione su varietà delle flotte e ruolo delle categorie. [Diagnostica AI](../TGC/docs/1966_balance_audit.md#alice-naval-ai-selection-diagnostics) |
-| NAVAL_TIMING · costruzione e logistica navale | Media · No · P2 · Rinviata | **Sorgenti**, Alice 1.3.0, entrambe. La curva provvisoria conserva il tempo base 90 e porta i tempi nazionali dei trasporti a 45/35 con tutti gli effetti diretti. Questi valori regolano l’approvvigionamento. La consegna dipende anche dalla soglia di 90 giorni dall’accodamento, dalla posizione e dalle merci. Tempi effettivi, capacità produttiva e formula V2 restano aperti. Riesaminare quando si calibra la progressione navale o cambia il consumatore Alice, mantenendo la positività e verificando la coda. [Curva provvisoria](../TGC/docs/1966_balance_audit.md#provisional-transport-production-curve) · [Contratto di costruzione](../TGC/docs/1966_balance_audit.md#task-34-alice-130-naval-construction-and-scripted-grants) |
+| NAVAL_TIMING · costruzione e logistica navale | Media · No · P2 · Rinviata | **Sorgenti**, Alice 1.3.0, entrambe. La curva provvisoria conserva il tempo base 90 e porta i tempi nazionali dei trasporti a 45/35 con tutti gli effetti diretti. Questi valori regolano l’approvvigionamento. La consegna dipende anche dalla soglia di 90 giorni dall’accodamento, dalla posizione e dalle merci. Tempi effettivi, capacità produttiva e formula V2 restano aperti. Riesaminare quando si calibra la progressione navale o cambia il consumatore Alice, mantenendo la positività e verificando la coda. [Curva provvisoria](../TGC/docs/1966_balance_audit.md#provisional-transport-production-curve) · [Contratto di costruzione](../TGC/docs/1966_balance_audit.md#alice-130-naval-construction-and-scripted-grants) |
 | ALICE_REMAINING · compatibilità residua dei campi | Media · No · P2 · Aperta | **Sorgenti e Dati**, Alice 1.3.0, entrambe. Oltre ai campi già schedati in UNIT_STRENGTH e UNIT_WEIGHT, lo schema scarta silenziosamente `priority` in 21 unità core e 23 con Timeline, e `limit_per_port` in 10 e 12. Altri casi e limiti di rappresentazione sono nell’audit tecnico. Riesaminare durante il workstream unità/AI o quando cambiano parser e consumatori. Verificare l’ambito V2 prima di scegliere equivalenti e collegare qui eventuali nuovi riscontri della stessa causa. [Schema Alice](https://github.com/schombert/Project-Alice/blob/v1.3.0/src/parsing/parser_defs.txt#L512-L542) · [Contratto applicato](../TGC/docs/1966_balance_audit.md#raw-values-versus-engine-applied-values) |
 | BALANCE · bilanciamento 1836–1966 | Da stimare · No · P2 · Rinviata | **Dati**, entrambi i motori e le composizioni. Le soglie legacy sono diagnostiche normative senza validazione. Il workstream deve fondare ruoli, progressione, infrastrutture e logistica e confrontare i valori effettivamente applicati. Riesaminare quando si definiscono obiettivi e misure della progressione. Le violazioni di uno stesso criterio restano raggruppate. [Contratto legacy](../TGC/docs/1966_balance_audit.md#legacy-normative-contract) |
 | CRASH_1949 · stabilità di campagna | Alta · Condizionale · P1 · Rinviata | **Aperta**. Il Project Hub registra un crash riproducibile verso fine aprile 1949. Motore, composizione, salvataggio di riferimento e causa restano da accertare nel workstream stabilità. Blocca la verifica di una campagna che lo riproduce e deve superare quella data. Riesaminare quando si recuperano condizioni minime di riproduzione o quando una verifica corrente richiede quel tratto di campagna. Fonte interna del progetto, sezione «Questioni aperte». |
 
-## Residui della riconciliazione
+## Verifiche runtime
 
-Per le differenze ancora presenti nel fork, le relative decisioni e i candidati upstream usare il [registro delle differenze upstream](upstream_delta_register.md).
+Il checkpoint documentato dalle ricevute Steam è `608d1867d`, profilo
+`core+1966`. I resoconti del medesimo checkpoint attestano la verifica
+strutturale delle due installazioni Loader. L’[evidenza storica](upstream_reconciliation.md#evidenza-runtime-e-di-recupero)
+copre altri assetti e rimane datata. Le differenze da recepire e le candidature
+si seguono nel [registro upstream](upstream_delta_register.md).
 
-**Blocco notifiche ufficiali chiuso.** Ripristinate le 15 notifiche nominative e allineati i testi al grado effettivo. Il testo di Ryan risulta già allineato in upstream.
+| ID | Evidenza disponibile e condizione di riesame |
+| --- | --- |
+| DEPLOY_STEAM | Ricevuta e manifest del profilo condiviso. Mancano avvio e caricamento di core e Timeline sul checkpoint registrato. Servono un’area utente isolata e controllo osservabile della finestra. |
+| DEPLOY_LOADER | In finestra sono documentati avvio, inizializzazione di entrambi i plugin e uso di CB e cache distinti per composizione. Avanzamento, salvataggio e riapertura sono stati osservati in un checkpoint precedente e restano da verificare su quello registrato. Riaprire il crash fullscreen se ricorre in finestra o se lo schermo intero diventa un requisito. |
+| DEPLOY_ALICE | Gli otto scenari preesistenti e la diagnostica risultano preservati nel resoconto. Mancano due scenari generati da questo deployment e il loro caricamento. Riprendere quando Documenti, AppData e gli altri output possono essere isolati o recuperati con una procedura verificata. Il guasto intermittente JIT Windows rimane aperto separatamente. |
+| TEMPERANCE | Gli ID 180–191 preservano i riferimenti. Servono salvataggi con eventi già pendenti per valutare la compatibilità oltre l’avvio. |
+| SONDERBUND | `bf55d38a2` preserva le risposte registrate in aggiunta alla guardia per destinatario. Alice 1.3.0 scrive il flag prima di accodare e ricontrolla il trigger al dispatch. Il singolo popup pendente non è interrogabile dal percorso esaminato. Un popup anteriore alle guardie può ricomparire. Il caso è accettato senza migrazione. Resta la verifica sui due motori. [Dispatch Alice](https://github.com/schombert/Project-Alice/blob/v1.3.0/src/scripting/events.cpp#L200-L262) |
+| DEPLOY_BILLING | Il payload include la correzione. Verificare servizi concorrenti, ripristino mensile di `override_campaigns`, arresto dopo l’ultimo servizio e assenza di doppi addebiti. Per la migrazione misurare separatamente esborso e movimento POP sui due motori, con e senza Direct Immigration e anche in assenza di destinazioni idonee. |
+| LOADER_TREATY | Il caso ottomano isolato produsse 23 clausole e ne applicò 22. L’identità del termine scartato e lo stato prima della sua applicazione non furono registrati. Per attribuire la causa, osservare indice, ordine, cedente, beneficiario e stato, confrontando il termine isolato con quello dopo le mutazioni precedenti. La cessione volontaria osservata lascia aperto il costo dell’obiettivo `acquire_province` rispetto al valore nativo della provincia selezionata. |
+| LOADER_PEACE | Verificare la guardia 96021 e la chiusura 96094 dopo pace generale, anche con seconda guerra aperta, più richieste per lo stesso perdente, vincitore umano con firma ritardata e 96021 già in coda. Il criterio è una sola chiusura senza consumo anticipato dei flag o cessioni duplicate. |
+| LOADER_ECONOMY | Inizializzazione degli hook, ordini edilizi e ricorrenza di 53 sono osservazioni parziali. Mancano misure dei pagamenti netti per strato su checkpoint abbinati, cumulo nazionale/provinciale, soglia 1990 e isolamento dei singoli effetti di 53 dal tick ordinario. |
+| USER_DATA | Il Project Hub riferisce una differenza d’impronta della cartella utente Paradox senza attribuzione. La causa e l’eventuale legame con le sessioni Loader restano indeterminati. Riesaminare con un confronto prima/dopo su un’area utente isolata. |
+| PERFORMANCE | L’inizializzazione del Performance Patch è documentata. Un confronto delle prestazioni richiede sessioni comparabili. |
 
-**Sonderbund (99797 → 99800) · verifica statica.** Il fork ha già la guardia per destinatario. La correzione locale pronta per revisione preserva anche le risposte già registrate. Upstream usa ancora il blocco per ID di 99797. Su Alice 1.3.0 l’effetto immediato scrive il flag paese prima di accodare il popup e il dispatch ricontrolla il trigger. La coda dei popup è persistita, ma il percorso di trigger esaminato non espone il singolo invito pendente come stato interrogabile. Un popup precedente a entrambe le guardie può quindi ricomparire. Il caso è accettato senza migrazione. Le verifiche in partita sui due motori restano aperte. [Dispatch Alice](https://github.com/schombert/Project-Alice/blob/v1.3.0/src/scripting/events.cpp#L200-L262) · [Studio del motore originale](https://github.com/maxioten/Victoria2-Reverse-Engineering/blob/main/Engine/Event_System.md)
-
-Le voci della tabella seguono i rispettivi workstream senza bloccare il checkpoint upstream fissato.
-
-| Classe Task 58 | Area e provenienza | Questione e riferimento |
-| --- | --- | --- |
-| B | Upstream TGC | I CB ordinari di `88604963d` e `b865278ff` e la rimozione del ramo Bhutan in `great_game_cb` sono recepiti nel core e in Extender. La #427 ha corretto gli ID delle partizioni. Resta da verificare la guardia di pace. [Candidati e motivazioni](upstream_reconciliation.md#task-55--preparazione-del-profilo-script-extender) |
-| B | Fork e percorso condiviso | Simulazione oltre l'avvio e salvataggi con eventi Temperance pendenti ancora da verificare. [Task 52](upstream_reconciliation.md#task-52--checkpoint-runtime) |
-| B | Deployment Windows | Un handle esterno persistente può impedire la sostituzione del journal. Conservare le ricevute e applicare il recupero per ID se si presenta il caso. [Procedura di recupero](deployment/local_deployment.md#rollback-and-interrupted-publication) |
-| B | Alice | Guasto intermittente JIT Windows osservato anche prima del merge. La diagnosi e la prova prolungata restano nel workstream Alice 1.3.0. [Task 53](upstream_reconciliation.md#task-53--diagnosi-del-crash-alice) |
-| B | Loader e integrazione Extender | Entrambi i profili hanno superato avvio, breve simulazione, editor dei trattati, salvataggio e riapertura in finestra. Resta da isolare il crash a schermo intero. Restano aperti anche pagamenti POP e transizione del 1990, clausola ottomana, costo di guerra, eventi 96021/96094 e singoli effetti dell’evento 53. [Profili Loader](deployment/script_extender_profile.md) · [Task 57](deployment/script_extender_task57.md) |
-| C | Bilanciamento e prestazioni | La re-baseline normativa prosegue come in BALANCE. Un confronto del Performance Patch richiede una prova dedicata. [Profilo Extender](deployment/script_extender_profile.md) |
-
-## Collaudi funzionali post-deployment (Task 71E–71F)
-
-**Stato della milestone: PARZIALE, non bloccante per l'integrità delle installazioni.**
-Il checkpoint locale installato e verificato dal deployer è
-`608d1867d429004d9e1acae98c67ecf7de6757d4`. Per Steam e i due
-Loader permanenti, le ricevute originali risultano integre e non sono state
-segnalate transazioni pendenti. Le verifiche strutturali non equivalgono a
-certificazione funzionale. [Stato e limiti del deployment](deployment/local_deployment.md#post-deployment-status--tasks-71d71f).
-
-| ID e ambiente | Stato verificato sul checkpoint | Condizione concreta per riprendere |
-| --- | --- | --- |
-| DEPLOY_STEAM · Victoria II classico, core e Timeline | Contenuti e ownership verificati sul disco; nessun avvio dei due profili in Task 71E–71F. | Area utente di prova isolata, controllo osservabile della finestra, poi avvio e caricamento di entrambi i profili senza toccare salvataggi personali. |
-| DEPLOY_LOADER · `core+extender` e `core+extender+1966` | Avvio in finestra; i log attestano entrambi i plugin e CB della rispettiva composizione. Cache e CB generati risultano distinti. Per questo checkpoint non sono stati verificati avanzamento, salvataggio e riapertura; i collaudi storici del Task 66 non sostituiscono quelli correnti. | Metodo affidabile di cattura/attivazione e controllo degli input su finestra identificata, con salvataggi di prova nelle due aree isolate. Nessuna ripetizione di input alla cieca. |
-| DEPLOY_ALICE · Project Alice 1.3.0 | Otto scenari preesistenti e `scenario_errors.txt` preservati, con hash invariati; i due scenari core e core+1966 per il checkpoint corrente non sono stati generati. `-outputScenario` non isola gli altri percorsi di scrittura Windows. | Ambiente isolato o procedura di conservazione e recupero verificata per Documenti, AppData e ogni altro output, prima di generare e caricare i due scenari dalla versione live verificata. |
-| DEPLOY_BILLING · Task 71B | Correzione presente nel payload installato; soltanto evidenze statiche e di composizione, non del comportamento economico in partita. | Ambiente di prova osservabile per controllare addebiti con servizi concorrenti, ripristino mensile di `override_campaigns`, spegnimento dopo l'ultimo servizio e assenza di duplicazioni. |
-
-**Decisione di arresto.** Non reiterare i collaudi con gli stessi limiti
-dell'ambiente di automazione e non chiedere playtest a Thomas. Nessuna
-regressione runtime nuova è stata dimostrata in questi task; riprendere
-soltanto se una delle condizioni specifiche sopra diventa verificabile.
-Restano invariati i workstream più ampi (inclusi crash fullscreen Loader
-e JIT intermittente Alice).
+Per le composizioni Loader valgono i [contratti dei consumatori](deployment/script_extender_profile.md#contratti-dei-consumatori).
+I [riscontri di progettazione e il piano storico](https://github.com/Dumcem/The-Grand-Combo/blob/11bab1312d7c3351b0abe5e3020596b26527c97a/docs/deployment/script_extender_task57.md#sessione-finale-unica)
+conservano i casi di prova dettagliati. Riprendere solo con le condizioni di
+osservabilità e isolamento pertinenti. La certificazione funzionale resta parziale.
 
 ## Manutenzione e chiusura
 

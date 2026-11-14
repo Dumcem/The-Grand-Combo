@@ -5,6 +5,9 @@ structural analysis completed, **not** that the mod is balanced or compatible wi
 both engines. Numerical ranges and caps in `1966_balance_rules.json` remain
 **UNVALIDATED**. They have not been fitted, widened or otherwise changed.
 
+Open design and compatibility questions are tracked in the
+[re-baseline backlog](../../docs/rebaseline_backlog.md#questioni-rinviate).
+
 ## Running
 
 From repository root (Python 3.11+; standard library only):
@@ -510,7 +513,7 @@ The generic positivity correction and generic tooling improvements remain
 possible upstream contributions. This new production curve is an explicit fork
 design choice; acceptance upstream is not assumed. No sync or push is involved.
 
-### Task 34: Alice 1.3.0 naval construction and scripted grants
+### Alice 1.3.0 naval construction and scripted grants
 
 The audit emits an `alice_naval_construction` INFO row for each effective naval
 class in core and in core + Timeline. Each row uses the selected unit definition,
@@ -563,7 +566,7 @@ fingerprints. This guard is a generic TGC upstream candidate.
 [Trigger evaluation](https://github.com/schombert/Project-Alice/blob/v1.3.0/src/scripting/triggers.cpp#L3804-L3807) ·
 [Unit effects](https://github.com/schombert/Project-Alice/blob/v1.3.0/src/scripting/effects.cpp#L4365-L4380)
 
-### Task 35: remaining scripted naval paths
+### Additional scripted naval paths
 
 Core and Timeline select the same eight files with `sub_unit` effects.
 There are 166 calls in each composition, including 59 covered by Task 34.

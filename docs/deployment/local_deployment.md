@@ -47,10 +47,9 @@ its ownership and its prior commit; disable it in the launcher for core-only
 play. There is no implicit uninstall operation. Optional-mod compatibility
 with Timeline or other options is not certified by the deployment tool.
 
-Task 58 retired the legacy Performance Addon. Task 67 removed the residual
-unowned pair `mod/TGCPerformanceAddon` and `mod/TGCPerformanceAddon.mod`
-from Steam. Historical deployment records remain recoverable through the
-digest-specific catalog described under [local state](#transaction-manifests-and-local-state).
+The legacy Performance Addon is retired. Its historical deployment records
+remain recoverable through the digest-specific catalog described under
+[local state](#transaction-manifests-and-local-state).
 
 ## Target configuration and commands
 
@@ -326,48 +325,18 @@ and drift checks in `AGENTS.md`. The Loader Timeline profile also checks its
 effective file inventory separately because the 1966 tools use the canonical
 core and Timeline descriptors.
 
-## Post-deployment status — Tasks 71D–71F (2026-11-13)
+## Recording deployment evidence
 
-**Result: deployment verified structurally; functional certification partial.**
-The reported deployment source checkpoint is
-`608d1867d429004d9e1acae98c67ecf7de6757d4`. Tasks 71E–71F
-reverified the original deployment receipts for the three Victoria II game
-roots, with no pending transactions or managed-component changes. This
-checkpoint documents the installation layout; the deployed runtime payload is
-determined by each transaction manifest. The following runtime observations
-come from the local Codex task reports, not from the deployment tool itself.
+Keep the deployment source revision and profile with the receipt and manifest.
+Record runtime observations separately in the [re-baseline backlog](../rebaseline_backlog.md#verifiche-runtime).
+A verified transaction establishes the managed installation state for its
+recorded manifest. Runtime checks need an observable session and an isolated
+or recoverable user-data area.
 
-| Environment | Installed / verified | Runtime evidence still missing |
-| --- | --- | --- |
-| Shared Steam root, `core` and `core+1966` | The deployer verified the managed core and Timeline content and receipts at `C:\Program Files (x86)\Steam\steamapps\common\Victoria 2`. | Launching both profiles on the current checkpoint; the existing Steam user-data area was not isolated for unattended testing. |
-| Dedicated `core+extender` root | Windowed start; logs confirmed Script Extender, Performance Patch and CB reading from `TGCScriptExtender`. | Controlled campaign advance, test save and reopening on this checkpoint. |
-| Dedicated `core+extender+1966` root | Windowed start; logs confirmed both plugins and CB reading from `TGCScriptExtender1966`. The two Loader caches and generated CB files are separate. | Controlled campaign advance, test save and reopening on this checkpoint. |
-| Project Alice 1.3.0, shared core and Timeline | Existing installation and eight older scenarios inventoried; their SHA-256 values and `scenario_errors.txt` were unchanged across Tasks 71E–71F. | Safe generation and loading of **both new scenarios** from the verified shared deployment. Existing scenarios do not establish compatibility with this checkpoint. |
-| Campaign billing, Task 71B | The deployed managed files contain the reviewed fix. | In-engine checks of continued charges, monthly repair of a cleared `override_campaigns` flag, stopping after the last service, and no duplicate charges. |
-
-The two Loader game processes started and initialized both plugins, but
-window capture / activation could not be controlled reliably in Task 71E.
-Task 71F did not retry blind interaction. For the current deployment, the
-campaign/save/reopen checks remain **unverified**, notwithstanding earlier
-Task 66 tests on an older installation state.
-
-Project Alice 1.3.0 on Windows writes scenarios and saves under the user's
-Documents directories and may overwrite `scenario_errors.txt` in local
-AppData; `-outputScenario` changes the output scenario name, **not** those
-other write locations. Task 71F found no verified isolated environment:
-WSL exposed only `docker-desktop` and its Docker engine was inaccessible.
-Generation was therefore deliberately not attempted. No personal saves,
-settings, existing scenarios or diagnostics were modified.
-
-Resume functional certification only when (a) a reliable observable GUI
-control path and isolated disposable user-data roots are available for
-Victoria II, and/or (b) an Alice execution environment or fully verified
-preservation/recovery procedure protects **all** its write locations.
-Record in-engine observations separately from static tests and receipt
-verification. Never send blind input, overwrite personal scenario data,
-or infer runtime success from an installed payload. Outstanding checks
-and their reopening conditions are tracked in
-[the re-baseline backlog](../rebaseline_backlog.md#post-deployment-functional-checks-tasks-71e71f).
+On Windows, Alice 1.3.0 can write to Documents and local AppData.
+`-outputScenario` changes the scenario name only. Before generating scenarios,
+verify the isolation or recovery of all write locations, including the
+diagnostic file. Generate from the verified live deployment.
 
 ## Simulated tests
 

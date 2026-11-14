@@ -8,9 +8,10 @@ timeline architecture.
 - Default core root: `TGC/`
 - Default 1966 runtime root: `TGC_Timeline_1966/`
 
-The base `TGC/` mod is intentionally non-1966. The runtime content for the
-extended timeline lives in the `TGC Timeline 1966` submod. To play the extended
-timeline, enable both `TGC - The Grand Combination` and `TGC Timeline 1966`.
+The [Timeline manifest](../../TGC_Timeline_1966/docs/manifest_1966_timeline.md)
+defines the composition and the carrier inventory. The default validator scope
+is the canonical core and Timeline pair. The assembled Loader profiles have a
+separate [deployment composition](../../docs/deployment/script_extender_profile.md).
 
 ## What it checks
 
@@ -39,7 +40,12 @@ The validator is manifest-driven and now checks two layers:
 
 Known false positives such as historical Hunley submarine flavour text, province
 id `1966`, and pre-existing `submarine_warfare` modifiers are not represented as
-forbidden validator patterns; they are documented in the submod manifest.
+forbidden validator patterns. The ruleset also requires the root README's
+Timeline name and manifest reference, and checks the presence of the extension
+audit, validator guide, [mixed-file note](../../TGC_Timeline_1966/docs/TODO_mixed_files.md)
+and Timeline manifest at their current paths. The drift checker additionally extracts the manifest's override/carrier
+table. Structural checks and drift findings do not establish runtime behavior.
+See the [verification boundaries](1966_extension_audit.md).
 
 ## Run
 

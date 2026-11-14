@@ -2,22 +2,11 @@
 
 `core+extender` prepara i contenuti della [PR #417](https://github.com/The-Grand-Combination/The-Grand-Combo/pull/417)
 che dipendono da Script Extender. Il profilo è destinato a **Victoria II 3.04
-Windows x86** in una seconda installazione, fuori da `steamapps`. Il Task 55
-verifica contenuti e deployment staticamente e su installazioni simulate.
-Il [rapporto del Task 56](script_extender_task56.md) documenta le prove in partita
-su Victoria II 3.04. Il [Task 57](script_extender_task57.md) ricostruisce i
-controlli del plugin e definisce la sessione per le prove residue.
+Windows x86**. La [guida di deployment](local_deployment.md#profiles-and-runtime-policy)
+definisce la matrice dei profili e i requisiti di isolamento. Usare una radice
+dedicata per ciascuna composizione Loader.
 
 ## Composizione e caricamento
-
-L'assetto corrente usa Steam per core e Timeline 1966, due installazioni
-dedicate per i profili Loader e Project Alice 1.3.0 come motore alternativo
-per i contenuti condivisi. L'obiettivo è mantenere tutte le configurazioni
-supportate con il minor numero di installazioni compatibile con stabilità,
-isolamento e recuperabilità. Rivalutare le installazioni dedicate quando
-cambiano mod, Loader o deployer. Un consolidamento richiede la verifica di
-tutti i profili, dell'isolamento dei file generati e delle cache e della
-conservazione di salvataggi, backup e funzionalità.
 
 | Profilo | Coppia runtime sotto `mod/` | Selezione in launcher | `user_dir` |
 | --- | --- | --- | --- |
@@ -122,10 +111,9 @@ Gli altri riferimenti sono conservati.
 
 ## Ritorno al profilo condiviso
 
-Il Task 58 ha ritirato il vecchio addon, che modificava decisioni di
-rinomina e contenuti di giornale. Il Task 64 abilita il Performance Patch
-del Loader nel profilo dedicato con i valori del bundle. Le prove runtime
-del Task 56 riguardavano il solo Script Extender con quattro funzioni attive.
+Il Performance Patch del Loader usa i valori del bundle nel profilo
+dedicato. Per il ritiro del vecchio addon e le verifiche su configurazioni
+precedenti, vedere le [evidenze storiche](../upstream_reconciliation.md).
 [Opzioni del Performance Patch](https://github.com/The-Grand-Combination/The-Grand-Loader/blob/3.0.0/docs/README.md)
 
 Il profilo condiviso continua a usare `core` o `core+1966` su Victoria II
@@ -135,50 +123,51 @@ TGC con la Timeline solo se desiderata. Aprire un salvataggio del profilo
 condiviso. Trattati, indici dei CB, modifiche territoriali, stato economico e
 flag possono rendere incompatibile un salvataggio passato per l'Extender.
 
-## Condizioni per un test runtime separato
+## Contratti dei consumatori
 
-Per ripetere il collaudo del Task 66, usare la modalità finestra con
-`fullScreen=no` e `borderless=no` nelle impostazioni di **Victoria II**.
-Nel test sono stati preparati i file `settings.txt` della copia di gioco,
-della radice utente indicata da `userdir.txt` e della sottocartella del
-profilo. Con gli INI ufficiali del bundle 3.0.0, entrambi i profili hanno
-avviato la campagna, aperto l'editor dei trattati e riaperto un salvataggio
-dopo l'avanzamento. Nei due primi avvii a freddo a schermo intero, invece,
-`v2game.exe` si è arrestato con `0xC0000005` all'offset `0x0041AC6B`
-durante l'inizializzazione della mappa. Il confronto ha verificato la
-mitigazione in finestra sulla macchina di prova. La causa del crash resta
-da isolare.
+- **Mappa.** Il profilo deve risolvere `definition.csv` nella propria coppia
+  pubblicata sotto `mod/`. Il core fornisce il CSV. L’override dedicato evita
+  che il Loader cerchi il percorso della coppia condivisa. I test verificano il
+  percorso effettivo per ciascuna composizione.
+- **Cessione.** `acquire_province` è `is_triggered_only` e il selettore conserva
+  l’ID della singola provincia. Con `peace_cost_factor = 1` il contributo
+  territoriale atteso usa il valore nativo di quell’ID. `badboy_factor = 1.0`
+  usa la base 5 prima dei correttivi. Il costo osservato nell’editor del
+  trattato volontario vale per quel percorso. [Selettore e costo](https://github.com/The-Grand-Combination/The-Grand-Loader/blob/3.0.0/script_extender/src/features/demand_province.cpp)
+- **Smembramento.** La coda del plugin aggrega per perdente, trattiene il primo
+  vincitore e alza il budget al massimo delle richieste pendenti. L’editor o il
+  trattato AI intervengono dopo la pace bilaterale. Il 96094 richiede invece
+  pace generale e i due flag. Pulisce i flag e applica gli effetti di chiusura
+  senza cessioni. `se_treaty_dismantled` inibisce il 96021 anche da solo,
+  mentre occorre anche `dismantling_treaty` per il 96094. La catena legacy
+  conserva le proprie condizioni. Il plugin rivalida i termini dopo ciascuna
+  mutazione precedente, quindi l’esito della convalida iniziale può cambiare.
+  [Coda](https://github.com/The-Grand-Combination/The-Grand-Loader/blob/3.0.0/script_extender/src/features/treaty.cpp#L1939-L1958) ·
+  [Applicazione](https://github.com/The-Grand-Combination/The-Grand-Loader/blob/3.0.0/script_extender/src/features/treaty.cpp#L1301-L1351)
+- **Reddito.** Nella progressione culturale ordinaria ogni curva lascia il
+  posto alla successiva. Le ultime due si escludono alla soglia del 1990.
+  Per i pagamenti supportati il plugin moltiplica il netto positivo dello
+  strato per `max(0, 1000 + provincia + paese) / 1000` in unità fisse da
+  1/32768 con troncamento intero. Il paese è il proprietario della provincia.
+  Gli importi non positivi, il fondo per gli input artigiani e le chiamate
+  estranee ai sette siti restano invariati. L’evento 53 conserva il richiamo a
+  un giorno e le spese nazionali delle campagne sotto `override_campaigns`.
+  I sei trasferimenti POP diretti sono rimossi nella composizione Loader.
+  [Sorgente redditi](https://github.com/The-Grand-Combination/The-Grand-Loader/blob/3.0.0/script_extender/src/features/income_modifiers.cpp#L10-L76)
 
-Il collaudo ha verificato la riapertura dei salvataggi del 3 gennaio 1836
-nel profilo base e del 2 gennaio 1836 nel profilo 1966. I log hanno
-confermato l'inizializzazione di entrambi i plugin e l'uso di cache
-separate. La prova breve non misura il guadagno del Performance Patch né
-certifica la stabilità su una campagna lunga. Le verifiche funzionali
-residue sono elencate nel [backlog](../rebaseline_backlog.md#residui-della-riconciliazione).
+## Avvio in finestra e isolamento
 
-Per Project Alice 1.3.0, il Task 66 ha verificato staticamente entrambi i
-profili condivisi. Su Windows la versione 1.3.0 usa la cartella Documenti
-di sistema per scenari e salvataggi anche quando si copia l'eseguibile.
-In assenza di un ambiente separato, il Task 66 non ha rigenerato scenari
-né avviato Alice. Il guasto JIT intermittente già documentato resta
-distinto dal crash a schermo intero di Victoria II.
-[Percorsi utente di Alice 1.3.0](https://github.com/schombert/Project-Alice/blob/v1.3.0/src/filesystem/simple_fs_win.cpp)
+Avviare Victoria II con `fullScreen=no` e `borderless=no`. Controllare il
+`settings.txt` della copia di gioco, della radice utente indicata da
+`userdir.txt` e della sottocartella del profilo. È il workaround osservato
+per il crash a schermo intero durante l’inizializzazione della mappa.
 
-1. Autorizzare esplicitamente il percorso della seconda installazione e l'uso
-   del bundle ufficiale verificato. Confermare Victoria II 3.04 Windows x86,
-   isolare la cartella di gioco e partire da salvataggi di prova.
-2. Esaminare il piano pulito e usare il ciclo `plan → apply → verify` della
-   [procedura di deployment](local_deployment.md), con
-   il profilo scelto su ogni comando. Verificare ownership, SHA del
-   commit e contenuto della coppia. Per annullare la transazione usare
-   `rollback` con lo stesso profilo e l'ID registrato. Il rollback gestisce
-   i file TGC pubblicati, mentre bundle e salvataggi restano separati.
-3. Avviare col solo descrittore TGC esteso e con entrambi gli INI originali.
-   Controllare nel log del Loader l'inizializzazione di entrambi i plugin, l'origine dei
-   CB e delle tabelle, interfaccia dei trattati e `user_dir` distinto.
-4. Verificare una cessione di singola provincia e il costo in pace, un trattato
-   volontario e uno forzato con vincitori umano e AI, una partizione, la
-   chiusura 96094 e i flag, i costi di costruzione di entrambe le strutture e
-   i redditi per strato. Ripetere caricamento e salvataggio nel solo profilo
-   dedicato. Per un eventuale test multiplayer allineare build, contenuti
-   e INI di tutti i partecipanti.
+Usare il bundle ufficiale verificato, gli INI completi e un’area di
+salvataggi di prova isolata. Pubblicare e recuperare la coppia gestita
+seguendo la [guida di deployment](local_deployment.md). Le ricevute
+riguardano i contenuti TGC. Il bundle e i salvataggi hanno un ciclo separato.
+Verificare il log dei plugin e la separazione dei file generati. Per il
+multiplayer allineare build, contenuti e INI dei partecipanti.
+
+Il [backlog](../rebaseline_backlog.md#verifiche-runtime) indica che cosa è
+stato osservato e quali comportamenti richiedono ancora una verifica.

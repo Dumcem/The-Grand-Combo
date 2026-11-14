@@ -1,5 +1,7 @@
 # AGENTS.md
 
+See the [fork documentation index](docs/README.md) for technical references.
+
 ## Project Alice compatibility policy
 
 - Project Alice is an officially supported runtime target alongside the original Victoria II engine (`v2game.exe`). Changes must not knowingly break either supported engine unless an explicit project decision changes this policy.
@@ -30,7 +32,7 @@
 
 ## Re-baseline verification policy — temporary
 
-- The upstream synchronization checkpoint is closed. The general technical and balance re-baseline continues. Use `docs/upstream_reconciliation.md` for the handoff and `docs/rebaseline_backlog.md` for residual work.
+- The general technical and balance re-baseline continues. Use [the backlog](docs/rebaseline_backlog.md) for open technical work and [the upstream delta register](docs/upstream_delta_register.md) for the synchronization baseline.
 - Treat existing fork changes, prior fixes, audit conclusions, validation results, documentation claims, and legacy AI-generated work as evidence to be re-evaluated, not as proof of correctness.
 - During the re-baseline, validate the implementation from first principles where practical. Do not preserve a previous conclusion solely because it is already implemented, documented, tested, or reported as passing.
 - Audit the audit tooling itself. Review validator and audit code, parsing assumptions, rulesets, coverage, thresholds, reference values, balance targets, and other parameters used to decide whether content is valid or plausible.
@@ -46,7 +48,7 @@
 - Resolve conflicts from the upstream implementation and reapply justified fork changes. Preserve verified fork fixes and upstream improvements, including in files Git combines automatically.
 - Trace intentional differences from upstream commit and behavior through the fork change, its rationale, and its verification. Demonstrate actual incompatibilities and address them where practical.
 - Preserve Victoria II and the supported Project Alice baseline unless an explicit project decision changes that policy.
-- Record synchronization outcomes and exceptions in `docs/upstream_reconciliation.md`.
+- Record the synchronized revision and active exceptions in [the upstream delta register](docs/upstream_delta_register.md). Record enduring evidence from closed checkpoints in [the reconciliation history](docs/upstream_reconciliation.md).
 
 ## Upstream contribution policy
 
@@ -82,7 +84,6 @@ If the task does **not** touch/assess 1966 extension validity or balance, skip t
 - When changing a `TGC_Timeline_1966/` file that is not clearly timeline-only, run or explicitly consider `python TGC/tools/check_1966_submod_drift.py --reverse`; decide whether to port the generic part back to core without bringing 1966 content into `TGC/`, or explain why not.
 - Never transfer changes between core and submod automatically: porting must be intentional, drift WARN entries require manual review, and drift FAIL entries must be fixed before proceeding.
 - After syncing from the original/upstream mod, treat core/submod drift verification as mandatory. If possible, use the pre-sync commit as `<pre-sync-ref>` and run or explicitly consider `python TGC/tools/check_1966_submod_drift.py --base-ref <pre-sync-ref>` and `python TGC/tools/check_1966_submod_drift.py --reverse --base-ref <pre-sync-ref>`; CI runs both with `--fail-on-warn` for pull requests, pushes, and manual dispatches, so WARNs must be resolved by porting/adapting the change to the counterpart or clearly explaining why it should not transfer.
-- After changes affecting 1966 content or rules, continue to run `python TGC/tools/validate_1966_extension.py` and `python TGC/tools/audit_1966_balance.py`.
 
 ## If validation fails
 Do not patch immediately.
@@ -92,8 +93,7 @@ First provide a diagnosis and classify the issue as:
 - gameplay/balance issue
 
 ## If validation passes
-Proceed with the requested task.
-Always report:
+For runs required by the validation trigger policy, report:
 - validator result
 - FAIL/WARN/INFO counts from the audit
 - PRIORITY SUMMARY
