@@ -19,6 +19,12 @@ restano disponibili in Git. I riferimenti delle PR #418–427 sono nel
 | Geografia | Paracatu 2444 rimane nel gruppo Aw per la corrispondenza territoriale. I due gruppi climatici avevano valori identici al confronto. La provincia 2447 conserva Rio de Janeiro. |
 | Loader e Performance Addon | La PR #417 fu recepita nel solo overlay Victoria II. Il vecchio addon fu ritirato al checkpoint di chiusura. La coppia residua Steam fu rimossa successivamente. I cataloghi storici restano risolvibili per digest per il recupero. |
 
+## Verifiche mirate dei contributi
+
+- **Scuole di ricerca.** La descrizione navale richiede `ts_naval_desc`. Il fork `9d8de29a6` usa quella chiave al posto del titolo ceco e conserva il duplicato navale. La correzione upstream cambia soltanto la chiave della riga descrittiva. Il confronto byte per byte conserva il resto del CSV Windows-1252.
+- **Propaganda.** Il segno del pagamento e la soglia di cassa formano un solo contratto. `0500fc93e` corregge il segno nel fork. La fascia da 250.000 richiede anche il limite superiore di 10 milioni di POP. I controlli statici coprono 420 combinazioni e la selezione esclusiva del pagamento.
+- **Fabbriche e Carrington.** Per Alice 1.3.0 occorre leggere il valutatore effettivo dopo il parser. I due predicati statali di fabbrica condividono lo stesso helper e il ciclo paese di un evento può escludere il destinatario. Le condizioni di riesame sono nel [backlog](rebaseline_backlog.md#eventi-decisioni-e-mappa). Nessuna prova in gioco è stata eseguita durante questi controlli.
+
 ## Evidenza runtime e di recupero
 
 - **Steam e Alice a `864c81fe8`.** Il motore originale raggiunse una finestra responsiva per core e Timeline. Alice generò entrambi gli scenari, caricò il core e caricò la Timeline in uno di tre tentativi. Gli altri due terminarono con `0xC0000409` e `IMAGE_REL_AMD64_ADDR32NB relocation requires an ordered section layout`. Il controllo con lo scenario precedente riuscì. Il difetto intermittente è localizzato nella rilocazione JIT Windows, con causa delle allocazioni e correzione ancora aperte. I diagnostici furono 150 errori non fatali e 314 avvisi per core, 195 e 314 per Timeline. I 197 errori Timeline appartengono a un checkpoint anteriore.

@@ -58,11 +58,21 @@ Le PR #418–438 sono già state accettate upstream e sono chiuse come candidatu
 
 Le due esclusioni di contenuto (campagne e BRZ) restano decisioni di progetto. Per BRZ, la prova preliminare consiste nel risolvere il chiamante previsto e il conflitto con le conversioni esistenti. Per le campagne, i casi da confrontare sono attivazione, disattivazione e reset in un paese umano idoneo, con e senza overlay, usando la stessa popolazione e le stesse destinazioni. La verifica deve distinguere movimenti POP e variazione di tesoreria, includendo una campagna senza destinazioni idonee.
 
-## Candidature residue
+## Contributi presentati e candidature residue
 
-- **Sonderbund.** Il fork usa già un invito per paese. `bf55d38a2` aggiunge la guardia per le risposte già registrate. Vale la pena mantenere la candidatura come patch autonoma, con il limite dei popup preesistenti esplicitato nel [backlog](rebaseline_backlog.md#verifiche-runtime).
-- **Script condivisi.** Valgono una revisione separata le guardie di proprietà per Svizzera, Anatolia e Rotterdam e le regressioni del menu indigeno e di Petrograd. Rinviare propaganda, migrazione, BRZ 8502/8503 e cambi condizionati dei submod finché gli effetti desiderati e la raggiungibilità sono verificati.
-- **Compatibilità.** Valutare patch minime dopo la verifica di asset caricato, OOB, chiavi persistenti delle invenzioni e workaround Alice per singolo meccanismo. Rinviare 96021/96094 alla verifica della catena Loader. Le correzioni dei nove ID delle partizioni sono già integrate con la #427.
+Le PR #439–441 sono aperte e non comprese nel master upstream verificato né nel riferimento sincronizzato del fork. Una PR accettata entra nel master upstream. La sua integrazione nel fork richiede una verifica distinta di revisione e comportamento.
+
+| Contributo | Stato e rapporto con il fork |
+| --- | --- |
+| [#439 Sonderbund](https://github.com/The-Grand-Combination/The-Grand-Combo/pull/439) | Presentata. Il fork ha già l'invito per paese e la guardia per le risposte registrate in `bf55d38a2`. Rimane il limite dei popup preesistenti. |
+| [#440 Scuole di ricerca](https://github.com/The-Grand-Combination/The-Grand-Combo/pull/440) | Presentata, commit `4e8935b78`. Corregge il duplicato navale conservando titolo e descrizione cechi. Il fork `9d8de29a6` conserva il duplicato e perde il titolo ceco. Controllo statico di unicità e conservazione byte per byte. |
+| [#441 Costi propaganda](https://github.com/The-Grand-Combination/The-Grand-Combo/pull/441) | Presentata, commit `7f5c1ad20`. Il fork `0500fc93e` corregge il segno. La PR corregge anche la sovrapposizione delle soglie da 250.000 e 500.000. Controllo statico su 420 combinazioni. |
+| Predicati di fabbrica | Respinta la sostituzione delle otto occorrenze come correzione Alice. Le due forme condividono un helper statale che restituisce sempre vero. Rimane aperta la semantica Victoria II 3.04. |
+| Carrington | Rinviato l'accodamento finché non si verifica il percorso UTI e la migrazione dei salvataggi. Bloccati i destinatari finché resta incerto l'effetto condizionale sul destinatario in Victoria II 3.04. |
+| Candidature da verificare | Tooltip del menu indigeno, pulizia dei core SIC e testo Rio de Janeiro possono essere isolati. Anatolia, Svizzera, Rotterdam, Gold Rush, stato pendente del menu e Petrograd richiedono verifiche di scope, salvataggi o scelte di progetto. |
+| Altri rinvii | Migrazione, BRZ 8502/8503 e routing dei submod richiedono evidenza su effetti e raggiungibilità. Sprite, OOB e chiavi delle invenzioni richiedono verifica di asset, contenuto previsto e salvataggi. I casi 500007 e 96025 e le condizioni di riesame sono nel [backlog](rebaseline_backlog.md#eventi-decisioni-e-mappa). Rinviare 96021/96094 alla verifica Loader. I nove ID delle partizioni sono già integrati con la #427. |
+
+Le verifiche delle PR #440–441 sono statiche. I test sono rimasti locali e ciascuna PR contiene soltanto il rispettivo file dati.
 
 ## Regressioni da mantenere
 

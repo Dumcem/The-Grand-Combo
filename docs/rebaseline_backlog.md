@@ -22,7 +22,7 @@ La baseline supportata è **Project Alice 1.3.0**, insieme a **Victoria II origi
 | Area | Voci |
 | --- | --- |
 | [Ordini di battaglia e storia](#ordini-di-battaglia-e-storia) | OOB_NO_POP, OOB_OWNER, OOB_SEARCH, DEAD_OOB, INVALID_HISTORY |
-| [Eventi, decisioni e mappa](#eventi-decisioni-e-mappa) | OPTIONS_AID, OPTIONS_CANAL, CANAL_CONTROL, BATTLE_EVENT, EVENT_REF, LITERACY, REG_MOD, SANTA_MOD, EVENT_ORPHAN, EVENT_DEBUG, EVENT_MILITARY, PICTURE, EMPTY_ALLOW |
+| [Eventi, decisioni e mappa](#eventi-decisioni-e-mappa) | OPTIONS_AID, OPTIONS_CANAL, CANAL_CONTROL, BATTLE_EVENT, EVENT_REF, LITERACY, REG_MOD, SANTA_MOD, EVENT_ORPHAN, EVENT_DEBUG, EVENT_MILITARY, PICTURE, EMPTY_ALLOW, FACTORY_STATE, CARRINGTON_SCHEDULING, CARRINGTON_RECIPIENTS, GREAT_WAR_ALLIANCE |
 | [Ricerca, economia e unità](#ricerca-economia-e-unità) | TECH_AI, SCHOOL, TEXTILE, NAV_ORG, BLOCKADE, NAV_ATTR, UNIT_BASKET, UNIT_MORALE, UNIT_REINF, UNIT_STRENGTH, UNIT_WEIGHT, STEAM, ARTILLERY |
 | [Workaround navali](#workaround-navali) | SUB_AI_GP, SUB_AI_SP, SUB_FRA, SUB_SWE, SUB_FISH, SUB_BEIYANG, SUB_EIC, SUB_JAP, SUB_RUS |
 | [Questioni rinviate](#questioni-rinviate) | NAVAL_AI, NAVAL_TIMING, ALICE_REMAINING, BALANCE, CRASH_1949 |
@@ -157,6 +157,8 @@ Eventi per regione. Riesaminare al ritorno su ciascuna catena o dopo cambi di re
 
 **Traccia.** 0 errori e 48 warning. Log 211–221, 236–251, 253–256, 273–288, 291. [AUSFlavor.txt](../TGC/events/AUSFlavor.txt#L2638) · [Archaeology.txt](../TGC/events/Archaeology.txt#L3349) · [BRZFlavor.txt](../TGC/events/BRZFlavor.txt#L5731) · [CBsAndCores.txt](../TGC/events/CBsAndCores.txt#L1333) · [GEF Events.txt](../TGC/events/GEF%20Events.txt#L3256) · [Germany VS Hungary Events.txt](../TGC/events/Germany%20VS%20Hungary%20Events.txt#L240) · [JANFlavor.txt](../TGC/events/JANFlavor.txt#L3536) · [MEXFlavor.txt](../TGC/events/MEXFlavor.txt#L762) · [POLFlavor.txt](../TGC/events/POLFlavor.txt#L445) · [RUSFlavor.txt](../TGC/events/RUSFlavor.txt#L789) · [SPAFlavor.txt](../TGC/events/SPAFlavor.txt#L4251) · [SlaveryEvents.txt](../TGC/events/SlaveryEvents.txt#L195) · [USA_Minors.txt](../TGC/events/USA_Minors.txt#L2431) · [Alice · nations_parsing.cpp](https://github.com/schombert/Project-Alice/blob/v1.3.0/src/parsing/nations_parsing.cpp#L1391-L1408)
 
+L'evento polacco 500007 condivideva i riferimenti testuali di 203903, corretti separatamente nel fork con `068c8cabf`. La PR #435 copre i testi di 203903. Per 500007, trigger-only, la ricerca ha trovato un solo chiamante commentato. Vale per core e Timeline su entrambi i motori. Riaprire la candidatura quando emerge un ingresso attivo o un riuso deliberato.
+
 ### EVENT_DEBUG — Eventi di debug fuori dal flusso ordinario
 
 **E · Bassa · P3 · Dati · Dati · Entrambe.** 14 eventi di test sono a invocazione esplicita. Impatto sul gioco ordinario assente per il perimetro esaminato. Disponibilità da console aperta.
@@ -188,6 +190,22 @@ GUI e asset. Riesaminare alla revisione della decisione o se viene ritrovata la 
 Decisioni. Riesaminare se cambia il consumatore di allow. Stato Registrata.
 
 **Traccia.** 0 errori e 1 warning. Log 210. [RUS.txt](../TGC/decisions/RUS.txt#L1991) · [Alice · parsers_declarations.cpp](https://github.com/schombert/Project-Alice/blob/v1.3.0/src/parsing/parsers_declarations.cpp#L2314-L2319) · [Alice · commands.cpp](https://github.com/schombert/Project-Alice/blob/v1.3.0/src/gamestate/commands.cpp#L2118-L2130)
+
+### FACTORY_STATE — Presenza di fabbriche nello stato
+
+**Rinviata · Alice 1.3.0, core e Timeline.** In scope stato, `has_building = factory` e `has_factories = yes` invocano lo stesso helper, che restituisce sempre vero. Le otto sostituzioni in 10150 e 200049 lasciano passare anche gli stati senza fabbriche. Il controllo nazionale segue un altro percorso. Victoria II 3.04 usa entrambe le forme nei dati originali, ma l'equivalenza dei due valutatori resta aperta. Riaprire quando l'helper Alice cambia o quando un confronto su Victoria II con stati equivalenti, con e senza fabbrica, dimostra una differenza utile. [Valutatori Alice](https://github.com/schombert/Project-Alice/blob/v1.3.0/src/scripting/triggers.cpp#L3746) · [Helper](https://github.com/schombert/Project-Alice/blob/v1.3.0/src/economy/economy_stats.cpp#L1281-L1289)
+
+### CARRINGTON_SCHEDULING — Accodamento di 21501
+
+**Rinviata · entrambi i motori, core e Timeline.** In Alice `year = 1859` e `month = 8` sono soglie minime e il passaggio AI è giornaliero. La deduplicazione considera anche destinatario e data. Un UTI idoneo può riaccodare l'evento. L'idoneità del tag senza province nello scenario effettivo e la cadenza su Victoria II 3.04 restano da dimostrare. La guardia fork `e3f8162de` può consumare il flag senza destinatari e lascia intatte le istanze già in coda nei salvataggi. Riaprire con riscontro del percorso ordinario di UTI, un caso senza potenze idonee e un salvataggio con 21501 pendente. [Coda Alice](https://github.com/schombert/Project-Alice/blob/v1.3.0/src/scripting/events.cpp#L460-L492) · [Serializzazione](https://github.com/schombert/Project-Alice/blob/v1.3.0/src/gamestate/serialization.cpp#L711)
+
+### CARRINGTON_RECIPIENTS — Destinatario e filtro di 21501
+
+**Bloccata · entrambi i motori, core e Timeline.** In upstream il modificatore segue il ciclo e colpisce il destinatario senza filtro. Nel fork `ed2717251` lo sposta nel ciclo, che per impostazione predefinita in Alice esclude il destinatario anche se idoneo. Gli script originali Victoria II 3.04 supportano la lettura di `THIS` come destinatario nel filtro di esclusione. Riaprire quando un riscontro del motore originale stabilisce come applicare un effetto condizionale al destinatario una sola volta, con casi idoneo, non idoneo e terzo paese idoneo. [Ciclo Alice](https://github.com/schombert/Project-Alice/blob/v1.3.0/src/scripting/effects.cpp#L323-L353) · [Scope Victoria II](https://github.com/maxioten/Victoria2-Reverse-Engineering/blob/4f71b13969fd6de2014491a737189175f7292134/Engine/triggers-and-scopes.md)
+
+### GREAT_WAR_ALLIANCE — Lettore senza scrittore verificato
+
+**Rinviata · entrambi i motori, core e Timeline, incluso il carrier Loader.** L'evento 96025 ha chiamanti attivi. Nel fork legge `great_war_temp_alliance` nel selettore dei paesi, senza uno scrittore attivo individuato nei dati ispezionati. Riaprire se emerge un produttore esterno, uno storico o un salvataggio con il flag. [Evento core](https://github.com/Dumcem/The-Grand-Combo/blob/b5423ec1b79ce7a7c44c28d11a5c4e874c04b91b/TGC/events/Great%20War.txt#L1796-L1825)
 
 ## Ricerca, economia e unità
 
