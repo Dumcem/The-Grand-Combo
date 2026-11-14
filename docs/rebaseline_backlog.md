@@ -332,13 +332,15 @@ Origine delle guardie nei commit [3dadb6622](https://github.com/Dumcem/The-Grand
 
 Per le differenze ancora presenti nel fork, le relative decisioni e i candidati upstream usare il [registro delle differenze upstream](upstream_delta_register.md).
 
-**Blocco notifiche ufficiali chiuso.** Ripristinate le 15 notifiche nominative e allineati i testi al grado effettivo. La correzione di Ryan è registrata come candidata upstream nel [registro di riconciliazione](upstream_reconciliation.md#inventario-del-delta-fissato).
+**Blocco notifiche ufficiali chiuso.** Ripristinate le 15 notifiche nominative e allineati i testi al grado effettivo. Il testo di Ryan risulta già allineato in upstream.
+
+**Sonderbund (99797 → 99800) · verifica statica.** Il fork ha già la guardia per destinatario. La correzione locale pronta per revisione preserva anche le risposte già registrate. Upstream usa ancora il blocco per ID di 99797. Su Alice 1.3.0 l’effetto immediato scrive il flag paese prima di accodare il popup e il dispatch ricontrolla il trigger. La coda dei popup è persistita, ma il percorso di trigger esaminato non espone il singolo invito pendente come stato interrogabile. Un popup precedente a entrambe le guardie può quindi ricomparire. Il caso è accettato senza migrazione. Le verifiche in partita sui due motori restano aperte. [Dispatch Alice](https://github.com/schombert/Project-Alice/blob/v1.3.0/src/scripting/events.cpp#L200-L262) · [Studio del motore originale](https://github.com/maxioten/Victoria2-Reverse-Engineering/blob/main/Engine/Event_System.md)
 
 Le voci della tabella seguono i rispettivi workstream senza bloccare il checkpoint upstream fissato.
 
 | Classe Task 58 | Area e provenienza | Questione e riferimento |
 | --- | --- | --- |
-| B | Upstream TGC | I CB ordinari di `88604963d` e `b865278ff` e la rimozione del ramo Bhutan in `great_game_cb` sono recepiti nel core e in Extender. Restano da isolare le patch candidate sulle guardie di pace e sulle partizioni, preservandone le evidenze. [Candidati e motivazioni](upstream_reconciliation.md#task-55--preparazione-del-profilo-script-extender) |
+| B | Upstream TGC | I CB ordinari di `88604963d` e `b865278ff` e la rimozione del ramo Bhutan in `great_game_cb` sono recepiti nel core e in Extender. La #427 ha corretto gli ID delle partizioni. Resta da verificare la guardia di pace. [Candidati e motivazioni](upstream_reconciliation.md#task-55--preparazione-del-profilo-script-extender) |
 | B | Fork e percorso condiviso | Simulazione oltre l'avvio e salvataggi con eventi Temperance pendenti ancora da verificare. [Task 52](upstream_reconciliation.md#task-52--checkpoint-runtime) |
 | B | Deployment Windows | Un handle esterno persistente può impedire la sostituzione del journal. Conservare le ricevute e applicare il recupero per ID se si presenta il caso. [Procedura di recupero](deployment/local_deployment.md#rollback-and-interrupted-publication) |
 | B | Alice | Guasto intermittente JIT Windows osservato anche prima del merge. La diagnosi e la prova prolungata restano nel workstream Alice 1.3.0. [Task 53](upstream_reconciliation.md#task-53--diagnosi-del-crash-alice) |

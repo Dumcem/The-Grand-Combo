@@ -2,7 +2,9 @@
 
 Per le decisioni correnti e le prossime sincronizzazioni usare il [registro delle differenze upstream](upstream_delta_register.md). Questa pagina conserva le evidenze della riconciliazione e il [checkpoint storico del Task 58](#task-58--checkpoint-di-chiusura).
 
-La revisione upstream fissata è [14f2e6ff61e7e1ea07ffef07548560da5bcc47f0](https://github.com/The-Grand-Combination/The-Grand-Combo/commit/14f2e6ff61e7e1ea07ffef07548560da5bcc47f0). Il Task 39 ha inventariato 63 commit esclusivi upstream e 243 file nel [delta dalla base comune ea0392ff](https://github.com/The-Grand-Combination/The-Grand-Combo/compare/ea0392ff668851c916cd86688452e99f406ed861...14f2e6ff61e7e1ea07ffef07548560da5bcc47f0). Il fork era a `7441a4189253183dca61d6d71efb610fd4184e03` prima del primo lotto.
+Il consolidamento del 14 novembre 2026 registra l’integrazione della seconda serie di PR nel [registro](upstream_delta_register.md#integrazione-delle-pr-418438). Il checkpoint di sincronizzazione del fork resta quello del Task 71C, a upstream 8f106a7f0.
+
+La revisione upstream fissata per il lavoro storico è [14f2e6ff61e7e1ea07ffef07548560da5bcc47f0](https://github.com/The-Grand-Combination/The-Grand-Combo/commit/14f2e6ff61e7e1ea07ffef07548560da5bcc47f0). Il Task 39 ha inventariato 63 commit esclusivi upstream e 243 file nel [delta dalla base comune ea0392ff](https://github.com/The-Grand-Combination/The-Grand-Combo/compare/ea0392ff668851c916cd86688452e99f406ed861...14f2e6ff61e7e1ea07ffef07548560da5bcc47f0). Il fork era a `7441a4189253183dca61d6d71efb610fd4184e03` prima del primo lotto.
 
 ## Esiti registrati
 
