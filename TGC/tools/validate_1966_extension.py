@@ -6,6 +6,7 @@ import json
 import re
 import sys
 from collections import defaultdict
+from datetime import date
 from pathlib import Path
 
 from lib_1966_parser import (
@@ -15,6 +16,7 @@ from lib_1966_parser import (
 )
 from lib_1966_semantics import canonical_stat, effect_body, numeric_modifier_entries, report_modifier_semantics
 from lib_1966_diagnostics import Reporter
+from lib_1966_functional import read_campaign_end
 from lib_1966_runtime import compose_runtime, unit_definitions
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -79,10 +81,6 @@ NON_UNIT_EFFECT_KEYS = {"army_base", "navy_base"}
 LEGACY_UNIT_ALIASES = {"carrier": "aircraftcarrier"}
 
 
-def discover_unit_keys(core_root: str, timeline_root: str) -> set[str]:
-    return set(unit_definitions(compose_runtime(ROOT, core_root, timeline_root), ROOT))
-
-
 def validate_effect_unit_targets(rel_path: str, unit_keys: set[str]) -> list[str]:
     """Only technology modifiers and invention effect bodies, never trigger text."""
     failures: list[str] = []
@@ -140,7 +138,8 @@ def _run() -> int:
     loc_files = m["localisation_files"]
     structural = m["structural"]
     stale_rules = m.get("stale_reference_rules", [])
-    unit_keys = discover_unit_keys(args.core_root, args.timeline_root)
+    inventory = compose_runtime(ROOT, args.core_root, args.timeline_root)
+    unit_keys = set(unit_definitions(inventory, ROOT))
 
     failures: list[str] = []
     loc_index = build_localisation_index(loc_files)
@@ -199,7 +198,6 @@ def _run() -> int:
         if f"{k}_desc" not in loc_keys:
             failures.append(f"INVENTION missing localisation desc: {k}_desc")
 
-    inventory = compose_runtime(ROOT, args.core_root, args.timeline_root)
     unit_target_files = sorted(set(inventory.files('technologies') + inventory.files('inventions')))
     for rel in unit_target_files:
         failures.extend(validate_effect_unit_targets(rel, unit_keys))
@@ -214,6 +212,13 @@ def _run() -> int:
                     failures.append(f"STALE reference {rule['old_key']} found at {node.start} (expected context: {rule['new_key']})")
 
     d = structural["decision_alignment"]
+    end_date = date.fromisoformat(structural["campaign_end_date"])
+    timeline_defines = inventory.require("common/defines.lua")
+    if read_campaign_end(timeline_defines) != end_date:
+        failures.append(f"STRUCTURAL {timeline_defines} must set end_date to {end_date}")
+    core_defines = f"{args.core_root}/common/defines.lua"
+    if read_campaign_end(core_defines) == end_date:
+        failures.append(f"CORE CLEANUP {core_defines} must not set the Timeline end_date")
     decision_block = find_decision(d["file"], d["decision_key"])
     if decision_block is None:
         failures.append(f"STRUCTURAL missing {d['decision_key']} block in {d['file']}")

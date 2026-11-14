@@ -19,6 +19,7 @@ import difflib
 import re
 import subprocess
 import sys
+from collections import Counter
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Iterable
@@ -72,7 +73,8 @@ class Diagnostic:
 def run_git(args: list[str], check: bool = False) -> subprocess.CompletedProcess[str]:
     return subprocess.run(
         ["git", *args],
-        text=True,
+        # Match read_text_lines and preserve legacy bytes from Git diffs.
+        encoding="latin-1",
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
         check=check,
@@ -126,20 +128,51 @@ def parse_manifest_override_paths(manifest: Path, timeline_root: str, core_root:
     return paths
 
 
-def changed_added_lines_since(base_ref: str, path: Path) -> tuple[list[str], str | None]:
-    """Return added/current lines in hunks changed since base_ref."""
-    result = run_git(["diff", "--unified=0", base_ref, "--", str(path)])
+def shared_text_paths(core_root: Path, timeline_root: Path) -> set[str]:
+    """Find same-path overrides even before they are added to the manifest."""
+    return {
+        path.relative_to(timeline_root).as_posix()
+        for path in timeline_root.rglob("*")
+        if path.suffix.lower() in TEXT_OVERRIDE_SUFFIXES
+        and path.is_file()
+        and path.relative_to(timeline_root).parts[0] != "docs"
+        and (core_root / path.relative_to(timeline_root)).is_file()
+    }
+
+
+def changed_lines_since(base_ref: str, path: Path) -> tuple[list[str], list[str], str | None]:
+    """Return substantive added and removed lines in Git hunks."""
+    result = run_git(["diff", "--no-ext-diff", "--no-textconv", "--no-color",
+                      "--text", "--unified=0", base_ref, "--", str(path)])
     if result.returncode != 0:
-        return [], result.stderr.strip() or "git diff failed"
+        return [], [], result.stderr.strip() or "git diff failed"
 
     added: list[str] = []
-    for line in result.stdout.splitlines():
-        if not line.startswith("+") or line.startswith("+++"):  # diff metadata
+    removed: list[str] = []
+    in_hunk = False
+    for line in result.stdout.split("\n"):
+        if line.startswith("@@ "):
+            in_hunk = True
+        if not in_hunk or not line.startswith(("+", "-")):
             continue
         text = line[1:]
         if is_substantive(text):
-            added.append(text)
-    return added, None
+            (added if line.startswith("+") else removed).append(text)
+    return added, removed, None
+
+
+def retained_deletions(relpath, removed, added, source_lines, peer_lines):
+    """Flag net generic deletions whose line still has excess copies in the peer."""
+    deleted = Counter(map(normalize_line, removed)) - Counter(map(normalize_line, added))
+    source_counts = Counter(map(normalize_line, source_lines))
+    peer_counts = Counter(map(normalize_line, peer_lines))
+    retained = [line for line in deleted if peer_counts[line] > source_counts[line]
+                and not is_timeline_line(line)]
+    if not retained:
+        return []
+    return [Diagnostic("WARN", relpath,
+                       f"{len(retained)} distinct removed line(s) may still survive in the counterpart",
+                       retained[:5])]
 
 
 def summarize_full_difference(core_lines: list[str], timeline_lines: list[str]) -> tuple[int, int, int]:
@@ -182,11 +215,12 @@ def check_one_forward(relpath: str, core_root: Path, timeline_root: Path, base_r
     core_norm = [normalize_line(line) for line in core_lines]
     timeline_norm_set = {normalize_line(line) for line in timeline_lines if is_substantive(line)}
 
-    added_lines, error = changed_added_lines_since(base_ref, core_path)
+    added_lines, removed_lines, error = changed_lines_since(base_ref, core_path)
     if error:
         diagnostics.append(Diagnostic("FAIL", relpath, error))
         return diagnostics
 
+    diagnostics.extend(retained_deletions(relpath, removed_lines, added_lines, core_lines, timeline_lines))
     missing_from_timeline = []
     timeline_expected = []
     for line in added_lines:
@@ -229,8 +263,8 @@ def check_one_forward(relpath: str, core_root: Path, timeline_root: Path, base_r
     if core_norm == [normalize_line(line) for line in timeline_lines]:
         diagnostics.append(Diagnostic("OK", relpath, "override content currently matches core"))
     else:
-        core_only, timeline_only, timeline_hint_lines = summarize_full_difference(core_lines, timeline_lines)
-        if not added_lines:
+        if not (added_lines or removed_lines):
+            core_only, timeline_only, timeline_hint_lines = summarize_full_difference(core_lines, timeline_lines)
             diagnostics.append(
                 Diagnostic(
                     "INFO",
@@ -261,13 +295,13 @@ def check_one_reverse(relpath: str, core_root: Path, timeline_root: Path, base_r
     if not timeline_path.exists():
         return [Diagnostic("FAIL", relpath, f"timeline override missing: {timeline_path}")]
 
-    added_lines, error = changed_added_lines_since(base_ref, timeline_path)
+    added_lines, removed_lines, error = changed_lines_since(base_ref, timeline_path)
     if error:
         diagnostics.append(Diagnostic("FAIL", relpath, error))
         return diagnostics
 
     if not core_path.exists():
-        if added_lines:
+        if added_lines or removed_lines:
             diagnostics.append(
                 Diagnostic(
                     "INFO",
@@ -291,6 +325,7 @@ def check_one_reverse(relpath: str, core_root: Path, timeline_root: Path, base_r
     timeline_lines = read_text_lines(timeline_path)
     core_norm_set = {normalize_line(line) for line in core_lines if is_substantive(line)}
 
+    diagnostics.extend(retained_deletions(relpath, removed_lines, added_lines, timeline_lines, core_lines))
     generic_only = []
     timeline_expected = []
     for line in added_lines:
@@ -319,7 +354,7 @@ def check_one_reverse(relpath: str, core_root: Path, timeline_root: Path, base_r
                 f"{len(added_lines)} changed timeline line(s) since {base_ref} are present in core or look timeline-specific",
             )
         )
-    else:
+    elif not removed_lines:
         diagnostics.append(
             Diagnostic(
                 "OK",
@@ -338,7 +373,7 @@ def check_one_reverse(relpath: str, core_root: Path, timeline_root: Path, base_r
             )
         )
 
-    if generic_only or timeline_expected or added_lines:
+    if added_lines or removed_lines:
         diagnostics.append(
             Diagnostic(
                 "INFO",
@@ -415,6 +450,7 @@ def main(argv: list[str] | None = None) -> int:
     if diagnostics:
         watched_paths: list[str] = []
     else:
+        watched.update(shared_text_paths(core_root, timeline_root))
         watched_paths = sorted(watched)
         for relpath in watched_paths:
             if args.reverse:

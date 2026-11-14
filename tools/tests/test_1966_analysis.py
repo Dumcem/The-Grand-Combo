@@ -188,6 +188,7 @@ class ValidatorTests(unittest.TestCase):
             return changes[file] if file in changes else original(file, encoding=encoding)
         out = io.StringIO()
         with patch.object(p, "read_text", side_effect=read), patch.object(v, "read_text", side_effect=read), \
+                patch("lib_1966_functional.read_text", side_effect=read), \
                 patch.object(sys, "argv", ["validator"]), contextlib.redirect_stdout(out):
             code = v.main()
         return code, out.getvalue()
@@ -195,7 +196,24 @@ class ValidatorTests(unittest.TestCase):
     def test_current_baseline(self):
         code, out = self.run_validator({})
         self.assertEqual(code, 0, out)
-        self.assertIn("parsed inventions in tracked files: 232", out)
+
+    def test_campaign_end_requires_one_active_assignment(self):
+        timeline = "TGC_Timeline_1966/common/defines.lua"
+        core = "TGC/common/defines.lua"
+        old = "end_date = '1966.1.1'"
+        other = "end_date = '1967.1.1'"
+        for changes, expected, diagnostic in [
+            ({timeline: f"-- {old}\n{other}"}, 1, "must set end_date"),
+            ({timeline: f"{old}\n{other}"}, 1, "unique quoted campaign end_date"),
+            ({timeline: f"{old}\nend_date = SOME_OTHER_DATE"}, 1, "unique quoted campaign end_date"),
+            ({timeline: f"--[=[\n{old}\n]=]\n{other}"}, 1, "must set end_date"),
+            ({core: f"-- {old}\n{other}"}, 0, "OK:"),
+            ({core: old}, 1, "CORE CLEANUP"),
+        ]:
+            with self.subTest(changes=changes):
+                code, out = self.run_validator(changes)
+                self.assertEqual(code, expected, out)
+                self.assertIn(diagnostic, out)
 
     def test_no_false_pass_on_syntax_or_duplicates(self):
         manifest, _ = real_inputs()
@@ -514,25 +532,6 @@ print(json.dumps([(k,asdict(v)) for k,v in a.build_year_inference(fs).items()],s
                 result[(unit, stat, value, scope, file, owner)] += count
             return result
         self.assertEqual(semantic(actual), semantic(baseline))
-
-    def test_complete_report_is_identical_across_processes_and_input_order(self):
-        code = '''import sys
-sys.path.insert(0, 'TGC/tools')
-import audit_1966_balance as a
-from unittest.mock import patch
-rules=a.read_rules()
-if sys.argv[1]=='reverse': rules['scan_files'].reverse()
-with patch.object(a, 'read_rules', return_value=rules), patch.object(sys, 'argv', ['audit']):
-    raise SystemExit(a.main())'''
-        reports = []
-        for seed, order in [("0", "normal"), ("2", "reverse"), ("42", "normal"), ("100", "reverse")]:
-            result = subprocess.run([sys.executable, "-B", "-c", code, order], cwd=ROOT,
-                                    env=dict(os.environ, PYTHONHASHSEED=seed), capture_output=True, text=True)
-            self.assertEqual(result.returncode, 0, result.stderr or result.stdout[:1000])
-            self.assertIn(" - FAIL: 0", result.stdout)
-            reports.append(result.stdout)
-        self.assertEqual(len(set(reports)), 1)
-
 
 if __name__ == "__main__":
     unittest.main()

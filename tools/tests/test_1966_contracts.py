@@ -158,12 +158,15 @@ class RuntimeFixtures(unittest.TestCase):
             w('Core/common/production_types.txt','factory = { output_goods = steel }')
             w('Core/units/different_filename.txt','actual_id = { type = land attack = 1 build_time = 90 default_organisation = 30 discipline = 1 supply_consumption = .5 build_cost = { steel = 2 } supply_cost = { steel = .1 } }')
             w('Core/inventions/retained.txt','I = { effect = { actual_id = { attack = 2 supply_consumption = .25 } } }')
-            rules={'units':{'actual_id':{'unit_file':'missing.txt','monitored_stats':{'attack':{'final_range':{'min':0,'max':10}},'supply_consumption':{}}}},
+            rules={'units':{'actual_id':{'unit_file':'missing.txt','monitored_stats':{'attack':{'final_range':{'min':0,'max':2}},'supply_consumption':{}}}},
                    'files':{},'scan_files':[],'monitored_stat_catalog':['attack','supply_consumption'],'milestone_years':[1900], 'economic':{'key_goods':['steel']}}
             o=io.StringIO()
             with patch.object(a,'ROOT',root),patch.object(p,'ROOT',root),patch.object(a,'read_rules',return_value=rules),patch.object(sys,'argv',['audit','--core-root','Core','--timeline-root','Late','--json']),contextlib.redirect_stdout(o):
                 code=a.main()
             self.assertEqual(code,0,o.getvalue()[:1000]);rows=json.loads(o.getvalue())
+            warning, = [d for d in rows if d['code'] == 'final_range']
+            self.assertEqual((warning['level'], warning['basis'], warning['engine']),
+                             ('WARN', 'legacy_unvalidated', 'raw_script'))
             projection=next(d for d in rows if d['code']=='engine_projection')
             self.assertIn('raw_script_all_effects=3',projection['message'])
             self.assertEqual(projection['source'],'Core/units/different_filename.txt')

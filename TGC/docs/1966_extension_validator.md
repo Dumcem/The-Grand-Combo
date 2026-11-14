@@ -18,7 +18,9 @@ separate [deployment composition](../../docs/deployment/script_extender_profile.
 The validator is manifest-driven and now checks two layers:
 
 1. **Timeline submod runtime presence and coherence**
-   - `TGC_Timeline_1966/common/defines.lua` keeps `end_date = '1966.1.1'`.
+   - The effective `common/defines.lua` has one active quoted `end_date`
+     assignment, equal to `1966.1.1`. The check reads the repository's
+     one-assignment-per-line format and ignores Lua comments.
    - `TGC_Timeline_1966/decisions/00_Setup.txt` keeps `option_end_game` aligned
      with `year = 1966` in both `potential` and `allow`.
    - `TGC_Timeline_1966/interface/backend.gui` keeps `text = "The World in 1966"`.
@@ -31,7 +33,7 @@ The validator is manifest-driven and now checks two layers:
      is composed from the descriptors; a filename is not a unit identifier.
 
 2. **Core cleanup**
-   - `TGC/common/defines.lua` must not contain the 1966 end date.
+   - The active assignment in `TGC/common/defines.lua` uses a different end date.
    - `TGC/interface/backend.gui` must not show `The World in 1966`.
    - Timeline-only runtime files such as `TGC/units/aircraftcarrier.txt`,
      `TGC/units/submarine.txt`, `TGC/inventions/NEW_*_inventions.txt`, and the
@@ -150,8 +152,11 @@ tool behavior; the normative balance parameters require their own audit.
 
 ## CI automation
 
-GitHub Actions runs this validator on `push` and `pull_request` when the tool,
-manifest, submod runtime, core cleanup guard files, or related docs change.
+GitHub Actions runs the tooling/content suite, both drift checks, this validator
+and the balance summary on Linux with Python 3.14. Changes to the suites,
+descriptors, core and Timeline trees, or workflow configuration trigger the
+workflow on push and pull request. Manual dispatch also runs the checks.
+See the [local verification index](../../docs/README.md#esecuzione-locale).
 
 ## Timeline override drift check
 
@@ -167,9 +172,13 @@ core-to-submod read-only drift check from the repository root:
 python TGC/tools/check_1966_submod_drift.py
 ```
 
-This default mode compares changed core hunks against the timeline override and
-warns when a core change is not present in the submod and does not look clearly
-1966-specific.
+This mode checks the manifest and historical watchlist as well as same-path
+text overrides found in both trees. It warns about generic additions missing
+from the counterpart and net deletions whose text has excess copies there.
+The comparison uses normalized lines across the file. Identical text in the
+wrong scope can hide drift, and intentional extra copies can produce warnings.
+Purely structural edits, untracked additions, binary files and actual engine
+loading need separate evidence.
 
 When changing a timeline override directly, also run the reverse submod-to-core
 check:
@@ -192,7 +201,7 @@ python TGC/tools/check_1966_submod_drift.py --base-ref origin/main
 python TGC/tools/check_1966_submod_drift.py --reverse --base-ref origin/main
 ```
 
-`OK` means the watched override is currently coherent for the checked hunks,
+`OK` means the line heuristic found no discrepancy for the reported check,
 `INFO` marks expected timeline differences or carrier files without a current
 core counterpart, `WARN` marks possible drift that must be reviewed manually, and
 `FAIL` marks missing override files, invalid roots, or an invalid base ref. The

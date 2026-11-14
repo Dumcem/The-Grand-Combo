@@ -12,6 +12,25 @@ Questo indice raccoglie i riferimenti tecnici di `Dumcem/The-Grand-Combo` e dell
 - [Validator statico e controlli di drift](../TGC/docs/1966_extension_validator.md) — perimetro dei controlli, comandi e integrazione CI.
 - [Auditor di bilanciamento](../TGC/docs/1966_balance_audit.md) — fonti, criteri diagnostici e limiti dell’evidenza per motore.
 
+### Esecuzione locale
+
+Dalla radice del repository, con Python 3.11 o successivo e Git.
+
+```text
+python -B -m unittest discover -s tools/tests -v
+python -B -m unittest discover -s tools/deploy/tests -v
+```
+
+La prima suite verifica strumenti e regressioni statiche dei contenuti. La
+seconda usa repository e installazioni simulate e controlla i quattro profili
+dai file tracciati. Usare un checkout con cronologia per i confronti Loader con
+revisioni storiche e Windows per junction e attributi nativi. I risultati
+indicano gli eventuali casi saltati per limiti del filesystem o dei privilegi.
+
+GitHub Actions usa Python 3.14 su Linux per la prima suite e su Windows per la
+seconda. Per i controlli Timeline e i confronti di drift seguire le condizioni
+in [AGENTS.md](../AGENTS.md) e i comandi del [validator](../TGC/docs/1966_extension_validator.md).
+
 ## Deployment e profili Loader
 
 - [Deployment locale](deployment/local_deployment.md) — profili supportati, pubblicazione, verifica e recupero.

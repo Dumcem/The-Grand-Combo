@@ -72,6 +72,8 @@
 /tools/*
 !/tools/deploy/
 !/tools/deploy/**
+!/tools/tests/
+!/tools/tests/*.py
 
 !/docs/
 /docs/*

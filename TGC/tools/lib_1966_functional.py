@@ -356,15 +356,22 @@ def campaign_end(inventory):
     source = inventory.selected.get('common/defines.lua')
     if source is None:
         return None
-    text = re.sub(r'--\[(=*)\[.*?\]\1\]', '', read_text(source.file), flags=re.DOTALL)
+    return read_campaign_end(source.file)
+
+
+def read_campaign_end(file):
+    text = re.sub(r'--\[(=*)\[.*?\]\1\]', '\n', read_text(file), flags=re.DOTALL)
     text = re.sub(r'--[^\n]*', '', text)
-    values = re.findall(r'^\s*end_date\s*=\s*[\'\"]([0-9]+\.[0-9]+\.[0-9]+)[\'\"]', text, flags=re.MULTILINE)
-    if len(values) != 1:
-        raise ScriptError(f'{source.file}: unique quoted campaign end_date required')
+    assignments = re.findall(r'^[ \t]*end_date[ \t]*=[ \t]*([^\n]*)', text, flags=re.MULTILINE)
+    if len(assignments) != 1:
+        raise ScriptError(f'{file}: unique quoted campaign end_date required')
+    match = re.fullmatch(r"""(['"])([0-9]+\.[0-9]+\.[0-9]+)\1[ \t]*[,;]?[ \t]*""", assignments[0])
+    if match is None:
+        raise ScriptError(f'{file}: invalid campaign end_date')
     try:
-        return date(*(int(v) for v in values[0].split('.')))
+        return date(*(int(v) for v in match[2].split('.')))
     except ValueError as exc:
-        raise ScriptError(f'{source.file}: invalid campaign end_date') from exc
+        raise ScriptError(f'{file}: invalid campaign end_date') from exc
 
 
 def horizon_inventory(dependencies, timing, end):

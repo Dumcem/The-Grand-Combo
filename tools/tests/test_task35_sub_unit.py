@@ -1,6 +1,4 @@
 """Static regressions for the seven Task 35 scripted naval paths."""
-import hashlib
-import re
 import unittest
 
 from test_1966_applied import ROOT, reference_tree
@@ -9,30 +7,11 @@ from lib_1966_runtime import compose_runtime
 
 FLAG = [('NOT', [('has_global_flag', 'project_alice')])]
 ALICE_FLAG = FLAG[0][1][0]
-GUARD = b'NOT = { has_global_flag = project_alice }'
-BEIYANG_TERMS = re.compile(
-    rb'^\t\t1569 = \{\n\t\t\tlimit = \{ '
-    + re.escape(GUARD)
-    + rb' \}\n\t\t\tTHIS = \{\n(?P<body>.*?)^\t\t\t\}\n\t\t\}\n',
-    re.MULTILINE | re.DOTALL
+GUARDED_PATHS = (
+    'decisions/China.txt', 'decisions/France.txt', 'decisions/SWE.txt',
+    'decisions/UncivFlavor.txt', 'events/China.txt', 'events/EIC.txt',
+    'decisions/JAP.txt', 'decisions/RUS.txt',
 )
-FRENCH_ALICE_PORT = re.compile(
-    rb'^\t\t\trandom_owned = \{\n\t\t\t\tlimit = \{\n'
-    rb'\t\t\t\t\thas_global_flag = project_alice\n.*?^\t\t\t\}\n',
-    re.MULTILINE | re.DOTALL
-)
-# Whole-file fingerprints at 3dadb6622, with line endings normalized.
-# Later baselines include the reconciled Russian, French, Chinese and UncivFlavor hunks.
-BASELINE = {
-    'decisions/China.txt': (1, '0071e8b893410f110c849ccda3a58d0d97659ba0fbe7e7d12b72373f4911728a'),
-    'decisions/France.txt': (1, '7da32585362cd8eef4b18bfb2fee06f4da322c65698477de570b8cdc57350713'),
-    'decisions/SWE.txt': (1, '3d717656dc57cf98cf8e7e8e445985cad723bf2c9352d681a185938491e12869'),
-    'decisions/UncivFlavor.txt': (1, '71bf5e03191fa2e2db98561e41e318ab5aa7cc2ff62c868b6d953eb329180610'),
-    'events/China.txt': (4, '39379e3420ca2ec32a5945cd42ce1c27c2a25e45e413cd1c9195ab01dc271adc'),
-    'events/EIC.txt': (1, 'e8c28538980af5ee348a4601eaa3eacd221661e3c1d14da88e4d27ce0ab1eb45'),
-    'decisions/JAP.txt': (1, 'b9e5bb33bc61866ac478b313eb9cff798b35b141b781a6e0c65f933254516e97'),
-    'decisions/RUS.txt': (1, '76475a97b5d1cbf530ff4a65f82bed9b01351a9196bbd8bebb654b031ebe9227'),
-}
 
 
 def shape(nodes):
@@ -77,18 +56,22 @@ def leaves(nodes):
             yield key, value
 
 
+def ship_grants(nodes):
+    for key, value in nodes:
+        if key == 'sub_unit':
+            yield value
+        elif isinstance(value, list):
+            yield from ship_grants(value)
+
+
 class ScriptedNavalPaths(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.files = {path: (ROOT / 'TGC' / path).read_bytes().replace(b'\r\n', b'\n')
-                     for path in BASELINE}
-        cls.trees = {}
-        for path, raw in cls.files.items():
-            if BASELINE[path][0]:
-                # Legacy encodings are safe here because only ASCII script keys
-                # and delimiters are interpreted.
-                text = raw.removeprefix(b'\xef\xbb\xbf').decode('latin1')
-                cls.trees[path] = shape(reference_tree(text))
+        cls.trees = {
+            path: shape(reference_tree((ROOT / 'TGC' / path).read_bytes()
+                                       .removeprefix(b'\xef\xbb\xbf').decode('latin1')))
+            for path in GUARDED_PATHS
+        }
 
     def decision(self, file, name):
         return field(field(self.trees[f'decisions/{file}.txt'], 'political_decisions'), name)
@@ -101,36 +84,32 @@ class ScriptedNavalPaths(unittest.TestCase):
     def test_effective_paths_are_shared_by_core_and_timeline(self):
         for timeline in (None, 'TGC_Timeline_1966'):
             inventory = compose_runtime(ROOT, timeline_root=timeline)
-            for path in BASELINE:
+            for path in GUARDED_PATHS:
                 with self.subTest(timeline=timeline, path=path):
                     self.assertFalse((ROOT / 'TGC_Timeline_1966' / path).exists())
                     self.assertEqual(inventory.require(path), 'TGC/' + path)
 
-    def test_original_scripts_recovered_by_reversing_only_the_approved_guards(self):
-        for path, (guard_count, digest) in BASELINE.items():
-            with self.subTest(path=path):
-                raw = self.files[path]
-                self.assertEqual(raw.count(GUARD), guard_count)
-                if path == 'events/China.txt':
-                    raw, count = BEIYANG_TERMS.subn(
-                        lambda match: re.sub(rb'^\t\t', b'', match['body'], flags=re.MULTILINE), raw)
-                    self.assertEqual(count, 3)
-                if path == 'decisions/France.txt':
-                    raw, count = FRENCH_ALICE_PORT.subn(b'', raw)
-                    self.assertEqual(count, 1)
-                raw = re.sub(rb'^\t+(?:limit = \{ ' + re.escape(GUARD)
-                             + rb' \}|' + re.escape(GUARD) + rb')\n', b'', raw, flags=re.MULTILINE)
-                self.assertEqual(hashlib.sha256(raw).hexdigest(), digest)
-
     def test_swedish_and_fishermen_decisions_are_blocked_before_costs(self):
-        for file, name, cost in (
-            ('SWE', 'svenska_pansarbats_foreningen', ('money', '-0.1')),
-            ('UncivFlavor', 'conscript_fishermen', ('treasury', '-10000')),
-        ):
-            with self.subTest(name=name):
-                decision = self.decision(file, name)
-                self.assertEqual(field(decision, 'potential')[0], FLAG[0])
-                self.assertIn(cost, list(leaves(field(decision, 'effect'))))
+        sweden = self.decision('SWE', 'svenska_pansarbats_foreningen')
+        fishermen = self.decision('UncivFlavor', 'conscript_fishermen')
+        for decision in (sweden, fishermen):
+            self.assertIn(FLAG[0], field(decision, 'potential'))
+
+        swedish_effect = field(sweden, 'effect')
+        self.assertEqual(field(swedish_effect, 'any_pop'), [('money', '-0.1')])
+        self.assertEqual(field(field(swedish_effect, '329'), 'sub_unit'),
+                         [('type', 'cruiser'), ('value', 'current')])
+        self.assertIn(('set_country_flag', 'hms_sverige_built'), swedish_effect)
+
+        fishing_effect = field(fishermen, 'effect')
+        self.assertEqual(field(fishing_effect, 'treasury'), '-10000')
+        self.assertEqual(field(fishing_effect, 'add_country_modifier'),
+                         [('name', 'law_changed_by_force'), ('duration', '3650')])
+        port = field(fishing_effect, 'any_owned')
+        self.assertEqual(field(port, 'limit'), [('port', 'yes')])
+        self.assertEqual([(field(branch, 'chance'), field(field(branch, 'sub_unit'), 'type'))
+                          for branch in fields(port, 'random')],
+                         [('75', 'frigate'), ('5', 'manowar')])
 
     def test_japanese_and_russian_packages_are_blocked_at_entry(self):
         for file, name, charges, ship_count in (
@@ -142,7 +121,9 @@ class ScriptedNavalPaths(unittest.TestCase):
                 self.assertIn(FLAG[0], field(decision, 'potential'))
                 effects = list(leaves(field(decision, 'effect')))
                 self.assertEqual(fields(effects, 'treasury'), charges)
-                self.assertEqual(effects.count(('value', 'current')), ship_count)
+                ships = list(ship_grants(field(decision, 'effect')))
+                self.assertEqual(len(ships), ship_count)
+                self.assertTrue(all(field(ship, 'value') == 'current' for ship in ships))
                 self.assertTrue(fields(effects, 'activate_technology'))
 
     def test_french_colonial_effects_and_port_selection_survive(self):

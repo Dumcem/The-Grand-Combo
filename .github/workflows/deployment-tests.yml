@@ -1,0 +1,45 @@
+name: Test simulated deployment
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/deployment-tests.yml"
+      - ".gitattributes"
+      - "tools/deploy/**"
+      - "docs/deployment/**"
+      - "TGC*/**"
+      - "!TGC/docs/**"
+      - "!TGC/tools/**"
+      - "TGC/tools/lib_1966_parser.py"
+      - "TGC/tools/lib_1966_runtime.py"
+      - "*.mod"
+  push:
+    paths:
+      - ".github/workflows/deployment-tests.yml"
+      - ".gitattributes"
+      - "tools/deploy/**"
+      - "docs/deployment/**"
+      - "TGC*/**"
+      - "!TGC/docs/**"
+      - "!TGC/tools/**"
+      - "TGC/tools/lib_1966_parser.py"
+      - "TGC/tools/lib_1966_runtime.py"
+      - "*.mod"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  deployment:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # Loader reconciliation checks read historical blobs by commit ID.
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.14"
+      - run: python -B -m unittest discover -s tools/deploy/tests -v

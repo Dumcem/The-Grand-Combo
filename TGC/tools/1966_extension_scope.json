@@ -66,6 +66,7 @@
     "TGC_Timeline_1966/localisation/1966_other_tech.csv"
   ],
   "structural": {
+    "campaign_end_date": "1966-01-01",
     "decision_alignment": {
       "file": "TGC_Timeline_1966/decisions/00_Setup.txt",
       "decision_key": "option_end_game",
@@ -73,11 +74,6 @@
       "allow_year": 1966
     },
     "required_patterns": [
-      {
-        "file": "TGC_Timeline_1966/common/defines.lua",
-        "pattern": "end_date\\s*=\\s*'1966\\.1\\.1'",
-        "message": "timeline submod defines.lua must keep end_date = '1966.1.1'"
-      },
       {
         "file": "TGC_Timeline_1966/interface/backend.gui",
         "pattern": "text\\s*=\\s*\"The World in 1966\"",
@@ -104,11 +100,6 @@
     ],
     "core_forbidden_patterns": [
       {
-        "file": "TGC/common/defines.lua",
-        "pattern": "end_date\\s*=\\s*['\\\"]1966\\.1\\.1",
-        "message": "core TGC defines.lua must not keep the 1966 end date"
-      },
-      {
         "file": "TGC/interface/backend.gui",
         "pattern": "The World in 1966",
         "message": "core TGC backend.gui must not show the 1966 timeline label"
@@ -133,9 +124,6 @@
       "TGC_Timeline_1966/gfx/pictures/tech/great_war_entrenchment.tga",
       "TGC_Timeline_1966/gfx/pictures/tech/supercarrier_ships.tga",
       "TGC_Timeline_1966/gfx/pictures/tech/advanced_sonar_integration.tga"
-    ],
-    "unit_target_files_extra": [
-      "TGC_Timeline_1966/inventions/navy_inventions.txt"
     ]
   },
   "stale_reference_rules": [
