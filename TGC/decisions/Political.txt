@@ -533,6 +533,7 @@ political_decisions = {
 				}
 				AND = {
 					total_pops = 5000000
+					NOT = { total_pops = 10000000 }
 					money = 250000
 				}
 				AND = {
