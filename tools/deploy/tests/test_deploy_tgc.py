@@ -33,8 +33,9 @@ class DeploymentTests(unittest.TestCase):
         for name in ("mod", "common", "history", "map"):
             (self.game / name).mkdir(parents=True)
         (self.game / "v2game.exe").write_bytes(b"simulation only")
-        # Transaction records store the resolved target path.
-        _, self.game, _ = d.target_paths(self.root, self.game, self.state_base)
+        # Match the canonical paths used by the deployment tool. Windows CI can
+        # provide TEMP through an 8.3 alias, which changes the spelling on resolve.
+        self.root, self.game, _ = d.target_paths(self.root, self.game, self.state_base)
         self.catalog = json.loads((TOOL / "components.json").read_text())
         for c in self.catalog["components"]:
             if c["class"] == "utility/non-mod-target":
