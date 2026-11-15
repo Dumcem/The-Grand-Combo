@@ -45,7 +45,32 @@ Il caricatore associa un POP soldato a ogni reggimento nazionale. Elimina i regg
 
 **A · Alta · P1 · Sorgenti · Misto · Entrambe.** 57 reggimenti senza una sorgente idonea vengono eliminati al caricamento. I 57 warning corrispondenti sono in OOB_SEARCH e rappresentano gli stessi reggimenti.
 
-Ordini di battaglia e popolazione iniziale. Riesaminare con le fonti storiche e confrontare province, POP e composizione iniziale in entrambi i motori. Un ripristino richiede una sorgente coerente.
+**Classificazione statica al 1° gennaio 1836.** Le 57 esclusioni sono riprodotte con i dati TGC. Tutte le origini `home` appartengono al paese dell’OOB e contengono POP soldati. Per queste esclusioni la ricostruzione non rileva errori di parsing, POP mancanti o proprietà iniziali incompatibili.
+
+| Gruppo | Reggimenti | Causa |
+| --- | ---: | --- |
+| A | 37 | Nessun POP soldato nelle province possedute raggiunge individualmente il minimo. |
+| B | 8 | I POP soldati dell’origine sono sotto soglia e i posti disponibili altrove sono già occupati. |
+| C | 12 | Almeno un POP soldato dell’origine raggiunge il minimo, ma i posti disponibili nell’intero paese sono già occupati. |
+
+Con i parametri TGC, Alice richiede almeno 1.000 soldati per singolo POP. Per un POP idoneo la capacità OOB è `floor(size / 2000) + 1`, al netto dei reggimenti e delle costruzioni già associati. La ricerca d’origine precede quella nelle altre province possedute. [POP del 1836](../TGC/history/pops/1836.1.1) · [Storie provinciali](../TGC/history/provinces) · [Parametri TGC](../TGC/common/defines.lua#L138) · [Ricerca OOB](https://github.com/schombert/Project-Alice/blob/v1.3.0/src/military/military_templates.hpp#L58-L74) · [Capacità](https://github.com/schombert/Project-Alice/blob/v1.3.0/src/military/military.cpp#L1264-L1277)
+
+**Confronto Alice.** La baseline resta **1.3.0** e include già la ricerca alternativa e il controllo di capacità della PR #2082. Nel `main` esaminato a `42adaf79c0115e261a87fa5f08e2dff28ad24bc4` persistono soglia, controllo di capacità e rimozione dei reggimenti senza sorgente. Il codice prevede ancora **0/1 per LAN, 0/1 per MNC e 4/6 per BIK**. Le storie nazionali dei tre paesi puntano già ai rispettivi OOB, quindi il caricamento per direttiva introdotto da #2241 seleziona gli stessi file. Il fallimento della ricerca diventa un warning. La riduzione del numero di errori può avvenire senza recuperare alcun reparto. [PR #2082](https://github.com/schombert/Project-Alice/pull/2082/files) · [PR #2241](https://github.com/schombert/Project-Alice/pull/2241/files) · [Associazione in main](https://github.com/schombert/Project-Alice/blob/42adaf79c0115e261a87fa5f08e2dff28ad24bc4/src/parsing/parsers_declarations.cpp#L2581-L2639) · [Rimozione in main](https://github.com/schombert/Project-Alice/blob/42adaf79c0115e261a87fa5f08e2dff28ad24bc4/src/gamestate/system_state.cpp#L3273-L3278)
+
+**Victoria II 3.04 originale, caso Monaco.** L’analisi statica ha usato `v2game.exe`, SHA-256 `62d48c204364dd706584777c2e2b3c7ab3c5f1dd0170872554943575d53d6648`. Il caricatore crea la `Compagnie des Carabiniers` (tipo `guard`, `home = 3251`), applica il minimo e scarta il solo POP soldato disponibile, di dimensione 50. Inserisce comunque il reparto nella lista dell’armata senza sorgente. [OOB Monaco](../TGC/history/units/MNC_oob.txt#L9) · [POP Monaco](../TGC/history/pops/1836.1.1/ANewNation.txt#L18) · [Identificazione del binario 3.04](https://github.com/maxioten/Victoria2-Reverse-Engineering/blob/main/Engine/script-execution-boundaries.md)
+
+Indirizzi virtuali per riprendere la verifica sullo stesso binario, con base `0x00400000`.
+
+- `0x005BE630` cerca il POP sorgente. Il ramo `0x005BE9BA–0x005BEA4F` tratta il fallimento dell’associazione.
+- `0x005C6F90` chiama `0x005CB1D0`, che inserisce il reparto nella lista dell’armata.
+- `0x00662010` include la finalizzazione delle formazioni. Il ciclo a `0x00662AE9–0x00662B37` percorre la lista dei reggimenti senza leggere il campo sorgente. La richiesta di transizione alla sessione avviene a `0x0066908A`, prima di ulteriori chiamate. [Finalizzazione](https://github.com/maxioten/Victoria2-Reverse-Engineering/blob/main/Engine/loading-initialization.md) · [Confine della sessione giocabile](https://github.com/maxioten/Victoria2-Reverse-Engineering/blob/main/Engine/native-ui-and-frontend.md)
+- `0x0068A900` può distaccare e distruggere un reggimento tramite il suo distruttore virtuale. `0x0068AA10` può distaccare e distruggere i reparti durante la distruzione di un’armata. La traccia non collega queste procedure all’assenza di sorgente di Monaco durante l’avvio. Le chiamate indirette irrisolte lasciano aperte cancellazione e riassegnazione.
+
+**Esito e verifica runtime.** La divergenza nell’inizializzazione è accertata. La presenza del reparto nello stato giocabile del 3.04 rimane indeterminata. La verifica automatizzata si è fermata con esito **BLOCKED / NON VERIFICABILE** prima di avviare il gioco. Steam condivide dati utente preesistenti e il registro di deployment indicava `608d1867`, mentre il checkout esaminato era `1956eeeb`. Le due installazioni Loader contenevano profili diversi dal core e l’isolamento delle scritture esterne era da verificare. L’ambiente storico Task 54 era privo di `v2game.exe`. Nessuno snapshot iniziale attendibile è stato acquisito. La scheda resta aperta e l’impedimento riguarda questa verifica. [Procedura di verifica runtime](deployment/local_deployment.md#recording-deployment-evidence)
+
+Acquisire lo stato di Monaco con il 3.04 originale e TGC core di provenienza verificata, dopo l’ingresso nella sessione giocabile e prima dell’avanzamento di data, in un ambiente completamente isolato. Verificare il record del reggimento e il riferimento al POP, se presente. L’attribuzione a un bug di compatibilità Alice o a un difetto dei dati TGC rimane aperta. Sospendere le modifiche ai POP e agli OOB motivate dalle sole esclusioni Alice.
+
+**Archivio locale del progetto.** Il log Task 36 è conservato in `task36-checkpoint/new-scenario-errors.txt` con l’impronta riportata in [Provenienza](#provenienza-della-diagnostica-alice). Il catalogo Task 37 `task37-triage/occorrenze.csv` risolve ciascun caso per file OOB e riga di `home`. In `task45-checkpoint/new-scenario-errors.txt`, al checkpoint `cebfc8c9`, coincidono le firme dei 57 errori OOB_NO_POP, dei 78 warning OOB_OWNER e dei 140 warning OOB_SEARCH.
 
 **Traccia.** 57 errori e 0 warning. Log 145–201. [Ordini di battaglia](../TGC/history/units), 39 file · [AGC_oob.txt](../TGC/history/units/AGC_oob.txt#L7) · [Alice · parsers_declarations.cpp](https://github.com/schombert/Project-Alice/blob/v1.3.0/src/parsing/parsers_declarations.cpp#L2484-L2513) · [Alice · system_state.cpp](https://github.com/schombert/Project-Alice/blob/v1.3.0/src/gamestate/system_state.cpp#L3510-L3517)
 
@@ -55,15 +80,17 @@ Ordini di battaglia e popolazione iniziale. Riesaminare con le fonti storiche e 
 
 Ordini di battaglia e confini. Riesaminare quando si possono verificare proprietà, data e intenti dello schieramento. Il ripristino richiede di preservare il ruolo storico.
 
+**Sviluppo Alice.** Dopo la 1.3.0, `9e662b23b8e17d016d7f0c3f48df436a8ddf5dca`, integrato con #2241 e presente nel `main` esaminato, aggiunge al ramo con `home` straniera una ricerca nelle province possedute dal paese dell’armata. Il warning di proprietà rimane. Restano da misurare quanti dei 78 reparti siano recuperabili e il guadagno netto, poiché il fallback può occupare posti che altri reparti userebbero in seguito. La scheda resta aperta con baseline 1.3.0. [Commit Alice](https://github.com/schombert/Project-Alice/commit/9e662b23b8e17d016d7f0c3f48df436a8ddf5dca) · [PR #2241](https://github.com/schombert/Project-Alice/pull/2241/files)
+
 **Traccia.** 0 errori e 78 warning. Log 292–296, 300–301, 303, 306, 312–315, 323–324, 329, 334–341, 357, 367, 370–372, 375–376, 378–387, 394–398, 404, 406–411, 413–414, 419, 430–431, 433–436, 439–446, 459–461, 464–466, 487, 509. [Ordini di battaglia](../TGC/history/units), 38 file · [ABA_oob.txt](../TGC/history/units/ABA_oob.txt#L20) · [Alice · parsers_declarations.cpp](https://github.com/schombert/Project-Alice/blob/v1.3.0/src/parsing/parsers_declarations.cpp#L2484-L2499) · [Alice · system_state.cpp](https://github.com/schombert/Project-Alice/blob/v1.3.0/src/gamestate/system_state.cpp#L3510-L3517)
 
 ### OOB_SEARCH — Ricerca in un’altra provincia
 
 **D · Media · P2 · Sorgenti · Motore · Entrambe.** 140 avvisi precedono la ricerca. In 83 casi Alice associa un POP altrove e in 57 ricade in OOB_NO_POP. Il cambio di sorgente può incidere sui rinforzi.
 
-Ordini di battaglia. Riesaminare se cambia l’algoritmo o durante il confronto delle sorgenti dei reggimenti. Parità V2 da stabilire.
+**Confronto dei log.** I 57 fallimenti dei 140 tentativi storici sono già rappresentati in OOB_NO_POP. Dopo la 1.3.0, `9e662b2` emette OOB_SEARCH soltanto dopo un’assegnazione alternativa riuscita nel ramo con `home` posseduta. Per confrontare scenari, abbinare file OOB e identità del reggimento, usando la riga di `home` per il log storico, e verificare presenza e sorgente quando osservabili. La scheda resta aperta. Parità con Victoria II da stabilire. [Diff Alice](https://github.com/schombert/Project-Alice/commit/9e662b23b8e17d016d7f0c3f48df436a8ddf5dca)
 
-**Traccia.** 0 errori e 140 warning. Log 297–299, 302, 304–305, 307–311, 316–322, 325–328, 330–333, 342–356, 358–366, 368–369, 373–374, 377, 388–393, 399–403, 405, 412, 415–418, 420–429, 432, 437–438, 447–458, 462–463, 467–476, 478, 480–486, 488–508, 510–511. [Ordini di battaglia](../TGC/history/units), 70 file · [AFG_oob.txt](../TGC/history/units/AFG_oob.txt#L74) · [Alice · parsers_declarations.cpp](https://github.com/schombert/Project-Alice/blob/v1.3.0/src/parsing/parsers_declarations.cpp#L2495-L2513) · [Alice · military.cpp](https://github.com/schombert/Project-Alice/blob/v1.3.0/src/military/military.cpp#L9800-L9818)
+**Traccia.** 0 errori e 140 warning. Log 297–299, 302, 304–305, 307–311, 316–322, 325–328, 330–333, 342–356, 358–366, 368–369, 373–374, 377, 388–393, 399–403, 405, 412, 415–418, 420–429, 432, 437–438, 447–458, 462–463, 467–476, 478, 480–486, 488–508, 510–511. [Ordini di battaglia](../TGC/history/units), 70 file · [AFG_oob.txt](../TGC/history/units/AFG_oob.txt#L74) · [Alice · parsers_declarations.cpp](https://github.com/schombert/Project-Alice/blob/v1.3.0/src/parsing/parsers_declarations.cpp#L2495-L2513) · [Alice · military_templates.hpp](https://github.com/schombert/Project-Alice/blob/v1.3.0/src/military/military_templates.hpp#L58-L74)
 
 ### DEAD_OOB — Ordini di battaglia di tag inattivi
 
