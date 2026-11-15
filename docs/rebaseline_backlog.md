@@ -75,11 +75,13 @@ Storia iniziale e attivazione dei paesi. Riesaminare con date, territori e regol
 
 ### INVALID_HISTORY — Storia paese senza tag definito
 
-**C · Bassa · P3 · Dati · Dati · Entrambe.** I file di CIV, UCV, VLP, VNG, VNS e VOP esistono senza una voce attiva nella tabella paesi. Alice li salta.
+**Corretta e verificata staticamente · Bassa · P3 · Dati.** Alice 1.3.0 emetteva sei avvisi perché i file di storia di CIV, UCV, VLP, VNG, VNS e VOP avevano un prefisso privo di identità registrata. Il caricatore li scartava prima di aprirli. Il fork ha rimosso i sei file, recuperabili dalla revisione `e7ef8ca2b`. [File recuperabili](https://github.com/Dumcem/The-Grand-Combo/tree/e7ef8ca2b3cc91c2c2bfa36af44b82765ebf74c2/TGC/history/countries) · [Caricatore Alice 1.3.0](https://github.com/schombert/Project-Alice/blob/v1.3.0/src/gamestate/system_state.cpp#L3386-L3411)
 
-Storia e paesi. Verificare la disattivazione storica dei tag prima di recuperare o archiviare le definizioni.
+La simulazione iniziale e il confronto ripetuto dopo la rimozione confermano l'esito per `core`, `core+1966`, `core+extender` e `core+extender+1966`. I file di storia nazionale visibili passano da 688 a 682. La regola di Alice seleziona gli stessi 682 file e i warning specifici previsti passano da 6 a 0. Le 683 identità registrate e i riferimenti di gameplay risultano invariati. Il controllo drift fra core e Timeline è passato in entrambe le direzioni, con 0 FAIL e 0 WARN.
 
-**Traccia.** 0 errori e 6 warning. Log 513–518. [Storia paesi](../TGC/history/countries) · [countries.txt](../TGC/common/countries.txt) · [Alice · system_state.cpp](https://github.com/schombert/Project-Alice/blob/v1.3.0/src/gamestate/system_state.cpp#L3386-L3411)
+Il ramo upstream `1815` registra e usa ancora VLP, VNG, VNS e VOP. I quattro file vanno preservati nella composizione 1815. Il requisito di verifica prima dell'integrazione è nel [registro upstream](upstream_delta_register.md#invalid_history-e-scenario-1815).
+
+**Runtime pendente.** Il log precedente riportava 0 errori e 6 warning per questa voce, alle righe 513–518. La scomparsa degli avvisi resta da osservare rigenerando gli scenari Alice `core` e `core+1966` in un ambiente isolato. La parità su Victoria II originale è attesa dalla composizione statica e resta da confermare in esecuzione. L'installazione Steam condivisa è stata esclusa dalla prova.
 
 ## Eventi, decisioni e mappa
 

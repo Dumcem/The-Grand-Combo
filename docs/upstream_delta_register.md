@@ -45,6 +45,14 @@ Le PR #418–438 sono già state accettate upstream e sono chiuse come candidatu
 | Deployment e manutenzione | Tool transazionale, cataloghi, test, CI drift/1966, configurazione editor e istruzioni. Il catalogo storico dell'addon ritirato resta risolvibile per digest. [Deployment](deployment/local_deployment.md) | Mantenere come responsabilità del fork. Recupero e ownership valgono indipendentemente dal motore. |
 | Eccezioni e residui | Campagne migratorie e BRZ 8502/8503 restano le due esclusioni di contenuto principali. In cleanup `49543a1f3` ripristina la fascia raggiungibile 750.000–999.999 per i pagamenti dei vassalli. | Il fix della fascia è integrato upstream con la #421. Le guardie jugoslave e del golpe sono verificate per esclusione singola; resta il limite di evidenza su Victoria II indicato sopra. |
 
+### INVALID_HISTORY e scenario 1815
+
+Il fork rimuove intenzionalmente da `TGC/history/countries/` la storia di CIV, UCV, VLP, VNG, VNS e VOP rispetto a `4661c1b5a`. Le identità sono disattivate e i file non servono ai quattro profili distribuiti né ai componenti opzionali del catalogo. La rimozione elimina la causa dei sei warning di Alice 1.3.0. Per il riscontro statico e la verifica runtime pendente vedere la [scheda INVALID_HISTORY](rebaseline_backlog.md#invalid_history--storia-paese-senza-tag-definito).
+
+Il ramo upstream [1815 a `58aea0bb4`](https://github.com/The-Grand-Combination/The-Grand-Combo/tree/58aea0bb4714d3c469bb8c318289703fc350217e) registra VLP, VNG, VNS e VOP e usa la loro storia. Preservare i quattro file effettivi quando si integra quel ramo o qualsiasi scenario che registri tali identità. I blob di 1815 coincidono con quelli della base comune, quindi Git può propagare la cancellazione dal master senza segnalare un conflitto.
+
+Prima di accettare una futura integrazione 1815, verificare nella composizione effettiva le quattro registrazioni attive e i rispettivi file `VLP - Colonial La Plata.txt`, `VNG - Colonial Granada.txt`, `VNS - Colonial New Spain.txt` e `VOP - Colonial Peru.txt` sotto `history/countries/`. Quando il lavoro su 1815 sarà attivo, introdurre per quella composizione un controllo automatico che fallisca se manca anche una sola registrazione o uno dei quattro file. La rimozione è candidabile per il master upstream. Rinviare una PR finché non è definita la protezione della composizione 1815.
+
 ## Eccezioni di contenuto e condizioni di riesame
 
 - **Petrograd.** Le rinomine restano reversibili e ciascuna decisione assegna i propri premi una sola volta per paese. La ripetibilità delle rinomine resta una decisione progettuale aperta. Preservare le guardie sui premi durante il riesame.
