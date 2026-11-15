@@ -325,11 +325,17 @@ Unità e AI. Riesaminare se il peso raggiunge un consumatore. Conservare l’int
 
 ### STEAM — Chiave steam nelle definizioni navali
 
-**C · Bassa · P3 · Sorgenti · Motore · Timeline.** Due chiavi steam non appartengono allo schema Alice delle unità. Classi navali e merci restano disponibili. Il ruolo di steam in V2 è da accertare.
+**C · Bassa · P3 · Sorgenti · Motore · Timeline. Corretta e verificata staticamente, runtime pendente.** Eliminate le due direttive `steam = yes` da [aircraftcarrier.txt](../TGC_Timeline_1966/units/aircraftcarrier.txt) e [submarine.txt](../TGC_Timeline_1966/units/submarine.txt). Il confronto con il genitore conserva tutti i 28 campi rimanenti per unità, compresi i blocchi di merci e le classi `big_ship` e `light_ship`. Verificati i riferimenti a modelli, animazioni, suoni e invenzioni di sblocco.
 
-Unità navali. Riesaminare a fronte di un cambiamento di schema o di evidenza sulla meccanica V2.
+**Alice 1.3.0.** Lo schema delle unità omette `steam`. Il parser segnala la chiave sconosciuta senza assegnare alcun valore alla definizione. La rimozione elimina in previsione statica i due errori storici (log 5–6, zero warning) e conserva i dati usati dal motore. Lo schema separato degli edifici riconosce e scarta la chiave. [Schema unità](https://github.com/schombert/Project-Alice/blob/v1.3.0/src/parsing/parser_defs.txt#L512-L558) · [Schema edifici](https://github.com/schombert/Project-Alice/blob/v1.3.0/src/parsing/parser_defs.txt#L271-L285) · [Gestione chiavi sconosciute](https://github.com/schombert/Project-Alice/blob/v1.3.0/ParserGenerator/parser_generator.cpp#L805-L845)
 
-**Traccia.** 2 errori e 0 warning. Log 5–6. [aircraftcarrier.txt](../TGC_Timeline_1966/units/aircraftcarrier.txt#L5) · [submarine.txt](../TGC_Timeline_1966/units/submarine.txt#L5) · [Alice · parser_defs.txt](https://github.com/schombert/Project-Alice/blob/v1.3.0/src/parsing/parser_defs.txt#L272-L285) · [Alice · parser_defs.txt](https://github.com/schombert/Project-Alice/blob/v1.3.0/src/parsing/parser_defs.txt#L512-L554)
+**Victoria II 3.04.** Il binario originale esaminato registra il token generale `steam` (`0x0A5A`). Il controllo mirato non ne ha dimostrato l'uso nel lettore delle unità. Le 21 definizioni vanilla effettive di HoD 3.04, compreso `steam_transport`, funzionano senza la chiave, che compare invece in `common/buildings.txt` per `steamer_shipyard`. La parità per le due unità Timeline è attesa e resta da dimostrare.
+
+**Validazione.** Validator strutturale 1966 superato. Audit sul genitore 0 FAIL, 1.830 WARN, 2.974 INFO. Dopo la correzione 0 FAIL, 1.828 WARN, 2.974 INFO. I due warning rimossi riguardavano `steam`. Drift con `--fail-on-warn` superato in entrambe le direzioni. Gli inventari di `core` e `core+extender` escludono entrambe le unità. `core+1966` e `core+extender+1966` includono le definizioni corrette. Superati gli 11 test dei profili Extender e `git diff --check`.
+
+**Runtime residuo.** Rigenerare lo scenario Alice `core+1966` da un deployment verificato in un ambiente con installazione e dati utente isolati. Confermare l'assenza delle due firme nel log e la registrazione delle unità. Confermare la parità su Victoria II 3.04 con Timeline, anche nel profilo Loader. L'installazione Steam condivisa è stata esclusa dall'esecuzione.
+
+**Upstream.** Nessuna candidatura per queste due rimozioni. Le definizioni interessate appartengono alla Timeline del fork e sono assenti nell'upstream verificato a `4661c1b5a`.
 
 ### ARTILLERY — Riconoscimento dell’artiglieria per nome
 

@@ -2,7 +2,6 @@ aircraftcarrier = {
 	icon = 25
 	naval_icon = 12
 	
-	steam = yes
 	
 	type = naval
 	sprite = Carrier
