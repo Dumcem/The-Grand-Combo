@@ -39,7 +39,7 @@ Le 31 schede del triage storico hanno **blocco No per la re-baseline corrente** 
 
 ## Ordini di battaglia e storia
 
-Il caricatore associa un POP soldato a ogni reggimento nazionale. Elimina i reggimenti rimasti senza sorgente prima della serializzazione. OOB_NO_POP e OOB_OWNER costituiscono **135 esclusioni** distinte. OOB_SEARCH registra anche i tentativi falliti di OOB_NO_POP.
+Il caricatore di Alice 1.3.0 cerca un POP soldato per ogni reggimento nazionale. Elimina i reggimenti rimasti senza sorgente prima della serializzazione. OOB_NO_POP e OOB_OWNER costituiscono **135 esclusioni** distinte. OOB_SEARCH registra anche i tentativi falliti di OOB_NO_POP.
 
 ### OOB_NO_POP — Reggimenti privi di POP soldato
 
@@ -70,7 +70,7 @@ Indirizzi virtuali per riprendere la verifica sullo stesso binario, con base `0x
 
 Acquisire lo stato di Monaco con il 3.04 originale e TGC core di provenienza verificata, dopo l’ingresso nella sessione giocabile e prima dell’avanzamento di data, in un ambiente completamente isolato. Verificare il record del reggimento e il riferimento al POP, se presente. L’attribuzione a un bug di compatibilità Alice o a un difetto dei dati TGC rimane aperta. Sospendere le modifiche ai POP e agli OOB motivate dalle sole esclusioni Alice.
 
-**Archivio locale del progetto.** Il log Task 36 è conservato in `task36-checkpoint/new-scenario-errors.txt` con l’impronta riportata in [Provenienza](#provenienza-della-diagnostica-alice). Il catalogo Task 37 `task37-triage/occorrenze.csv` risolve ciascun caso per file OOB e riga di `home`. In `task45-checkpoint/new-scenario-errors.txt`, al checkpoint `cebfc8c9`, coincidono le firme dei 57 errori OOB_NO_POP, dei 78 warning OOB_OWNER e dei 140 warning OOB_SEARCH.
+**Archivio locale del progetto.** Il log Task 36 è conservato in `task36-checkpoint/new-scenario-errors.txt` con l’impronta riportata in [Provenienza](#provenienza-della-diagnostica-alice). Il catalogo Task 37 `task37-triage/occorrenze.csv` (SHA-256 `4c61810f8242100f00cd87a635b1f6730a97584d437ec514d0114d8e7c851be5`) risolve ciascun caso per file OOB e riga di `home`. In `task45-checkpoint/new-scenario-errors.txt`, al checkpoint `cebfc8c9`, coincidono le firme dei 57 errori OOB_NO_POP, dei 78 warning OOB_OWNER e dei 140 warning OOB_SEARCH.
 
 **Traccia.** 57 errori e 0 warning. Log 145–201. [Ordini di battaglia](../TGC/history/units), 39 file · [AGC_oob.txt](../TGC/history/units/AGC_oob.txt#L7) · [Alice · parsers_declarations.cpp](https://github.com/schombert/Project-Alice/blob/v1.3.0/src/parsing/parsers_declarations.cpp#L2484-L2513) · [Alice · system_state.cpp](https://github.com/schombert/Project-Alice/blob/v1.3.0/src/gamestate/system_state.cpp#L3510-L3517)
 
@@ -86,7 +86,24 @@ Ordini di battaglia e confini. Riesaminare quando si possono verificare propriet
 
 La simulazione segue l’ordine dei reggimenti nei file OOB e scala i posti dei singoli POP dopo ogni assegnazione. Con il fallback, a parità di capacità nazionale e sequenza OOB, l’ordine di iterazione delle province può cambiare il POP associato lasciando invariato l’insieme dei reparti conservati. I log storici identificano i reggimenti per file e riga di `home`. L’identità del POP scelto resta da osservare dove l’ordine effettivo incide.
 
-**Kokand.** Il fallback recupera i quattro irregolari alle righe 10, 15, 20 e 41. I primi sei reparti occupano tutti i posti disponibili. Perdono la sorgente la 6th Brigade e la 7th Brigade (`irregular`, `home = 1203`, righe 46 e 51) e la 2nd Brigade della seconda armata (`cavalry`, `home = 1195`, riga 57). Il totale passa da cinque a sei. [OOB Kokand](../TGC/history/units/KOK_oob.txt#L5)
+**Esclusioni residue nella simulazione.** Le righe `home` si riferiscono al file `TGC/history/units/<TAG>_oob.txt`. Le colonne delle righe sono in ordine corrispondente.
+
+| TAG | Righe `home` | Righe Task 36 | Causa nel fallback |
+| --- | --- | --- | --- |
+| CHH | 12, 17 | 323, 324 | Posti già occupati |
+| GAZ | 45 | 357 | Zero posti nazionali idonei |
+| GRE | 72 | 367 | Posti già occupati |
+| HDJ | 26 | 371 | Posti già occupati |
+| KAG | 20 | 380 | Posti già occupati |
+| KAL | 29, 34, 39, 44, 49, 54 | 381–386 | Posti già occupati |
+| KAZ | 7 | 387 | Zero posti nazionali idonei |
+| LUA | 12 | 404 | Posti già occupati |
+
+I **64 recuperi** corrispondono a tutte le altre righe della Traccia OOB_OWNER qui sotto. Nel catalogo Task 37, filtrare `gruppo = OOB_OWNER` e sottrarre le 14 `riga_log` della tabella. Le colonne `file` e `riga_file` identificano ogni recupero. I tre reparti spiazzati a Kokand appartengono allo schieramento già conservato in 1.3.0 e sono censiti separatamente.
+
+**Kokand.** Il fallback recupera i quattro irregolari alle righe 10, 15, 20 e 41. I primi sei reparti occupano tutti i posti disponibili. Perdono la sorgente la 6th Brigade e la 7th Brigade (`irregular`, `home = 1203`, righe 46 e 51) e la 2nd Brigade della seconda armata (`cavalry`, `home = 1195`, riga 57). Nella simulazione il totale passa da cinque a sei. [OOB Kokand](../TGC/history/units/KOK_oob.txt#L5)
+
+**Interpretazione storica di Kokand.** Le fonti rendono plausibili forze miste e forme diverse di reclutamento. Non attestano la numerazione o gli effettivi dei singoli reparti TGC e non dimostrano che la composizione simulata sia più fedele. Le origini da Bishkek e Naryn rimangono plausibili: la presenza e il controllo militari nella regione possono divergere dalla sovranità provinciale rappresentata nel gioco. Conservare i dati TGC finché emergano riscontri più precisi sul reclutamento e sullo schieramento dei reparti al 1836. [Khanato di Kokand, Encyclopaedia Iranica](https://www.iranicaonline.org/articles/kokand-khanate/)
 
 **Gaza e Kazakhstan.** Sono i due casi già contati fra i 14 esclusi senza recupero. Gaza ha **zero posti POP idonei**. `Maputo Warriors` ha origine a `2049`, sotto proprietà e controllo `POR`, e l’armata è schierata a `2050`. I quattro irregolari con origine in territorio `GAZ` sono già censiti in [OOB_NO_POP](#oob_no_pop--reggimenti-privi-di-pop-soldato), log 160–163. Il massimo nazionale è 400 per POP soldato. A `2049` anche i POP da 400 e 250 sono sotto soglia. La presenza militare e tributaria di Gaza nella regione della baia non stabilisce la sovranità sull’intera provincia né la provenienza di questo reparto nel 1836. [OOB Gaza](../TGC/history/units/GAZ_oob.txt#L45) · [Storia di 2049](<../TGC/history/provinces/africa/2049 - Maputo.txt>) · [POP del Mozambico](../TGC/history/pops/1836.1.1/Mozambique.txt#L20) · [Ricerca sulla presenza di Gaza nella regione](https://newcontree.org.za/index.php/nc/article/view/247/986)
 
