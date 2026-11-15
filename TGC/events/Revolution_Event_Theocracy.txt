@@ -35,22 +35,10 @@ country_event = {
             owner = { set_country_flag = reactionary_party_in_power }
         }
 
-        random_owned = {
-            limit = {
-                owner = {
-                    has_country_modifier = regency_government
-                    NOT = {
-                        government = absolute_monarchy
-                        government = prussian_constitutionalism
-                        government = hms_government
-                    }
-                }
-            }
-            owner = { remove_country_modifier = regency_government }
-        }
-        random_owned = {
-            limit = { owner = { has_country_modifier = santa_ana_rule } }
-            owner = { remove_country_modifier = santa_ana_rule }
+        remove_country_modifier = regency_modifier
+        any_owned = {
+            limit = { is_capital = yes owner = { tag = MEX } }
+            owner = { clr_country_flag = santa_anna_in_charge }
         }
         remove_country_modifier = freedom_of_religion
         clr_country_flag = communist_gov
@@ -482,22 +470,10 @@ country_event = {
             owner = { set_country_flag = reactionary_party_in_power }
         }
 
-        random_owned = {
-            limit = {
-                owner = {
-                    has_country_modifier = regency_government
-                    NOT = {
-                        government = absolute_monarchy
-                        government = prussian_constitutionalism
-                        government = hms_government
-                    }
-                }
-            }
-            owner = { remove_country_modifier = regency_government }
-        }
-        random_owned = {
-            limit = { owner = { has_country_modifier = santa_ana_rule } }
-            owner = { remove_country_modifier = santa_ana_rule }
+        remove_country_modifier = regency_modifier
+        any_owned = {
+            limit = { is_capital = yes owner = { tag = MEX } }
+            owner = { clr_country_flag = santa_anna_in_charge }
         }
         remove_country_modifier = freedom_of_religion
         clr_country_flag = communist_gov
@@ -929,22 +905,10 @@ country_event = {
             owner = { set_country_flag = reactionary_party_in_power }
         }
 
-        random_owned = {
-            limit = {
-                owner = {
-                    has_country_modifier = regency_government
-                    NOT = {
-                        government = absolute_monarchy
-                        government = prussian_constitutionalism
-                        government = hms_government
-                    }
-                }
-            }
-            owner = { remove_country_modifier = regency_government }
-        }
-        random_owned = {
-            limit = { owner = { has_country_modifier = santa_ana_rule } }
-            owner = { remove_country_modifier = santa_ana_rule }
+        remove_country_modifier = regency_modifier
+        any_owned = {
+            limit = { is_capital = yes owner = { tag = MEX } }
+            owner = { clr_country_flag = santa_anna_in_charge }
         }
         remove_country_modifier = freedom_of_religion
         clr_country_flag = communist_gov
@@ -1376,22 +1340,10 @@ country_event = {
             owner = { set_country_flag = reactionary_party_in_power }
         }
 
-        random_owned = {
-            limit = {
-                owner = {
-                    has_country_modifier = regency_government
-                    NOT = {
-                        government = absolute_monarchy
-                        government = prussian_constitutionalism
-                        government = hms_government
-                    }
-                }
-            }
-            owner = { remove_country_modifier = regency_government }
-        }
-        random_owned = {
-            limit = { owner = { has_country_modifier = santa_ana_rule } }
-            owner = { remove_country_modifier = santa_ana_rule }
+        remove_country_modifier = regency_modifier
+        any_owned = {
+            limit = { is_capital = yes owner = { tag = MEX } }
+            owner = { clr_country_flag = santa_anna_in_charge }
         }
         remove_country_modifier = freedom_of_religion
         clr_country_flag = communist_gov
@@ -1823,22 +1775,10 @@ country_event = {
             owner = { set_country_flag = reactionary_party_in_power }
         }
 
-        random_owned = {
-            limit = {
-                owner = {
-                    has_country_modifier = regency_government
-                    NOT = {
-                        government = absolute_monarchy
-                        government = prussian_constitutionalism
-                        government = hms_government
-                    }
-                }
-            }
-            owner = { remove_country_modifier = regency_government }
-        }
-        random_owned = {
-            limit = { owner = { has_country_modifier = santa_ana_rule } }
-            owner = { remove_country_modifier = santa_ana_rule }
+        remove_country_modifier = regency_modifier
+        any_owned = {
+            limit = { is_capital = yes owner = { tag = MEX } }
+            owner = { clr_country_flag = santa_anna_in_charge }
         }
         remove_country_modifier = freedom_of_religion
         clr_country_flag = communist_gov
@@ -2270,22 +2210,10 @@ country_event = {
             owner = { set_country_flag = reactionary_party_in_power }
         }
 
-        random_owned = {
-            limit = {
-                owner = {
-                    has_country_modifier = regency_government
-                    NOT = {
-                        government = absolute_monarchy
-                        government = prussian_constitutionalism
-                        government = hms_government
-                    }
-                }
-            }
-            owner = { remove_country_modifier = regency_government }
-        }
-        random_owned = {
-            limit = { owner = { has_country_modifier = santa_ana_rule } }
-            owner = { remove_country_modifier = santa_ana_rule }
+        remove_country_modifier = regency_modifier
+        any_owned = {
+            limit = { is_capital = yes owner = { tag = MEX } }
+            owner = { clr_country_flag = santa_anna_in_charge }
         }
         remove_country_modifier = freedom_of_religion
         clr_country_flag = communist_gov
@@ -2717,22 +2645,10 @@ country_event = {
             owner = { set_country_flag = reactionary_party_in_power }
         }
 
-        random_owned = {
-            limit = {
-                owner = {
-                    has_country_modifier = regency_government
-                    NOT = {
-                        government = absolute_monarchy
-                        government = prussian_constitutionalism
-                        government = hms_government
-                    }
-                }
-            }
-            owner = { remove_country_modifier = regency_government }
-        }
-        random_owned = {
-            limit = { owner = { has_country_modifier = santa_ana_rule } }
-            owner = { remove_country_modifier = santa_ana_rule }
+        remove_country_modifier = regency_modifier
+        any_owned = {
+            limit = { is_capital = yes owner = { tag = MEX } }
+            owner = { clr_country_flag = santa_anna_in_charge }
         }
         remove_country_modifier = freedom_of_religion
         clr_country_flag = communist_gov
@@ -3164,22 +3080,10 @@ country_event = {
             owner = { set_country_flag = reactionary_party_in_power }
         }
 
-        random_owned = {
-            limit = {
-                owner = {
-                    has_country_modifier = regency_government
-                    NOT = {
-                        government = absolute_monarchy
-                        government = prussian_constitutionalism
-                        government = hms_government
-                    }
-                }
-            }
-            owner = { remove_country_modifier = regency_government }
-        }
-        random_owned = {
-            limit = { owner = { has_country_modifier = santa_ana_rule } }
-            owner = { remove_country_modifier = santa_ana_rule }
+        remove_country_modifier = regency_modifier
+        any_owned = {
+            limit = { is_capital = yes owner = { tag = MEX } }
+            owner = { clr_country_flag = santa_anna_in_charge }
         }
         remove_country_modifier = freedom_of_religion
         clr_country_flag = communist_gov
@@ -3611,22 +3515,10 @@ country_event = {
             owner = { set_country_flag = reactionary_party_in_power }
         }
 
-        random_owned = {
-            limit = {
-                owner = {
-                    has_country_modifier = regency_government
-                    NOT = {
-                        government = absolute_monarchy
-                        government = prussian_constitutionalism
-                        government = hms_government
-                    }
-                }
-            }
-            owner = { remove_country_modifier = regency_government }
-        }
-        random_owned = {
-            limit = { owner = { has_country_modifier = santa_ana_rule } }
-            owner = { remove_country_modifier = santa_ana_rule }
+        remove_country_modifier = regency_modifier
+        any_owned = {
+            limit = { is_capital = yes owner = { tag = MEX } }
+            owner = { clr_country_flag = santa_anna_in_charge }
         }
         remove_country_modifier = freedom_of_religion
         clr_country_flag = communist_gov
@@ -4058,22 +3950,10 @@ country_event = {
             owner = { set_country_flag = reactionary_party_in_power }
         }
 
-        random_owned = {
-            limit = {
-                owner = {
-                    has_country_modifier = regency_government
-                    NOT = {
-                        government = absolute_monarchy
-                        government = prussian_constitutionalism
-                        government = hms_government
-                    }
-                }
-            }
-            owner = { remove_country_modifier = regency_government }
-        }
-        random_owned = {
-            limit = { owner = { has_country_modifier = santa_ana_rule } }
-            owner = { remove_country_modifier = santa_ana_rule }
+        remove_country_modifier = regency_modifier
+        any_owned = {
+            limit = { is_capital = yes owner = { tag = MEX } }
+            owner = { clr_country_flag = santa_anna_in_charge }
         }
         remove_country_modifier = freedom_of_religion
         clr_country_flag = communist_gov
@@ -4505,22 +4385,10 @@ country_event = {
             owner = { set_country_flag = reactionary_party_in_power }
         }
 
-        random_owned = {
-            limit = {
-                owner = {
-                    has_country_modifier = regency_government
-                    NOT = {
-                        government = absolute_monarchy
-                        government = prussian_constitutionalism
-                        government = hms_government
-                    }
-                }
-            }
-            owner = { remove_country_modifier = regency_government }
-        }
-        random_owned = {
-            limit = { owner = { has_country_modifier = santa_ana_rule } }
-            owner = { remove_country_modifier = santa_ana_rule }
+        remove_country_modifier = regency_modifier
+        any_owned = {
+            limit = { is_capital = yes owner = { tag = MEX } }
+            owner = { clr_country_flag = santa_anna_in_charge }
         }
         remove_country_modifier = freedom_of_religion
         clr_country_flag = communist_gov
@@ -4952,22 +4820,10 @@ country_event = {
             owner = { set_country_flag = reactionary_party_in_power }
         }
 
-        random_owned = {
-            limit = {
-                owner = {
-                    has_country_modifier = regency_government
-                    NOT = {
-                        government = absolute_monarchy
-                        government = prussian_constitutionalism
-                        government = hms_government
-                    }
-                }
-            }
-            owner = { remove_country_modifier = regency_government }
-        }
-        random_owned = {
-            limit = { owner = { has_country_modifier = santa_ana_rule } }
-            owner = { remove_country_modifier = santa_ana_rule }
+        remove_country_modifier = regency_modifier
+        any_owned = {
+            limit = { is_capital = yes owner = { tag = MEX } }
+            owner = { clr_country_flag = santa_anna_in_charge }
         }
         remove_country_modifier = freedom_of_religion
         clr_country_flag = communist_gov
@@ -5399,22 +5255,10 @@ country_event = {
             owner = { set_country_flag = reactionary_party_in_power }
         }
 
-        random_owned = {
-            limit = {
-                owner = {
-                    has_country_modifier = regency_government
-                    NOT = {
-                        government = absolute_monarchy
-                        government = prussian_constitutionalism
-                        government = hms_government
-                    }
-                }
-            }
-            owner = { remove_country_modifier = regency_government }
-        }
-        random_owned = {
-            limit = { owner = { has_country_modifier = santa_ana_rule } }
-            owner = { remove_country_modifier = santa_ana_rule }
+        remove_country_modifier = regency_modifier
+        any_owned = {
+            limit = { is_capital = yes owner = { tag = MEX } }
+            owner = { clr_country_flag = santa_anna_in_charge }
         }
         remove_country_modifier = freedom_of_religion
         clr_country_flag = communist_gov
@@ -5846,22 +5690,10 @@ country_event = {
             owner = { set_country_flag = reactionary_party_in_power }
         }
 
-        random_owned = {
-            limit = {
-                owner = {
-                    has_country_modifier = regency_government
-                    NOT = {
-                        government = absolute_monarchy
-                        government = prussian_constitutionalism
-                        government = hms_government
-                    }
-                }
-            }
-            owner = { remove_country_modifier = regency_government }
-        }
-        random_owned = {
-            limit = { owner = { has_country_modifier = santa_ana_rule } }
-            owner = { remove_country_modifier = santa_ana_rule }
+        remove_country_modifier = regency_modifier
+        any_owned = {
+            limit = { is_capital = yes owner = { tag = MEX } }
+            owner = { clr_country_flag = santa_anna_in_charge }
         }
         remove_country_modifier = freedom_of_religion
         clr_country_flag = communist_gov
@@ -6293,22 +6125,10 @@ country_event = {
             owner = { set_country_flag = reactionary_party_in_power }
         }
 
-        random_owned = {
-            limit = {
-                owner = {
-                    has_country_modifier = regency_government
-                    NOT = {
-                        government = absolute_monarchy
-                        government = prussian_constitutionalism
-                        government = hms_government
-                    }
-                }
-            }
-            owner = { remove_country_modifier = regency_government }
-        }
-        random_owned = {
-            limit = { owner = { has_country_modifier = santa_ana_rule } }
-            owner = { remove_country_modifier = santa_ana_rule }
+        remove_country_modifier = regency_modifier
+        any_owned = {
+            limit = { is_capital = yes owner = { tag = MEX } }
+            owner = { clr_country_flag = santa_anna_in_charge }
         }
         remove_country_modifier = freedom_of_religion
         clr_country_flag = communist_gov
@@ -6740,22 +6560,10 @@ country_event = {
             owner = { set_country_flag = reactionary_party_in_power }
         }
 
-        random_owned = {
-            limit = {
-                owner = {
-                    has_country_modifier = regency_government
-                    NOT = {
-                        government = absolute_monarchy
-                        government = prussian_constitutionalism
-                        government = hms_government
-                    }
-                }
-            }
-            owner = { remove_country_modifier = regency_government }
-        }
-        random_owned = {
-            limit = { owner = { has_country_modifier = santa_ana_rule } }
-            owner = { remove_country_modifier = santa_ana_rule }
+        remove_country_modifier = regency_modifier
+        any_owned = {
+            limit = { is_capital = yes owner = { tag = MEX } }
+            owner = { clr_country_flag = santa_anna_in_charge }
         }
         remove_country_modifier = freedom_of_religion
         clr_country_flag = communist_gov
@@ -7187,22 +6995,10 @@ country_event = {
             owner = { set_country_flag = reactionary_party_in_power }
         }
 
-        random_owned = {
-            limit = {
-                owner = {
-                    has_country_modifier = regency_government
-                    NOT = {
-                        government = absolute_monarchy
-                        government = prussian_constitutionalism
-                        government = hms_government
-                    }
-                }
-            }
-            owner = { remove_country_modifier = regency_government }
-        }
-        random_owned = {
-            limit = { owner = { has_country_modifier = santa_ana_rule } }
-            owner = { remove_country_modifier = santa_ana_rule }
+        remove_country_modifier = regency_modifier
+        any_owned = {
+            limit = { is_capital = yes owner = { tag = MEX } }
+            owner = { clr_country_flag = santa_anna_in_charge }
         }
         remove_country_modifier = freedom_of_religion
         clr_country_flag = communist_gov
@@ -7634,22 +7430,10 @@ country_event = {
             owner = { set_country_flag = reactionary_party_in_power }
         }
 
-        random_owned = {
-            limit = {
-                owner = {
-                    has_country_modifier = regency_government
-                    NOT = {
-                        government = absolute_monarchy
-                        government = prussian_constitutionalism
-                        government = hms_government
-                    }
-                }
-            }
-            owner = { remove_country_modifier = regency_government }
-        }
-        random_owned = {
-            limit = { owner = { has_country_modifier = santa_ana_rule } }
-            owner = { remove_country_modifier = santa_ana_rule }
+        remove_country_modifier = regency_modifier
+        any_owned = {
+            limit = { is_capital = yes owner = { tag = MEX } }
+            owner = { clr_country_flag = santa_anna_in_charge }
         }
         remove_country_modifier = freedom_of_religion
         clr_country_flag = communist_gov
@@ -8081,22 +7865,10 @@ country_event = {
             owner = { set_country_flag = reactionary_party_in_power }
         }
 
-        random_owned = {
-            limit = {
-                owner = {
-                    has_country_modifier = regency_government
-                    NOT = {
-                        government = absolute_monarchy
-                        government = prussian_constitutionalism
-                        government = hms_government
-                    }
-                }
-            }
-            owner = { remove_country_modifier = regency_government }
-        }
-        random_owned = {
-            limit = { owner = { has_country_modifier = santa_ana_rule } }
-            owner = { remove_country_modifier = santa_ana_rule }
+        remove_country_modifier = regency_modifier
+        any_owned = {
+            limit = { is_capital = yes owner = { tag = MEX } }
+            owner = { clr_country_flag = santa_anna_in_charge }
         }
         remove_country_modifier = freedom_of_religion
         clr_country_flag = communist_gov
@@ -8528,22 +8300,10 @@ country_event = {
             owner = { set_country_flag = reactionary_party_in_power }
         }
 
-        random_owned = {
-            limit = {
-                owner = {
-                    has_country_modifier = regency_government
-                    NOT = {
-                        government = absolute_monarchy
-                        government = prussian_constitutionalism
-                        government = hms_government
-                    }
-                }
-            }
-            owner = { remove_country_modifier = regency_government }
-        }
-        random_owned = {
-            limit = { owner = { has_country_modifier = santa_ana_rule } }
-            owner = { remove_country_modifier = santa_ana_rule }
+        remove_country_modifier = regency_modifier
+        any_owned = {
+            limit = { is_capital = yes owner = { tag = MEX } }
+            owner = { clr_country_flag = santa_anna_in_charge }
         }
         remove_country_modifier = freedom_of_religion
         clr_country_flag = communist_gov

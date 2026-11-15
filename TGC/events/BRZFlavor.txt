@@ -6,7 +6,22 @@
 		desc = "EVTDESC8002"
 		picture = "young_dom_pedro"
 
-		trigger = { tag = BRZ ai = yes NOT = { year = 1840 } NOT = { has_country_flag = pedro_ii_crowned } } #This is normally a triggered event, but it will trigger for the AI once so it has a chance to pick it
+		# The AI may start the early coronation independently of the decision.
+		trigger = {
+			tag = BRZ
+			ai = yes
+			NOT = { year = 1840 }
+			NOT = { has_country_flag = pedro_ii_crowned }
+			has_country_modifier = regency_modifier
+			OR = {
+				government = absolute_monarchy
+				government = absolute_monarchy2
+				government = prussian_constitutionalism
+				government = prussian_constitutionalism2
+				government = hms_government
+				government = hms_government2
+			}
+		}
 
 		mean_time_to_happen = { years = 2 }
 
@@ -14,7 +29,26 @@
 
 		option = {
 			name = "EVTOPTA8002"
-			country_event = { id = 8003 days = 30 }
+			any_owned = {
+				limit = {
+					is_capital = yes
+					owner = {
+						tag = BRZ
+						has_country_modifier = regency_modifier
+						OR = {
+							government = absolute_monarchy
+							government = absolute_monarchy2
+							government = prussian_constitutionalism
+							government = prussian_constitutionalism2
+							government = hms_government
+							government = hms_government2
+						}
+					}
+				}
+				owner = {
+					country_event = { id = 8003 days = 30 }
+				}
+			}
 			ai_chance = { factor = 20 }
 		}
 
@@ -38,11 +72,31 @@
 		# Long live!
 		option = {
 			name = "EVTOPTA8003"
-			prestige = 5
-			plurality = 1
-			any_pop = { militancy = -1 consciousness = 1 }
-			set_country_flag = pedro_ii_crowned
-			set_country_flag = child_emperor
+
+			any_owned = {
+				limit = {
+					is_capital = yes
+					owner = {
+						tag = BRZ
+						has_country_modifier = regency_modifier
+						OR = {
+							government = absolute_monarchy
+							government = absolute_monarchy2
+							government = prussian_constitutionalism
+							government = prussian_constitutionalism2
+							government = hms_government
+							government = hms_government2
+						}
+					}
+				}
+				owner = {
+					prestige = 5
+					plurality = 1
+					any_pop = { militancy = -1 consciousness = 1 }
+					set_country_flag = pedro_ii_crowned
+					set_country_flag = child_emperor
+				}
+			}
 		}
 	}
 
@@ -70,9 +124,29 @@
 
 		option = {
 			name = "EVTOPTB8004"
-			country_event = { id = 8005 days = 30 }
-			set_country_flag = pedro_ii_crowned
-			clr_global_flag = majority_coup
+
+			any_owned = {
+				limit = {
+					is_capital = yes
+					owner = {
+						tag = BRZ
+						has_country_modifier = regency_modifier
+						OR = {
+							government = absolute_monarchy
+							government = absolute_monarchy2
+							government = prussian_constitutionalism
+							government = prussian_constitutionalism2
+							government = hms_government
+							government = hms_government2
+						}
+					}
+				}
+				owner = {
+					country_event = { id = 8005 days = 30 }
+					set_country_flag = pedro_ii_crowned
+					clr_global_flag = majority_coup
+				}
+			}
 			ai_chance = { factor = 80 }
 		}
 	}
@@ -90,13 +164,31 @@
 		option = {
 			name = "EVTOPTA8003"
 
-			prestige = 5
-			plurality = 3
-			any_pop = { militancy = -1 consciousness = 1 }
-			add_country_modifier = { name = dom_pedro_ii duration = -1 }
-			remove_country_modifier = regency_modifier
-			set_country_flag = pedro_ii_crowned
-			
+			any_owned = {
+				limit = {
+					is_capital = yes
+					owner = {
+						tag = BRZ
+						has_country_modifier = regency_modifier
+						OR = {
+							government = absolute_monarchy
+							government = absolute_monarchy2
+							government = prussian_constitutionalism
+							government = prussian_constitutionalism2
+							government = hms_government
+							government = hms_government2
+						}
+					}
+				}
+				owner = {
+					prestige = 5
+					plurality = 3
+					any_pop = { militancy = -1 consciousness = 1 }
+					add_country_modifier = { name = dom_pedro_ii duration = -1 }
+					remove_country_modifier = regency_modifier
+					set_country_flag = pedro_ii_crowned
+				}
+			}
 		}
 	}
 
@@ -120,38 +212,58 @@
 		# Long live!
 		option = {
 			name = "EVTOPTA8003"
-			prestige = 7
-			any_pop = { militancy = -3 consciousness = 1 }
-			plurality = 6
-			set_country_flag = pedro_ii_crowned
-			remove_country_modifier = regency_modifier
-			add_country_modifier = { name = dom_pedro_ii duration = -1 }
 
-			## Prime Ministers ##
-			remove_country_modifier = national_confusion
-			remove_country_modifier = expert_diplomat
-			remove_country_modifier = successful_industrialist
-			remove_country_modifier = ivory_tower_intellectual
-			remove_country_modifier = man_of_the_people
-			remove_country_modifier = landed_gentleman
-			remove_country_modifier = military_man
-			remove_country_modifier = lord_admiral
-			remove_country_modifier = raving_loon
-			remove_country_modifier = luddite
-			remove_country_modifier = great_statesman
-			remove_country_modifier = backroom_boy
-			remove_country_modifier = great_reformer
-			remove_country_modifier = gauche_buffoon
-			remove_country_modifier = administrative_genius
-			remove_country_modifier = visionary_thinker
-			remove_country_modifier = competent_placeholder
-			remove_country_modifier = imperious_autocrat
-			remove_country_modifier = prince_of_terror
-			remove_country_modifier = efficient_sociopath
-			remove_country_modifier = pig_headed_isolationist
-			remove_country_modifier = ambitious_union_boss
-			remove_country_modifier = dour_economist
-			remove_country_modifier = has_political_leader
+			any_owned = {
+				limit = {
+					is_capital = yes
+					owner = {
+						tag = BRZ
+						has_country_modifier = regency_modifier
+						OR = {
+							government = absolute_monarchy
+							government = absolute_monarchy2
+							government = prussian_constitutionalism
+							government = prussian_constitutionalism2
+							government = hms_government
+							government = hms_government2
+						}
+					}
+				}
+				owner = {
+					prestige = 7
+					any_pop = { militancy = -3 consciousness = 1 }
+					plurality = 6
+					set_country_flag = pedro_ii_crowned
+					remove_country_modifier = regency_modifier
+					add_country_modifier = { name = dom_pedro_ii duration = -1 }
+
+					## Prime Ministers ##
+					remove_country_modifier = national_confusion
+					remove_country_modifier = expert_diplomat
+					remove_country_modifier = successful_industrialist
+					remove_country_modifier = ivory_tower_intellectual
+					remove_country_modifier = man_of_the_people
+					remove_country_modifier = landed_gentleman
+					remove_country_modifier = military_man
+					remove_country_modifier = lord_admiral
+					remove_country_modifier = raving_loon
+					remove_country_modifier = luddite
+					remove_country_modifier = great_statesman
+					remove_country_modifier = backroom_boy
+					remove_country_modifier = great_reformer
+					remove_country_modifier = gauche_buffoon
+					remove_country_modifier = administrative_genius
+					remove_country_modifier = visionary_thinker
+					remove_country_modifier = competent_placeholder
+					remove_country_modifier = imperious_autocrat
+					remove_country_modifier = prince_of_terror
+					remove_country_modifier = efficient_sociopath
+					remove_country_modifier = pig_headed_isolationist
+					remove_country_modifier = ambitious_union_boss
+					remove_country_modifier = dour_economist
+					remove_country_modifier = has_political_leader
+				}
+			}
 		}
 	}
 
@@ -174,11 +286,31 @@
 
 		option = {
 			name = "EVTOPTA8003"
-			any_pop = { militancy = -1 consciousness = 1 }
-			plurality = 1
-			remove_country_modifier = regency_modifier
-			clr_global_flag = majority_coup
-			add_country_modifier = { name = dom_pedro_ii duration = -1 }
+
+			any_owned = {
+				limit = {
+					is_capital = yes
+					owner = {
+						tag = BRZ
+						has_country_modifier = regency_modifier
+						OR = {
+							government = absolute_monarchy
+							government = absolute_monarchy2
+							government = prussian_constitutionalism
+							government = prussian_constitutionalism2
+							government = hms_government
+							government = hms_government2
+						}
+					}
+				}
+				owner = {
+					any_pop = { militancy = -1 consciousness = 1 }
+					plurality = 1
+					remove_country_modifier = regency_modifier
+					clr_global_flag = majority_coup
+					add_country_modifier = { name = dom_pedro_ii duration = -1 }
+				}
+			}
 		}
 	}
 
@@ -189,9 +321,19 @@
 		desc = "EVTDESC8008"
 		picture = "dom_pedro_ages"
 
-		trigger = { year = 1844
-					NOT = { year = 1845 month = 3 militancy = 1 }
-					has_country_flag = child_emperor
+		trigger = {
+			tag = BRZ
+			year = 1844
+			NOT = { year = 1845 month = 3 militancy = 1 }
+			has_country_flag = child_emperor
+			OR = {
+				government = absolute_monarchy
+				government = absolute_monarchy2
+				government = prussian_constitutionalism
+				government = prussian_constitutionalism2
+				government = hms_government
+				government = hms_government2
+			}
 		}
 
 		mean_time_to_happen = { days = 1 }
@@ -200,7 +342,26 @@
 
 		option = {
 			name = "EVTOPTA8003"
-			add_country_modifier = { name = "child_emperor" duration = -1 }
+
+			any_owned = {
+				limit = {
+					is_capital = yes
+					owner = {
+						tag = BRZ
+						OR = {
+							government = absolute_monarchy
+							government = absolute_monarchy2
+							government = prussian_constitutionalism
+							government = prussian_constitutionalism2
+							government = hms_government
+							government = hms_government2
+						}
+					}
+				}
+				owner = {
+					add_country_modifier = { name = "child_emperor" duration = -1 }
+				}
+			}
 		}
 
 	}
