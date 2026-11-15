@@ -77,40 +77,6 @@ conveyor_belt_diffusion = {
     }
 }
 
-perfected_power_loom = {
-    limit = { automated_assemblyline = 1 }
-    chance = {
-        base = 2
-        modifier = {
-            factor = -2
-            NOT = { invention = jacquard_power_loom }
-        }
-    }
-    effect = {
-        factory_goods_output = {
-            regular_textile = 0.05
-        }
-        factory_goods_output = {
-            luxury_textile = 0.05
-        }
-    }
-}
-
-mechanized_tufting_machine = {
-    limit = { automated_assemblyline = 1 }
-    chance = {
-        base = 2
-    }
-    effect = {
-        factory_goods_output = {
-            regular_textile = 0.05
-        }
-        factory_goods_output = {
-            luxury_textile = 0.05
-        }
-    }
-}
-
 #optimized_assembly
 experimental_robotic_production = {
     limit = { optimized_assembly = 1 }

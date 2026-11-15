@@ -253,11 +253,14 @@ In `chicago_school`, `modern_primary_education`, `modern_secondary_education` e 
 
 ### TEXTILE — Merci industriali inesistenti
 
-**A · Media · P2 · Sorgenti · Dati · Timeline.** perfected_power_loom e mechanized_tufting_machine perdono quattro bonus +0,05 per regular_textile e luxury_textile. Il consumatore funziona con merci valide.
+**Corretta tramite scorporo e verificata staticamente · Media · P2 · Dati · Timeline.** La mod storica `Test` aveva una filiera di tappeti e tessili per la casa con le merci `regular_textile` e `luxury_textile`, fabbriche, produzioni artigianali e domanda POP dedicate. Il fork importò nel 2024 `perfected_power_loom` e `mechanized_tufting_machine` con due bonus industriali da +0,05 ciascuna, senza le relative merci e fabbriche. Il file delle invenzioni passò poi alla Timeline 1966. [Importazione 2024](https://github.com/Dumcem/The-Grand-Combo/commit/2d15c2d71fc3f0654983598ade2ebbb6fb14a5a8) · [Split Timeline](https://github.com/Dumcem/The-Grand-Combo/commit/c5ae7219aec87ba5c35388bc51bd9892fa4cb0dd)
 
-Economia e invenzioni. Riesaminare con fonti su tappeti e produzione tessile. Ripristino candidato solo dopo aver identificato i beni voluti.
+La decisione di progetto rinvia l'integrazione della filiera. La Timeline rimuove entrambe le invenzioni e le loro quattro chiavi di localizzazione. La Timeline rimuove anche le due stringhe Bigelow, prive di consumatori. L'archivio storico `Legacy/TestTGCExtension/Test` conserva le invenzioni originali e le loro dipendenze per un eventuale progetto separato, ancora da approvare.
 
-**Traccia.** 4 errori e 0 warning. Log 33–36. [NEW_industry_inventions.txt](../TGC_Timeline_1966/inventions/NEW_industry_inventions.txt#L91) · [Alice · parsers_declarations.cpp](https://github.com/schombert/Project-Alice/blob/v1.3.0/src/parsing/parsers_declarations.cpp#L1715-L1725) · [Alice · culture.cpp](https://github.com/schombert/Project-Alice/blob/v1.3.0/src/culture/culture.cpp#L655-L659) · [Alice · economy_production.cpp](https://github.com/schombert/Project-Alice/blob/v1.3.0/src/economy/economy_production.cpp#L890-L898)
+**Verifica statica.** La scansione dei quattro profili non ha trovato consumatori delle invenzioni rimosse. L'assemblaggio conferma che i profili senza Timeline sono identici e che i profili con Timeline perdono solo i due blocchi e le quattro stringhe. Le altre invenzioni sono identiche. In Alice 1.3.0 i quattro errori storici `Invalid commodity` (log 33–36) scendono da 4 a 0 in previsione statica. Validator 1966 superato. Audit da 0 FAIL, 1.828 WARN, 2.974 INFO a 0 FAIL, 1.828 WARN, 2.972 INFO. Drift con `--fail-on-warn` superato in entrambe le direzioni. [Lookup delle merci in Alice](https://github.com/schombert/Project-Alice/blob/v1.3.0/src/parsing/parsers_declarations.cpp#L1715-L1725)
+
+**Runtime pendente.** Rigenerare lo scenario Timeline in Alice 1.3.0 da un deployment verificato in ambiente isolato e controllare il log. Verificare l'avvio della Timeline su Victoria II 3.04, anche con Loader. Alice salva le invenzioni attive per ID e controlla il checksum dello scenario durante il caricamento. La riapertura di salvataggi precedenti con lo scenario rigenerato, e la gestione delle invenzioni rimosse nei salvataggi Victoria II, restano da verificare.
+
 
 ### NAV_ORG — Organizzazione navale negli effetti unità
 
