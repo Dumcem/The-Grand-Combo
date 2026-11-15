@@ -134,7 +134,7 @@ chicago_school = {
         }
         modifier = {
             factor = 1
-            tech_school = culture_tech_school
+            has_country_modifier = ts_culture
         }
         modifier = {
             factor = 1
@@ -154,7 +154,7 @@ modern_primary_education = {
         base = 2
         modifier = {
             factor = 1
-            tech_school = culture_tech_school
+            has_country_modifier = ts_culture
         }
         modifier = {
             factor = 1
@@ -173,7 +173,7 @@ modern_secondary_education = {
         base = 2
         modifier = {
             factor = 1
-            tech_school = culture_tech_school
+            has_country_modifier = ts_culture
         }
         modifier = {
             factor = 1
@@ -192,7 +192,7 @@ professional_educators = {
         base = 2
         modifier = {
             factor = 1
-            tech_school = culture_tech_school
+            has_country_modifier = ts_culture
         }
         modifier = {
             factor = 1
