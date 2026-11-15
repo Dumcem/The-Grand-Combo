@@ -225,11 +225,11 @@ Le schede sui modificatori condividono il controllo dello scope del parser Alice
 
 ### TECH_AI — Condizione AI nel contesto errato
 
-**B · Media · P2 · Sorgenti · Misto · Timeline.** is_greater_power direttamente dentro ai_chance di experimental_radar viene scartato. L’intento di filtro o di peso resta aperto.
+**Mitigata · Media · P2 · Sorgenti e Dati · Timeline.** Alice 1.3.0 segnala e scarta `is_greater_power = yes` al livello principale di `ai_chance`, dove la grammatica non ammette trigger. In `experimental_radar` la condizione è stata spostata subito dopo `factor = 2` nel primo `modifier`. Il bonus regionale di quel blocco è così riservato alle grandi potenze. Il confronto statico conferma che l'intero `ai_chance` coincide con quello di `advanced_radar_applications` e che gli altri coefficienti e trigger sono preservati. [army_tech.txt](../TGC_Timeline_1966/technologies/army_tech.txt#L4657) · [Grammatica Alice](https://github.com/schombert/Project-Alice/blob/v1.3.0/src/parsing/parser_defs.txt#L652-L661) · [Compilazione del modifier](https://github.com/schombert/Project-Alice/blob/v1.3.0/src/parsing/trigger_parsing.cpp#L921-L950)
 
-Ricerca e AI. Riesaminare se cambia la grammatica o quando si ricostruisce l’intento. Conservare i modifier validi e verificare V2.
+**Compatibilità statica.** Alice 1.3.0 accetta la forma corretta e usa il proprio `ai_weight` per scegliere la ricerca, senza consultare `ai_chance`. Gli script originali di Victoria II 3.04 attestano il trigger dentro un `modifier` tecnologico. L'esecuzione e il trattamento della forma malformata in Victoria II restano non verificati. Validator 1966, audit (0 FAIL, 1.830 WARN, 2.974 INFO) e drift inverso (0 FAIL, 0 WARN) completati. La tecnologia è specifica della Timeline. [Selettore Alice](https://github.com/schombert/Project-Alice/blob/v1.3.0/src/ai/ai_campaign.cpp#L115-L255)
 
-**Traccia.** 1 errori e 0 warning. Log 7. [army_tech.txt](../TGC_Timeline_1966/technologies/army_tech.txt#L4670) · [Alice · cultures_parsing.cpp](https://github.com/schombert/Project-Alice/blob/v1.3.0/src/parsing/cultures_parsing.cpp#L550-L553) · [Alice · trigger_parsing.cpp](https://github.com/schombert/Project-Alice/blob/v1.3.0/src/parsing/trigger_parsing.cpp#L921-L950) · [Alice · parsers.hpp](https://github.com/schombert/Project-Alice/blob/v1.3.0/src/parsing/parsers.hpp#L64-L77)
+**Verifica residua per la chiusura.** Il log storico, riga 7, riporta un errore e zero warning per questa scheda. L'installazione Alice disponibile è condivisa con Steam e manca un ambiente verificato per isolare gli output utente. Resta da confermare l'assenza della firma nel nuovo log di uno scenario core + Timeline rigenerato con Alice 1.3.0 dopo un deployment verificato. I controlli statici 1966 non coprono il parser di `ai_chance`.
 
 ### SCHOOL — Scuola culturale senza definizione
 

@@ -4667,9 +4667,9 @@
 	
 	    	ai_chance = {
 	        	factor = 2
-			is_greater_power = yes
 	        	modifier = {
 	            		factor = 2
+				is_greater_power = yes
 	            		OR = {
 	                		AND = {
 	                    			capital_scope = { continent = europe }
