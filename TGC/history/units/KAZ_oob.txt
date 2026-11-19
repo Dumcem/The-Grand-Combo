@@ -8,7 +8,7 @@ army = {
 	}
 }
 leader = {
-	name = "Kenesary Khan"
+	name = "Kenesary Kasymov"
 	type = land
 	date = 1836.1.1
 	background = seasoned_aristocrat
