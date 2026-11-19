@@ -131,6 +131,9 @@ class ExtenderProfileTests(unittest.TestCase):
         before = previous.splitlines(keepends=True)
         self.assertEqual(sum(bool(income.match(line)) for line in before), 15)
         self.assertEqual(b"".join(line for line in before if not income.match(line)), upstream)
+        # Upstream PR #436 corrected this comment after the Loader baseline.
+        self.assertEqual(upstream.count(b"\n#Depracated\n"), 1)
+        reviewed = upstream.replace(b"\n#Depracated\n", b"\n#Deprecated\n", 1)
 
         manifest_path = "tools/deploy/extender_overlay.json"
         manifest = json.loads((ROOT / manifest_path).read_bytes())
@@ -155,7 +158,7 @@ class ExtenderProfileTests(unittest.TestCase):
             with self.subTest(profile=profile):
                 self.assertEqual(source, CORE / path)
                 actual = source.read_bytes().replace(b"\r\n", b"\n")
-                self.assertEqual(actual, upstream)
+                self.assertEqual(actual, reviewed)
 
     def test_declared_overlay_and_descriptor(self):
         manifest = json.loads((ROOT / "tools/deploy/extender_overlay.json").read_bytes())

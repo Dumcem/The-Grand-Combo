@@ -3,8 +3,8 @@
 | Riferimento | Stato |
 | --- | --- |
 | Ultimo upstream integrato | [`8f106a7f0`](https://github.com/The-Grand-Combination/The-Grand-Combo/commit/8f106a7f0ec5690d3fe67429a37986506ad5218b), PR #418–427, integrato in `124844576`. |
-| Upstream confrontato | [`4661c1b5a`](https://github.com/The-Grand-Combination/The-Grand-Combo/commit/4661c1b5a7d24f6b658e14caf69245e6043355ee), comprende le PR #428–438, da recepire o verificare per hunk alla prossima sincronizzazione. |
-| Fork verificato | [`bf55d38a2`](https://github.com/Dumcem/The-Grand-Combo/commit/bf55d38a233ee6a68acba75412f97ece5154a0df), inclusa la guardia Sonderbund per le risposte già registrate. |
+| Upstream confrontato | [`85f173164`](https://github.com/The-Grand-Combination/The-Grand-Combo/commit/85f173164fe2ef635c78eac48880d79fcaa9ebd7), punta di `master` verificata il 19 novembre 2026. Estende il confronto precedente a `4661c1b5a` con i merge delle PR #439–442. |
+| Fork verificato | Base `84c4a635f` e modifiche del checkpoint di riconciliazione selettiva #428–442 riportate sotto. |
 
 Alla sincronizzazione confrontare i due riferimenti upstream e il candidato fork
 con il nuovo upstream. Riesaminare gli hunk combinati automaticamente, i carrier
@@ -12,23 +12,27 @@ e le regressioni indicate sotto. Per ogni differenza conservata registrare motiv
 profilo ed evidenza. Il [backlog](rebaseline_backlog.md) segue le verifiche aperte.
 La [riconciliazione](upstream_reconciliation.md) conserva le motivazioni storiche.
 
-## PR #428–438 da riconciliare
+## PR #428–442 riconciliate per hunk
 
 | PR | Merge upstream | Contributo | Stato nel fork |
 | --- | --- | --- | --- |
-| [#428](https://github.com/The-Grand-Combination/The-Grand-Combo/pull/428) | [`199783291`](https://github.com/The-Grand-Combination/The-Grand-Combo/commit/199783291cd3f39eb5d39f42ab3f5cf11324d3ee) | Flag del menu Workplace Events | Già presente. |
-| [#429](https://github.com/The-Grand-Combination/The-Grand-Combo/pull/429) | [`4661c1b5a`](https://github.com/The-Grand-Combination/The-Grand-Combo/commit/4661c1b5a7d24f6b658e14caf69245e6043355ee) | Concessione svedese e russificazione finlandese | Lettori FIN e guardia SWE presenti. Manca il controllo del flag sotto SCA. |
-| [#430](https://github.com/The-Grand-Combination/The-Grand-Combo/pull/430) | [`1223fa769`](https://github.com/The-Grand-Combination/The-Grand-Combo/commit/1223fa769d5471a363837f2215d30dd59ac2ecf8) | Relazioni negli eventi di bancarotta | Già presente. |
-| [#431](https://github.com/The-Grand-Combination/The-Grand-Combo/pull/431) | [`401afd5e4`](https://github.com/The-Grand-Combination/The-Grand-Combo/commit/401afd5e4d251b39721a65f124dfd8b2b0f485b6) | Proprietà di Port-au-Prince | Già presente. |
-| [#432](https://github.com/The-Grand-Combination/The-Grand-Combo/pull/432) | [`145c7f73d`](https://github.com/The-Grand-Combination/The-Grand-Combo/commit/145c7f73dfee9c348cdbcd74159d935eda692557) | Guardia della decisione confederata su Cuba | Già presente. |
-| [#433](https://github.com/The-Grand-Combination/The-Grand-Combo/pull/433) | [`3f836c865`](https://github.com/The-Grand-Combination/The-Grand-Combo/commit/3f836c8654edfedd69b3a9d09643f04e4103b9e3) | Flag della decisione messicana | Scrittore e lettore minuscoli. Manca la guardia per lo stato storico con suffisso maiuscolo. |
-| [#434](https://github.com/The-Grand-Combination/The-Grand-Combo/pull/434) | [`a79e5b79a`](https://github.com/The-Grand-Combination/The-Grand-Combo/commit/a79e5b79ae33ec5992ad0f1c7c26b943f6a2ce5f) | Chiave dell’opzione Direct Immigration 980005 | Già presente. |
+| [#428](https://github.com/The-Grand-Combination/The-Grand-Combo/pull/428) | [`199783291`](https://github.com/The-Grand-Combination/The-Grand-Combo/commit/199783291cd3f39eb5d39f42ab3f5cf11324d3ee) | Flag del menu Workplace Events | Già presente nei 22 lettori di `WorkPlaceEvents.txt`. |
+| [#429](https://github.com/The-Grand-Combination/The-Grand-Combo/pull/429) | [`4661c1b5a`](https://github.com/The-Grand-Combination/The-Grand-Combo/commit/4661c1b5a7d24f6b658e14caf69245e6043355ee) | Concessione svedese e russificazione finlandese | Quattro lettori FIN e guardia SWE già presenti. Aggiunta la guardia SCA in `FIN.txt`. |
+| [#430](https://github.com/The-Grand-Combination/The-Grand-Combo/pull/430) | [`1223fa769`](https://github.com/The-Grand-Combination/The-Grand-Combo/commit/1223fa769d5471a363837f2215d30dd59ac2ecf8) | Relazioni negli eventi di bancarotta | Già presenti i tre controlli su `FROM` in `OnAction.txt`. |
+| [#431](https://github.com/The-Grand-Combination/The-Grand-Combo/pull/431) | [`401afd5e4`](https://github.com/The-Grand-Combination/The-Grand-Combo/commit/401afd5e4d251b39721a65f124dfd8b2b0f485b6) | Proprietà di Port-au-Prince | Già presente il filtro `any_owned` su 2213 in `HAIFlavor.txt`. |
+| [#432](https://github.com/The-Grand-Combination/The-Grand-Combo/pull/432) | [`145c7f73d`](https://github.com/The-Grand-Combination/The-Grand-Combo/commit/145c7f73dfee9c348cdbcd74159d935eda692557) | Guardia della decisione confederata su Cuba | Già presente il lettore `csa_join_cub` in `ACW.txt`. |
+| [#433](https://github.com/The-Grand-Combination/The-Grand-Combo/pull/433) | [`3f836c865`](https://github.com/The-Grand-Combination/The-Grand-Combo/commit/3f836c8654edfedd69b3a9d09643f04e4103b9e3) | Flag della decisione messicana | Aggiunto il lettore storico `protecting_legacy_GCO` in `MEX.txt`. Il fork conserva lo scrittore minuscolo di `850b52cfe`. |
+| [#434](https://github.com/The-Grand-Combination/The-Grand-Combo/pull/434) | [`a79e5b79a`](https://github.com/The-Grand-Combination/The-Grand-Combo/commit/a79e5b79ae33ec5992ad0f1c7c26b943f6a2ce5f) | Chiave dell’opzione Direct Immigration 980005 | Già presente `EVTOPTA980005` in `DirectImmigrationEvents.txt`. |
 | [#435](https://github.com/The-Grand-Combination/The-Grand-Combo/pull/435) | [`6a4fe6f5b`](https://github.com/The-Grand-Combination/The-Grand-Combo/commit/6a4fe6f5b70f8cb1c51d3a8a6c034c13ad9803b3) | Localizzazione polacca 203903 | Le due chiavi sono presenti in un’altra posizione del CSV. |
-| [#436](https://github.com/The-Grand-Combination/The-Grand-Combo/pull/436) | [`4aa770f9d`](https://github.com/The-Grand-Combination/The-Grand-Combo/commit/4aa770f9d71e32de67e5a748225bbb5606c02d29) | Commenti di script e defines | Parziale. Restano differenze puntuali nei commenti, inclusi i tre apostrofi e i defines del core. |
-| [#437](https://github.com/The-Grand-Combination/The-Grand-Combo/pull/437) | [`50fcafac8`](https://github.com/The-Grand-Combination/The-Grand-Combo/commit/50fcafac81498541f2aaf75fd82022b755c08650) | Localizzazione Direct Immigration | Le sei correzioni del CSV non sono presenti. |
-| [#438](https://github.com/The-Grand-Combination/The-Grand-Combo/pull/438) | [`95ba0241f`](https://github.com/The-Grand-Combination/The-Grand-Combo/commit/95ba0241faeb1c7dda0ba04d491f107437cfc173) | Guide dei submod | La guida Low RAM contiene correzioni equivalenti. Manca la correzione nella guida Belle Cartographie. |
+| [#436](https://github.com/The-Grand-Combination/The-Grand-Combo/pull/436) | [`4aa770f9d`](https://github.com/The-Grand-Combination/The-Grand-Combo/commit/4aa770f9d71e32de67e5a748225bbb5606c02d29) | Commenti di script e defines | Corretti `event_modifiers.txt` e due commenti di `defines.lua` in core e Timeline. Già presenti i commenti in ACW, Argentina, Belgium, BoerWar, RUS, NaturalDisasters, SAFFlavor e nei defines Six Great Powers e Less Combat RNG. |
+| [#437](https://github.com/The-Grand-Combination/The-Grand-Combo/pull/437) | [`50fcafac8`](https://github.com/The-Grand-Combination/The-Grand-Combo/commit/50fcafac81498541f2aaf75fd82022b755c08650) | Localizzazione Direct Immigration | Recepiti i sei testi per gli eventi 980003, 980004, 980005 e 980007 in `00_events-direct-immigration.csv`. |
+| [#438](https://github.com/The-Grand-Combination/The-Grand-Combo/pull/438) | [`95ba0241f`](https://github.com/The-Grand-Combination/The-Grand-Combo/commit/95ba0241faeb1c7dda0ba04d491f107437cfc173) | Guide dei submod | Recepita la correzione nella guida Belle Cartographie. Low RAM ha già la misura corretta e conserva una formulazione equivalente sugli avvii. |
+| [#439](https://github.com/The-Grand-Combination/The-Grand-Combo/pull/439) | [`91c4d4d36`](https://github.com/The-Grand-Combination/The-Grand-Combo/commit/91c4d4d362ef9d9bada8aa41856f29bf441ec2cd) | Inviti Sonderbund | Già presente nell’evento 99797, con entrambe le guardie per paese e la scrittura immediata del flag di invito. Rimane il caso dei popup preesistenti. |
+| [#440](https://github.com/The-Grand-Combination/The-Grand-Combo/pull/440) | [`fa9627123`](https://github.com/The-Grand-Combination/The-Grand-Combo/commit/fa96271238cc58f9c8f8f16e165b928723eaa4bc) | Scuole di ricerca | Titolo e descrizione navali e cechi già presenti come quattro righe distinte, identiche a upstream in `00_tech-schools.csv`. |
+| [#441](https://github.com/The-Grand-Combination/The-Grand-Combo/pull/441) | [`f7dd39d83`](https://github.com/The-Grand-Combination/The-Grand-Combo/commit/f7dd39d8327acb1f79ec5ebfba94b74daa7729bd) | Costi propaganda | Già presenti in `Political.txt` il limite superiore della fascia da 250.000 e l’addebito da 500.000. |
+| [#442](https://github.com/The-Grand-Combination/The-Grand-Combo/pull/442) | [`85f173164`](https://github.com/The-Grand-Combination/The-Grand-Combo/commit/85f173164fe2ef635c78eac48880d79fcaa9ebd7) | Menu indigeno e Rio de Janeiro | Già presenti i due avvisi in `00_tooltips.csv` e `PROV2447` in `00_map-provinces.csv`. Restano le guardie del menu del fork. |
 
-Le PR #418–438 sono già state accettate upstream e sono chiuse come candidature. Alla prossima sincronizzazione verificare gli hunk residui e i carrier, in particolare i defines della Timeline e le compatibilità dei flag. Le prove runtime del fork restano nel backlog.
+Tutte le PR #428–442 risultano incorporate in upstream. Il checkpoint riguarda i relativi diff di merge. Il riferimento dell’ultima integrazione complessiva resta `8f106a7f0`. Le verifiche e le differenze intenzionali sono descritte nella [riconciliazione](upstream_reconciliation.md#riconciliazione-selettiva-428442).
 
 ## Differenze correnti
 
@@ -68,14 +72,8 @@ Le due esclusioni di contenuto (campagne e BRZ) restano decisioni di progetto. P
 
 ## Contributi presentati e candidature residue
 
-Le PR #439–442 sono aperte e non comprese nel master upstream verificato né nel riferimento sincronizzato del fork. Una PR accettata entra nel master upstream. La sua integrazione nel fork richiede una verifica distinta di revisione e comportamento.
-
 | Contributo | Stato e rapporto con il fork |
 | --- | --- |
-| [#439 Sonderbund](https://github.com/The-Grand-Combination/The-Grand-Combo/pull/439) | Presentata. Il fork ha già l'invito per paese e la guardia per le risposte registrate in `bf55d38a2`. Rimane il limite dei popup preesistenti. |
-| [#440 Scuole di ricerca](https://github.com/The-Grand-Combination/The-Grand-Combo/pull/440) | Presentata, commit `4e8935b78`. Corregge il duplicato navale conservando titolo e descrizione cechi. Il fork ha integrato la correzione del duplicato e il ripristino del titolo ceco perso in `9d8de29a6`. La PR upstream resta aperta. Controllo statico di unicità e conservazione byte per byte. |
-| [#441 Costi propaganda](https://github.com/The-Grand-Combination/The-Grand-Combo/pull/441) | Presentata, commit `7f5c1ad20`. Il fork conserva il segno corretto da `0500fc93e` e ha integrato il limite superiore della fascia da 250.000. La PR upstream resta aperta. Controllo statico su 420 combinazioni. |
-| [#442 Localizzazione del menu indigeno e di Rio de Janeiro](https://github.com/The-Grand-Combination/The-Grand-Combo/pull/442) | Presentata, commit `5e36ccb17`. Allinea due avvisi alle soglie di evento 100 e corregge `PROV2447`. Contiene soltanto i due CSV. Tre test locali del menu e confronto byte per byte, senza prova in gioco. La PR è aperta. Accettazione upstream e integrazione nel fork restano distinte. |
 | KENESARY_TITLE | Correzione locale del solo nome iniziale in `KAZ_oob.txt`, da `Kenesary Khan` a `Kenesary Kasymov`. Candidata upstream raccomandata per correggere il titolo anticipato al 1836. Diff nominale e composizione dei quattro profili verificati staticamente, prove runtime e salvataggi pendenti. [Motivazione, fonti e limiti](rebaseline_backlog.md#kenesary_title--titolo-di-kenesary-nelloob-del-1836). Nessuna PR presentata. |
 | Predicati di fabbrica | Respinta la sostituzione delle otto occorrenze come correzione Alice. Le due forme condividono un helper statale che restituisce sempre vero. Rimane aperta la semantica Victoria II 3.04. |
 | Carrington | Rinviato l'accodamento finché non si verifica il percorso UTI e la migrazione dei salvataggi. Bloccati i destinatari finché resta incerto l'effetto condizionale sul destinatario in Victoria II 3.04. |
@@ -85,8 +83,6 @@ Le PR #439–442 sono aperte e non comprese nel master upstream verificato né n
 **Anatolia, 500291 B.** I quattro gruppi anatolici contengono 20 province. I nuovi core GRE su 862, 865 e 866 non comportano cessione. Il filtro di cessione può includere core greci preesistenti in altre regioni, se in mano russa e fuori dalle esclusioni. Alice può cedere a un titolare GRE senza terra. Dopo la cessione la Grecia appena costituita può diventare vassallo se è controllata dall'AI. Riaprire dopo aver chiarito l'ampiezza territoriale voluta e verificato su Victoria II 3.04 il destinatario assente, la cessione e il vassallaggio successivo. [Opzione B](https://github.com/The-Grand-Combination/The-Grand-Combo/blob/4661c1b5a7d24f6b658e14caf69245e6043355ee/TGC/events/RUSFlavor.txt#L8984-L9038) · [Cessione Alice](https://github.com/schombert/Project-Alice/blob/v1.3.0/src/scripting/effects.cpp#L2091-L2103)
 
 **Gold Rush, 99903.** Upstream legge il flag di refutazione del proprietario attuale. Il fork legge quello globale, prodotto anche da CAL, DES o TEX, e può rendere idoneo un successore che non ha refutato. Un salvataggio con il solo flag `manifest_destiny_refuted_country` resta idoneo upstream a parità degli altri requisiti e può perdere l'accesso nel fork. Riaprire dopo aver deciso se l'idoneità segue San Francisco o l'autore della refutazione e quali forme storiche dei flag vanno supportate. Conservare i due controlli di esecuzione unica. [Produttore](https://github.com/The-Grand-Combination/The-Grand-Combo/blob/4661c1b5a7d24f6b658e14caf69245e6043355ee/TGC/decisions/MEX.txt#L40-L92) · [Evento](https://github.com/The-Grand-Combination/The-Grand-Combo/blob/4661c1b5a7d24f6b658e14caf69245e6043355ee/TGC/events/USA_Minors.txt#L1326-L1402)
-
-Le verifiche delle PR #440–441 sono statiche. I test sono rimasti locali e ciascuna PR contiene soltanto il rispettivo file dati.
 
 ## Regressioni da mantenere
 
