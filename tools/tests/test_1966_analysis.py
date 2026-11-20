@@ -443,7 +443,7 @@ class RealDataTests(unittest.TestCase):
         tech_files = [b["file"] for b in manifest["tech_tree"]["branches"]]
         files = list(dict.fromkeys(tech_files + manifest["invention_files"] + rules["scan_files"]))
         actual_total = expected_total = 0
-        invention_count = 0
+        invention_counts = {}
         for file in files:
             text = (ROOT / file).read_text(encoding="utf-8")
             groups, scalars = independent_inventory(text)
@@ -453,7 +453,7 @@ class RealDataTests(unittest.TestCase):
             actual_total += len(actual)
             expected_total += len(expected)
             if file in manifest["invention_files"]:
-                invention_count += len(actual)
+                invention_counts[Path(file).name] = len(actual)
             if file in tech_files:
                 direct = {(path[0], key): value for path, key, value, _, _ in scalars
                           if len(path) == 1 and key in {"area", "year"}}
@@ -461,7 +461,15 @@ class RealDataTests(unittest.TestCase):
                     self.assertEqual(meta["area"], direct[(meta["key"], "area")])
                     self.assertEqual(meta["year"], int(direct[(meta["key"], "year")]))
                 self.assertEqual(len(actual), 60)
-        self.assertEqual((actual_total, expected_total, invention_count), (626, 626, 232))
+        self.assertEqual((actual_total, expected_total), (624, 624))
+        # The industrial file excludes the two inventions removed in 7796f9a7f.
+        self.assertEqual(invention_counts, {
+            "NEW_army_inventions.txt": 62,
+            "NEW_navy_inventions.txt": 43,
+            "NEW_commerce_inventions.txt": 53,
+            "NEW_culture_inventions.txt": 39,
+            "NEW_industry_inventions.txt": 33,
+        })
 
     def test_effects_individually_match_independent_inventory(self):
         _, rules = real_inputs()
