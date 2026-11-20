@@ -87,6 +87,17 @@ class ExtenderProfileTests(unittest.TestCase):
         self.assertFalse(timeline.keys() & overlay.keys())
         self.assertEqual(combined["map/definition.csv"], core["map/definition.csv"])
         self.assertEqual(combined["map/region.txt"], core["map/region.txt"])
+        anatolia_paths = ("events/RUSFlavor.txt", "map/region.txt", "map/definition.csv", "map/adjacencies.csv",
+                          "history/countries/GRE - Greece.txt", "history/countries/ANT - Anatolia.txt",
+                          "history/countries/TUR - Ottoman Empire.txt",
+                          "localisation/00_events_0500000.csv")
+        for profile, files in inventories.items():
+            with self.subTest(profile=profile):
+                for path in anatolia_paths:
+                    self.assertEqual(files[path], CORE / path)
+        anatolia_text = core[anatolia_paths[-1]].read_bytes().splitlines()
+        choice_c, = (line for line in anatolia_text if line.startswith(b"EVTOPTC500291;"))
+        self.assertIn(b"Bosphorus;", choice_c)
         self.assertIn("end_date = '1966.1.1'", combined["common/defines.lua"].read_text(encoding="cp1252"))
         self.assertNotEqual(combined["common/defines.lua"], extender["common/defines.lua"])
         for directory in ("technologies", "inventions", "units", "localisation"):

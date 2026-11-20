@@ -4,7 +4,7 @@ from collections import defaultdict
 import re
 import unittest
 
-from test_upstream_task42 import ROOT, decision, definitions, section, event
+from test_upstream_task42 import ROOT, decision, definitions, evaluate, section, event
 from test_upstream_task47 import option
 from lib_1966_parser import member, parse_script, scalar, walk
 from lib_1966_runtime import compose_runtime
@@ -137,18 +137,81 @@ class UpstreamFirstTests(unittest.TestCase):
         for key in ('EVTNAME100', 'EVTDESC100', *(f'EVTOPT{letter}100' for letter in 'ABCD')):
             self.assertEqual(sum(line.startswith(key.encode() + b';') for line in labels), 1)
 
-    def test_anatolia_without_bosphorus_cedes_only_the_selected_provinces(self):
-        choice = option(event('RUSFlavor', 500291), 'EVTOPTB500291')
-        cessions = [node for node in choice.children if scalar(node, 'secede_province') == 'GRE']
-        cession, = cessions
-        self.assertEqual(cession.key, 'any_owned')
-        limit = section(cession, 'limit')
-        self.assertEqual(scalar(limit, 'is_core'), 'GRE')
-        exclusions = {shape(node.children)[0] for node in limit.children if node.key == 'NOT'}
-        self.assertEqual(exclusions, {('region', 'TUR_861'), ('region', 'TUR_860'),
-                                      ('province_id', '865'), ('province_id', '866'),
-                                      ('province_id', '862')})
-        self.assertEqual(scalar(section(choice, 'relation'), 'who'), 'GRE')
+    def test_anatolia_greek_core_and_cession_sets(self):
+        regions = {
+            'TUR_863': {862, 863, 864, 865, 866},
+            'TUR_869': {867, 869, 871, 872},
+            'TUR_873': {870, 873, 874, 875, 895},
+            'TUR_876': {868, 876, 877, 878, 880, 881},
+            'TUR_860': {828, 858, 859, 3387},
+            'TUR_861': {860, 861},
+        }
+        mapped = {node.key: {int(p.value) for p in node.children}
+                  for node in definitions('map/region.txt') if node.key in regions}
+        self.assertEqual(mapped, regions)
+        anatolia = set.union(*(regions[key] for key in ('TUR_863', 'TUR_869', 'TUR_873', 'TUR_876')))
+        straits = regions['TUR_860'] | regions['TUR_861']
+        excluded = straits | {862, 865, 866}
+        playable = {int(line.split(b';', 1)[0]) for line in
+                    (ROOT / 'TGC/map/definition.csv').read_bytes().splitlines()[1:]
+                    if line.split(b';', 1)[0].isdigit()}
+        self.assertLessEqual(anatolia | straits | {805, 855, 883, 994}, playable)
+
+        popup = event('RUSFlavor', 500291)
+        gates = section(popup, 'trigger')
+        self.assertEqual({int(node.key) for node in gates.children if node.key.isdecimal()},
+                         {860, 873, 876})
+        for letter, core_area, retained in (('B', anatolia, excluded),
+                                             ('C', anatolia | straits, set())):
+            choice = option(popup, f'EVTOPT{letter}500291')
+            grant, transfer = (node for node in choice.children if node.key == 'any_owned')
+            self.assertEqual(scalar(grant, 'add_core'), 'GRE')
+            self.assertEqual(scalar(transfer, 'secede_province'), 'GRE')
+            for owned, previous in (
+                (anatolia | straits | {805, 855, 883, 994}, {805}),
+                ({860, 873, 876, 862, 865, 866, 859, 805, 855, 883, 994},
+                 {805, 855, 859, 860, 862, 865, 866, 883, 869}),
+                ({860, 873, 876}, set()),
+            ):
+                def select(scope, cores):
+                    def matches(node, province):
+                        if node.key == 'region':
+                            return province in mapped[node.value]
+                        if node.key == 'province_id':
+                            return province == int(node.value)
+                        if (node.key, node.value) == ('owned_by', 'RUS'):
+                            return province in owned
+                        if (node.key, node.value) == ('is_core', 'GRE'):
+                            return province in cores
+                        raise AssertionError(node.key)
+
+                    limit = section(scope, 'limit')
+                    return {p for p in owned if evaluate(limit.children, lambda node: matches(node, p))}
+
+                with self.subTest(option=letter, owned=sorted(owned), previous=sorted(previous)):
+                    granted = select(grant, previous)
+                    self.assertEqual(granted - previous, (owned & core_area) - previous)
+                    self.assertEqual(select(transfer, previous | granted),
+                                     (owned & (previous | core_area)) - retained)
+
+    def test_anatolia_greek_vassal_and_capital_effects_follow_cession(self):
+        popup = event('RUSFlavor', 500291)
+        for letter, capital in (('B', None), ('C', '860')):
+            choice = option(popup, f'EVTOPT{letter}500291')
+            grant, transfer = (node for node in choice.children if node.key == 'any_owned')
+            relation = section(choice, 'relation')
+            selection = section(choice, 'random_country')
+            self.assertLess(grant.start.offset, transfer.start.offset)
+            self.assertLess(transfer.start.offset, relation.start.offset)
+            self.assertLess(relation.start.offset, selection.start.offset)
+            self.assertEqual(scalar(relation, 'who'), 'GRE')
+            self.assertEqual(shape(section(selection, 'limit').children),
+                             [('tag', 'GRE'), ('ai', 'yes'), ('exists', 'yes')])
+            self.assertEqual(scalar(selection, 'capital'), capital)
+            overlord = section(selection, 'RUS')
+            self.assertEqual(scalar(overlord, 'create_vassal'), 'GRE')
+            if capital:
+                self.assertLess(section(selection, 'capital').start.offset, overlord.start.offset)
 
     def test_petrograd_rewards_are_one_time_in_each_direction(self):
         for name, flag in (
