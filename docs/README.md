@@ -35,6 +35,7 @@ in [AGENTS.md](../AGENTS.md) e i comandi del [validator](../TGC/docs/1966_extens
 
 - [Deployment locale](deployment/local_deployment.md) — profili supportati, pubblicazione, verifica e recupero.
 - [Profilo The Grand Loader](deployment/script_extender_profile.md) — composizione, dipendenze e limiti dei profili con Script Extender.
+- [Laboratorio runtime Windows](deployment/runtime_lab.md) — isolamento, deployment, evidenze e ripristino.
 
 ## Re-baseline e questioni aperte
 

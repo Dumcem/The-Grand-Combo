@@ -1,0 +1,48 @@
+# Matrice delle verifiche runtime
+
+[Procedura del laboratorio](runtime_lab.md) · [Backlog](../rebaseline_backlog.md#verifiche-runtime)
+
+## Fixture condivise
+
+| Fixture | Preparazione e riuso |
+| --- | --- |
+| Nuova partita | Inizio 1836 in pausa. Una base per motore e profilo, con scenario Alice rigenerato dopo il deploy. Serve per smoke, configurazioni e prove ripetute Alice. |
+| Eventi pendenti | Derivazioni dalla base con un evento realmente accodato o un popup aperto nel punto richiesto. Conservare una copia prima dell'accodamento, una in attesa e una dopo la risposta. Usare per Temperance, Sonderbund e Gold Rush. Una prova forzata da console può diagnosticare gli effetti di una scelta, mentre la prova di dispatch richiede il percorso effettivo. |
+| Territorio e diplomazia | Derivazioni dalla base con proprietà divisa, soggetti e sfere controllabili, mappa e tag annotati. Serve per Yinxu, Petrograd, Gold Rush e Anatolia, con condizioni specifiche per ciascun caso. |
+| Guerra e pace | Base con due guerre e registrazione di belligeranti, leader, province e pace bilaterale/generale. Derivare una battaglia TEX/MEX e copie per USS e Loader senza condividere flag già consumati. |
+| Economia | Checkpoint gemelli a parità di POP, cassa, data, prezzi, velocità e servizi attivi. Riutilizzabili tra ingaggio e Loader con le rispettive condizioni. |
+
+Produrre le fixture nel laboratorio. Conservare motore, profilo, revisione,
+checksum e SHA-256 assieme alla ricetta. Le copie diagnostiche di vecchi
+salvataggi sono facoltative e richiedono provenienza e scenario compatibile
+documentati. Il risultato storico vale per la fixture effettivamente provata.
+
+## Primo gruppo
+
+V2 indica Victoria II 3.04 x86. Per Alice usare la versione 1.3.0 e una fixture
+per ogni scenario. Per i casi con «entrambi» iniziare dai profili condivisi.
+
+| Caso | Motore e profilo | Stato iniziale e azione | Osservazione, evidenza e chiusura |
+| --- | --- | --- | --- |
+| DEPLOY_STEAM | V2, `core` e `core+1966`, copia autorizzata fuori da `steamapps` | Da radice pulita, deploy verificato. Selezionare i descrittori corretti, creare partita, avanzare, salvare e riaprire. | Finestra responsiva, data e checksum osservati, salvataggio ricaricato, percorsi effettivi confinati. Conservare ricevuta, schermate, log e trace. Chiudere per entrambi i profili quando tutti i passaggi sono osservati. |
+| DEPLOY_LOADER | V2, entrambi i profili Extender | Radici private, INI e plugin verificati, avvio in finestra. Selezionare un solo descrittore, avanzare, salvare e riaprire. | Bootstrap e due inizializzazioni nel log, CB generato e cache privati, salvataggio riaperto. Conservare hash DLL/INI, trace, log e schermate. Chiudere dopo il riscontro per ciascuna radice. |
+| DEPLOY_ALICE | Alice, `core` e `core+1966` | Deploy verificato e directory scenario pulita o nomi univoci. Generare e aprire entrambi gli scenari, iniziare partita e riaprire salvataggio breve. | Due build attribuibili, hash, checksum, viewport responsiva e ricarica osservata. Conservare diagnostica separata, variante CPU, trace, schermate ed exit code. Un successo conta per quel tentativo. JIT ha un caso separato. |
+| [EVENT_ORPHAN](../event_orphan_review.md#prove-runtime-da-riprendere) | Alice, due profili condivisi | Riutilizzare entrambe le build DEPLOY_ALICE. Confrontare per ID e messaggio le 48 firme storiche. Controllare a parte i due messaggi 44840, EVENT_REF 4102182 e i 16 ID EVENT_MILITARY. | Attesa statica da verificare: 201090–201092 compilati e 45 corpi della coorte ancora non elaborati. Conservare log grezzi e diff per ID, comprese nuove firme e variazioni giustificate. Chiudere il confronto quando ogni ID ha un esito in entrambe le composizioni. |
+| [Yinxu](../event_orphan_review.md#prove-runtime-da-riprendere) | Entrambi, condivisi. V2 anche con i due Loader | Due paesi, provincia 1515 all'ospite. Eseguire A/B da copie gemelle, poi ramo forzato per proprietà o sfera e completamento 201096. | Popup all'ospite, risposta al richiedente, denaro, relazione e modificatore/flag attesi. Dopo 201096 entrambe le decisioni chiuse. Conservare scope, variazioni e popup. Chiudere dopo tutti i rami applicabili. Indus resta legato alla conferma di Harappa. |
+| TEMPERANCE | Entrambi, condivisi | Fixture per 180–191 già accodati, conservando ID, scadenza, destinatario e checksum originari. Iniziare con un caso riproducibile, poi estendere la copertura. | Caricamento, dispatch atteso per il paese giusto, esito di scelta e persistenza. Conservare salvataggi diagnostici e schermate/log per ID. Chiusura per combinazione provata e documentazione distinta delle fixture storiche indisponibili. |
+| SONDERBUND | Entrambi, condivisi | Invito pendente, invito recente già marcato, risposta accettata e rifiutata. Riaprire in attesa, ripetere il tentativo di invito e far maturare la risposta. Usare una variante anteriore alle guardie solo se disponibile. | Destinatario, risposta e flag persistono e le guardie bloccano duplicati sui percorsi correnti. Annotare l'eventuale ricomparsa di un vecchio popup come caso accettato. Conservare salvataggi, data, flag e schermate. Chiudere con esito ripetibile sui due motori. |
+
+## Gruppi successivi
+
+| Caso | Motore e profilo | Stato iniziale e azione | Osservazione, evidenza e chiusura |
+| --- | --- | --- | --- |
+| [PETROGRAD](../upstream_delta_register.md#petrograd--decisioni-e-rinomine-della-provincia-994) | Entrambi, condivisi e due Loader su V2 | Provincia 994, regioni divise, vassallaggio variabile. Provare entrambi i primi usi, sovrascrittura periodica e reload con/senza flag storico. | Nome, beneficiari, premi e guardie coerenti dopo reload. Conservare proprietari, relazioni, flag e premi. Chiudere sulle varianti della scheda. |
+| GOLD RUSH | Entrambi, condivisi e due Loader su V2 | MEX, USA, CAL o terzo titolare, regione divisa e 104 ceduta prima/dopo scelta. Dispatch naturale 99903, reload nei tre punti e prova dei flag. | Destinatari e refutazione corretti. Registrare POP, RGO, life rating e durata in cinque province, flag e storico di esecuzione. Chiudere sulle varianti del backlog. |
+| [ANATOLIA](../rebaseline_backlog.md#anatolia--perimetro-di-500291-e-verifiche-runtime) | Entrambi, condivisi | Russia proprietaria di sottoinsiemi di regioni, GRE/TUR presenti o assenti, GRE umana o AI. Esercitare le opzioni 500291 e 500294 dove applicabile. | Rilevare cessioni, core, capitale, esistenza, vassallaggio, cultura e pop. Conservare liste di province e snapshot nazionali. Chiudere confrontando ogni variante con la matrice 500291. |
+| [BATTLE_EVENT / Santa Anna](../event_orphan_review.md#prove-runtime-da-riprendere) | V2 condivisi. Alice dopo disponibilità di un gancio equivalente | TEX/MEX prima del 1840 con Santa Anna vivo e al governo, con/senza comando. Controlli con avversario diverso, sconfitta e data tardiva. Se parte 44840, esercitare A/B/C di 44841. | Rilevare scope, avversario, provincia, comando e guardia unica. Registrare destinatari e `texas_velasco_peace` solo per trattato pieno. Chiudere con dispatch e varianti negativi attribuibili oppure prova ripetibile del guasto. |
+| [USS_VICTORY_SCOPE](../rebaseline_backlog.md#uss_victory_scope--destinatario-dello-smembramento-dopo-la-vittoria-uss) | Entrambi, condivisi | Vittoria USS con un perdente valido e un terzo paese distinguibile, controllo con perdente non idoneo. Eseguire catena e confrontare pace, destinatario ed effetti. | Applicazione al destinatario atteso o evidenza di scope divergente. Conservare log e differenze per tag. Chiudere dopo riproduzione e attribuzione sui due motori. |
+| [MILITARY_HIRE_PAYMENT](../rebaseline_backlog.md#military_hire_payment--addebito-e-idoneità-nel-reclutamento-attivo) | Entrambi, condivisi | Copie con cassa sotto, alla soglia e sopra tariffa. Usare `utility_menu`, ripetere con finestre concorrenti e oltre i 30 giorni. | Rilevare idoneità, cassa, generale e cooldown. Registrare casi minimo/massimo, duplicazione e saldo effettivo. Chiudere con corrispondenza tra tariffa, addebito e guardie. |
+| LOADER_TREATY | V2, due Loader | Guerra e pace con fixture ottomana, clausole annotate, cessione volontaria e CB. Riprodurre le 23 clausole e isolare il termine eventualmente scartato. | Conservare ordine, indice, cedente, beneficiario, stato, costo nativo e costo osservato. Chiudere con attribuzione del termine e misura di `acquire_province` per provincia. |
+| LOADER_ECONOMY | V2, due Loader | Checkpoint gemelli, modificatori di strato nazionali/provinciali, misure prima/dopo 1990, banche/università e servizi di 53. | Registrare netto POP, ordini, cassa, ricorrenze e addebiti. Chiudere con misure comparabili e separazione degli effetti di 53 dal tick ordinario. |
+| LOADER_PEACE | V2, due Loader | Due guerre, più richieste per perdente, firma ritardata e 96021 già pendente. Passare dalla pace bilaterale alla generale. | Una sola chiusura 96094, flag consumati al punto previsto, cessioni non duplicate. Conservare sequenza delle firme, flag e territori in ogni stato. Chiudere dopo i controlli del backlog. |
+| PERFORMANCE / JIT Alice | Alice, condivisi. Per Performance Patch usare anche una serie V2 con Loader | Ripetere avvii da checkpoint e fixture identici. Tenere costanti variante CPU, scenario, profilo, velocità e risorse assegnate. Comparare tempi e crash usando una serie dichiarata. | Conservare tempi, risorse, hash e codici d'uscita, eventuali dump e messaggio di rilocazione. Contare successi e fallimenti separatamente per profilo e variante. Il caso JIT resta aperto finché manca una spiegazione verificata e una prova di regressione. [Evidenza storica](../upstream_reconciliation.md#evidenza-runtime-e-di-recupero) |

@@ -331,7 +331,8 @@ Keep the deployment source revision and profile with the receipt and manifest.
 Record runtime observations separately in the [re-baseline backlog](../rebaseline_backlog.md#verifiche-runtime).
 A verified transaction establishes the managed installation state for its
 recorded manifest. Runtime checks need an observable session and an isolated
-or recoverable user-data area.
+or recoverable user-data area. See the [Windows runtime lab](runtime_lab.md)
+for the isolation boundary, evidence capture and checkpoint procedure.
 
 On Windows, Alice 1.3.0 can write to Documents and local AppData.
 `-outputScenario` changes the scenario name only. Before generating scenarios,
