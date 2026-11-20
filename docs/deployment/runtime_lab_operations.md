@@ -236,3 +236,89 @@ sintetica e i tre comandi del deployer. Gli exit code `plan`, `apply` e
 `verify` sono tutti 0. I 103 percorsi protetti coincidono e la copia
 sacrificabile è stata rimossa. Cinque test locali passano per
 ricostruzione, mapping XML, ricezione delle evidenze e riuso cache.
+
+## Riscontro del Task 12
+
+Il 20 novembre 2026 `Containers-DisposableClientVM` risultava abilitata
+su Windows 11 Pro, con il launcher presente e senza segnali di riavvio
+pendente nei controlli di servicing. Il launcher ha completato la
+predisposizione iniziale del client Microsoft Windows Sandbox 0.8.114.0.
+La revisione usata nelle prove è `3c3be0d63138e3c9ddaef5ca3d2d04a40d3e98c3`.
+Sono stati verificati anche gli otto hash delle ricevute di riferimento del Task 10.
+
+Le sessioni `t12-ammissione-01` e `t12-ammissione-02` hanno usato la
+stessa baseline sintetica `admission-t12-v1`, con rete, clipboard,
+periferiche e vGPU disabilitate, Protected Client attivo e outbox separate.
+In entrambe il guest ha creato, modificato ed eliminato sentinelle. Le
+scritture sui due mount in sola lettura sono state negate. Nella seconda
+sessione, con un nuovo ID Sandbox, erano assenti le sentinelle lasciate
+nella prima sotto la radice di prova, Documenti, AppData locale e roaming e
+TEMP. Il desktop del secondo guest è stato osservato direttamente. Gli
+inventari prima/dopo coincidono per le 103 voci host protette e i due
+mount di ingresso. Entrambi gli export sono stati verificati con
+`archive-export`.
+
+La sonda ha registrato cinque esiti `false` per sessione a causa del modo
+in cui PowerShell avvolge `UnauthorizedAccessException`. Le cinque
+operazioni hanno restituito esplicitamente accesso negato. Il riesame ha
+confermato anche gli hash invariati e ha conservato intatti i registri
+grezzi. L'esito rivisto è in
+`sessions/t12-ammissione-02/admission-summary.json`. La traccia disponibile
+è il registro delle operazioni sintetiche, con percorso, orario ed esito.
+
+Per ripetere l'ammissione usare `sandbox-config --baseline admission-t12-v1`
+con un ID nuovo per ciascuna sessione. Nella configurazione generata,
+impostare il comando di accesso sulla sonda archiviata
+`C:\TGCInput\probe.ps1`, come negli esempi `.wsb` delle due sessioni.
+Usare `host-check` prima e dopo. Chiudere e verificare l'ID con
+`wsb.exe list --raw` e `wsb.exe stop --id <id>`. Conservare i risultati
+dell'outbox con `archive-export`.
+
+### Smoke Alice 1.3.0 core
+
+`t12-alice-core` ha completato `plan → apply → verify` nel guest con la
+revisione `3c3be0d63` e lo stesso profilo di isolamento. Il manifest TGC
+ha digest `1dcfee2f661923abf19472c315dc4c4767d5fa8f4759578db806be16ec30ce94`.
+Al primo avvio `launch_alice.exe` è uscito con `0xC0000135`. Nel guest
+mancavano `MSVCP140.dll`, `VCRUNTIME140.dll` e `VCRUNTIME140_1.dll`,
+dipendenze di `LLVM-C.dll`. Le tre copie x64 già presenti sull'host,
+firmate da Microsoft, sono state verificate per SHA-256 e affiancate
+all'eseguibile nella radice guest. Il mount aggiuntivo ha rifiutato
+la scrittura e la verifica del deploy TGC è passata di nuovo.
+[Distribuzione locale delle librerie Visual C++](https://learn.microsoft.com/en-us/cpp/windows/deployment-in-visual-cpp)
+
+Il launcher ha generato `tgc-lab-core.bin` e ha avviato `Alice.exe`
+(variante AVX2) con quel file. Sono stati osservati il globo del 1836,
+l'ingresso in partita con l'Impero russo al 1º gennaio 1836 e il ritorno
+al launcher con «Save and Exit». Il salvataggio sintetico è stato
+verificato su disco. Il checksum interno Alice nelle intestazioni dello
+scenario e del salvataggio coincide. SHA-256 dello scenario:
+`dc348af50328d761edc85d78f64c98cbe3611ab0abe0a1634aa85badf31b2ed8`.
+La sessione è stata distrutta e le 105 voci inventariate sono
+risultate invariate, come l'ingresso ausiliario. L'export di 23 file
+comprende `scenario_errors.txt` separato, scenario, salvataggio, manifest,
+registro dell'errore iniziale e hash dell'eseguibile. Il riepilogo e
+l'identità riutilizzabile sono in `sessions/t12-alice-core/`.
+Un ripristino locale dalla cache con `scenario-reuse` ha restituito lo
+stesso SHA-256 senza avviare o ricompilare lo scenario.
+[Formato delle intestazioni Alice 1.3.0](https://github.com/schombert/Project-Alice/blob/v1.3.0/src/gamestate/serialization.hpp#L174-L193)
+
+Per preparare una nuova sessione core con cache, dalla sessione Windows
+ordinaria usare l'ID della baseline e la chiave registrata.
+
+```powershell
+$key = (Get-Content "$lab\sessions\t12-alice-core\runtime-summary.json" -Raw | ConvertFrom-Json).cache_key
+python -B $tool sandbox-config --lab-root $lab --run alice-core-02 `
+    --baseline alice-130-t12 --commit 3c3be0d63138e3c9ddaef5ca3d2d04a40d3e98c3 `
+    --engine alice --profile core --cache-key $key
+```
+
+La baseline ausiliaria `alice-130-t12-vc-runtime` contiene le tre DLL e
+il loro manifest. Esporre quell'ingresso in sola lettura e verificare
+hash e permessi. Copiare le tre DLL solo nella radice di gioco guest
+prima di avviare Alice. Nel guest, dopo `guest-deploy`, confrontare
+`scenario-identity.json` con la variante usata, il digest del nuovo
+manifest e gli hash delle DLL. Usare `scenario-reuse` dalla voce montata
+e collocare `scenarios/tgc-lab-core.bin` nella cartella scenari del
+guest. Il launcher con il solo descrittore TGC selezionato riconosce lo
+scenario. Conservare il controllo host e l'export per il nuovo ID.

@@ -1,10 +1,11 @@
 # Laboratorio runtime Windows
 
 Il laboratorio conserva su disco locale procedure, input ed evidenze. Windows
-Sandbox è il primo ambiente di esecuzione da qualificare su Windows 11 Pro.
+Sandbox è la modalità operativa qualificata per l'isolamento con sentinelle
+su Windows 11 Pro, con Protected Client attivo e vGPU disattivata.
 Ogni sessione può essere chiusa e ricostruita dagli input verificati. Il
 deployer resta l'unico strumento di pubblicazione dei contenuti TGC.
-[Comandi e archivio permanente](runtime_lab_operations.md) · [Matrice runtime](runtime_lab_matrix.md)
+[Comandi e archivio permanente](runtime_lab_operations.md) · [Ammissione Task 12](runtime_lab_operations.md#riscontro-del-task-12) · [Matrice runtime](runtime_lab_matrix.md)
 
 ## Confine di isolamento
 
