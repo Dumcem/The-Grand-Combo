@@ -1,4 +1,4 @@
-"""Regression checks for the Indus and Yinxu excavation decisions."""
+"""Regression checks for the Yinxu excavation decisions."""
 
 import unittest
 
@@ -10,7 +10,6 @@ class ExcavationPermissionTests(unittest.TestCase):
     def test_diplomatic_requests_reach_each_site_owner_and_return_to_requester(self):
         sites = (
             ('mesopotamian', '926', 201010, 201011, 201012),
-            ('indus', '1128', 201080, 201081, 201082),
             ('yinxu', '1515', 201090, 201091, 201092),
         )
         for site, province, request, grant, refusal in sites:

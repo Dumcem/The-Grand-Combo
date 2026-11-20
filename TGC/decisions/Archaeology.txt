@@ -494,7 +494,7 @@ indus_excavations = {
 		}
 
 		effect = {
-			1128 = { owner = { country_event = 201080 } }
+			1128 = { owner = { country_event = 201010 } }
 			add_country_modifier = { name = international_negotiations duration = 730 }
 		}
 	}
