@@ -322,3 +322,154 @@ manifest e gli hash delle DLL. Usare `scenario-reuse` dalla voce montata
 e collocare `scenarios/tgc-lab-core.bin` nella cartella scenari del
 guest. Il launcher con il solo descrittore TGC selezionato riconosce lo
 scenario. Conservare il controllo host e l'export per il nuovo ID.
+
+## Riscontro del Task 13
+
+Il checkpoint Git iniziale era `ca008ec0b9b4d431cd5a8d1335b43c90a4033166`.
+Le prove riusano il bundle `alice-130-t12` a
+`3c3be0d63138e3c9ddaef5ca3d2d04a40d3e98c3`. Il delta fino al checkpoint
+contiene soltanto documentazione. Si riusano inoltre `alice-130-t12-vc-runtime`,
+Windows Sandbox con Protected Client e vGPU disattivata e il client
+Project Alice 1.3.0 AVX2 con SHA-256
+`b1a2d4d664add6f5187d6c4fd92e259930cb1944cdc3636c36ef58e993318c95`.
+SHA-256 della baseline di input
+`9cfcaec59df040ad0dd709d4551805677fc1e01d517840a6a136c8686e0973eb`.
+
+### Riapertura core
+
+`t13-alice-core` ha completato `plan → apply → verify` nel guest
+e ripristinato `tgc-lab-core.bin` tramite `scenario-reuse`. Il
+manifest coincide con quello del Task 12
+(`1dcfee2f661923abf19472c315dc4c4767d5fa8f4759578db806be16ec30ce94`).
+La cache ha chiave
+`af6ea133dbbeb22a2fc76c22209fcc0e405c30db850bdad58e19ef71854ae92e`.
+Il motore ha riaperto il salvataggio del Task 12 in partita, con l'Impero
+russo in pausa al 1º gennaio 1836. Dopo cinque giorni di simulazione
+sono stati eseguiti «Save and Exit» e un nuovo avvio di Alice. Il nuovo
+salvataggio ha riportato alla partita in pausa al 6 gennaio 1836 con
+lo stato osservato prima dell'uscita. I file sono in `raw/synthetic-saves/`
+e le immagini in `screens/`.
+
+| Artefatto `core` | Impronta |
+| --- | --- |
+| SHA-256 dello scenario | `dc348af50328d761edc85d78f64c98cbe3611ab0abe0a1634aa85badf31b2ed8` |
+| Checksum Alice dello scenario e dei due salvataggi | `8db62b55a969b9194c823224decd040ff00634670d99c6b6ec7151655b8d944e374c5c5d33f187a7b655e8fae42bead5af2e1bac07ecceaff9d639d5a2ec7815` |
+| SHA-256 della fixture RUS del 1º gennaio | `bc2fd6624c8f0fc5f546407893017a3b0e4ff36a2de5d3f71eab1c9d1d5ec096` |
+| SHA-256 del nuovo salvataggio RUS del 6 gennaio | `78ca27a008663dfe9ae6b361b1c25586fa92bb2d9170f848eda0a77337edd42b` |
+
+La diagnostica `core` proviene dalla build Task 12 dello stesso scenario,
+con 70 errori e 301 warning. Le tre firme di errore con riga diversa
+rispetto al Task 36 sono OPTIONS_CANAL. Il limite di opzioni in 36996
+ricompare quattro righe prima dopo la rimozione di quattro assegnazioni
+a flag provinciali nel file. Il [confronto per ID](../event_orphan_review.md#confronto-diagnostico-alice-130)
+riporta 45 firme della coorte EVENT_ORPHAN.
+
+L'export ha verificato 23 file. Al termine `wsb list --raw` non
+elencava guest. `host-check` ha attestato 106 ambiti invariati, inclusi
+input, richiesta e voce cache. Gli hash dell'input Visual C++ montato
+separatamente coincidono nelle due ricevute ausiliarie.
+
+### Qualificazione core+1966
+
+`t13-alice-1966` ha completato `plan → apply → verify` con il manifest
+`11b4e5b23edd78dce306b2275cf81aad4052693f83740dc6033d4753d08590ed`.
+Il launcher è uscito con codice 0. La maschera `TGC Timeline 1966`
+ha selezionato il descrittore Timeline e la sua dipendenza core. Lo
+scenario `tgc-lab-core-1966.bin` registra le radici nell'ordine
+gioco base, TGC, Timeline. Il deploy verificato conserva gli override
+della Timeline, inclusi `common/defines.lua` e `technologies/army_tech.txt`.
+
+Al primo tentativo, Alice ha smesso di rispondere nella transizione
+dalla schermata iniziale. Il processo è
+stato chiuso e rilanciato con lo stesso scenario. Al secondo tentativo,
+selezionando esplicitamente «New Game» e l'Impero russo, la partita
+era responsiva e in pausa al 1º gennaio 1836. Dopo sette giorni di
+simulazione, «Save and Exit» e un nuovo avvio hanno permesso di
+riaprire la partita in pausa all'8 gennaio con lo stato salvato.
+La causa del primo blocco rimane indeterminata. Le evidenze del
+tentativo sono in `raw/first-entry-stall.json` e `screens/`.
+
+| Artefatto `core+1966` | Impronta |
+| --- | --- |
+| SHA-256 dello scenario | `e7759c161303653fb86cc47751fca0ec56255c4973852005283b1c05eb59e682` |
+| Checksum Alice dello scenario e del salvataggio | `a58c7830726f91b616c8aa4affcc7d02f39e3d67111e00d41dced44834398fc65ca2ee8ade2f8ffb6afa1b208b73025073ab34fe89151d844c6d1227147c14c3` |
+| SHA-256 del salvataggio RUS dell'8 gennaio | `5994a55ad7ee296c3d7e9994d4cdf3d64911fc9e31ef32ed710c26253fb3935b` |
+| Chiave cache | `0fc64b376b1cdf45eb824da36d723ab8234570c5a4253046c7f473b903ceaa28` |
+
+La build ha riportato 104 errori non fatali e 301 warning. I 34
+errori aggiuntivi rispetto a `core` riguardano i campi e riferimenti
+storici di tecnologie e invenzioni Timeline. Tutte le firme di errore
+coincidono con il Task 36, tenuto conto dello spostamento delle tre
+righe OPTIONS_CANAL. I due profili hanno le stesse 301 firme di
+warning, con le stesse molteplicità. [Diagnostica storica](../rebaseline_backlog.md#provenienza-della-diagnostica-alice)
+
+`scenario-store` ha conservato lo scenario archiviato. Una prova
+separata di `scenario-reuse` ha restituito lo stesso SHA-256.
+L'export ha verificato 27 file. Il guest è stato distrutto e la lista
+di Sandbox è risultata vuota. I 105 ambiti protetti e gli hash
+dell'input Visual C++ coincidono con le impronte iniziali. Le fixture
+riutilizzabili sono in `fixtures/alice-130-core-t13` e
+`fixtures/alice-130-1966-t13`, con ricetta, impronte e identità dello
+scenario.
+
+### Controlli tecnici 1966
+
+- Il validator strutturale è passato su 25 aree, 300 tecnologie e 230
+  invenzioni nel perimetro. Ha segnalato 53 limiti semantici Alice come
+  diagnostica.
+- L'audit ha registrato 0 FAIL, 1.828 WARN e 2.972 INFO. I risultati sulle
+  soglie sono calcolati sui valori grezzi degli script con base normativa
+  da validare. Le proiezioni motore seguono il perimetro dichiarato
+  dall'audit. [Contratto dell'audit](../../TGC/docs/1966_balance_audit.md)
+- **PRIORITY SUMMARY.** Undici gruppi di semantica motore, due di
+  disponibilità, uno di design e 120 lacune di evidenza. Zero gruppi
+  nelle categorie integrità, perimetro sorgenti, invarianti tecniche e
+  meccaniche.
+- **RECOMMENDED PLAYTEST FOCUS.** L'audit elenca cinque proprietà di
+  `aircraftcarrier`: `build_time` (8), `default_organisation` (9),
+  `gun_power` (2), `maximum_speed` (2) e `supply_consumption` (8).
+  I conteggi derivano dalle regole diagnostiche sui valori grezzi.
+- 122 casi del deployer e del laboratorio (6 saltati), 124 casi
+  delle suite 1966 e due regressioni Yinxu, tutti con uscita 0.
+
+I log dei due controlli 1966 sono in
+`%LOCALAPPDATA%\TGC-Runtime-Lab\sessions\task13\raw`.
+
+### Ripetizione delle prove
+
+Preparare una sessione per volta dalla working copy e assegnarle un ID
+nuovo. Usare lo stesso commit del bundle per riprodurre queste prove.
+Usare l'identità e la chiave della fixture scelta.
+
+```powershell
+$lab = Join-Path ([Environment]::GetFolderPath('LocalApplicationData')) 'TGC-Runtime-Lab'
+$py = "$lab\baselines\alice-130-t12\input\tools\Python\python.exe"
+$tool = 'tools/deploy/runtime_lab.py'
+$ref = '3c3be0d63138e3c9ddaef5ca3d2d04a40d3e98c3'
+$run = 'alice-core-replay-01'
+$fixture = Get-Content "$lab\fixtures\alice-130-core-t13\fixture.json" -Raw | ConvertFrom-Json
+# Per core+1966 scegliere alice-130-1966-t13 e un altro ID.
+& $py -B $tool sandbox-config --lab-root $lab --run $run --baseline alice-130-t12 --commit $ref --engine alice --profile $fixture.profile --cache-key $fixture.cache_key
+```
+
+Replicare il mount in sola lettura delle DLL ausiliarie dal
+`session.wsb` della prova. Collocare l'identità, il manifest e la
+fixture scelta nella richiesta prima di acquisire
+`host-check --phase before`. Avviare con `wsb start --config`
+passando il contenuto di `session.wsb` e aprire la console con
+`wsb connect --id <id>`. Nel guest usare la procedura di
+ammissione e `guest-deploy`, confrontare il manifest e gli hash
+effettivi, quindi eseguire `scenario-reuse` con la ricetta sotto
+`C:\TGCScenarioEntry`. Collocare lo scenario in
+`Documents\Project Alice\scenarios` e il salvataggio in
+`Documents\Project Alice\saved games` nelle cartelle utente del guest.
+Avviare Alice, selezionare il salvataggio, premere «Play» e controllare
+nazione, data e stato. Salvare, chiudere Alice, riavviarlo e ripetere
+la selezione con il nuovo salvataggio.
+
+Per ripetere una nuova build Timeline, usare `--profile core+1966` e
+omettere `--cache-key`. Dopo `guest-deploy` e il controllo delle
+librerie eseguire `guest-alice-build`. Per entrambi i profili, usare
+`guest-export` a motore chiuso, poi `wsb stop --id <id>`,
+`wsb list --raw`, `host-check --phase after` e `archive-export`.
+I controlli host prendono `--lab-root $lab --run $run`.

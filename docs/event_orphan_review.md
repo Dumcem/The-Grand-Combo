@@ -100,9 +100,31 @@ Le decisioni GEF furono commentate da `ecc55dc33`. I TODO espliciti del trattato
 
 I due test di regressione archeologica, i 188 test generali e gli 11 test dei profili Loader passano. Il drift core–Timeline verifica 18 percorsi per direzione da `99780e8ce` con `--fail-on-warn`, 0 FAIL e 0 WARN in entrambi i sensi. I due file archeologici sono fuori dal perimetro del validator e dell'audit di bilanciamento 1966.
 
+## Confronto diagnostico Alice 1.3.0
+
+Il Task 13 ha confrontato il log della build `core` del Task 12, riusata
+con cache verificata, e il nuovo log `core+1966` con il log storico
+del Task 36 identificato dal suo SHA-256. In entrambi i profili le 45
+firme conservate nella coorte coincidono per ID e messaggio. Sono assenti
+solo le firme di 201090, 201091 e 201092. Le tre firme 201080–201082 attestano
+che `events/Archaeology.txt` è stato caricato. Le definizioni Yinxu sono
+nello stesso file e la decisione effettiva le raggiunge. Le diagnostiche
+di compilazione per quel file e per la decisione sono assenti. La compilazione della
+catena è coerente con questi riscontri e con la risoluzione degli eventi
+pendenti di Alice. Restano da osservare in partita le opzioni e gli
+effetti. [Risoluzione Alice 1.3.0](https://github.com/schombert/Project-Alice/blob/v1.3.0/src/parsing/nations_parsing.cpp#L1235-L1259)
+
+Entrambi i log conservano le 16 firme del ramo inattivo EVENT_MILITARY
+per 10000105–10000120. Per 44840 rimangono «defined but never
+triggered» per il corpo nazionale e «referenced but never defined» per
+il riferimento provinciale. È assente la firma di 4102182. L'inventario
+effettivo conferma l'assenza dell'ID USS da eventi e decisioni. I CSV
+`event-orphan-core.csv` e `event-orphan-core-1966.csv` conservano i
+risultati per ID e le righe dei log in
+`%LOCALAPPDATA%\TGC-Runtime-Lab\sessions\task13`.
+
 ## Prove runtime da riprendere
 
-1. In Alice 1.3.0, rigenerare scenari core e core + Timeline da un deployment verificato quando gli output utente saranno isolati. Cercare per firma e ID. Attese statiche per questa coorte: compilazione di 201090–201092 e 45 corpi ancora non elaborati. Controllare separatamente entrambi i messaggi di `44840` e l'assenza di nuovi errori di compilazione per Yinxu.
-2. Su entrambi i motori, provare la decisione Yinxu con due paesi distinti e 1515 in possesso del paese ospite. Il popup deve aprirsi all'ospite e A/B devono tornare al richiedente con denaro, relazione e modificatore o flag corretti. Provare anche il ramo forzato con proprietà o sfera e la chiusura di entrambe le decisioni dopo 201096. In 3.04 includere i due profili Loader. Riprendere Indus dopo la verifica della provincia e ripetere la stessa matrice con 201080–201082.
-3. Per BATTLE_EVENT provare in 3.04 una vittoria terrestre TEX contro MEX prima del 1840 con Santa Anna al governo e vivo, con e senza Santa Anna al comando. Includere una vittoria contro un altro avversario mentre TEX è in guerra con MEX, una sconfitta e una vittoria dopo il 1840. Registrare scope del vincitore, avversario, provincia, comandante e applicazione della guardia di esecuzione unica. Se la catena parte, esercitare le tre opzioni di 44841 e confermare i destinatari, in particolare `texas_velasco_peace` per il solo trattato pieno. Per Alice riaprire quando un gancio equivalente è implementato e il tipo del record può essere verificato.
-4. Per 8500/8501, solo se serve il debug, provare in un ambiente isolato risoluzione da console su 3.04, guardia amazzonica, risposta a `QQQ` e province persiane. Prima di riaprire i rami senza radice usare i criteri per ID riportati sopra. EVENT_REF, EVENT_MILITARY e BRZ 8502/8503 restano coperti dalle verifiche già documentate. [Backlog](rebaseline_backlog.md#eventi-decisioni-e-mappa)
+1. Su entrambi i motori, provare la decisione Yinxu con due paesi distinti e 1515 in possesso del paese ospite. Il popup deve aprirsi all'ospite e A/B devono tornare al richiedente con denaro, relazione e modificatore o flag corretti. Provare anche il ramo forzato con proprietà o sfera e la chiusura di entrambe le decisioni dopo 201096. In 3.04 includere i due profili Loader. Riprendere Indus dopo la verifica della provincia e ripetere la stessa matrice con 201080–201082.
+2. Per BATTLE_EVENT provare in 3.04 una vittoria terrestre TEX contro MEX prima del 1840 con Santa Anna al governo e vivo, con e senza Santa Anna al comando. Includere una vittoria contro un altro avversario mentre TEX è in guerra con MEX, una sconfitta e una vittoria dopo il 1840. Registrare scope del vincitore, avversario, provincia, comandante e applicazione della guardia di esecuzione unica. Se la catena parte, esercitare le tre opzioni di 44841 e confermare i destinatari, in particolare `texas_velasco_peace` per il solo trattato pieno. Per Alice riaprire quando un gancio equivalente è implementato e il tipo del record può essere verificato.
+3. Per 8500/8501, solo se serve il debug, provare in un ambiente isolato risoluzione da console su 3.04, guardia amazzonica, risposta a `QQQ` e province persiane. Prima di riaprire i rami senza radice usare i criteri per ID riportati sopra. EVENT_REF, EVENT_MILITARY e BRZ 8502/8503 restano coperti dalle verifiche già documentate. [Backlog](rebaseline_backlog.md#eventi-decisioni-e-mappa)
