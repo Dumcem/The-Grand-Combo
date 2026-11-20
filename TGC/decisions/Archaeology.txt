@@ -494,7 +494,7 @@ indus_excavations = {
 		}
 
 		effect = {
-			1128 = { owner = { country_event = 201010 } }
+			1128 = { owner = { country_event = 201080 } }
 			add_country_modifier = { name = international_negotiations duration = 730 }
 		}
 	}
@@ -539,7 +539,7 @@ indus_excavations = {
 				has_country_modifier = yinxu_excavations
 				has_country_modifier = international_negotiations
 				has_country_flag = yinxu_refused
-				has_global_flag = oraclebones_found
+				has_global_flag = oracle_bones
 			}
 		}
 
@@ -551,7 +551,7 @@ indus_excavations = {
 		}
 
 		effect = {
-			1515 = { owner = { country_event = 201010 } }
+			1515 = { owner = { country_event = 201090 } }
 			add_country_modifier = { name = international_negotiations duration = 730 }
 		}
 	}
@@ -566,7 +566,7 @@ indus_excavations = {
 			}
 			NOT = {
 				has_country_modifier = yinxu_excavations
-				has_global_flag = oraclebones_found
+				has_global_flag = oracle_bones
 			}
 		}
 

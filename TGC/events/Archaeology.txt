@@ -3675,7 +3675,6 @@
 			money = -15000
 			add_country_modifier = { name = yinxu_excavations duration = -1 }
 			relation = { who = FROM value = 20 }
-			set_global_flag = oraclebones_found
 		}
 	}
 
