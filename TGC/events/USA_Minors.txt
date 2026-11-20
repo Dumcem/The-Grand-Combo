@@ -1339,6 +1339,9 @@
 			OR = {
 				has_country_flag = hasmanifestdestiny
 				has_global_flag = manifest_destiny_refuted
+				# Older saves can record the refutation only on the current owner.
+				has_country_flag = manifest_destiny_refuted_country
+				has_country_flag = manifest_destiny_refuted
 			}
 			war = no
 			NOT = { has_global_flag = cali_gold_rush }
