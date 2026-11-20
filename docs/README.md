@@ -39,6 +39,7 @@ in [AGENTS.md](../AGENTS.md) e i comandi del [validator](../TGC/docs/1966_extens
 ## Re-baseline e questioni aperte
 
 - [Registro della re-baseline](rebaseline_backlog.md) — questioni tecniche, stato delle verifiche e condizioni di riesame.
+- [Riesame EVENT_ORPHAN](event_orphan_review.md) — inventario dei 48 ID storici, registrazione nei motori e casi runtime pendenti.
 
 ## Sincronizzazione upstream
 
