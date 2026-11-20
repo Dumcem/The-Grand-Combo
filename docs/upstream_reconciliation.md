@@ -37,6 +37,25 @@ Il 19 novembre 2026 la punta di `master` upstream era `85f173164`. Sono stati co
 
 Verificati i quattro inventari dei profili, senza pubblicare payload. I due controlli drift hanno 0 FAIL e 0 WARN. Il validator 1966 passa e l’audit restituisce 0 FAIL, 1.828 WARN e 2.972 INFO, in linea con il [checkpoint TEXTILE](rebaseline_backlog.md#textile--merci-industriali-inesistenti). Questi riscontri sono statici. L’avvio, la rigenerazione dello scenario Alice e le prove sui salvataggi restano pendenti. Le cinque correzioni residue recepite erano già upstream, quindi ulteriori PR sarebbero ridondanti.
 
+## Integrazione Git delle PR #428–442
+
+Il Task 7 ha recuperato `master` dall'upstream ufficiale e integrato `85f173164fe2ef635c78eac48880d79fcaa9ebd7` partendo da `a7b1aeb64913291e2d8ec0dbd6b612c52be1c994`. Il merge-base è `8f106a7f0`, già integrato da `124844576`. Il confronto con il primo genitore conferma che tutti i file tracciati al di fuori della documentazione canonica conservano gli stessi blob. L'intervallo upstream comprende 15 merge e 15 commit di contributo, distribuiti su 27 file.
+
+| Risoluzione | Riscontro sul risultato |
+| --- | --- |
+| Guida Low RAM, #438 | Conservata la formulazione già riconciliata. Entrambe le versioni riportano 500 MB e la possibilità di fino a sei crash nei primi avvii. |
+| Bancarotta, #430 | I tre controlli in conflitto hanno lo stesso `relation = { who = FROM value = 100 }`. Conservati anche gli effetti `is_slave` del fork nelle opzioni 70000 e 70001. |
+| Sonderbund, #439 | I blocchi eseguibili di `SWIFlavor.txt` coincidono. Conservato il commento che spiega la guardia durante l'attesa della risposta. |
+| Localizzazione polacca, #435 | L'unione automatica aggiungeva una seconda copia delle due righe identiche di 203903. Conservata la posizione scelta in `068c8cabf` e lasciate distinte le chiavi di 500007. |
+
+Il confronto delle righe aggiunte e rimosse sui 27 percorsi conferma i contributi upstream, con la formulazione equivalente della guida Low RAM. Il controllo in contesto conserva le guardie finlandesi SWE e SCA, il lettore messicano `protecting_legacy_GCO` e il produttore minuscolo del fork, le guardie del menu indigeno, `PROV2447` Rio de Janeiro e `PROV1203` Osh. Le altre differenze sui file interessati riguardano commenti, codifica, formattazione o comportamenti del fork fuori dagli hunk upstream, tra cui scope di Carrington, esclusioni per Belgio e Brasilia e protezioni messicane e russe. Per le altre esclusioni e gli adattamenti restano validi il [registro](upstream_delta_register.md#eccezioni-di-contenuto-e-condizioni-di-riesame) e i [contratti Loader](deployment/script_extender_profile.md#contratti-dei-consumatori).
+
+La suite generale supera 185 test, comprese 47 regressioni upstream. Nei quattro inventari effettivi sono univoche le 11 chiavi di localizzazione controllate, oltre alla chiave d'opzione 980005 nella composizione Direct Immigration. Il drift in entrambe le direzioni, con base `a7b1aeb64` e `--fail-on-warn`, verifica 18 percorsi con 0 FAIL e 0 WARN. Il validator 1966 verifica 25 aree, 300 occorrenze tecnologiche, localizzazione e struttura. L'intero output dell'audit è identico al pre-merge (0 FAIL, 1.828 WARN, 2.972 INFO). Le differenze di semantica Alice e le soglie di bilanciamento non validate conservano lo stato già documentato.
+
+La suite di deployment simulato su Windows termina con 115 successi su 117 casi, inclusi gli 11 test dei profili e degli overlay. Due casi sono saltati per il privilegio Windows di creazione dei symlink. Il controllo delle junction native e quelli degli hardlink passano.
+
+L'identità dei payload e il controllo dei confini Loader costituiscono evidenza di non regressione statica per Victoria II 3.04 e Project Alice 1.3.0. Le osservazioni in gioco disponibili sono riferite ai checkpoint precedenti. Lo scenario Alice e i salvataggi restano nel perimetro delle [verifiche runtime del backlog](rebaseline_backlog.md#verifiche-runtime). Il merge incorpora contributi già upstream, quindi una nuova PR per questo checkpoint sarebbe ridondante.
+
 ## Evidenza runtime e di recupero
 
 - **Steam e Alice a `864c81fe8`.** Il motore originale raggiunse una finestra responsiva per core e Timeline. Alice generò entrambi gli scenari, caricò il core e caricò la Timeline in uno di tre tentativi. Gli altri due terminarono con `0xC0000409` e `IMAGE_REL_AMD64_ADDR32NB relocation requires an ordered section layout`. Il controllo con lo scenario precedente riuscì. Il difetto intermittente è localizzato nella rilocazione JIT Windows, con causa delle allocazioni e correzione ancora aperte. I diagnostici furono 150 errori non fatali e 314 avvisi per core, 195 e 314 per Timeline. I 197 errori Timeline appartengono a un checkpoint anteriore.
