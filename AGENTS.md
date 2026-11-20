@@ -15,6 +15,16 @@ See the [fork documentation index](docs/README.md) for technical references.
 - After upstream TGC synchronization, consider Project Alice compatibility as part of the mandatory regression review together with core/1966 synchronization.
 - If preserving both engines would require a substantive gameplay or design compromise, do not choose one silently: report the conflict and obtain a project decision before proceeding.
 
+## Savegame compatibility policy
+
+- Backward compatibility with savegames created by earlier versions of the mod is a best-effort convenience, not a development requirement or a guarantee.
+- Preserve existing savegame compatibility when doing so is straightforward and does not introduce meaningful complexity, maintenance burdens, technical debt, or compromises to gameplay and implementation quality.
+- Do not introduce or retain legacy code paths, compatibility shims, migration mechanisms, redundant events, obsolete structures, or other workarounds solely to keep older savegames usable when a cleaner implementation is preferable.
+- Fixes, refactoring, balance changes, and new mechanics may intentionally invalidate older savegames when justified by the long-term quality and maintainability of the mod. Avoid unnecessary incompatibilities, but do not distort development priorities to prevent them.
+- Players wishing to continue an existing campaign may retain and use the corresponding older mod version rather than expecting to migrate their savegame to every subsequent release.
+- When a change is known to invalidate older savegames, document that consequence where relevant. Historical savegames may still be used for debugging or regression analysis without implying an obligation to maintain their compatibility.
+- This policy concerns compatibility across mod revisions and does not weaken the separate requirement to support both the original Victoria II engine and the adopted Project Alice baseline.
+
 ## External engine research references
 
 - When an investigation depends on Victoria II engine behavior, Project Alice compatibility, or other opaque mechanics, consider relevant public technical research when it can materially improve accuracy or avoid duplicating work. This may include reverse-engineering studies, engine-extension or patch projects, diagnostic tooling, and reproducible experiments.
