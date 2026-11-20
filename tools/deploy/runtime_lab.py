@@ -213,7 +213,8 @@ def sandbox_config(args):
     for key in ("Networking", "ClipboardRedirection", "PrinterRedirection", "AudioInput", "VideoInput"):
         ElementTree.SubElement(config, key).text = "Disable"
     ElementTree.SubElement(config, "ProtectedClient").text = "Enable"
-    ElementTree.SubElement(config, "VGpu").text = "Enable" if args.vgpu else "Disable"
+    # Windows Sandbox CLI requires this exact element name.
+    ElementTree.SubElement(config, "vGPU").text = "Enable" if args.vgpu else "Disable"
     mappings = ElementTree.SubElement(config, "MappedFolders")
     for host, guest, readonly in mounts:
         mapping = ElementTree.SubElement(mappings, "MappedFolder")

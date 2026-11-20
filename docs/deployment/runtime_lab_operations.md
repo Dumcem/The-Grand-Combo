@@ -247,8 +247,9 @@ La revisione usata nelle prove è `3c3be0d63138e3c9ddaef5ca3d2d04a40d3e98c3`.
 Sono stati verificati anche gli otto hash delle ricevute di riferimento del Task 10.
 
 Le sessioni `t12-ammissione-01` e `t12-ammissione-02` hanno usato la
-stessa baseline sintetica `admission-t12-v1`, con rete, clipboard,
-periferiche e vGPU disabilitate, Protected Client attivo e outbox separate.
+stessa baseline sintetica `admission-t12-v1`, con rete, clipboard e
+periferiche disabilitate, Protected Client richiesto e outbox separate.
+Il Task 14 ha chiarito il limite della [direttiva vGPU storica](#controllo-della-configurazione-grafica).
 In entrambe il guest ha creato, modificato ed eliminato sentinelle. Le
 scritture sui due mount in sola lettura sono state negate. Nella seconda
 sessione, con un nuovo ID Sandbox, erano assenti le sentinelle lasciate
@@ -329,8 +330,8 @@ Il checkpoint Git iniziale era `ca008ec0b9b4d431cd5a8d1335b43c90a4033166`.
 Le prove riusano il bundle `alice-130-t12` a
 `3c3be0d63138e3c9ddaef5ca3d2d04a40d3e98c3`. Il delta fino al checkpoint
 contiene soltanto documentazione. Si riusano inoltre `alice-130-t12-vc-runtime`,
-Windows Sandbox con Protected Client e vGPU disattivata e il client
-Project Alice 1.3.0 AVX2 con SHA-256
+la configurazione Sandbox storica con Protected Client richiesto e il
+client Project Alice 1.3.0 AVX2 con SHA-256
 `b1a2d4d664add6f5187d6c4fd92e259930cb1944cdc3636c36ef58e993318c95`.
 SHA-256 della baseline di input
 `9cfcaec59df040ad0dd709d4551805677fc1e01d517840a6a136c8686e0973eb`.
@@ -473,3 +474,241 @@ librerie eseguire `guest-alice-build`. Per entrambi i profili, usare
 `guest-export` a motore chiuso, poi `wsb stop --id <id>`,
 `wsb list --raw`, `host-check --phase after` e `archive-export`.
 I controlli host prendono `--lab-root $lab --run $run`.
+
+## Task 14 · Victoria II 3.04 x86
+
+Checkpoint iniziale `8eca8278d73fd78dbd084c89b94c2469d8f18087`,
+con `origin/master` a `ca008ec0b9b4d431cd5a8d1335b43c90a4033166`.
+Il bundle permanente termina a `3c3be0d63138e3c9ddaef5ca3d2d04a40d3e98c3`.
+La differenza rispetto a HEAD riguarda la documentazione. Il Task 13
+è attestato dalle ricevute dell'archivio in `sessions/task13`.
+
+La baseline Victoria II riusa `alice-130-t12/input` per i dati
+Heart of Darkness, il bundle e gli strumenti. Il binario archiviato
+`v2game.exe` è un PE x86 (`0x014c`), identico alla copia Steam
+locale per dimensione e SHA-256
+`62d48c204364dd706584777c2e2b3c7ab3c5f1dd0170872554943575d53d6648`.
+L'identità della base resta
+`9cfcaec59df040ad0dd709d4551805677fc1e01d517840a6a136c8686e0973eb`.
+
+Il supplemento `baselines/victoria2-304-x86` contiene 51 file e
+134.431.648 byte. Aggiunge gli asset originali mancanti e le librerie
+Lua e Steam del gioco. Lo snapshot del supplemento ha SHA-256
+`ca0df368d6b50da9a0ffa7e812dc50265ac1060904c32a3b4f207141d03c5c65`.
+Il manifest elenca le impronte dei singoli file. L'inventario PE
+indica `d3d9.dll`, `d3dx9_41.dll`, Lua, TBB e Steam API.
+Lua importa VC80 e TBB importa VC100. Il supplemento conserva il CAB
+DirectX x86 distribuito con il gioco e i redistributable Visual C++
+2005 e 2010 x86 di Steamworks, tutti con firma Microsoft valida.
+L'estrazione DirectX e l'installazione dei redistributable sono eseguite
+nella Sandbox. [Requisiti Heart of Darkness](https://store.steampowered.com/app/215001/Victoria_II_Heart_of_Darkness/) · [Deployment Microsoft C++](https://learn.microsoft.com/en-us/cpp/windows/deployment-in-visual-cpp)
+
+### Dipendenza del frontend e avvio offline
+
+Il primo avvio `core` ha caricato TGC, creato il dispositivo
+Direct3D 9 e scritto il checksum 3.04 `EPTI`. Prima del menu il
+processo è terminato con `0xC0000005` in `v2game.exe+0x005EE877`.
+La stessa firma è riapparsa al riavvio con cache e in un controllo
+senza mod. Il log ricolloca il problema dopo l'inizializzazione
+della mappa. I due installer Visual C++ x86 erano usciti con codice 0.
+
+Il binario contiene un riferimento dinamico a `ggcoins.dll`.
+Aggiungendo nella sola copia guest la DLL originale appartenente alla
+distribuzione Steam, il motore ha raggiunto il menu e aperto partite
+offline in finestra. La DLL è conservata in
+`baselines/victoria2-304-x86-frontend`, con SHA-256
+`3e29a9501e1dec6fc728eefd4a4390261471b14cac9f7f95277ab46ab47a0305`.
+Snapshot del secondo supplemento
+`aa2759530f9ea1c1e2cf32f3a99fee476096201dfb91164e8b4f5d5dfd85f6a6`.
+Il mount era in sola lettura, come verificato nel guest. Il caso riguarda
+la completezza della copia del motore. I file `.wsb` richiedono
+Protected Client attivo e la disattivazione di rete e vGPU.
+
+### Profilo core
+
+`t14-v2-core` ha superato `plan → apply → verify` con il solo
+descrittore `TGC.mod` e il manifest
+`1dcfee2f661923abf19472c315dc4c4767d5fa8f4759578db806be16ec30ce94`.
+In finestra è stata osservata la partita russa in pausa al 1º gennaio
+1836. All'avanzamento fino al 3 gennaio sono seguiti salvataggio,
+uscita e riapertura in un nuovo processo. La partita in pausa mostrava
+la stessa data, nazione e situazione sulla mappa. Il log del nuovo
+processo riporta 3.04 e il checksum di inizializzazione `GBPA`.
+La scrittura e la riapertura sono attestate separatamente.
+Il log registra 35 tecnologie in ciascuno dei cinque file di ramo.
+
+La fixture `fixtures/v2-304-core-t14/Russian_Empire1836_01_03.v2`
+ha SHA-256
+`fd03d99b70bf8b08c769622497c2e357b3a70e85578e94d64800bf3f1ebc40e9`.
+L'intestazione indica `RUS`, partenza il 1º gennaio e data salvata
+il 3 gennaio. L'archivio verificato contiene 98 file, incluse tre
+schermate native F11 e i log dei tentativi. Dopo la distruzione del
+guest i 105 ambiti host e le impronte dei due supplementi coincidono.
+
+### Profilo core+1966
+
+`t14-v2-1966` ha superato `plan → apply → verify` in un nuovo
+guest con `TGC.mod` seguito da `TGC_Timeline_1966.mod` e manifest
+`11b4e5b23edd78dce306b2275cf81aad4052693f83740dc6033d4753d08590ed`.
+Gli hash di descrittori, `defines.lua` e del file militare Timeline
+corrispondono alla revisione del bundle. Il log del motore registra
+60 tecnologie per file di ramo contro le 35 del core, confermando il
+caricamento degli override. Il checksum di inizializzazione è `GFVE`.
+
+Il primo processo ha mostrato «Failed to create a graphics device»
+con la console disconnessa. Nel log falliscono la creazione Direct3D
+con elaborazione vertici hardware e il tentativo software. Riavviato
+una volta con la console connessa, il motore ha creato il dispositivo
+senza modificare il deployment o la configurazione del guest.
+L'associazione con lo stato della console è osservata in questa
+sessione. La causa del guasto grafico non è stata isolata.
+
+La Grand Campaign russa è partita in pausa il 1º gennaio 1836 ed è
+avanzata fino al 4 gennaio. Il salvataggio era presente a motore chiuso
+e si è riaperto nel nuovo processo con data, nazione e stato attesi.
+La fixture `fixtures/v2-304-1966-t14/Russian_Empire1836_01_04.v2`
+ha SHA-256
+`fd3d4b115c4f9505945cb86d68a3b88194b9824d70d4a389422686b380ec5197`.
+L'archivio verificato contiene 60 file, incluse tre schermate native
+e i log del primo tentativo. Dopo la distruzione del guest i 105
+ambiti host e le impronte dei supplementi coincidono.
+
+Le ricevute `runtime-summary.json` in `sessions/t14-v2-core` e
+`sessions/t14-v2-1966` identificano archivi, fixture e schermate.
+`sessions/task14/summary.json` collega i due esiti, l'identità degli
+input e la ricetta. Nei guest il motore è stato osservato in partita
+senza un processo Steam attivo.
+
+### Controllo della configurazione grafica
+
+I due log del motore riportano l'adattatore NVIDIA. Due prove
+sintetiche senza file di gioco, registrate in
+`sessions/task14/isolation-probe` e
+`sessions/task14/isolation-probe-vgpu-case`, hanno riprodotto
+la differenza. Con `<VGpu>Disable</VGpu>` il guest esponeva
+NVIDIA e l'adattatore remoto Microsoft. Con
+`<vGPU>Disable</vGPU>` esponeva solo l'adattatore remoto.
+In entrambi i casi risultavano soltanto gli indirizzi loopback,
+senza schede di rete abilitate né route predefinite.
+
+Il generatore ora usa il nome `vGPU` della specifica. I risultati
+dei primi due guest attestano il funzionamento offline con la
+GPU esposta. Per le configurazioni storiche fa fede il riscontro
+effettivo nel guest. [Configurazione Windows Sandbox](https://learn.microsoft.com/en-us/windows/security/application-security/application-isolation/windows-sandbox/windows-sandbox-configure-using-wsb-file#vgpu)
+
+La correzione interessa il generatore del laboratorio di questo fork.
+Il file è assente dal riferimento upstream e una PR al mod originale
+non è pertinente.
+
+In `t14-v2-warp-core` il manifest è identico al primo core. A gioco
+riaperto il guest esponeva solo l'adattatore remoto Microsoft, senza
+schede di rete abilitate né route predefinite. Direct3D ha indicato
+Microsoft Basic Render Driver e `d3d10warp.dll`. Il motore ha
+caricato la partita russa al 1º gennaio, scritto il salvataggio al 3
+gennaio e riaperto lo stesso stato in un nuovo processo. Checksum
+`GBPA`, tre schermate e 105 ambiti host senza differenze.
+La fixture del profilo corretto è `fixtures/v2-304-warp-core-t14`.
+Il salvataggio ha SHA-256
+`c14033e75311e7c33bc4733d219766b5b637fdabac992166e3bd463e85ac400a`.
+
+`t14-v2-warp-1966` ha usato lo stesso manifest del primo ciclo
+Timeline, il renderer WARP e i due descrittori nello stesso ordine.
+Il log conferma 60 tecnologie per ramo e il checksum `GFVE`.
+Dopo una disconnessione, il primo processo mostrava il menu ma i
+clic non attivavano i pulsanti. Un riavvio a console connessa ha
+ripristinato i comandi. La partita russa è avanzata dal 1º al 3
+gennaio 1836. Il file è stato verificato a gioco chiuso e la partita
+è stata riaperta in pausa al 3 gennaio in un nuovo processo.
+Il guest vedeva soltanto l'adattatore remoto Microsoft e non aveva
+schede di rete abilitate o route predefinite.
+La fixture corrispondente è `fixtures/v2-304-warp-1966-t14`.
+Il salvataggio ha SHA-256
+`dff3ac436d820572e6b14a0ca7dc9986b3998fd8de32b2c59eef771d6d522979`.
+
+### Ripetizione locale
+
+La ricetta del checkpoint è in `sessions/task14/recipe` nell'archivio
+permanente. Usare PowerShell 7 dalla radice di questo repository, con
+Windows Sandbox disponibile e nessun guest attivo. Conservare la base
+`alice-130-t12` e i due supplementi con i rispettivi manifest. Eseguire
+prima un profilo completo e poi l'altro in un guest nuovo, con un ID
+nuovo per ogni prova. La configurazione corretta disattiva la vGPU.
+
+```powershell
+$lab = "$env:LOCALAPPDATA\TGC-Runtime-Lab"
+$recipe = "$lab\sessions\task14\recipe"
+$run = 't14-v2-replay-core-01'
+& "$recipe\t14-v2-start-local.ps1" -Profile core -Run $run
+while (!(Test-Path "$lab\transfer\$run\outbox\progress.log")) {
+    Start-Sleep -Seconds 2
+}
+Get-Content "$lab\transfer\$run\outbox\progress.log" -Wait
+```
+
+Attendere l'avvio del motore e interrompere la sola lettura del log con
+Ctrl+C. La ricetta usa `sandbox-config`, `host-check` e `guest-deploy`
+con `plan → apply → verify`. Il processo nativo usa
+`v2game.exe -mod=mod/TGC.mod`. Per `core+1966` aggiunge
+`-mod=mod/TGC_Timeline_1966.mod` in coda. Se compare il messaggio
+facoltativo sull'associazione `ms-gamingoverlay`, chiuderlo dal guest.
+In caso di disconnessione della console, usare «Riconnetti» oppure
+`wsb connect --id <id>` con l'ID nel `sandbox-start.json` della
+sessione. La console può perdere la connessione durante un comando
+di controllo mentre il guest continua l'esecuzione.
+Se si verifica l'errore grafico documentato o il menu perde l'input
+dopo una disconnessione, chiudere il gioco e lanciare una volta
+`& "$recipe\t14-v2-retry-graphics-local.ps1" -Run $run`.
+La ricetta conserva i log e attende 40 secondi prima di riavviare.
+Assicurarsi che la console sia connessa durante l'attesa.
+
+In «Single Player» scegliere l'Impero russo e avviare la Grand
+Campaign. Acquisire una schermata nativa con F11 al 1º gennaio 1836.
+Avanzare di alcuni giorni, mettere in pausa, annotare la data,
+premere F11 e salvare col nome proposto. Uscire dal gioco e rilevare
+il file sul disco del guest prima di riavviare.
+
+```powershell
+& "$recipe\t14-v2-control-local.ps1" -Run $run -Action inspect
+Get-Content "$lab\transfer\$run\outbox\inspect.json"
+& "$recipe\t14-v2-control-local.ps1" -Run $run -Action restart
+```
+
+Nel nuovo processo usare «Single Player», scegliere il proprio
+salvataggio e premere «PLAY». Verificare nazione, data e stato in
+partita. Premere F11 e rilevare il processo responsivo prima di
+uscire dal gioco.
+
+```powershell
+& "$recipe\t14-v2-control-local.ps1" -Run $run -Action inspect
+# Uscire dal gioco dopo il riscontro.
+& "$recipe\t14-v2-close-local.ps1" -Run $run
+$py = "$lab\baselines\alice-130-t12\input\tools\Python\python.exe"
+# Sostituire 1836.1.3 con la data effettivamente osservata, se diversa.
+& $py -B "$recipe\t14-v2-receipt-local.py" $lab $run '1836.1.3'
+```
+
+La chiusura esporta e verifica l'archivio, distrugge il guest e
+confronta gli ambiti host e i supplementi prima e dopo. La ricevuta
+controlla anche l'intestazione del salvataggio, l'ordine dei
+descrittori, gli hash di file rappresentativi rispetto al commit e
+il manifest dopo il runtime. Per la seconda prova usare un altro ID
+e `-Profile 'core+1966'`. Tenere separate le fixture.
+
+### Condizioni per i due profili Loader
+
+Usare la baseline nativa qualificata e l'asset ufficiale Grand Loader
+3.0.0 con Script Extender e Performance Patch, verificando gli hash
+di DLL e INI e l'inizializzazione di entrambi i plugin. Preparare
+radici distinte `C:\TGC-Lab\Games\Loader` e
+`C:\TGC-Lab\Games\Loader1966`, con `userdir.txt`, cache, log,
+salvataggi e CB generato privati per ciascuna. Avviare in finestra
+con il singolo descrittore previsto per ciascuna composizione.
+Ripetere avanzamento, salvataggio e riapertura in guest separati e
+conservare le ricevute dei controlli di isolamento. [Contratto Extender](script_extender_profile.md)
+
+Le suite mirate del laboratorio e del deployment Extender hanno
+superato rispettivamente 5 e 11 test dopo la correzione del generatore.
+La qualifica ha esercitato il caricamento delle due composizioni.
+Validatore e audit 1966 sono
+stati saltati perché il task non modifica o valuta validità o
+bilanciamento dell'estensione.

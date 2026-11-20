@@ -51,6 +51,7 @@ class RuntimeLabTests(unittest.TestCase):
         self.assertEqual(config.findtext("Networking"), "Disable")
         self.assertEqual(config.findtext("ClipboardRedirection"), "Disable")
         self.assertEqual(config.findtext("ProtectedClient"), "Enable")
+        self.assertEqual(config.findtext("vGPU"), "Disable")
         maps = config.findall("MappedFolders/MappedFolder")
         self.assertEqual([element.findtext("ReadOnly") for element in maps], ["true", "true", "false"])
         self.assertEqual(Path(maps[2].findtext("HostFolder")), self.root / "transfer/test/outbox")
