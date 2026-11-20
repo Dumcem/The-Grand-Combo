@@ -554,6 +554,13 @@ sessione Windows isolata e
 osservabile con ripristino dimostrato.
 [Riscontro infrastrutturale](deployment/runtime_lab.md#riscontro-del-task-10) · [Matrice delle prove](deployment/runtime_lab_matrix.md)
 
+Il Task 11 ha archiviato le evidenze del Task 10 con verifica SHA-256 e
+collaudato la ricostruzione locale della fixture sintetica. Windows Sandbox
+è disabilitata sull'host esaminato. La configurazione è pronta per la prova
+di ammissione dopo abilitazione autorizzata. Gli smoke dei motori sono in
+attesa della qualifica del guest.
+[Archivio, comandi e stato](deployment/runtime_lab_operations.md#riscontro-del-task-11)
+
 | ID | Evidenza disponibile e condizione di riesame |
 | --- | --- |
 | DEPLOY_STEAM | Ricevuta e manifest del profilo condiviso. Mancano avvio e caricamento di core e Timeline sul checkpoint registrato. Servono un’area utente isolata e controllo osservabile della finestra. |

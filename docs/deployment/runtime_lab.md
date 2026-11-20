@@ -1,29 +1,29 @@
 # Laboratorio runtime Windows
 
-Il laboratorio usa una VM Windows dedicata con checkpoint a VM spenta, profilo
-locale standard e dischi del guest compresi nel checkpoint. Una sola VM può
-ospitare i due motori e tutti i profili. Il deployer resta l'unico strumento di
-pubblicazione dei contenuti TGC. La [matrice runtime](runtime_lab_matrix.md)
-collega fixture, osservazioni e criteri di chiusura al backlog.
+Il laboratorio conserva su disco locale procedure, input ed evidenze. Windows
+Sandbox è il primo ambiente di esecuzione da qualificare su Windows 11 Pro.
+Ogni sessione può essere chiusa e ricostruita dagli input verificati. Il
+deployer resta l'unico strumento di pubblicazione dei contenuti TGC.
+[Comandi e archivio permanente](runtime_lab_operations.md) · [Matrice runtime](runtime_lab_matrix.md)
 
 ## Confine di isolamento
 
 | Soluzione | Condizioni e limiti |
 | --- | --- |
-| VM Windows con checkpoint | Preferita per ripristinare insieme filesystem, profilo e registro del guest. Console grafica osservabile, accelerazione richiesta dai motori da verificare. Prestazioni e capacità CPU/GPU del guest possono differire dall'host. |
-| Account Windows standard dedicato | Ripiego se esiste già ed è accessibile. Richiede sessione interattiva, Documenti e AppData indipendenti e prova che il token non possa scrivere nelle destinazioni personali né nelle copie di gioco esistenti. Condivide servizi, registro di macchina e aree pubbliche scrivibili. Il ripristino deve includere tutte le scritture nel profilo e nelle radici rilevate. |
-| Windows Sandbox | Valutabile se già attiva. Ripristino ricostruendo la sessione da input immutabili, con rete e condivisioni disabilitate. La compatibilità grafica, quella dei prerequisiti e il trasferimento delle evidenze vanno dimostrati. [Requisiti e configurazione](https://learn.microsoft.com/en-us/windows/security/application-security/application-isolation/windows-sandbox/windows-sandbox-overview) |
+| Windows Sandbox | Inclusa in Windows 11 Pro. Ricostruzione da input immutabili. Rete e reindirizzamenti disabilitati, con cartelle dedicate per input in sola lettura e uscita. Occorrono verifica effettiva dei mount, avvio legittimo offline e prova grafica per ciascun motore. [Requisiti](https://learn.microsoft.com/en-us/windows/security/application-security/application-isolation/windows-sandbox/windows-sandbox-install) |
+| VM Windows con checkpoint | Ripiego se esiste già un guest autorizzato a tempo indeterminato con risorse disponibili. Il checkpoint ripristina filesystem, profilo e registro del guest. Verificare console, grafica e diritti d'uso del guest. [Checkpoint Windows](https://learn.microsoft.com/en-us/windows-server/virtualization/hyper-v/checkpoints) |
+| Account Windows standard dedicato | Ripiego se già autorizzato e accessibile. Richiede sessione interattiva, Documenti e AppData indipendenti e prova che il token non possa scrivere nelle destinazioni personali né nelle copie di gioco esistenti. Condivide servizi, registro di macchina e aree pubbliche scrivibili. Il ripristino deve includere tutte le scritture nel profilo e nelle radici rilevate. |
 | `userdir.txt`, variabili d'ambiente, `-outputScenario`, VSS | Utili per singoli percorsi, nomi o recupero. L'isolamento richiede un confine verificabile per tutte le scritture. VSS sul volume host con dati personali non offre un ripristino mirato del laboratorio. |
 
-Durante le prove tenere il guest offline, senza cartelle host mappate, dischi
-host, clipboard condivisa, redirect RDP o account cloud. Usare un supporto
-di ingresso dedicato di sola lettura e scollegarlo prima dell'avvio dei motori.
-Esportare le evidenze a sessione conclusa mediante un supporto dedicato ai soli
-artefatti del laboratorio. Tenere separati gli input immutabili e il disco
-sacrificabile. L'host conserva i propri log di sistema, i file della VM, le
-risorse condivise di calcolo e gli export deliberati. I checkpoint riguardano
-i dischi del guest inclusi e vanno conservati secondo la politica locale.
-[Checkpoint Windows](https://learn.microsoft.com/en-us/windows-server/virtualization/hyper-v/checkpoints)
+Durante le prove tenere il guest offline, senza dischi host, clipboard
+condivisa, reindirizzamenti delle periferiche o account cloud. La Sandbox
+espone soltanto gli input dedicati in lettura e una cartella di uscita
+esclusiva della sessione. Qualificare entrambe le modalità prima di esporre
+una baseline di motore. Per una VM con checkpoint usare supporti dedicati
+agli input e alle evidenze e scollegarli durante la prova. L'host conserva
+log di sistema, file di virtualizzazione, risorse condivise di calcolo ed
+export deliberati. L'archivio deve rimanere ricostruibile con risorse già
+disponibili e senza licenze aggiuntive o versioni di valutazione.
 
 ## Radici e prerequisiti
 
@@ -48,8 +48,8 @@ Assegnare a ciascuna radice il proprio `--state-root`, ad esempio
 stato nuovo. Le ricevute precedenti sono vincolate alla loro radice e
 appartengono al contesto in cui sono state create. Conservare risultati e
 manifest in `C:\TGC-Lab\Runs\<id>`, fuori dagli alberi sotto osservazione.
-Ripartire dal checkpoint pulito tra i profili condivisi, che possono
-scrivere negli stessi percorsi utente all'interno del guest.
+Ricostruire la sessione o ripartire dal checkpoint pulito tra i profili
+condivisi, che possono scrivere negli stessi percorsi utente nel guest.
 
 ## Ammissione al primo avvio
 
@@ -62,7 +62,7 @@ scrivere negli stessi percorsi utente all'interno del guest.
 2. Con strumenti già autorizzati, eseguire una prova di scrittura sintetica nel
    guest e osservare i percorsi assoluti. Provare creazione, rename e rimozione
    sotto Documenti, AppData, TEMP, gioco, dati utente, plugin e stato. Verificare
-   poi un ripristino del checkpoint su questi dati. Prima di avviare un motore
+   poi una ricostruzione della Sandbox o un ripristino del checkpoint su questi dati. Prima di avviare un motore
    confermare il desktop osservabile e un tracciamento di filesystem, registro
    e processi figli (per esempio Process Monitor nel guest). Registrare
    eventuali limiti della cattura. [Process Monitor](https://learn.microsoft.com/en-us/sysinternals/downloads/procmon)
@@ -111,8 +111,8 @@ if ((Get-FileHash "$evidence\host-before.json").Hash -ne
 ## Ciclo per una sessione
 
 1. Scegliere revisione Git, profilo, motore, fixture e un ID di sessione.
-   Con tutti i motori chiusi, partire dal checkpoint pulito e verificarne le
-   impronte. Usare una copia della fixture associata a motore, profilo e
+   Con tutti i motori chiusi, partire dagli input immutabili verificati o dal
+   checkpoint pulito. Usare una copia della fixture associata a motore, profilo e
    checksum. Tenere l'originale della fixture immutabile.
 2. Eseguire i comandi seguenti nel guest. Rivedere il piano e il suo target
    prima di `apply`. Registrare ciascun exit code e fermarsi al primo errore.
@@ -151,8 +151,8 @@ if ((Get-FileHash "$evidence\host-before.json").Hash -ne
    checksum, fixture e sua impronta, azione, esito e riferimenti ai file.
    Usare `pass`, `fail`, `blocked` o `not-run` per ciascuna prova.
 5. Confrontare l'host e il guest con le rispettive baseline. Esportare
-   l'evidenza, fermare la VM e ripristinare il checkpoint pulito oppure
-   conservare deliberatamente il checkpoint della prova con il suo ID.
+   l'evidenza e chiudere la Sandbox, oppure fermare la VM e ripristinare il
+   checkpoint pulito. Conservare il checkpoint della prova solo quando serve.
    Verificare il ripristino con sentinelle modificate, aggiunte e rimosse.
    Il rollback del deployer riguarda le coppie gestite. Il checkpoint
    recupera anche profilo, cache, output plugin e altri dati del guest.
