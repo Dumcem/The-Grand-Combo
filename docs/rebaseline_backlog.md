@@ -548,6 +548,12 @@ strutturale delle due installazioni Loader. L’[evidenza storica](upstream_reco
 copre altri assetti e rimane datata. Le differenze da recepire e le candidature
 si seguono nel [registro upstream](upstream_delta_register.md).
 
+Il Task 10 ha verificato pubblicazione e rollback del payload `core+1966`
+su una radice sintetica con stato dedicato. Il primo avvio richiede una
+sessione Windows isolata e
+osservabile con ripristino dimostrato.
+[Riscontro infrastrutturale](deployment/runtime_lab.md#riscontro-del-task-10) · [Matrice delle prove](deployment/runtime_lab_matrix.md)
+
 | ID | Evidenza disponibile e condizione di riesame |
 | --- | --- |
 | DEPLOY_STEAM | Ricevuta e manifest del profilo condiviso. Mancano avvio e caricamento di core e Timeline sul checkpoint registrato. Servono un’area utente isolata e controllo osservabile della finestra. |

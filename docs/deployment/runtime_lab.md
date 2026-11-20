@@ -48,6 +48,8 @@ Assegnare a ciascuna radice il proprio `--state-root`, ad esempio
 stato nuovo. Le ricevute precedenti sono vincolate alla loro radice e
 appartengono al contesto in cui sono state create. Conservare risultati e
 manifest in `C:\TGC-Lab\Runs\<id>`, fuori dagli alberi sotto osservazione.
+Ripartire dal checkpoint pulito tra i profili condivisi, che possono
+scrivere negli stessi percorsi utente all'interno del guest.
 
 ## Ammissione al primo avvio
 
@@ -84,6 +86,7 @@ manifest in `C:\TGC-Lab\Runs\<id>`, fuori dagli alberi sotto osservazione.
    `the_grand_loader.log`, `mod\script_extender\common\se_cb_types.generated.txt`,
    INI e output di entrambi i plugin per ogni radice. Aggiungere al perimetro
    le scritture scoperte e interrompere la prova se viola il confine.
+   [Known Folder nel sorgente Alice 1.3.0](https://github.com/schombert/Project-Alice/blob/v1.3.0/src/filesystem/simple_fs_win.cpp#L422-L531)
 
 Il confronto dei file copre percorsi, assenze, directory vuote, dimensioni
 e SHA-256 dei file ordinari. Il comando si ferma su reparse point, errori di
@@ -127,12 +130,19 @@ if ((Get-FileHash "$evidence\host-before.json").Hash -ne
 3. Preparare la fixture. Per Alice rigenerare dal deployment verificato, nel
    working directory della copia di gioco. Usare una selezione osservata nel
    launcher oppure `-modsMask <mask> -outputScenario <nome.bin> -autoBuild`
-   dopo aver verificato il mask per l'ordine dei descrittori di quella radice.
-   Usare un nome nuovo per ciascun profilo e conservare subito
-   `scenario_errors.txt` per ciascuna build. Registrare percorso, dimensione,
-   SHA-256 e checksum mostrato al caricamento. Ripetere per core e Timeline.
+   dopo aver verificato i nomi dei descrittori di quella radice. Alice 1.3.0
+   cerca una sottostringa sensibile alle maiuscole nel nome e include le
+   dipendenze. Con la composizione canonica, verificare che
+   `TGC - The Grand Combination` selezioni soltanto il core e che
+   `TGC Timeline 1966` selezioni la Timeline con il core caricato prima.
+   Usare un nome scenario nuovo per ciascun profilo. Archiviare ogni
+   `scenario_errors.txt` del laboratorio prima della build successiva,
+   affinché l'assenza di diagnostica nuova sia osservabile. Il launcher può
+   aprire un editor come processo figlio in presenza di errori. Registrare
+   percorso, dimensione, SHA-256 e checksum mostrato al caricamento.
    La CLI headless è utile quando osservabile entro un tempo definito.
    Menu, avanzamento e ricarica richiedono osservazioni coerenti con il caso.
+   [Selezione e generazione nel launcher 1.3.0](https://github.com/schombert/Project-Alice/blob/v1.3.0/src/launcher/launcher_main_win.cpp#L1147-L1184) · [Scrittura scenario e diagnostica](https://github.com/schombert/Project-Alice/blob/v1.3.0/src/launcher/launcher_main_win.cpp#L122-L173)
 4. Eseguire le azioni della [matrice](runtime_lab_matrix.md) e raccogliere
    prova visiva, log, differenze di stato, errori e codici d'uscita. Registrare
    almeno data UTC, operatore, commit, Windows guest, versione e SHA-256
@@ -149,3 +159,45 @@ if ((Get-FileHash "$evidence\host-before.json").Hash -ne
 
 Binari di gioco, DLL esterne, scenari, salvataggi, log e configurazioni
 locali restano fuori dal repository.
+
+## Riscontro del Task 10
+
+Il 20 novembre 2026, `origin/master` e la working copy di partenza
+corrispondevano a `37000ca00a535f69c443a4916a89ab1bcd213cb9`.
+L'host esaminato era Windows 11 Pro x64, build 26300.9974, con 28 processori
+logici, circa 64 GiB di RAM e 376 GiB liberi sul volume di lavoro.
+L'hypervisor era rilevato e i servizi `vmcompute` e `hns` erano attivi.
+La sessione non esponeva una VM Windows con checkpoint o Windows Sandbox
+utilizzabile. I due account candidati appartenevano a Codex, con profili
+presenti e senza sessione attiva. L'enumerazione della GUI host era
+disponibile. Mancavano una console guest e una traccia di scrittura del guest.
+
+L'inventario ha identificato la radice Steam condivisa di Victoria II e
+Alice, due radici Loader con `userdir.txt`, DLL e INI distinti per radice,
+otto scenari Alice esistenti, diagnostica Alice in Local AppData e tre
+target nello stato locale del deployer. Il file di rilascio locale dichiara
+Alice 1.3.0. Gli eseguibili e i plugin sono stati identificati con SHA-256.
+Gli archivi originali non sono stati individuati nei percorsi esaminati.
+Il banner storico Loader `1.1.0` coincide con il bootstrapper del tag del
+bundle `3.0.0`. Nei log compaiono Script Extender `0.1.0` e Performance
+Patch `1.0.0`. In AppContainer il percorso Local AppData appariva
+reindirizzato, mentre il profilo Windows ordinario risolveva Documenti e
+AppData nelle proprie cartelle. Le impronte dei percorsi personali sono
+state calcolate sul profilo ordinario. In AppContainer anche l'enumerazione
+`tasklist` falliva e l'area TEMP della prima prova è stata dismessa alla
+chiusura della sessione. Il ciclo completo ha usato una radice TEMP
+persistente nella sessione ordinaria, con il controllo `tasklist` nativo.
+[Bootstrapper](https://github.com/The-Grand-Combination/The-Grand-Loader/blob/3.0.0/launcher/CMakeLists.txt#L1-L4) · [Asset Loader](https://github.com/The-Grand-Combination/The-Grand-Loader/releases/expanded_assets/3.0.0) · [Asset Alice](https://github.com/schombert/Project-Alice/releases/expanded_assets/v1.3.0)
+
+| Verifica | Esito |
+| --- | --- |
+| Pubblicazione sacrificabile | `plan → apply → verify` con deployer invariato, profilo `core+1966`, sorgente `18bbd5bb819d9ef1ae5c997f3c88c6f48a70510f`, sentinella sintetica come marker di installazione. 16.539 file verificati. Transazione `ac2262c3d1c5441f815008b9d5948375`, digest manifest `7ca39341ae76303482df594366427047d60da27456ccf211e7057cec06a5c47b`. |
+| Ripristino sacrificabile | `rolled-back` con ripristino della coppia TGC preesistente nella fixture, rimozione della coppia Timeline aggiunta e conservazione del file estraneo. Un secondo confronto ha confermato il ripristino del salvataggio sintetico e la scomparsa della cache aggiunta. Impronta della baseline della fixture: `ACC06D444CFCED1160F4927ABC9A483EB974016465E8C6F4317F363A3457E2E3`. |
+| Percorsi personali | Prima e dopo la prova, inventari identici su 103 percorsi etichettati e 10.704 record di file, comprese le cartelle dati Paradox e Alice, le copie dei plugin, le cache selezionate e i metadati locali del deployer. Il confronto di contenuto vale per i percorsi osservati. |
+| Tooling | Suite del deployer 117 eseguiti, 6 saltati, nessun errore. Ripetizione in sessione ordinaria dei sei casi saltati. Quattro passati (hardlink e junction), due saltati per assenza del privilegio symlink. Il controllo delle impronte rileva una sostituzione a parità di dimensione, registra directory vuote e assenze, e rifiuta etichette duplicate. |
+| Motori | Bloccato prima dell'avvio. Servono un guest Windows autorizzato e ripristinabile, oppure un account di prova già autorizzato con confine dimostrabile, e strumenti di osservazione nella relativa sessione. Il materiale legittimo per quel guest, eventuali prerequisiti e l'avvio offline vanno verificati prima di avviare ciascun profilo. |
+
+Le prove infrastrutturali sono attribuite alla fixture sintetica. Gli otto
+scenari esistenti sono stati osservati durante l'inventario. La rigenerazione
+di core e Timeline, il confronto delle 48 firme, Yinxu, Temperance e
+Sonderbund attendono un ambiente ammesso alla prova.
