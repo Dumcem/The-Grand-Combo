@@ -3685,7 +3685,7 @@
 
 		title = "EVTNAME201092"
 		desc = "EVTDESC201092"
-		picture = "Indus"
+		picture = "Yinxu"
 		is_triggered_only = yes
 
 		option = {

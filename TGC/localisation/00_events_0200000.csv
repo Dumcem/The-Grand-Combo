@@ -1163,7 +1163,7 @@ EVTDESC201090;A foreign power has asked for access to the old ruins of Yinxu. An
 EVTNAME201090;$FROMCOUNTRY_ADJ$ Archaeological Expedition;;;;;;;;;;;;;x
 EVTOPTA201090;If they want dirt, give them dirt.;;;;;;;;;;;;;x
 EVTOPTB201090;We will not let foreigners desecrate our archeological heritage;;;;;;;;;;;;;x
-EVTDESC201091;The government of $FROMCOUNTRY$ has decided to give full access regarding our expedition in the region of Hainan. Our exploration and research can begin.;;;;;;;;;;;;;x
+EVTDESC201091;The government of $FROMCOUNTRY$ has decided to give full access regarding our expedition at Yinxu in Henan. Our exploration and research can begin.;;;;;;;;;;;;;x
 EVTNAME201091;$FROMCOUNTRY$ gives access;;;;;;;;;;;;;x
 EVTOPTA201091;Splendid;;;;;;;;;;;;;x
 EVTDESC201092;The $FROMCOUNTRY_ADJ$ have refused to grant our explorers and archaeologists access to their country. This is a major setback to our archaeological ambitions.;;;;;;;;;;;;;x
