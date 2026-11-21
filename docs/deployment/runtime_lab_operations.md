@@ -789,45 +789,65 @@ abilitate o route predefinite. Il controllo finale confronta 105
 ambiti host per sessione. Entrambi i confronti sono passati e
 l'elenco finale delle Sandbox era vuoto.
 
-### Diagnosi e ripetizione
+### Diagnosi e avviso Bitdefender
 
-Il primo processo core si è chiuso prima del menu con `CFileException`.
-Il generatore scriveva `userdir.txt` con CRLF su Windows. Dopo aver
-conservato file e log, la ricetta ha riscritto lo stesso percorso
-privato senza fine riga. Nello stesso guest il ciclo core è riuscito.
-Il generatore ora scrive direttamente i byte ASCII del percorso, senza
-terminatore. La ricetta archiviata riusa una versione precedente dello
-strumento nel bundle del guest e conserva quel passaggio per
-compatibilità con l'input storico. La correzione riguarda lo strumento
-di questo fork.
+Il 20 novembre 2026 alle 23:27 UTC il primo processo core si è chiuso
+prima del menu con `CFileException` ed exit code 3. Il generatore di allora
+scriveva `userdir.txt` con CRLF su Windows. Le copie archiviate prima e dopo
+il recupero differiscono solo per quei due byte. Il percorso utente è
+rimasto nella radice privata del guest e il ciclo core è riuscito nello
+stesso guest dopo la correzione. Il profilo Timeline ha applicato la stessa
+correzione prima del primo avvio.
 
-Il controllo finale dell'esportazione core è riuscito dopo aver
-corretto nella ricetta locale il percorso dello stato transazionale.
-Durante la prova è comparso un avviso Bitdefender su una riga di
-comando PowerShell. L'origine precisa resta indeterminata e le
-protezioni sono rimaste attive. La qualifica copre l'avvio in
-finestra. Il crash storico a schermo intero e le prove funzionali
-di trattati, partizioni, redditi POP e bilanciamento restano fuori
-da questo esito.
+Il log di esecuzione del Task 15 registra due richieste distinte.
 
-La procedura completa è in `sessions/task15/ricetta.md`. Per ripetere
-la prova, avviare PowerShell 7 dalla radice del repository e usare
-un ID nuovo per ciascun profilo.
+- Alle 23:29:23 UTC Codex ha inviato a `pwsh.exe` una riga host per leggere,
+  modificare, riscrivere e analizzare `t15-loader-control-local.ps1`, quindi
+  invocarlo con `-Action retry`. Alle 23:29:28 `CreateProcess` ha restituito
+  accesso negato (errore Windows 5). L'esecuzione del corpo della riga host
+  in quel tentativo rimane senza riscontro.
+- Alle 23:29:47 UTC è stato inviato un secondo comando modificato. Alle
+  23:29:54 ha restituito `ExitCode: 0` dal guest. `raw/engine-retry.json`
+  della sessione core registra il rilancio alle 23:30:30, coerente con
+  l'attesa di 35 secondi della ricetta. Il successivo controllo
+  dell'esportazione core è riuscito dopo una correzione separata del
+  percorso dello stato transazionale.
 
-```powershell
-$lab = "$env:LOCALAPPDATA\TGC-Runtime-Lab"
-$recipe = "$lab\sessions\task15\recipe"
-$run = 't15-loader-replay-core-01'
-& "$recipe\t15-loader-start-local.ps1" -Run $run -Profile 'core+extender'
-```
+Il Task 15 riporta una notifica del modulo Antivirus Bitdefender per una
+«riga di comando dannosa» associata a `pwsh.exe`. L'errore 5 conferma il
+fallimento dell'avvio del processo. Per attribuirlo a Bitdefender e capire
+quale controllo sia intervenuto serve il record del prodotto. La riscrittura
+con esecuzione immediata è un'ipotesi sul motivo del rilevamento. Lo script
+del secondo tentativo preparava anche comandi PowerShell codificati per il
+guest. Il log dell'host lascia indeterminato se il primo tentativo sia
+arrivato a quella fase. L'ipotesi di falso positivo resta non verificata.
 
-Seguire il log di avanzamento in `transfer/<id>/outbox/progress.log`,
-poi creare e salvare una partita nella console. A gioco chiuso
-usare `t15-loader-control-local.ps1` con `-Action inspect` e
-`-Action restart`. Dopo la riapertura eseguire `inspect` mentre il
-motore risponde, uscire e usare `t15-loader-close-local.ps1` per
-esportare, chiudere il guest e controllare l'host. Concludere con
-`t15-loader-receipt-local.py` passando la data effettiva. Per la
-seconda prova usare `core+extender+1966` e un altro ID. Le istruzioni
-archiviate includono la raccolta dei log in caso di errore al primo
-avvio e la riconnessione della console.
+L'archivio `sessions/task15/recipe` contiene la copia finale degli script
+con SHA-256 verificati. Il log di esecuzione locale del Task 15
+(`01a1f951-5b86-7372-9a7a-6f28ddd10c9e`) conserva la generazione originale
+alla riga 4544, il comando negato e il relativo esito alle righe 4997 e 5000,
+il secondo tentativo e il suo esito alle righe 5009 e 5012. Gli script
+ricostruiti staticamente chiariscono la sequenza e le modifiche successive
+alla copia finale. La notifica originaria manca dall'archivio. La ricerca
+nei registri eventi Windows non ha trovato canali o provider con il nome
+Bitdefender. Riesaminare l'avviso con la voce originale in Notifiche, l'ora,
+l'azione, il modulo e l'identità del processo. [Notifiche Bitdefender](https://www.bitdefender.com/consumer/support/answer/2103/)
+
+### Procedura versionata e ricetta storica
+
+La correzione `a9ad23fb9` in `guest-deploy` scrive direttamente il percorso
+privato in ASCII senza terminatore prima dell'avvio del motore. Il test
+`test_guest_stage_uses_private_loader_paths_and_exact_userdir_bytes` verifica
+i byte per entrambi i profili Loader e l'assenza del file nei profili
+condivisi. Per una sessione futura autorizzata, preparare l'input con la
+versione corrente dello strumento e seguire il [ciclo ordinario](#sessione-motore-e-riuso).
+Per un errore di avvio conservare i log, la ricevuta e i byte di `userdir.txt`.
+La correzione del terminatore avviene in preparazione e rende superflua la
+riscrittura dinamica della ricetta dopo il primo avvio.
+
+`sessions/task15/ricetta.md` conserva la procedura usata con l'input storico,
+compresi ispezione, riapertura, chiusura e recupero con il vecchio strumento.
+Mantenere attive le protezioni host durante qualsiasi riesame. La qualifica
+copre l'avvio in finestra. Restano aperti il crash
+storico a schermo intero e le questioni funzionali nella
+[matrice](runtime_lab_matrix.md#incertezze-potenzialmente-dipendenti-dal-motore).
