@@ -3,6 +3,7 @@
 import argparse
 import json
 from pathlib import Path
+from subprocess import CompletedProcess
 import sys
 import tempfile
 import unittest
@@ -78,6 +79,70 @@ class RuntimeLabTests(unittest.TestCase):
         self.assertEqual(lab.archive_export(self.args())["status"], "verified")
         self.assertEqual(lab.snapshot(self.root / "sessions/test/raw"), lab.snapshot(drop))
         self.assertTrue(drop.is_dir())
+
+    def test_guest_stage_uses_private_loader_paths_and_exact_userdir_bytes(self):
+        cases = (
+            ("victoria2", "core+extender", "Loader"),
+            ("victoria2", "core+extender+1966", "Loader1966"),
+            ("victoria2", "core", "Shared"),
+            ("victoria2", "core+1966", "Shared"),
+            ("alice", "core", "Shared"),
+            ("alice", "core+1966", "Shared"),
+        )
+        commit = "a" * 40
+        inputs = self.root / "inputs"
+        inputs.mkdir()
+        (inputs / "checkout.bundle").touch()
+        for root in ("Loader", "Loader1966", "Shared"):
+            (inputs / "games" / root).mkdir(parents=True)
+        input_digest = lab.digest(lab.snapshot(inputs))
+
+        for index, (engine, profile, root) in enumerate(cases):
+            with self.subTest(engine=engine, profile=profile):
+                workspace = self.root / f"guest-{index}"
+                evidence = workspace / "Evidence"
+                evidence.mkdir(parents=True)
+                game = workspace / "Games" / root
+                user_data = workspace / "UserData" / root
+                state = workspace / "State" / root
+                request = dict(engine=engine, profile=profile, commit=commit,
+                               baseline_sha256=input_digest)
+                summary = {"phases": {}}
+                phases = []
+
+                def run(command, *, stdout, **_kwargs):
+                    if command[0] == "git":
+                        return CompletedProcess(command, 0)
+                    phase = command[3]
+                    phases.append(phase)
+                    self.assertEqual(command[4:10], ["--game-root", str(game),
+                                                     "--state-root", str(state),
+                                                     "--profile", profile])
+                    if phase == "plan":
+                        plan = dict(identity={"commit": commit}, profile=profile,
+                                    root=str(workspace / "Checkout"), target=str(game),
+                                    state_dir=str(state / "targets" / "fixture"),
+                                    blockers=[], components=[], fingerprint="plan")
+                        stdout.write(json.dumps(plan).encode("utf-8"))
+                    elif phase == "apply":
+                        stdout.write(b'{"digest": "payload"}')
+                    return CompletedProcess(command, 0)
+
+                with patch.object(lab, "revision", return_value=commit), patch.object(
+                        lab.subprocess, "run", side_effect=run):
+                    lab.stage_and_deploy(request, workspace, inputs, evidence, summary)
+
+                self.assertEqual(phases, ["plan", "apply", "verify"])
+                self.assertEqual(summary["status"], "pass")
+                self.assertEqual([path.name for path in (workspace / "Games").iterdir()], [root])
+                userdir = game / "userdir.txt"
+                if root == "Shared":
+                    self.assertFalse(userdir.exists())
+                    self.assertFalse((workspace / "UserData").exists())
+                else:
+                    self.assertTrue(user_data.is_dir())
+                    self.assertEqual(userdir.read_bytes(), str(user_data).encode("ascii"))
+                self.assertFalse((inputs / "games" / root / "userdir.txt").exists())
 
     def test_sandbox_can_map_only_the_selected_cache_entry(self):
         inputs = self.root / "baselines/admission/input"

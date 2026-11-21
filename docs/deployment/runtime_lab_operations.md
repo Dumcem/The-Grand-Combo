@@ -712,3 +712,104 @@ La qualifica ha esercitato il caricamento delle due composizioni.
 Validatore e audit 1966 sono
 stati saltati perché il task non modifica o valuta validità o
 bilanciamento dell'estensione.
+
+## Task 15 · Qualifica dei profili Grand Loader
+
+Le due prove hanno usato Victoria II 3.04 x86, la baseline nativa del
+Task 14 con i relativi supplementi e il bundle Git a `3c3be0d63`.
+Al momento della prova il checkout e `origin/master` erano a
+`246231fc5`. I contenuti dei due profili e `deploy_tgc.py`
+coincidono fra le due revisioni. Il riepilogo permanente è `sessions/task15/summary.json`
+sotto `%LOCALAPPDATA%\TGC-Runtime-Lab`.
+
+Lo ZIP ufficiale Grand Loader 3.0.0 è conservato in
+`sessions/task15/grand-loader-3.0.0.zip`. Il suo SHA-256 coincide con
+quello pubblicato,
+`e5ca3b29c9d17870ca2235eacc9ca1759251467827c39e82ece1045d3c59dfba`.
+Il manifest `baselines/victoria2-loader-300-t15/manifest.json` contiene
+gli hash delle DLL, dei due INI completi e delle risorse impiegate,
+oltre agli import x86 e al digest degli input. Lo ZIP conserva il CB
+pregenerato di distribuzione. Il laboratorio lo esclude dall'input
+dei guest e verifica che il plugin lo generi durante ogni prova.
+[Asset ufficiale](https://github.com/The-Grand-Combination/The-Grand-Loader/releases/expanded_assets/3.0.0)
+
+### Risultati Loader
+
+| Profilo | Descrittore selezionato | Checksum | Fixture nell'archivio |
+| --- | --- | --- | --- |
+| `core+extender` | `TGCScriptExtender.mod` | `AKGB` | `fixtures/t15-loader-core-01` |
+| `core+extender+1966` | `TGCScriptExtender1966.mod` | `FNKX` | `fixtures/t15-loader-1966-01` |
+
+Entrambe le prove hanno superato `plan → apply → verify` e la verifica
+dopo il runtime. In ciascuna, l'Impero russo è partito il 1º gennaio
+1836, è avanzato fino al 3 gennaio ed è stato riaperto in pausa a
+quella data in un nuovo processo. Le due fixture contengono salvataggi
+distinti con i rispettivi SHA-256 in `fixture.json`. Le ricevute
+`runtime-summary.json` nelle sessioni `t15-loader-core-01` e
+`t15-loader-1966-01` collegano manifest, schermate, log e salvataggio.
+
+Nei log di avvio e riapertura, al banner storico 1.1.0 del
+bootstrapper seguono Script Extender 0.1.0 e Performance Patch 1.0.0.
+I log mostrano i valori letti dagli INI, fra cui
+`treaty_dismantle_gp=250` e `oos_log=1`, con i profiler disattivati.
+I file del bundle hanno gli stessi hash prima e dopo le due sessioni.
+
+Le radici dei giochi, dei dati utente e dello stato transazionale
+sono distinte sotto `C:\TGC-Lab\Games`, `C:\TGC-Lab\UserData` e
+`C:\TGC-Lab\State`, con le rispettive sottocartelle `Loader` e
+`Loader1966`. Il log attribuisce i CB alla coppia selezionata più
+`common/se_treaty_cbs.txt`. Ogni guest ha generato
+`mod\script_extender\common\se_cb_types.generated.txt` nella propria
+radice e creato la cache della mappa sotto il proprio `user_dir`.
+Per la Timeline, `default.map` risolve `definition.csv` dalla coppia
+`TGCScriptExtender1966` e il file pubblicato coincide con il blob
+atteso. Il log motore registra 60 tecnologie per ramo nella Timeline
+e 35 nel core.
+
+I guest hanno usato WARP con vGPU disattivata, senza schede di rete
+abilitate o route predefinite. Il controllo finale confronta 105
+ambiti host per sessione. Entrambi i confronti sono passati e
+l'elenco finale delle Sandbox era vuoto.
+
+### Diagnosi e ripetizione
+
+Il primo processo core si è chiuso prima del menu con `CFileException`.
+Il generatore scriveva `userdir.txt` con CRLF su Windows. Dopo aver
+conservato file e log, la ricetta ha riscritto lo stesso percorso
+privato senza fine riga. Nello stesso guest il ciclo core è riuscito.
+Il generatore ora scrive direttamente i byte ASCII del percorso, senza
+terminatore. La ricetta archiviata riusa una versione precedente dello
+strumento nel bundle del guest e conserva quel passaggio per
+compatibilità con l'input storico. La correzione riguarda lo strumento
+di questo fork.
+
+Il controllo finale dell'esportazione core è riuscito dopo aver
+corretto nella ricetta locale il percorso dello stato transazionale.
+Durante la prova è comparso un avviso Bitdefender su una riga di
+comando PowerShell. L'origine precisa resta indeterminata e le
+protezioni sono rimaste attive. La qualifica copre l'avvio in
+finestra. Il crash storico a schermo intero e le prove funzionali
+di trattati, partizioni, redditi POP e bilanciamento restano fuori
+da questo esito.
+
+La procedura completa è in `sessions/task15/ricetta.md`. Per ripetere
+la prova, avviare PowerShell 7 dalla radice del repository e usare
+un ID nuovo per ciascun profilo.
+
+```powershell
+$lab = "$env:LOCALAPPDATA\TGC-Runtime-Lab"
+$recipe = "$lab\sessions\task15\recipe"
+$run = 't15-loader-replay-core-01'
+& "$recipe\t15-loader-start-local.ps1" -Run $run -Profile 'core+extender'
+```
+
+Seguire il log di avanzamento in `transfer/<id>/outbox/progress.log`,
+poi creare e salvare una partita nella console. A gioco chiuso
+usare `t15-loader-control-local.ps1` con `-Action inspect` e
+`-Action restart`. Dopo la riapertura eseguire `inspect` mentre il
+motore risponde, uscire e usare `t15-loader-close-local.ps1` per
+esportare, chiudere il guest e controllare l'host. Concludere con
+`t15-loader-receipt-local.py` passando la data effettiva. Per la
+seconda prova usare `core+extender+1966` e un altro ID. Le istruzioni
+archiviate includono la raccolta dei log in caso di errore al primo
+avvio e la riconnessione della console.

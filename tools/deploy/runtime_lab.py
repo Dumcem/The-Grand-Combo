@@ -279,7 +279,8 @@ def stage_and_deploy(request, workspace, inputs, evidence, summary):
     if name != "Shared":
         user_data = no_links(workspace / "UserData" / name)
         user_data.mkdir(parents=True)
-        no_links(game / "userdir.txt").write_text(str(user_data) + "\n", encoding="ascii")
+        # Victoria II reads the entire file as the directory path.
+        no_links(game / "userdir.txt").write_bytes(str(user_data).encode("ascii"))
     state = no_links(workspace / "State" / name)
     deployer = repo / "tools" / "deploy" / "deploy_tgc.py"
     target = ["--game-root", str(game), "--state-root", str(state), "--profile", request["profile"]]
