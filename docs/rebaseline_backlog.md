@@ -597,12 +597,60 @@ collaudato la ricostruzione locale della fixture sintetica. Al Task 11 Windows S
 | GOLD RUSH | Analisi di dispatch, refutazione, flag, storico e pacchetto provinciale per MEX, USA, CAL e proprietari terzi. Lo scope al cambio di proprietario di 104 tra dispatch e scelta su 3.04 resta da chiarire. I vecchi salvataggi compatibili sono fixture facoltative. [Evidenza statica](upstream_delta_register.md#gold-rush--california-e-flag-persistenti) |
 | LOADER_PEACE | Modellare deterministicamente la guardia 96021 e la chiusura 96094 dopo pace generale, anche con seconda guerra aperta, più richieste per lo stesso perdente, vincitore umano con firma ritardata e 96021 già in coda. Il criterio è una sola chiusura senza consumo anticipato dei flag o cessioni duplicate. |
 | LOADER_ECONOMY | Inizializzazione degli hook, ordini edilizi e ricorrenza di 53 sono osservazioni parziali. Mancano misure dei pagamenti netti per strato su checkpoint abbinati, cumulo nazionale/provinciale, soglia 1990 e isolamento dei singoli effetti di 53 dal tick ordinario. |
-| USER_DATA | Il Project Hub riferisce una differenza d’impronta della cartella utente Paradox senza attribuzione. La causa e l’eventuale legame con le sessioni Loader restano indeterminati. Riesaminare prima ricevute e impronte disponibili. |
+| [USER_DATA](#user_data--divergenza-dimpronta-paradox) | **Aperta.** Divergenza di metadati verificata nel Task 66 del 12 novembre 2026 UTC. I dati disponibili circoscrivono l'intervallo e la directory. Il singolo elemento cambiato e il processo responsabile restano indeterminati. |
 | PERFORMANCE | L’inizializzazione del Performance Patch è documentata. Il confronto resta sospeso. Il JIT resta aperto a esame di log, dump e binario. |
 
 Per le composizioni Loader valgono i [contratti dei consumatori](deployment/script_extender_profile.md#contratti-dei-consumatori).
 I [riscontri di progettazione e il piano storico](https://github.com/Dumcem/The-Grand-Combo/blob/11bab1312d7c3351b0abe5e3020596b26527c97a/docs/deployment/script_extender_task57.md#sessione-finale-unica)
 conservano i casi di prova dettagliati. La copertura funzionale resta parziale. Un eventuale esperimento richiede il criterio di necessità e le condizioni di osservabilità e isolamento pertinenti.
+
+### USER_DATA — Divergenza d'impronta Paradox
+
+Nel Task 66, la verifica prima/dopo di `Documents/Paradox Interactive`
+(`paradox_user`) ha segnalato la sola differenza fra i cinque ambiti
+protetti. `audit-local.py` calcolava SHA-256 sui record
+`lstat` di percorsi relativi, dimensioni, `mtime_ns` e attributi Windows
+di file e directory in ordine deterministico, comprese le directory vuote.
+Includeva i reparse point senza attraversarli. `protected-before.json`
+conservava soltanto il conteggio e l'impronta aggregata per radice.
+
+| Rilevazione | Record | SHA-256 dei metadati |
+| --- | ---: | --- |
+| Prima | 2.279 | `a2c4525428c142df9e70f1d0742ea232088db5ebe02e2c3ecb4c0df55bd11e26` |
+| Dopo, confermata da due letture | 2.279 | `91c905755feed2d353314e4a26c475ada1354b97f2f4c07398e81402d426b1e1` |
+
+La discrepanza è stata rilevata alle 22:42 UTC. Il controllo e il comando
+di verifica e rollback delle copie sono partiti in parallelo. L'ordine
+rispetto all'inizio del rollback resta indeterminato. I deployment di
+prova, i rollback e i percorsi `userdir.txt` puntavano a radici dedicate
+temporanee. Le due letture successive contavano 2.262 file e 17 directory
+senza `mtime` recenti secondo la soglia usata (22:12:34 UTC). Il `FileSystemWatcher`
+copriva nomi, ultima scrittura e dimensioni durante singoli avvii. Restano
+fuori dalla sua copertura i cambi di soli attributi, gli intervalli tra gli
+avvii e l'identità del processo autore. L'impronta non comprendeva il
+contenuto dei file. Il report entrò nel Project Hub alla revisione 14 del
+13 novembre e nel registro a `332c7a30e`.
+
+Nei successivi Task 10–16 del laboratorio, tutte le 20 coppie di inventari
+host archiviate e comparabili sono identiche all'interno della propria
+coppia. Nei due profili Loader del Task 15 sono state ricalcolate le
+impronte dichiarate nelle ricevute dei 105 ambiti host di ciascun profilo.
+`victoria-documents` contiene 2.262 file invariati per profilo. Questi
+inventari di percorsi e contenuti appartengono a prove successive e usano
+un metodo diverso da quello del Task 66.
+
+Fonti locali nel log di esecuzione «Allinea Victoria II con Loader», turno
+Task 66 (`01a1d1cc-a9de-7022-8f43-7007649a4c63`). Il comando `exec-4e935458`
+definisce la misura, `exec-af0d69bb` registra la divergenza e i risultati
+`exec-37d60076`, `exec-52ea3d6e` e `exec-5be4cfe8` riportano le impronte.
+Per il Task 15, usare `host-before.json`, `host-after.json` e i rispettivi
+riepiloghi in `sessions/t15-loader-core-01` e `sessions/t15-loader-1966-01`
+dell'archivio del laboratorio.
+
+Riesaminare se si recupera un inventario iniziale per singolo percorso con
+la stessa radice e lo stesso metodo, oppure una traccia di scrittura
+correlabile all'intervallo con percorso, operazione e processo. Una nuova
+impronta della cartella personale non ricostruirebbe lo stato del Task 66.
 
 ## Manutenzione e chiusura
 
