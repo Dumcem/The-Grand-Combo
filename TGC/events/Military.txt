@@ -520,11 +520,11 @@ country_event = {
 	option = {
 		name = "EVTOPTA10000101"
 
-		treasury = -5000
-
 		random_owned = {
 			limit = {
 				owner = {
+					money = 5000
+					NOT = { has_country_modifier = recently_hired_general }
 					check_variable = { which = random_seed value = 0.99 }
 					NOT = { check_variable = { which = random_seed value = 33.01 } }
 				}
@@ -535,11 +535,15 @@ country_event = {
 					personality = active_p
 					background = sucker
 				}
+				treasury = -5000
+				add_country_modifier = { name = recently_hired_general duration = 30 }
 			}
 		}
 		random_owned = {
 			limit = {
 				owner = {
+					money = 5000
+					NOT = { has_country_modifier = recently_hired_general }
 					check_variable = { which = random_seed value = 33.99 }
 					NOT = { check_variable = { which = random_seed value = 66.01 } }
 				}
@@ -550,11 +554,15 @@ country_event = {
 					personality = earnest
 					background = clueless
 				}
+				treasury = -5000
+				add_country_modifier = { name = recently_hired_general duration = 30 }
 			}
 		}
 		random_owned = {
 			limit = {
 				owner = {
+					money = 5000
+					NOT = { has_country_modifier = recently_hired_general }
 					check_variable = { which = random_seed value = 66.99 }
 					NOT = { check_variable = { which = random_seed value = 100.01 } }
 				}
@@ -565,26 +573,20 @@ country_event = {
 					personality = arrogant
 					background = efficient_bureaucrat
 				}
-			}
-		}
-
-		set_country_flag = hidden_tooltip
-		random_owned = { limit = { owner = { has_country_flag = hidden_tooltip } }
-			owner = {
+				treasury = -5000
 				add_country_modifier = { name = recently_hired_general duration = 30 }
 			}
 		}
-		clr_country_flag = hidden_tooltip
 	}
 	
 	option = {
 		name = "EVTOPTB10000101"
 
-		treasury = -15000
-
 		random_owned = {
 			limit = {
 				owner = {
+					money = 15000
+					NOT = { has_country_modifier = recently_hired_general }
 					check_variable = { which = random_seed value = 0.99 }
 					NOT = { check_variable = { which = random_seed value = 33.01 } }
 				}
@@ -595,11 +597,15 @@ country_event = {
 					personality = active_p
 					background = priest
 				}
+				treasury = -15000
+				add_country_modifier = { name = recently_hired_general duration = 30 }
 			}
 		}
 		random_owned = {
 			limit = {
 				owner = {
+					money = 15000
+					NOT = { has_country_modifier = recently_hired_general }
 					check_variable = { which = random_seed value = 33.99 }
 					NOT = { check_variable = { which = random_seed value = 66.01 } }
 				}
@@ -610,11 +616,15 @@ country_event = {
 					personality = stout
 					background = elder
 				}
+				treasury = -15000
+				add_country_modifier = { name = recently_hired_general duration = 30 }
 			}
 		}
 		random_owned = {
 			limit = {
 				owner = {
+					money = 15000
+					NOT = { has_country_modifier = recently_hired_general }
 					check_variable = { which = random_seed value = 66.99 }
 					NOT = { check_variable = { which = random_seed value = 100.01 } }
 				}
@@ -625,26 +635,20 @@ country_event = {
 					personality = balanced_p
 					background = sucker
 				}
-			}
-		}
-
-		set_country_flag = hidden_tooltip
-		random_owned = { limit = { owner = { has_country_flag = hidden_tooltip } }
-			owner = {
+				treasury = -15000
 				add_country_modifier = { name = recently_hired_general duration = 30 }
 			}
 		}
-		clr_country_flag = hidden_tooltip
 	}
 	
 	option = {
 		name = "EVTOPTC10000101"
 
-		treasury = -50000
-
 		random_owned = {
 			limit = {
 				owner = {
+					money = 50000
+					NOT = { has_country_modifier = recently_hired_general }
 					check_variable = { which = random_seed value = 0.99 }
 					NOT = { check_variable = { which = random_seed value = 33.01 } }
 				}
@@ -655,11 +659,15 @@ country_event = {
 					personality = spirited
 					background = warmonger
 				}
+				treasury = -50000
+				add_country_modifier = { name = recently_hired_general duration = 30 }
 			}
 		}
 		random_owned = {
 			limit = {
 				owner = {
+					money = 50000
+					NOT = { has_country_modifier = recently_hired_general }
 					check_variable = { which = random_seed value = 33.99 }
 					NOT = { check_variable = { which = random_seed value = 66.01 } }
 				}
@@ -670,11 +678,15 @@ country_event = {
 					personality = resolute
 					background = womanizer
 				}
+				treasury = -50000
+				add_country_modifier = { name = recently_hired_general duration = 30 }
 			}
 		}
 		random_owned = {
 			limit = {
 				owner = {
+					money = 50000
+					NOT = { has_country_modifier = recently_hired_general }
 					check_variable = { which = random_seed value = 66.99 }
 					NOT = { check_variable = { which = random_seed value = 100.01 } }
 				}
@@ -685,26 +697,20 @@ country_event = {
 					personality = soft
 					background = cursed_luck
 				}
-			}
-		}
-
-		set_country_flag = hidden_tooltip
-		random_owned = { limit = { owner = { has_country_flag = hidden_tooltip } }
-			owner = {
+				treasury = -50000
 				add_country_modifier = { name = recently_hired_general duration = 30 }
 			}
 		}
-		clr_country_flag = hidden_tooltip
 	}
 	
 	option = {
 		name = "EVTOPTD10000101"
 
-		treasury = -500000
-
 		random_owned = {
 			limit = {
 				owner = {
+					money = 500000
+					NOT = { has_country_modifier = recently_hired_general }
 					check_variable = { which = random_seed value = 0.99 }
 					NOT = { check_variable = { which = random_seed value = 33.01 } }
 				}
@@ -715,11 +721,15 @@ country_event = {
 					personality = cautious
 					background = disgraced
 				}
+				treasury = -500000
+				add_country_modifier = { name = recently_hired_general duration = 30 }
 			}
 		}
 		random_owned = {
 			limit = {
 				owner = {
+					money = 500000
+					NOT = { has_country_modifier = recently_hired_general }
 					check_variable = { which = random_seed value = 33.99 }
 					NOT = { check_variable = { which = random_seed value = 66.01 } }
 				}
@@ -730,11 +740,15 @@ country_event = {
 					personality = resolute
 					background = diplomat
 				}
+				treasury = -500000
+				add_country_modifier = { name = recently_hired_general duration = 30 }
 			}
 		}
 		random_owned = {
 			limit = {
 				owner = {
+					money = 500000
+					NOT = { has_country_modifier = recently_hired_general }
 					check_variable = { which = random_seed value = 66.99 }
 					NOT = { check_variable = { which = random_seed value = 100.01 } }
 				}
@@ -745,16 +759,10 @@ country_event = {
 					personality = coolminded
 					background = generals_aide
 				}
-			}
-		}
-
-		set_country_flag = hidden_tooltip
-		random_owned = { limit = { owner = { has_country_flag = hidden_tooltip } }
-			owner = {
+				treasury = -500000
 				add_country_modifier = { name = recently_hired_general duration = 30 }
 			}
 		}
-		clr_country_flag = hidden_tooltip
 	}
 	
 }
@@ -771,11 +779,11 @@ country_event = {
 	option = {
 		name = "EVTOPTA10000102"
 
-		treasury = -10000
-
 		random_owned = {
 			limit = {
 				owner = {
+					money = 10000
+					NOT = { has_country_modifier = recently_hired_general }
 					check_variable = { which = random_seed value = 0.99 }
 					NOT = { check_variable = { which = random_seed value = 33.01 } }
 				}
@@ -786,11 +794,15 @@ country_event = {
 					personality = aggressive
 					background = powerful_friends
 				}
+				treasury = -10000
+				add_country_modifier = { name = recently_hired_general duration = 30 }
 			}
 		}
 		random_owned = {
 			limit = {
 				owner = {
+					money = 10000
+					NOT = { has_country_modifier = recently_hired_general }
 					check_variable = { which = random_seed value = 33.99 }
 					NOT = { check_variable = { which = random_seed value = 66.01 } }
 				}
@@ -801,11 +813,15 @@ country_event = {
 					personality = confident
 					background = pawn
 				}
+				treasury = -10000
+				add_country_modifier = { name = recently_hired_general duration = 30 }
 			}
 		}
 		random_owned = {
 			limit = {
 				owner = {
+					money = 10000
+					NOT = { has_country_modifier = recently_hired_general }
 					check_variable = { which = random_seed value = 66.99 }
 					NOT = { check_variable = { which = random_seed value = 100.01 } }
 				}
@@ -816,26 +832,20 @@ country_event = {
 					personality = inept
 					background = rising_star
 				}
-			}
-		}
-
-		set_country_flag = hidden_tooltip
-		random_owned = { limit = { owner = { has_country_flag = hidden_tooltip } }
-			owner = {
+				treasury = -10000
 				add_country_modifier = { name = recently_hired_general duration = 30 }
 			}
 		}
-		clr_country_flag = hidden_tooltip
 	}
 	
 	option = {
 		name = "EVTOPTB10000102"
-
-		treasury = -25000
 		
 		random_owned = {
 			limit = {
 				owner = {
+					money = 25000
+					NOT = { has_country_modifier = recently_hired_general }
 					check_variable = { which = random_seed value = 0.99 }
 					NOT = { check_variable = { which = random_seed value = 33.01 } }
 				}
@@ -846,11 +856,15 @@ country_event = {
 					personality = irate
 					background = generals_aide
 				}
+				treasury = -25000
+				add_country_modifier = { name = recently_hired_general duration = 30 }
 			}
 		}
 		random_owned = {
 			limit = {
 				owner = {
+					money = 25000
+					NOT = { has_country_modifier = recently_hired_general }
 					check_variable = { which = random_seed value = 33.99 }
 					NOT = { check_variable = { which = random_seed value = 66.01 } }
 				}
@@ -861,11 +875,15 @@ country_event = {
 					personality = harsh
 					background = elder
 				}
+				treasury = -25000
+				add_country_modifier = { name = recently_hired_general duration = 30 }
 			}
 		}
 		random_owned = {
 			limit = {
 				owner = {
+					money = 25000
+					NOT = { has_country_modifier = recently_hired_general }
 					check_variable = { which = random_seed value = 66.99 }
 					NOT = { check_variable = { which = random_seed value = 100.01 } }
 				}
@@ -876,26 +894,20 @@ country_event = {
 					personality = strange
 					background = professor
 				}
-			}
-		}
-
-		set_country_flag = hidden_tooltip
-		random_owned = { limit = { owner = { has_country_flag = hidden_tooltip } }
-			owner = {
+				treasury = -25000
 				add_country_modifier = { name = recently_hired_general duration = 30 }
 			}
 		}
-		clr_country_flag = hidden_tooltip
 	}
 	
 	option = {
 		name = "EVTOPTC10000102"
-
-		treasury = -100000
 		
 		random_owned = {
 			limit = {
 				owner = {
+					money = 100000
+					NOT = { has_country_modifier = recently_hired_general }
 					check_variable = { which = random_seed value = 0.99 }
 					NOT = { check_variable = { which = random_seed value = 33.01 } }
 				}
@@ -906,11 +918,15 @@ country_event = {
 					personality = coolminded
 					background = innovative_tactician
 				}
+				treasury = -100000
+				add_country_modifier = { name = recently_hired_general duration = 30 }
 			}
 		}
 		random_owned = {
 			limit = {
 				owner = {
+					money = 100000
+					NOT = { has_country_modifier = recently_hired_general }
 					check_variable = { which = random_seed value = 33.99 }
 					NOT = { check_variable = { which = random_seed value = 66.01 } }
 				}
@@ -921,11 +937,15 @@ country_event = {
 					personality = spirited
 					background = natural_born_leader
 				}
+				treasury = -100000
+				add_country_modifier = { name = recently_hired_general duration = 30 }
 			}
 		}
 		random_owned = {
 			limit = {
 				owner = {
+					money = 100000
+					NOT = { has_country_modifier = recently_hired_general }
 					check_variable = { which = random_seed value = 66.99 }
 					NOT = { check_variable = { which = random_seed value = 100.01 } }
 				}
@@ -936,26 +956,20 @@ country_event = {
 					personality = gutsy
 					background = uncommonly_young
 				}
-			}
-		}
-		
-		set_country_flag = hidden_tooltip
-		random_owned = { limit = { owner = { has_country_flag = hidden_tooltip } }
-			owner = {
+				treasury = -100000
 				add_country_modifier = { name = recently_hired_general duration = 30 }
 			}
 		}
-		clr_country_flag = hidden_tooltip
 	}
 	
 	option = {
 		name = "EVTOPTD10000102"
-
-		treasury = -1000000
 		
 		random_owned = {
 			limit = {
 				owner = {
+					money = 1000000
+					NOT = { has_country_modifier = recently_hired_general }
 					check_variable = { which = random_seed value = 0.99 }
 					NOT = { check_variable = { which = random_seed value = 33.01 } }
 				}
@@ -966,11 +980,15 @@ country_event = {
 					personality = spirited
 					background = uncommonly_young
 				}
+				treasury = -1000000
+				add_country_modifier = { name = recently_hired_general duration = 30 }
 			}
 		}
 		random_owned = {
 			limit = {
 				owner = {
+					money = 1000000
+					NOT = { has_country_modifier = recently_hired_general }
 					check_variable = { which = random_seed value = 33.99 }
 					NOT = { check_variable = { which = random_seed value = 66.01 } }
 				}
@@ -981,11 +999,15 @@ country_event = {
 					personality = cautious
 					background = nationalist
 				}
+				treasury = -1000000
+				add_country_modifier = { name = recently_hired_general duration = 30 }
 			}
 		}
 		random_owned = {
 			limit = {
 				owner = {
+					money = 1000000
+					NOT = { has_country_modifier = recently_hired_general }
 					check_variable = { which = random_seed value = 66.99 }
 					NOT = { check_variable = { which = random_seed value = 100.01 } }
 				}
@@ -996,16 +1018,10 @@ country_event = {
 					personality = brutish
 					background = school_of_defense
 				}
-			}
-		}
-
-		set_country_flag = hidden_tooltip
-		random_owned = { limit = { owner = { has_country_flag = hidden_tooltip } }
-			owner = {
+				treasury = -1000000
 				add_country_modifier = { name = recently_hired_general duration = 30 }
 			}
 		}
-		clr_country_flag = hidden_tooltip
 	}
 	
 }
@@ -1021,12 +1037,12 @@ country_event = {
 	
 	option = {
 		name = "EVTOPTA10000103"
-
-		treasury = -50000
 		
 		random_owned = {
 			limit = {
 				owner = {
+					money = 50000
+					NOT = { has_country_modifier = recently_hired_general }
 					check_variable = { which = random_seed value = 0.99 }
 					NOT = { check_variable = { which = random_seed value = 33.01 } }
 				}
@@ -1037,11 +1053,15 @@ country_event = {
 					personality = vicious
 					background = politician
 				}
+				treasury = -50000
+				add_country_modifier = { name = recently_hired_general duration = 30 }
 			}
 		}
 		random_owned = {
 			limit = {
 				owner = {
+					money = 50000
+					NOT = { has_country_modifier = recently_hired_general }
 					check_variable = { which = random_seed value = 33.99 }
 					NOT = { check_variable = { which = random_seed value = 66.01 } }
 				}
@@ -1052,11 +1072,15 @@ country_event = {
 					personality = polite
 					background = cavalry_officer
 				}
+				treasury = -50000
+				add_country_modifier = { name = recently_hired_general duration = 30 }
 			}
 		}
 		random_owned = {
 			limit = {
 				owner = {
+					money = 50000
+					NOT = { has_country_modifier = recently_hired_general }
 					check_variable = { which = random_seed value = 66.99 }
 					NOT = { check_variable = { which = random_seed value = 100.01 } }
 				}
@@ -1067,26 +1091,20 @@ country_event = {
 					personality = perverse
 					background = eccentric_genius
 				}
-			}
-		}
-
-		set_country_flag = hidden_tooltip
-		random_owned = { limit = { owner = { has_country_flag = hidden_tooltip } }
-			owner = {
+				treasury = -50000
 				add_country_modifier = { name = recently_hired_general duration = 30 }
 			}
 		}
-		clr_country_flag = hidden_tooltip
 	}
 	
 	option = {
 		name = "EVTOPTB10000103"
-
-		treasury = -100000
 		
 		random_owned = {
 			limit = {
 				owner = {
+					money = 100000
+					NOT = { has_country_modifier = recently_hired_general }
 					check_variable = { which = random_seed value = 0.99 }
 					NOT = { check_variable = { which = random_seed value = 33.01 } }
 				}
@@ -1097,11 +1115,15 @@ country_event = {
 					personality = wrathful
 					background = diplomat
 				}
+				treasury = -100000
+				add_country_modifier = { name = recently_hired_general duration = 30 }
 			}
 		}
 		random_owned = {
 			limit = {
 				owner = {
+					money = 100000
+					NOT = { has_country_modifier = recently_hired_general }
 					check_variable = { which = random_seed value = 33.99 }
 					NOT = { check_variable = { which = random_seed value = 66.01 } }
 				}
@@ -1112,11 +1134,15 @@ country_event = {
 					personality = active_p
 					background = artillerist
 				}
+				treasury = -100000
+				add_country_modifier = { name = recently_hired_general duration = 30 }
 			}
 		}
 		random_owned = {
 			limit = {
 				owner = {
+					money = 100000
+					NOT = { has_country_modifier = recently_hired_general }
 					check_variable = { which = random_seed value = 66.99 }
 					NOT = { check_variable = { which = random_seed value = 100.01 } }
 				}
@@ -1127,26 +1153,20 @@ country_event = {
 					personality = romantic
 					background = diligent_officer
 				}
-			}
-		}
-
-		set_country_flag = hidden_tooltip
-		random_owned = { limit = { owner = { has_country_flag = hidden_tooltip } }
-			owner = {
+				treasury = -100000
 				add_country_modifier = { name = recently_hired_general duration = 30 }
 			}
 		}
-		clr_country_flag = hidden_tooltip
 	}
 	
 	option = {
 		name = "EVTOPTC10000103"
-
-		treasury = -250000
 		
 		random_owned = {
 			limit = {
 				owner = {
+					money = 250000
+					NOT = { has_country_modifier = recently_hired_general }
 					check_variable = { which = random_seed value = 0.99 }
 					NOT = { check_variable = { which = random_seed value = 33.01 } }
 				}
@@ -1157,11 +1177,15 @@ country_event = {
 					personality = audacious
 					background = elder
 				}
+				treasury = -250000
+				add_country_modifier = { name = recently_hired_general duration = 30 }
 			}
 		}
 		random_owned = {
 			limit = {
 				owner = {
+					money = 250000
+					NOT = { has_country_modifier = recently_hired_general }
 					check_variable = { which = random_seed value = 33.99 }
 					NOT = { check_variable = { which = random_seed value = 66.01 } }
 				}
@@ -1172,11 +1196,15 @@ country_event = {
 					personality = balanced_p
 					background = professor
 				}
+				treasury = -250000
+				add_country_modifier = { name = recently_hired_general duration = 30 }
 			}
 		}
 		random_owned = {
 			limit = {
 				owner = {
+					money = 250000
+					NOT = { has_country_modifier = recently_hired_general }
 					check_variable = { which = random_seed value = 66.99 }
 					NOT = { check_variable = { which = random_seed value = 100.01 } }
 				}
@@ -1187,26 +1215,20 @@ country_event = {
 					personality = coolminded
 					background = adventurer
 				}
-			}
-		}
-
-		set_country_flag = hidden_tooltip
-		random_owned = { limit = { owner = { has_country_flag = hidden_tooltip } }
-			owner = {
+				treasury = -250000
 				add_country_modifier = { name = recently_hired_general duration = 30 }
 			}
 		}
-		clr_country_flag = hidden_tooltip
 	}
 	
 	option = {
 		name = "EVTOPTD10000103"
-
-		treasury = -2000000
 		
 		random_owned = {
 			limit = {
 				owner = {
+					money = 2000000
+					NOT = { has_country_modifier = recently_hired_general }
 					check_variable = { which = random_seed value = 0.99 }
 					NOT = { check_variable = { which = random_seed value = 33.01 } }
 				}
@@ -1217,11 +1239,15 @@ country_event = {
 					personality = merciless
 					background = generals_aide
 				}
+				treasury = -2000000
+				add_country_modifier = { name = recently_hired_general duration = 30 }
 			}
 		}
 		random_owned = {
 			limit = {
 				owner = {
+					money = 2000000
+					NOT = { has_country_modifier = recently_hired_general }
 					check_variable = { which = random_seed value = 33.99 }
 					NOT = { check_variable = { which = random_seed value = 66.01 } }
 				}
@@ -1232,11 +1258,15 @@ country_event = {
 					personality = persistent
 					background = bg_engineer
 				}
+				treasury = -2000000
+				add_country_modifier = { name = recently_hired_general duration = 30 }
 			}
 		}
 		random_owned = {
 			limit = {
 				owner = {
+					money = 2000000
+					NOT = { has_country_modifier = recently_hired_general }
 					check_variable = { which = random_seed value = 66.99 }
 					NOT = { check_variable = { which = random_seed value = 100.01 } }
 				}
@@ -1247,16 +1277,10 @@ country_event = {
 					personality = relentless
 					background = school_of_defense
 				}
-			}
-		}
-
-		set_country_flag = hidden_tooltip
-		random_owned = { limit = { owner = { has_country_flag = hidden_tooltip } }
-			owner = {
+				treasury = -2000000
 				add_country_modifier = { name = recently_hired_general duration = 30 }
 			}
 		}
-		clr_country_flag = hidden_tooltip
 	}
 	
 }
@@ -1272,12 +1296,12 @@ country_event = {
 	
 	option = {
 		name = "EVTOPTA10000104"
-
-		treasury = -250000
 		
 		random_owned = {
 			limit = {
 				owner = {
+					money = 250000
+					NOT = { has_country_modifier = recently_hired_general }
 					check_variable = { which = random_seed value = 0.99 }
 					NOT = { check_variable = { which = random_seed value = 33.01 } }
 				}
@@ -1288,11 +1312,15 @@ country_event = {
 					personality = relentless
 					background = natural_born_leader
 				}
+				treasury = -250000
+				add_country_modifier = { name = recently_hired_general duration = 30 }
 			}
 		}
 		random_owned = {
 			limit = {
 				owner = {
+					money = 250000
+					NOT = { has_country_modifier = recently_hired_general }
 					check_variable = { which = random_seed value = 33.99 }
 					NOT = { check_variable = { which = random_seed value = 66.01 } }
 				}
@@ -1303,11 +1331,15 @@ country_event = {
 					personality = choleric
 					background = school_of_the_bayonet
 				}
+				treasury = -250000
+				add_country_modifier = { name = recently_hired_general duration = 30 }
 			}
 		}
 		random_owned = {
 			limit = {
 				owner = {
+					money = 250000
+					NOT = { has_country_modifier = recently_hired_general }
 					check_variable = { which = random_seed value = 66.99 }
 					NOT = { check_variable = { which = random_seed value = 100.01 } }
 				}
@@ -1318,26 +1350,20 @@ country_event = {
 					personality = unflinching
 					background = elder
 				}
-			}
-		}
-
-		set_country_flag = hidden_tooltip
-		random_owned = { limit = { owner = { has_country_flag = hidden_tooltip } }
-			owner = {
+				treasury = -250000
 				add_country_modifier = { name = recently_hired_general duration = 30 }
 			}
 		}
-		clr_country_flag = hidden_tooltip
 	}
 	
 	option = {
 		name = "EVTOPTB10000104"
-
-		treasury = -1000000
 		
 		random_owned = {
 			limit = {
 				owner = {
+					money = 1000000
+					NOT = { has_country_modifier = recently_hired_general }
 					check_variable = { which = random_seed value = 0.99 }
 					NOT = { check_variable = { which = random_seed value = 33.01 } }
 				}
@@ -1348,11 +1374,15 @@ country_event = {
 					personality = aggressive
 					background = rising_star
 				}
+				treasury = -1000000
+				add_country_modifier = { name = recently_hired_general duration = 30 }
 			}
 		}
 		random_owned = {
 			limit = {
 				owner = {
+					money = 1000000
+					NOT = { has_country_modifier = recently_hired_general }
 					check_variable = { which = random_seed value = 33.99 }
 					NOT = { check_variable = { which = random_seed value = 66.01 } }
 				}
@@ -1363,11 +1393,15 @@ country_event = {
 					personality = au_fait
 					background = womanizer
 				}
+				treasury = -1000000
+				add_country_modifier = { name = recently_hired_general duration = 30 }
 			}
 		}
 		random_owned = {
 			limit = {
 				owner = {
+					money = 1000000
+					NOT = { has_country_modifier = recently_hired_general }
 					check_variable = { which = random_seed value = 66.99 }
 					NOT = { check_variable = { which = random_seed value = 100.01 } }
 				}
@@ -1378,26 +1412,20 @@ country_event = {
 					personality = efficient
 					background = uncommonly_young
 				}
-			}
-		}
-
-		set_country_flag = hidden_tooltip
-		random_owned = { limit = { owner = { has_country_flag = hidden_tooltip } }
-			owner = {
+				treasury = -1000000
 				add_country_modifier = { name = recently_hired_general duration = 30 }
 			}
 		}
-		clr_country_flag = hidden_tooltip
 	}
 	
 	option = {
 		name = "EVTOPTC10000104"
-
-		treasury = -2000000
 		
 		random_owned = {
 			limit = {
 				owner = {
+					money = 2000000
+					NOT = { has_country_modifier = recently_hired_general }
 					check_variable = { which = random_seed value = 0.99 }
 					NOT = { check_variable = { which = random_seed value = 33.01 } }
 				}
@@ -1408,11 +1436,15 @@ country_event = {
 					personality = romantic
 					background = cursed_luck
 				}
+				treasury = -2000000
+				add_country_modifier = { name = recently_hired_general duration = 30 }
 			}
 		}
 		random_owned = {
 			limit = {
 				owner = {
+					money = 2000000
+					NOT = { has_country_modifier = recently_hired_general }
 					check_variable = { which = random_seed value = 33.99 }
 					NOT = { check_variable = { which = random_seed value = 66.01 } }
 				}
@@ -1423,11 +1455,15 @@ country_event = {
 					personality = audacious
 					background = innovative_tactician
 				}
+				treasury = -2000000
+				add_country_modifier = { name = recently_hired_general duration = 30 }
 			}
 		}
 		random_owned = {
 			limit = {
 				owner = {
+					money = 2000000
+					NOT = { has_country_modifier = recently_hired_general }
 					check_variable = { which = random_seed value = 66.99 }
 					NOT = { check_variable = { which = random_seed value = 100.01 } }
 				}
@@ -1438,28 +1474,22 @@ country_event = {
 					personality = merciless
 					background = nationalist
 				}
-			}
-		}
-
-		set_country_flag = hidden_tooltip
-		random_owned = { limit = { owner = { has_country_flag = hidden_tooltip } }
-			owner = {
+				treasury = -2000000
 				add_country_modifier = { name = recently_hired_general duration = 30 }
 			}
 		}
-		clr_country_flag = hidden_tooltip
 	}
 	
 	option = {
 		name = "EVTOPTD10000104"
 
-		treasury = -2000000
-		treasury = -2000000
-		treasury = -1000000
+		# Keep the 3.04 treasury deltas within range after checking the full price.
 
 		random_owned = {
 			limit = {
 				owner = {
+					money = 5000000
+					NOT = { has_country_modifier = recently_hired_general }
 					check_variable = { which = random_seed value = 0.99 }
 					NOT = { check_variable = { which = random_seed value = 33.01 } }
 				}
@@ -1470,11 +1500,17 @@ country_event = {
 					personality = implacable
 					background = immoral
 				}
+				treasury = -2000000
+				treasury = -2000000
+				treasury = -1000000
+				add_country_modifier = { name = recently_hired_general duration = 30 }
 			}
 		}
 		random_owned = {
 			limit = {
 				owner = {
+					money = 5000000
+					NOT = { has_country_modifier = recently_hired_general }
 					check_variable = { which = random_seed value = 33.99 }
 					NOT = { check_variable = { which = random_seed value = 66.01 } }
 				}
@@ -1485,11 +1521,17 @@ country_event = {
 					personality = daring
 					background = school_of_defense
 				}
+				treasury = -2000000
+				treasury = -2000000
+				treasury = -1000000
+				add_country_modifier = { name = recently_hired_general duration = 30 }
 			}
 		}
 		random_owned = {
 			limit = {
 				owner = {
+					money = 5000000
+					NOT = { has_country_modifier = recently_hired_general }
 					check_variable = { which = random_seed value = 66.99 }
 					NOT = { check_variable = { which = random_seed value = 100.01 } }
 				}
@@ -1500,16 +1542,12 @@ country_event = {
 					personality = calm
 					background = school_of_the_bayonet
 				}
-			}
-		}
-
-		set_country_flag = hidden_tooltip
-		random_owned = { limit = { owner = { has_country_flag = hidden_tooltip } }
-			owner = {
+				treasury = -2000000
+				treasury = -2000000
+				treasury = -1000000
 				add_country_modifier = { name = recently_hired_general duration = 30 }
 			}
 		}
-		clr_country_flag = hidden_tooltip
 	}
 	
 }
