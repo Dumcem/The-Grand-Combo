@@ -177,13 +177,31 @@ dopo la qualifica sintetica.
    profilo risulta incompatibile nel guest. I casi di gioco in matrice
    richiedono ancora osservazioni e fixture specifiche.
 5. Chiudere i motori e raccogliere in `Evidence` output scelti, log e
-   osservazioni. Usare `python -B $tool guest-export`; il comando copia
-   nell'outbox e lascia una ricevuta SHA-256. Chiudere la Sandbox, poi in
-   host eseguire `host-check --phase after` e `archive-export` con lo
-   stesso `--lab-root` e `--run`. Il trasferimento archiviato viene
-   confrontato con la ricevuta e pubblicato in `sessions/<id>/raw`.
-   Conservare un drop non verificato per diagnosi. Ricostruire una nuova
-   sessione dagli stessi input e verificare le sentinelle.
+   osservazioni. Usare `python -B $tool guest-export` e attendere la
+   ricevuta SHA-256 nell'outbox prima di chiudere la Sandbox. Per la
+   chiusura da CLI seguire la verifica qui sotto. Poi eseguire sull'host
+   `host-check --phase after` e `archive-export` con lo stesso `--lab-root`
+   e `--run`. Il trasferimento archiviato viene confrontato con la ricevuta
+   e pubblicato in `sessions/<id>/raw`. Conservare un drop non verificato
+   per diagnosi. Ricostruire una nuova sessione dagli stessi input e
+   verificare le sentinelle.
+
+### Verifica della chiusura da CLI
+
+Usare l'ID conservato in `sandbox-start.json` per `wsb stop --id <id>`.
+Conservare l'ora UTC, l'esito di `stop` e l'output di `wsb list --raw`.
+Richiedere esito zero da entrambi i comandi e un oggetto JSON con
+`WindowsSandboxEnvironments` di tipo array. Verificare che l'ID della
+sessione sia assente. Nelle ricette che partono senza altri guest attendere
+un array vuoto. Il controllo con il solo `.Count` nelle ricette locali
+dei Task 14 e 15 accetta anche un campo assente o nullo. Se la lista è
+assente o invalida, conservare il drop e trattare la chiusura come non
+verificata. [CLI Windows Sandbox](https://learn.microsoft.com/en-us/windows/security/application-security/application-isolation/windows-sandbox/windows-sandbox-cli#stop)
+
+`stop` termina il guest e chiude la finestra del desktop. `list` riguarda le
+sessioni dell'utente corrente. Un dialogo di disconnessione richiede un
+riscontro temporale separato con il client e lo stato del guest.
+[Evidenza storica e condizione di riesame](../rebaseline_backlog.md#verifiche-runtime)
 
 ## Manutenzione
 
