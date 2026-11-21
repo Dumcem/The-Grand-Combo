@@ -119,6 +119,28 @@ class AliceProfileTests(unittest.TestCase):
             self.assertIn(f'../mod/{ALICE_PROFILES[alice]}/map/definition.csv'.encode(), actual["map/default.map"])
             self.assertEqual(actual["map/definition.csv"], baseline["map/definition.csv"])
 
+    def test_amazon_region_has_unique_south_american_provinces_in_all_profiles(self):
+        region_path = "map/region.txt"
+        continent_path = "map/continent.txt"
+        definition_path = "map/definition.csv"
+        event_paths = ("events/BRZFlavor.txt", "events/Debug.txt")
+        for profile, files in self.inventories.items():
+            with self.subTest(profile=profile):
+                for path in (region_path, continent_path, definition_path, *event_paths):
+                    self.assertEqual(files[path], CORE / path)
+                region, = (n for n in nodes(files[region_path]) if n.key == "THE_AMAZON_FOREST")
+                south_america, = (n for n in nodes(files[continent_path]) if n.key == "south_america")
+                provinces = [n.value for n in region.children]
+                continental_ids = {n.value for n in child(south_america, "provinces").children}
+                defined_ids = {
+                    line.partition(";")[0]
+                    for line in files[definition_path].read_text(encoding="latin-1").splitlines()
+                }
+                self.assertTrue(provinces)
+                self.assertEqual(len(provinces), len(set(provinces)))
+                self.assertLessEqual(set(provinces), continental_ids & defined_ids)
+                self.assertTrue(set(provinces).isdisjoint({"1128", "1122", "1120", "1133"}))
+
     def test_unique_event_ids_option_limit_and_overlay_dependencies(self):
         new = set(AID_PAGES.values()) | {"37001"}
         self.assertEqual(self.adapted.keys(), self.original.keys() | new)
