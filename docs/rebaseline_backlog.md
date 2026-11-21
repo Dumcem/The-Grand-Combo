@@ -196,17 +196,15 @@ Le due schede sulle opzioni condividono la causa nel parser. Restano distinte pe
 
 ### OPTIONS_AID — Opzioni di Country Aid oltre il limite
 
-**A · Alta · P1 · Sorgenti · Misto · Entrambe.** Alice conserva otto opzioni e scarta I/J negli eventi 100003, 100005, 100007, 100009 e 100013. Si perdono livelli di aiuto e i relativi effetti.
+**Corretta nell'overlay Alice 1.3.0, con verifica statica · Core e Timeline.** Il parser conserva otto opzioni e scartava I/J nei cinque menu di importo. Le seconde pagine 100014–100018 ripristinano tutti gli importi. Sul donatore si imposta un flag nazionale temporaneo, si entra in `FROM` e si usa `this_bounce` per impostare `THIS` al richiedente. Lo scope `if` copre il caso in cui i due paesi coincidano e `any_defined_country` individua il donatore negli altri casi. Alice accoda un singolo evento al donatore con `FROM` già catturato e lo script rimuove il flag nella stessa esecuzione. Nessun evento intermedio è inviato al richiedente.
 
-Eventi e diplomazia economica. Riesaminare alla revisione di Country Aid o se cambia il limite. Ripristino candidato con equivalenza di importi, destinatari, FROM, rifiuto e pesi AI, dopo confronto V2.
+La seconda pagina consente zero. Il confronto strutturale preserva tutte le 50 opzioni economiche, l'ordine degli effetti, le localizzazioni, il rifiuto iniziale e i pesi IA. La verifica degli scope include due richiedenti distinti nello stesso giorno. I profili Victoria II caricano il file originale. [Overlay Country Aid](../tools/deploy/alice_overlay/events/CountryAid.txt) · [Scope Alice](https://github.com/schombert/Project-Alice/blob/v1.3.0/src/scripting/effects.cpp#L323-L415) · [Accodamento Alice](https://github.com/schombert/Project-Alice/blob/v1.3.0/src/scripting/effects.cpp#L4236-L4240)
 
 **Traccia.** 10 errori e 0 warning. Log 135–144. [CountryAid.txt](../TGC/events/CountryAid.txt#L197) · [Alice · parsers_declarations.cpp](https://github.com/schombert/Project-Alice/blob/v1.3.0/src/parsing/parsers_declarations.cpp#L3113-L3123) · [Alice · constants.hpp](https://github.com/schombert/Project-Alice/blob/v1.3.0/src/common_types/constants.hpp#L581) · [Alice · events.cpp](https://github.com/schombert/Project-Alice/blob/v1.3.0/src/scripting/events.cpp#L14-L31)
 
 ### OPTIONS_CANAL — Opzioni di finanziamento del Chunnel
 
-**A · Alta · P1 · Sorgenti · Misto · Entrambe.** Stesso limite di OPTIONS_AID. Nell’evento 36996 mancano I/J/K, con durate 4745, 5110 e 5475 giorni e pesi AI legati ai fondi.
-
-Eventi infrastrutturali. Riesaminare con la catena di finanziamento o un cambio del limite. Verificare che resti una scelta AI valida e preservare i rami V2.
+**Corretta nell'overlay Alice 1.3.0, con verifica statica · Core e Timeline.** Il parser scartava I/J/K da 36996, compresi i pesi IA e le durate di 4745, 5110 e 5475 giorni. La seconda pagina 37001 conserva H–K. Il ramo di navigazione pesa quanto questi quattro rami insieme e lascia intatti tesorerie, province e flag. Il test ricostruisce la distribuzione normalizzata originale per tutte le 36 coppie di contributi e per i valori limite, senza imporre la stessa sequenza casuale. La seconda pagina conserva l'effetto A in prima posizione per la scelta automatica alla scadenza e gli assegna peso IA zero. `37000` e il file originale di Victoria II sono invariati. [Overlay Chunnel](../tools/deploy/alice_overlay/events/Canals%20Construction.txt) · [Test statici](../tools/deploy/tests/test_alice_profile.py)
 
 **Traccia.** 3 errori e 0 warning. Log 132–134. [Canals Construction.txt](../TGC/events/Canals%20Construction.txt#L1771) · [Alice · parsers_declarations.cpp](https://github.com/schombert/Project-Alice/blob/v1.3.0/src/parsing/parsers_declarations.cpp#L3113-L3123) · [Alice · constants.hpp](https://github.com/schombert/Project-Alice/blob/v1.3.0/src/common_types/constants.hpp#L581)
 

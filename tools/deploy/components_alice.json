@@ -1,0 +1,47 @@
+{
+  "schema": 1,
+  "runtime_policy_version": 1,
+  "profiles": {
+    "core+alice": ["TGCAlice"],
+    "core+alice+1966": ["TGCAlice1966"]
+  },
+  "components": [
+    {
+      "id": "TGCAlice",
+      "name": "TGC - Project Alice",
+      "source_dir": "tools/deploy/alice_overlay",
+      "source_descriptor": "TGC.mod",
+      "destination_dir": "TGCAlice",
+      "destination_descriptor": "TGCAlice.mod",
+      "dependencies": [],
+      "class": "core",
+      "profiles": ["core+alice"],
+      "runtime_policy": {
+        "files": "git-tracked-working-copy-bytes",
+        "roots": ["events", "localisation"]
+      },
+      "exclusions": [],
+      "extends": "TGC",
+      "overlay_manifest": "tools/deploy/alice_overlay.json"
+    },
+    {
+      "id": "TGCAlice1966",
+      "name": "TGC - Project Alice + Timeline 1966",
+      "source_dir": "tools/deploy/alice_overlay",
+      "source_descriptor": "TGC.mod",
+      "destination_dir": "TGCAlice1966",
+      "destination_descriptor": "TGCAlice1966.mod",
+      "dependencies": [],
+      "class": "core",
+      "profiles": ["core+alice+1966"],
+      "runtime_policy": {
+        "files": "git-tracked-working-copy-bytes",
+        "roots": ["events", "localisation"]
+      },
+      "exclusions": [],
+      "extends": "TGC",
+      "overlay_manifest": "tools/deploy/alice_overlay.json",
+      "timeline_overrides": "tools/deploy/extender_1966_overrides.json"
+    }
+  ]
+}

@@ -10,18 +10,20 @@ the production target. Never use the Steam installation as a working copy.
 Keep all supported configurations usable with the fewest installations that
 preserve compatibility, stability, data isolation and recovery. The current
 layout uses Steam for TGC core and Timeline 1966, two dedicated game roots
-for the Loader profiles, and Project Alice 1.3.0 as an alternate engine using
-the shared content. Reassess the need for separate roots when the mod,
+for the Loader profiles, and a separate target for the two assembled Project
+Alice 1.3.0 profiles. Reassess the need for separate roots when the mod,
 Loader or deployment tooling changes. Consolidate only after demonstrating
 that every profile still works, writable generated files and caches remain
 isolated, and migration preserves saves, backups and functionality.
 
 | Profile | Engine and prerequisites | Launcher selection |
 | --- | --- | --- |
-| `core` | Project Alice 1.3.0, or original Victoria II | **TGC - The Grand Combination** |
-| `core+1966` | Project Alice 1.3.0, or original Victoria II | **TGC - The Grand Combination** and **TGC Timeline 1966** |
+| `core` | Victoria II 3.04 | **TGC - The Grand Combination** |
+| `core+1966` | Victoria II 3.04 | **TGC - The Grand Combination** and **TGC Timeline 1966** |
 | `core+extender` | Victoria II 3.04 x86 with Loader 3.0.0 and both plugins | **TGC - Script Extender** |
 | `core+extender+1966` | Victoria II 3.04 x86 with Loader 3.0.0 and both plugins | **TGC - Script Extender + Timeline 1966** |
+| `core+alice` | Project Alice 1.3.0 | **TGC - Project Alice** |
+| `core+alice+1966` | Project Alice 1.3.0 | **TGC - Project Alice + Timeline 1966** |
 
 `--optional ID` may be repeated for entries in the shared catalog. Each
 Loader profile publishes its own directory and descriptor as a single pair.
@@ -46,6 +48,24 @@ to play the extension. Updating `core` after `core+1966` preserves Timeline,
 its ownership and its prior commit; disable it in the launcher for core-only
 play. There is no implicit uninstall operation. Optional-mod compatibility
 with Timeline or other options is not certified by the deployment tool.
+
+### Project Alice profiles
+
+Use a Victoria II game-data root prepared for Alice 1.3.0 that is separate
+from the four Victoria II deployment profiles. Both Alice profiles can use
+the same dedicated root. Pass `--profile core+alice` or
+`--profile core+alice+1966` to `plan`, `apply`, `verify` and `rollback`.
+Select the single corresponding entry in the Alice launcher. The 1966 entry
+already includes the canonical Timeline.
+
+The deployer assembles core, the selected Timeline and the Alice event overlay
+before staging. It generates one descriptor per profile from `TGC.mod` with
+its own path and user directory, and updates that payload's map definition path.
+Each event file has one runtime path. `tools/deploy/alice_overlay.json` pins
+the original hashes for replacements and declares the added localisation file.
+When either core event file changes, reconcile the overlay and update the
+corresponding hash after checking the event contracts. The combined profile
+also checks the canonical Timeline override list used by the Extender build.
 
 The legacy Performance Addon is retired. Its historical deployment records
 remain recoverable through the digest-specific catalog described under
@@ -316,10 +336,9 @@ none of these writes.
 
 ## Project Alice and validation boundary
 
-Project Alice 1.3.0 remains the supported baseline. If Alice shares the same
-installation/mod directory, deployment uses the same files. The tool does not
-locate/install Alice, rebuild scenarios, activate mods or claim old scenarios
-match updated files. Runtime compatibility and playtesting are separate steps.
+Project Alice 1.3.0 remains the supported baseline. The assembled Alice
+profiles are verified at the file level. The tool does not locate or install
+Alice, rebuild scenarios, activate mods or verify runtime compatibility.
 Changes to the 1966 composition are checked with the validator, balance audit
 and drift checks in `AGENTS.md`. The Loader Timeline profile also checks its
 effective file inventory separately because the 1966 tools use the canonical

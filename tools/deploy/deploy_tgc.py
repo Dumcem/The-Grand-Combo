@@ -29,6 +29,10 @@ EXTENDER_PROFILES = {EXTENDER_PROFILE: EXTENDER_COMPONENT,
                      EXTENDER_TIMELINE_PROFILE: EXTENDER_TIMELINE_COMPONENT}
 EXTENDER_CATALOGS = {EXTENDER_PROFILE: "components_extender.json",
                      EXTENDER_TIMELINE_PROFILE: "components_extender_1966.json"}
+ALICE_PROFILES = {"core+alice": "TGCAlice", "core+alice+1966": "TGCAlice1966"}
+ALICE_TIMELINE_COMPONENT = ALICE_PROFILES["core+alice+1966"]
+ALICE_CATALOG = "components_alice.json"
+ASSEMBLED_COMPONENTS = set(EXTENDER_PROFILES.values()) | set(ALICE_PROFILES.values())
 TIMELINE_COMPONENT = "TGC_Timeline_1966"
 LOADER_PLUGINS = ["script_extender/script_extender.dll", "performance_patch/performance_patch.dll"]
 PRE_RETIREMENT_CATALOG_DIGEST = "ac278a9baa07090b10020b3f7e0cd5bfe08ed17ee6ab6399e67df97e7db535b6"
@@ -240,6 +244,23 @@ def load_catalog(path):
         require(set(selected) <= ids and len(selected) == len(set(selected)), f"Invalid profile {profile}")
     for component in catalog["components"]:
         require(set(component["dependencies"]) <= ids, "Unknown dependency")
+    if catalog["profiles"].keys() & ALICE_PROFILES.keys():
+        require(path.name == ALICE_CATALOG
+                and catalog["profiles"] == {profile: [cid] for profile, cid in ALICE_PROFILES.items()}
+                and ids == set(ALICE_PROFILES.values()), "Alice requires its own catalog")
+        shared = load_catalog(path.with_name("components.json"))
+        shared_components = {c["id"]: c for c in shared["components"]}
+        catalog["base_component"] = shared_components["TGC"]
+        catalog["timeline_component"] = shared_components[TIMELINE_COMPONENT]
+        for component in catalog["components"]:
+            require(component["extends"] == "TGC" and not component["dependencies"],
+                    "Invalid Alice base or dependencies")
+            require(component["destination_dir"] == component["id"], "Invalid Alice destination")
+            require(component["source_descriptor"] == catalog["base_component"]["source_descriptor"],
+                    "Alice must use the core descriptor template")
+            relative(component["overlay_manifest"])
+            if component["id"] == ALICE_TIMELINE_COMPONENT:
+                relative(component["timeline_overrides"])
     loader_profiles = catalog["profiles"].keys() & EXTENDER_PROFILES.keys()
     if loader_profiles:
         profile = next(iter(loader_profiles))
@@ -273,8 +294,9 @@ def selected_components(catalog, profile, optional):
         require(cid in mapping and mapping[cid]["class"] == "optional", f"Not an optional mod: {cid}")
         if cid not in selected:
             selected.append(cid)
-    if profile in EXTENDER_PROFILES:
-        require(selected == [EXTENDER_PROFILES[profile]], "Extender must be selected alone")
+    assembled = EXTENDER_PROFILES.get(profile) or ALICE_PROFILES.get(profile)
+    if assembled:
+        require(selected == [assembled], "Assembled profile must be selected alone")
     else:
         require("TGC" in selected, "Core profile required")
     for cid in selected:
@@ -308,23 +330,25 @@ def check_descriptor(root, component, mapping):
 def component_descriptor(root, component, catalog, tracked):
     require(component["source_descriptor"] in tracked, "Descriptor is not tracked")
     source = root / component["source_descriptor"]
-    if component["id"] != EXTENDER_TIMELINE_COMPONENT:
+    is_alice = component["id"] in ALICE_PROFILES.values()
+    if not is_alice and component["id"] != EXTENDER_TIMELINE_COMPONENT:
         check_descriptor(root, component, {c["id"]: c for c in catalog["components"]})
         return source
 
     core, timeline = catalog["base_component"], catalog["timeline_component"]
     shared = {c["id"]: c for c in (core, timeline)}
-    require(all(c["source_descriptor"] in tracked for c in shared.values()),
-            "Shared descriptors are not tracked")
+    require(core["source_descriptor"] in tracked, "Core descriptor is not tracked")
     core_text = check_descriptor(root, core, shared)
-    timeline_text = check_descriptor(root, timeline, shared)
-    # Flatten only a folder overlay with a dependency and no other load rules.
-    require(re.fullmatch(r'\s*name\s*=\s*"[^"\n]+"\s*path\s*=\s*"[^"\n]+"'
-                         r'\s*dependencies\s*=\s*\{\s*"[^"\n]+"\s*\}\s*', timeline_text),
-            "Timeline descriptor needs an explicit assembly rule")
-    text = check_descriptor(root, catalog["template_component"], {})
+    if component["id"] in (EXTENDER_TIMELINE_COMPONENT, ALICE_TIMELINE_COMPONENT):
+        require(timeline["source_descriptor"] in tracked, "Timeline descriptor is not tracked")
+        timeline_text = check_descriptor(root, timeline, shared)
+        # Flatten only a folder overlay with a dependency and no other load rules.
+        require(re.fullmatch(r'\s*name\s*=\s*"[^"\n]+"\s*path\s*=\s*"[^"\n]+"'
+                             r'\s*dependencies\s*=\s*\{\s*"[^"\n]+"\s*\}\s*', timeline_text),
+                "Timeline descriptor needs an explicit assembly rule")
+    text = core_text if is_alice else check_descriptor(root, catalog["template_component"], {})
     require(descriptor_values(text, "replace_path") == descriptor_values(core_text, "replace_path"),
-            "Extender replace paths differ from core")
+            "Assembled replace paths differ from core")
     for field, value in (("name", component["name"]), ("path", "mod/" + component["destination_dir"]),
                          ("user_dir", component["id"])):
         text = re.sub(r'^[ \t]*' + field + r'[ \t]*=.*$', lambda _: f'{field} = "{value}"', text, flags=re.M)
@@ -355,28 +379,31 @@ def source_files(root, component, tracked):
 
 def payload_sources(root, component, tracked, catalog):
     overlay = source_files(root, component, tracked)
-    if component["id"] not in EXTENDER_PROFILES.values():
+    cid = component["id"]
+    is_alice = cid in ALICE_PROFILES.values()
+    if cid not in ASSEMBLED_COMPONENTS:
         return overlay
+    label = "Alice" if is_alice else "Extender"
     manifest = component["overlay_manifest"]
-    require(manifest in tracked, "Extender overlay manifest is not tracked")
+    require(manifest in tracked, f"{label} overlay manifest is not tracked")
     expected = read_json(root / manifest)
-    require(overlay.keys() == expected.keys(), "Extender overlay differs from declared files")
+    require(overlay.keys() == expected.keys(), f"{label} overlay differs from declared files")
     files = source_files(root, catalog["base_component"], tracked)
     base_names = {name.casefold(): name for name in files}
     for name, base_hash in expected.items():
         base_name = base_names.get(name.casefold())
         if base_hash is None:
-            require(base_name is None, f"Extender addition conflicts with core: {name}")
+            require(base_name is None, f"{label} addition conflicts with core: {name}")
         else:
             require(re.fullmatch(r"[a-f0-9]{64}", base_hash), f"Invalid overlay base hash: {name}")
             require(base_name == name, f"Missing or differently cased core override: {name}")
             data = no_links(files[name]).read_bytes().replace(b"\r\n", b"\n")
-            require(hashlib.sha256(data).hexdigest() == base_hash, f"Refresh Extender override: {name}")
-    if component["id"] == EXTENDER_TIMELINE_COMPONENT:
+            require(hashlib.sha256(data).hexdigest() == base_hash, f"Refresh {label} override: {name}")
+    if cid in (EXTENDER_TIMELINE_COMPONENT, ALICE_TIMELINE_COMPONENT):
         timeline = source_files(root, catalog["timeline_component"], tracked)
         timeline_names = {name.casefold(): name for name in timeline}
         require(not timeline_names.keys() & {name.casefold() for name in overlay},
-                "Timeline/Extender collision requires an explicit merge")
+                f"Timeline/{label} collision requires an explicit merge")
         overlap = timeline_names.keys() & base_names.keys()
         require(all(timeline_names[name] == base_names[name] for name in overlap),
                 "Timeline/core path case collision")
@@ -384,16 +411,19 @@ def payload_sources(root, component, tracked, catalog):
         require(manifest in tracked, "Timeline override manifest is not tracked")
         require(read_json(root / manifest) == sorted(base_names[name] for name in overlap),
                 "Timeline/core overrides differ from the declared paths")
+        files.update(timeline)
+    if is_alice or cid == EXTENDER_TIMELINE_COMPONENT:
         map_path = "map/default.map"
         definition = "map/definition.csv"
-        require(map_path in overlay and definition in files, "Extender Timeline map files missing")
-        data = no_links(overlay[map_path]).read_bytes()
-        source = f'definitions = "../mod/{EXTENDER_COMPONENT}/{definition}"'.encode()
+        map_source = files if is_alice else overlay
+        require(map_path in map_source and definition in files, f"{label} map files missing")
+        data = no_links(map_source[map_path]).read_bytes()
+        source_dir = catalog["base_component"]["destination_dir"] if is_alice else EXTENDER_COMPONENT
+        source = f'definitions = "../mod/{source_dir}/{definition}"'.encode()
         definitions = re.findall(rb"^[ \t]*definitions[ \t]*=[^\r\n]*", data, re.M)
-        require(definitions == [source], "Extender map definition path changed")
+        require(definitions == [source], f"{label} map definition path changed")
         target = f'definitions = "../mod/{component["destination_dir"]}/{definition}"'.encode()
         overlay[map_path] = data.replace(source, target)
-        files.update(timeline)
     return {**files, **overlay}
 
 
@@ -498,10 +528,17 @@ def delta(old, new):
 def check_profile_target(game, profile):
     names = {entry.name.casefold() for entry in (game / "mod").iterdir()}
     loader_pairs = {cid: {cid.casefold(), cid.casefold() + ".mod"} for cid in EXTENDER_PROFILES.values()}
+    alice_pairs = {name for cid in ALICE_PROFILES.values() for name in (cid.lower(), cid.lower() + ".mod")}
+    shared_pairs = {"tgc", "tgc.mod", "tgc_timeline_1966", "tgc_timeline_1966.mod"}
+    if profile in ALICE_PROFILES:
+        require(not names & (shared_pairs | set().union(*loader_pairs.values())),
+                "Alice profiles require a separate target from Victoria II profiles")
+        return
+    require(not names & alice_pairs, "Victoria II profiles require a separate target from Alice")
     if profile in EXTENDER_PROFILES:
         require(not any(p.casefold() == "steamapps" for p in game.parts),
                 "Extender requires a separate installation outside steamapps")
-        require(not names & {"tgc", "tgc.mod", "tgc_timeline_1966", "tgc_timeline_1966.mod"},
+        require(not names & shared_pairs,
                 "Extender target already contains the shared profile")
         other = set().union(*(pair for cid, pair in loader_pairs.items() if cid != EXTENDER_PROFILES[profile]))
         require(not names & other, "Extender profiles require separate game roots")
@@ -1049,7 +1086,7 @@ def apply_plan(plan, root, game, catalog_path, state_base=None, adopt_existing=F
                 source = root / unit["source"]
                 comp = mapping[unit["component"]]
                 if unit["new"]["kind"] == "directory":
-                    if unit["component"] in EXTENDER_PROFILES.values():
+                    if unit["component"] in ASSEMBLED_COMPONENTS:
                         sources = payload_sources(root, comp, tracked, catalog)
                     else:
                         sources = {rel: source / rel for rel in unit["new"]["files"]}
@@ -1205,14 +1242,18 @@ def main(argv=None):
     parser.add_argument("--game-root", required=True, type=Path)
     parser.add_argument("--repo-root", type=Path, default=Path(__file__).resolve().parents[2])
     parser.add_argument("--state-root", type=Path, help="Override local metadata base; useful for simulations")
-    parser.add_argument("--profile", choices=("core", "core+1966", *EXTENDER_PROFILES), default="core")
+    parser.add_argument("--profile", choices=("core", "core+1966", *EXTENDER_PROFILES, *ALICE_PROFILES),
+                        default="core")
     parser.add_argument("--optional", action="append", default=[])
     parser.add_argument("--plan-file", type=Path, help="apply input; plan always emits JSON to stdout")
     parser.add_argument("--adopt-existing", action="store_true")
     parser.add_argument("--transaction-id")
     parser.add_argument("--recover-lock", action="store_true", help="Rollback only: remove lock if its PID is demonstrably gone")
     args = parser.parse_args(argv)
-    catalog = Path(__file__).with_name(EXTENDER_CATALOGS.get(args.profile, "components.json"))
+    catalog_name = ALICE_CATALOG if args.profile in ALICE_PROFILES else EXTENDER_CATALOGS.get(
+        args.profile, "components.json"
+    )
+    catalog = Path(__file__).with_name(catalog_name)
     try:
         if args.command == "plan":
             result = build_plan(args.repo_root, args.game_root, catalog, args.profile, args.optional, args.state_root)

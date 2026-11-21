@@ -1,6 +1,7 @@
 """All write tests use disposable repositories and simulated game installations."""
 import copy
 import contextlib
+import hashlib
 import importlib.util
 import json
 import os
@@ -107,6 +108,40 @@ class DeploymentTests(unittest.TestCase):
     def test_core_1966_profile(self):
         self.apply(self.plan("core+1966"))
         self.assertEqual(set(self.verify()), {"TGC", "TGC_Timeline_1966"})
+
+    def test_alice_profiles_publish_and_rollback_independent_assembled_pairs(self):
+        shared_catalog = self.catalog_path
+        self.catalog_path = self.root / "tools/deploy" / d.ALICE_CATALOG
+        self.put(self.catalog_path, (TOOL / d.ALICE_CATALOG).read_bytes())
+        self.put(self.catalog_path.with_name("components.json"), json.dumps(self.catalog).encode())
+        self.put(self.root / "tools/deploy/extender_1966_overrides.json", b'["common/payload.txt"]')
+        base_event = b"original event\n"
+        self.put(self.root / "TGC/events/demo.txt", base_event)
+        self.put(self.root / "TGC/map/default.map", b'definitions = "../mod/TGC/map/definition.csv"\n')
+        self.put(self.root / "TGC/map/definition.csv", b"fixture definitions\n")
+        self.put(self.root / "tools/deploy/alice_overlay/events/demo.txt", b"Alice event\n")
+        manifest = {"events/demo.txt": hashlib.sha256(base_event).hexdigest()}
+        self.put(self.root / "tools/deploy/alice_overlay.json", json.dumps(manifest).encode())
+        self.commit()
+
+        core = self.apply(self.plan("core+alice"))
+        timeline = self.apply(self.plan("core+alice+1966"))
+        self.assertEqual(set(self.verify()), {"TGCAlice", "TGCAlice1966"})
+        self.assertFalse((self.game / "mod/TGC").exists())
+        with self.assertRaisesRegex(d.DeploymentError, "separate target from Alice"):
+            d.build_plan(self.root, self.game, shared_catalog, "core", (), self.state_base)
+        for cid in d.ALICE_PROFILES.values():
+            installed = self.game / "mod" / cid
+            self.assertEqual((installed / "events/demo.txt").read_bytes(), b"Alice event\n")
+            self.assertIn(f"../mod/{cid}/map/definition.csv", (installed / "map/default.map").read_text())
+        self.assertEqual((self.game / "mod/TGCAlice1966/common/payload.txt").read_bytes(),
+                         b"TGC_Timeline_1966\r\n")
+
+        self.rollback(timeline["transaction_id"])
+        self.assertEqual(set(self.verify()), {"TGCAlice"})
+        self.rollback(core["transaction_id"])
+        self.assertFalse((self.game / "mod/TGCAlice.mod").exists())
+        self.assertTrue((self.game / "mod/CWE.mod").is_file())
 
     def extender_catalog(self):
         self.put(self.root / "components.json", self.catalog_path.read_bytes())
