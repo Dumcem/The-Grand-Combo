@@ -42180,7 +42180,7 @@
 
     }
 
-} # Vyterga
+} # Byelozersk
 
 993 = {
     text_position = {
@@ -42213,7 +42213,7 @@
 
     }
 
-} # St Petersburg
+} # Vytegra
 
 994 = {
     text_position = {
@@ -42265,7 +42265,7 @@
         naval_base = 2.370278
     }
 
-} # Petrozavorsk
+} # Sankt-Peterburg
 
 995 = {
     text_position = {
@@ -42303,7 +42303,7 @@
 
     }
 
-} # Luga
+} # Petrozavodsk
 
 996 = {
     text_position = {
@@ -50387,7 +50387,7 @@
 
     }
 
-} # Alma Ata
+} # Shu
 
 1186 = {
     text_position = {
@@ -84721,7 +84721,7 @@
         naval_base = 3.176578
     }
 
-} # Chaimate
+} # Inkomati
 
 2050 = {
     text_position = {
@@ -85033,7 +85033,7 @@
 
     }
 
-} # Quelimane
+} # Moyo
 
 2059 = {
     text_position = {
@@ -106675,7 +106675,7 @@
 
     }
 
-} # Lop Nur
+} # Balkhash
 
 2607 = {
     text_position = {
