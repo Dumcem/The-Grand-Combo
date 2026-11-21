@@ -69,6 +69,21 @@ class UpstreamEventTests(unittest.TestCase):
         for key in keys:
             self.assertEqual(sum(line.startswith(key.encode() + b';') for line in loc), 1)
 
+    def test_gold_rush_description_uses_historical_dates_and_full_count(self):
+        gold_rush = event('TGC/events/USA_Minors.txt', 99903)
+        key = scalar(gold_rush, 'desc').encode('ascii')
+        path = ROOT / 'TGC/localisation/00_events_0090000.csv'
+        header, *rows = path.read_bytes().splitlines()
+        row, = (line for line in rows if line.startswith(key + b';'))
+        columns = row.split(b';')
+        self.assertEqual(len(columns), len(header.split(b';')))
+        english = columns[1]
+        self.assertIn(b'began in 1848,', english)
+        self.assertIn(b'in late 1848.', english)
+        self.assertNotIn(b'$YEAR$', english)
+        self.assertIn(b'brought some 300,000 people', english)
+        self.assertIn(b'Of the 300,000,', english)
+
     def test_sonderbund_independent_invitations_and_responses(self):
         path = 'TGC/events/SWIFlavor.txt'
         invitation, war = (event(path, event_id) for event_id in (99797, 99800))
