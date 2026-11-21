@@ -2,6 +2,27 @@
 
 See the [fork documentation index](docs/README.md) for technical references.
 
+## Shared Workspace context and source routing
+
+This repository is part of **Thomas – Shared Workspace**.
+
+Before undertaking substantive project work, consult the following persistent sources when accessible:
+
+- [PROJECT HUB – Victoria II / The Grand Combo](https://docs.google.com/document/d/1Emgb7R5rbDqzZiqAtLA0v5lsDwHwfasDcOpZUfH6TUU/edit) — project orientation, current decisions, active constraints, open workstreams, and pre-implementation material.
+- [REGOLE OPERATIVE – ChatGPT, Drive e GitHub](https://docs.google.com/document/d/1d0v_SgcG_F0QP86pF60lFs4mdMqvQ58cyym-e_zrIKk/edit) — shared rules for source ownership, collaboration, ChatGPT–Codex routing, and persistent changes.
+
+Apply the following source hierarchy:
+
+- **Repository:** authoritative for actual implementation, mod files, configurations, and formalized technical documentation. Read this `AGENTS.md` and relevant repository documentation.
+- **Project Hub:** authoritative for current project-level decisions, constraints, and workstreams not yet formalized in the repository.
+- **Shared Workspace operating rules:** authoritative for cross-project organization, source routing, and collaboration procedures.
+
+Do not duplicate canonical content across these sources or treat chat history, previous task summaries, or outdated project snapshots as authoritative.
+
+Do not assume that a Codex session inherits ChatGPT Project instructions or has access to Google Drive. If a required source is inaccessible, explicitly report the limitation, distinguish verified information from unavailable context, and avoid inventing or silently substituting its contents.
+
+When work is delegated by ChatGPT, use the explicit task mandate for scope and objectives, but independently verify the relevant canonical sources whenever accessible.
+
 ## Project Alice compatibility policy
 
 - Project Alice is an officially supported runtime target alongside the original Victoria II engine (`v2game.exe`). Changes must not knowingly break either supported engine unless an explicit project decision changes this policy.
