@@ -4897,7 +4897,7 @@ country_event = {
 		random_owned = { limit = { owner = { ai = no OR = { tag = CPL tag = KRA } PZN = { exists = yes ai = yes } } } owner = { PZN = { country_event = 666666122 } } }
 		random_owned = { limit = { owner = { ai = no OR = { tag = CPL tag = KRA } GLM = { exists = yes ai = yes } } } owner = { GLM = { country_event = 666666122 } } }
 		random_owned = { limit = { owner = { ai = no OR = { tag = KRA tag = PZN } CPL = { exists = yes ai = yes } } } owner = { CPL = { country_event = 666666122 } } }
-		random_owned = { limit = { owner = { ai = no OR = { tag = GLM tag = PZN } CPL = { exists = yes ai = yes } } } owner = { GLM = { country_event = 666666122 } } }
+		random_owned = { limit = { owner = { ai = no tag = PZN GLM = { exists = yes ai = yes } } } owner = { GLM = { country_event = 666666122 } } }
 	}
 	
 	option = {

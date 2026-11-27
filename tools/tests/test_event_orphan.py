@@ -1,4 +1,4 @@
-"""Regression checks for archaeological permissions and discovery."""
+"""Regression checks for events investigated during the orphan review."""
 
 import unittest
 
@@ -102,3 +102,27 @@ class ExcavationPermissionTests(unittest.TestCase):
         discovery = section(finale, 'option')
         self.assertEqual(scalar(discovery, 'set_global_flag'), 'oracle_bones')
         self.assertEqual(scalar(discovery, 'clr_global_flag'), 'yinxu_excavations_rights')
+
+
+class PolishAnnexationTests(unittest.TestCase):
+    def test_every_annexation_checks_the_actual_recipient(self):
+        immediate = section(event('POLFlavor', 666666036), 'immediate')
+        dispatches = set()
+        for branch in immediate.children:
+            recipient, = section(branch, 'owner').children
+            gate = section(section(branch, 'limit'), 'owner')
+            recipient_gate = section(gate, recipient.key)
+            self.assertEqual(scalar(recipient_gate, 'exists'), 'yes')
+            self.assertEqual(scalar(recipient_gate, 'ai'), 'yes')
+            self.assertEqual(scalar(gate, 'ai'), 'no')
+            self.assertEqual(scalar(recipient, 'country_event'), '666666122')
+
+            callers = [node.value for node in walk(gate.children) if node.key == 'tag']
+            self.assertEqual({node.key for node in gate.children},
+                             {'ai', 'tag' if len(callers) == 1 else 'OR', recipient.key})
+            dispatches.update((caller, recipient.key) for caller in callers)
+
+        self.assertEqual(dispatches, {
+            (caller, recipient) for caller in ('CPL', 'KRA', 'PZN')
+            for recipient in ('CPL', 'KRA', 'PZN', 'GLM') if caller != recipient
+        })
