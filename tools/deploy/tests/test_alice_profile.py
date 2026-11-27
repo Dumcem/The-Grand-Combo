@@ -224,6 +224,24 @@ class AliceProfileTests(unittest.TestCase):
             self.assertEqual(balances, {donor: -17 * step, requester_a: 8 * step, requester_b: 9 * step})
             self.assertFalse(pending)
 
+    def test_chunnel_financing_times_construction_at_both_ends(self):
+        for profile, files in self.inventories.items():
+            with self.subTest(profile=profile):
+                event, = (n for n in nodes(files[CHUNNEL_PATH]) if scalar(n, "id") == "36999")
+                option, = (n for n in options(event) if scalar(n, "name") == "EVTOPTE36999")
+                actual = []
+                for outcome in child(option, "random_list").children:
+                    actual.append((outcome.keyword, [
+                        (province.keyword, scalar(child(province, "add_province_modifier"), "name"),
+                         scalar(child(province, "add_province_modifier"), "duration"))
+                        for province in outcome.children
+                    ]))
+                self.assertEqual(actual, [
+                    (weight, [(province, "chunnel_construction", duration) for province in ("301", "401")])
+                    for weight, duration in (("40", "3285"), ("35", "2920"), ("15", "3650"),
+                                             ("5", "2190"), ("5", "2555"))
+                ])
+
     def test_chunnel_preserves_effects_and_normalized_weights(self):
         original = options(self.original["36996"])
         first, second = (options(self.adapted[event_id]) for event_id in ("36996", "37001"))

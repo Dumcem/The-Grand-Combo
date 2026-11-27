@@ -217,6 +217,10 @@ La seconda pagina consente zero. Il confronto strutturale preserva tutte le 50 o
 
 ### CANAL_CONTROL — Controllo marittimo degli attraversamenti
 
+**Chunnel, durata della costruzione corretta.** L'opzione da un milione di `36999` includeva cinque esiti per Suez (1755), con lo stesso peso complessivo dei cinque esiti per Canterbury e Arras (301 e 401). I lavori a Suez lasciavano libero il controllo di completamento di `37000` sulle due sponde, se il proponente era già marcato e gli altri requisiti erano soddisfatti. Il core e l'overlay Alice conservano solo i cinque esiti per entrambe le sponde, con durate di 2.190–3.650 giorni e gli stessi pesi relativi. Il controllo statico verifica il percorso in tutti e quattro i profili Victoria II 3.04 e in entrambe le composizioni Alice 1.3.0. Un modificatore già applicato in un salvataggio compatibile conserva gli effetti della scelta precedente. [Finanziamento e completamento](../TGC/events/Canals%20Construction.txt#L2098)
+
+**Chunnel, negoziazione fra due paesi ancora aperta.** Solo la decisione per un unico proprietario delle due sponde scrive `chunnel_proposer`. Le catene avviate da un paese che ne possiede una sola possono finanziare i lavori senza marcare un beneficiario per `37000`. Le opzioni B–E di `36999` rimuovono inoltre il flag di discussione nazionale, mentre le decisioni lo scrivono in scope globale. Per chiudere il ciclo occorre definire chi riceve l'inaugurazione e il prestigio se le due sponde restano divise o cambiano proprietario. [Decisioni](../TGC/decisions/2_Canals.txt#L595)
+
 **A · Alta · P2 · Sorgenti · Misto · Entrambe.** Alice azzera la provincia di controllo dei canali 12, 13 e 14. Il controllo del blocco non interviene dopo l’apertura. Solo per il 12 è stato trovato un enable attivo.
 
 Mappa e infrastrutture. Riesaminare al ritorno su Chunnel o Alaska o se cambia il consumatore. La semantica di controllo richiede una decisione prima di cambiare il tipo di arco.

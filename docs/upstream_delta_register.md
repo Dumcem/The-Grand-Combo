@@ -129,6 +129,11 @@ La cronologia di TGC documenta un primo scrittore nazionale `manifest_destiny_re
 
 ## Contributi presentati e candidature residue
 
+Chunnel: consigliata una patch upstream minima per rimuovere i cinque esiti
+che applicano a Suez i lavori finanziati dall'opzione E di `36999`.
+`85f173164` conserva gli stessi esiti. L'overlay Alice e la relativa
+regressione appartengono al fork. [Difetto e casi ancora aperti](rebaseline_backlog.md#canal_control--controllo-marittimo-degli-attraversamenti)
+
 | Contributo | Stato e rapporto con il fork |
 | --- | --- |
 | Metadati provinciali 992–995, 1185, 2049, 2058 e 2606 | Raccomandata una patch editoriale autonoma. `85f173164` ha gli stessi campi e commenti errati. Il delta tocca quattro etichette in `definition.csv` e otto commenti in `positions.txt`, senza modificare ID, colori, geometria o nome iniziale. Il resto della sequenza sfalsata e le rinomine condizionali hanno condizioni di riesame distinte. [Evidenza](rebaseline_backlog.md#province_names--denominazioni-provinciali-divergenti-per-lo-stesso-id) |
