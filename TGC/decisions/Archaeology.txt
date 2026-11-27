@@ -477,8 +477,8 @@ indus_excavations = {
 			has_country_flag = museum_build
 			revolution_n_counterrevolution = 1
 			NOT = {
-				owns = 1128
-				1128 = { owner = { in_sphere = THIS } }
+				owns = 1227
+				1227 = { owner = { in_sphere = THIS } }
 				has_country_modifier = indus_excavations
 				has_country_modifier = international_negotiations
 				has_country_flag = indus_refused
@@ -494,7 +494,7 @@ indus_excavations = {
 		}
 
 		effect = {
-			1128 = { owner = { country_event = 201010 } }
+			1227 = { owner = { country_event = 201080 } }
 			add_country_modifier = { name = international_negotiations duration = 730 }
 		}
 	}
@@ -504,8 +504,8 @@ indus_excavations = {
 		potential = {
 			revolution_n_counterrevolution = 1
 			OR = {
-				owns = 1128
-				1128 = { owner = { in_sphere = THIS } }
+				owns = 1227
+				1227 = { owner = { in_sphere = THIS } }
 			}
 			NOT = {
 				has_country_modifier = indus_excavations
@@ -517,8 +517,8 @@ indus_excavations = {
 			social_science = 1
 			invention = modern_archaeology
 			OR = {
-				owns = 1128
-				1128 = { owner = { in_sphere = THIS } }
+				owns = 1227
+				1227 = { owner = { in_sphere = THIS } }
 			}
 		}
 

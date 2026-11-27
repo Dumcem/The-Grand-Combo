@@ -3341,7 +3341,7 @@
 				any_pop = { militancy = -1 }
 			}
 		}
-## Indus Excavations - Babylon ##
+## Indus Excavations - Harappa ##
 
 	# Indus Excavations - asking for permissions
 	country_event = {
@@ -3355,9 +3355,14 @@
 		option = {
 			name = "EVTOPTA201080"
 
-			money = 15000
-			set_global_flag = indus_excavations_rights
-			FROM = { country_event = 201081 }
+			random_owned = {
+				limit = { NOT = { has_global_flag = harappa_found } }
+				owner = {
+					money = 15000
+					set_global_flag = indus_excavations_rights
+					FROM = { country_event = 201081 }
+				}
+			}
 
 			ai_chance = {
 				factor = 20
@@ -3379,8 +3384,13 @@
 		option = {
 			name = "EVTOPTB201080"
 
-			prestige = 10
-			FROM = { country_event = 201082 }
+			random_owned = {
+				limit = { NOT = { has_global_flag = harappa_found } }
+				owner = {
+					prestige = 10
+					FROM = { country_event = 201082 }
+				}
+			}
 		}
 	}
 
@@ -3400,9 +3410,14 @@
 
 			prestige = 10
 			money = -15000
-			add_country_modifier = { name = indus_excavations duration = -1 }
 			relation = { who = FROM value = 20 }
-			set_global_flag = indus_excavations_rights
+			random_owned = {
+				limit = { NOT = { has_global_flag = harappa_found } }
+				owner = {
+					add_country_modifier = { name = indus_excavations duration = -1 }
+					set_global_flag = indus_excavations_rights
+				}
+			}
 		}
 	}
 
