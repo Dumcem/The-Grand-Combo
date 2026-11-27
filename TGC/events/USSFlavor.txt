@@ -1102,163 +1102,162 @@
 		}
 	}
 
-	## USSA win ## (The "missing" part is in the cb itself)
+	## USSA win ##
 
-		#Description: The dismantling of the USA after the war with the USSA.
+		# Accepted War of the Americas peace, delivered to the defeated USA.
 		country_event = {
 			id = 3755286
 			title = EVTNAME3755286
 			desc = EVTDESC3755286
 			major = yes
-
 			is_triggered_only = yes
 
-			option = {
-				name = EVTOPTA3755286
-
-				prestige = -60
-
-				# Mexico gets its old territories back
-				MEX_85 = { add_core = MEX }	# California
-				MEX_94 = { add_core = MEX } # Nevada
-				MEX_97 = { add_core = MEX } # Utah
-				MEX_100 = { add_core = MEX } # Arizona
-				MEX_103 = { add_core = MEX } # New Mexico
-				USA_126 = { add_core = MEX } # Kansas
-				TEX_132 = { add_core = MEX }# Texas
-				110 = { add_core = MEX } # Wyoming
-				107 = { add_core = MEX }
-				108 = { add_core = MEX } # Colorado
-				103 = { add_core = MEX }
-				135 = { add_core = MEX }
-				128 = { add_core = MEX } # Kansas
-				129 = { add_core = MEX } # Oklahoma
-				any_owned = {
-					limit = { is_core = MEX }
-					remove_core = USA
-					secede_province = MEX
-				}
-
-				# Take most of Florida
+			immediate = {
 				any_owned = {
 					limit = {
-						region = USA_200
-						NOT = { province_id = 198 }
+						is_capital = yes
+						owner = { tag = USA has_country_flag = uss_americas_settlement_pending }
 					}
-					remove_core = USA
-					add_core = USS
-					secede_province = USS
-				}
+					owner = {
+						clr_country_flag = uss_americas_settlement_pending
 
-				# New England becomes independent
-				USA_232 = { add_core = NEN }
-				any_owned = {
-					limit = { is_core = NEN }
-					remove_core = THIS
-					secede_province = NEN
-				}
-
-				# Oregon becomes independent
-				any_owned = {
-					limit = {
-						OR = {
-							region = CAN_13 # British Columbia
-							region = USA_78 # Washington
-							region = USA_81 # Oregon
-							region = USA_91 # Idaho
+						# Mexico, Florida, New England, Oregon and Dakota, in that order.
+						any_owned = {
+							limit = {
+								OR = { continent = north_america continent = south_america }
+								OR = {
+									is_core = MEX
+									region = MEX_85
+									region = MEX_94
+									region = MEX_97
+									region = MEX_100
+									region = MEX_103
+									region = USA_126
+									region = TEX_132
+									province_id = 110
+									province_id = 107
+									province_id = 108
+									province_id = 103
+									province_id = 135
+									province_id = 128
+									province_id = 129
+								}
+							}
+							add_core = MEX
+							remove_core = USA
+							secede_province = MEX
 						}
+						any_owned = {
+							limit = { region = USA_200 NOT = { province_id = 198 } }
+							remove_core = USA
+							add_core = USS
+							secede_province = USS
+						}
+						any_owned = {
+							limit = {
+								OR = { continent = north_america continent = south_america }
+								OR = { is_core = NEN region = USA_232 }
+							}
+							add_core = NEN
+							remove_core = USA
+							secede_province = NEN
+						}
+						any_owned = {
+							limit = {
+								OR = {
+									region = CAN_13 # British Columbia
+									region = USA_78 # Washington
+									region = USA_81 # Oregon
+									region = USA_91 # Idaho
+								}
+							}
+							remove_core = USA
+							add_core = UOR
+							secede_province = UOR
+						}
+						any_owned = {
+							limit = {
+								OR = {
+									province_id = 111 # Wyoming
+									province_id = 112
+									province_id = 113
+									region = USA_116 # Montana
+									province_id = 106 # Colorado
+									region = USA_118 # North Dakota
+									region = USA_121 # South Dakota
+									region = USA_124 # Nebraska
+									province_id = 126 # Kansas
+									province_id = 127
+								}
+							}
+							remove_core = USA
+							add_core = DAK
+							secede_province = DAK
+						}
+						any_country = {
+							limit = {
+								exists = yes
+								NOT = { tag = USA }
+								OR = { vassal_of = USA in_sphere = USA }
+								any_core = {
+									owned_by = USA
+									NOT = { is_core = USA }
+									OR = { continent = north_america continent = south_america }
+								}
+							}
+							set_country_flag = uss_americas_return_pending
+							country_event = 5084910
+						}
+
+						set_country_flag = uss_americas_settlement_complete
 					}
-					remove_core = THIS
-					add_core = UOR
-					secede_province = UOR
 				}
-
-				# Dakota becomes independent
-				any_owned = {
-					limit = {
-						OR = {
-							province_id = 111 # Wyoming
-							province_id = 112
-							province_id = 113
-							region = USA_116 # Montana
-							province_id = 106 # Colorado
-							region = USA_118 # North Dakota
-							region = USA_121 # South Dakota
-							region = USA_124 # Nebraska
-							province_id = 126 # Kansas
-							province_id = 127
-						}
-					}
-					remove_core = THIS
-					add_core = DAK
-					secede_province = DAK
-				}
-
-				any_country = {
-					limit = {
-						NOT = { tag = THIS }
-						OR = {
-							vassal_of = THIS
-							in_sphere = THIS
-						}
-						any_core = {
-							owned_by = THIS
-							NOT = { is_core = THIS }
-						}
-						exists = yes
-					}
-					country_event = 5084910
-				}
-
-				ai_chance = { factor = 100 }
 			}
+
+			option = { name = EVTOPTA3755286 }
 		}
 
-
-		#Description: Vassals and spherelings of the USSA get their cores.
+		# Eligible dependents of the defeated USA receive their remaining cores.
 		country_event = {
 			id = 5084910
 			title = EVTNAME5084910
 			desc = EVTDESC5084910
 			picture = treaty_of_versailles
-
 			is_triggered_only = yes
 
-			option = {
-				name = EVTOPTA5084910
-
-				USA = {
-					any_owned = {
-						limit = {
-							is_core = THIS
-							NOT = { is_core = USA }
+			immediate = {
+				any_owned = {
+					limit = {
+						is_capital = yes
+						owner = { has_country_flag = uss_americas_return_pending }
+					}
+					owner = {
+						USA = {
+							any_owned = {
+								limit = {
+									is_core = THIS
+									NOT = { is_core = USA }
+									OR = { continent = north_america continent = south_america }
+								}
+								secede_province = THIS
+							}
+							diplomatic_influence = { who = THIS value = -400 }
 						}
-						secede_province = THIS
-					}
-					diplomatic_influence = {
-						who = THIS
-						value = -400
-					}
-					release_vassal = THIS
-				}
-
-				all_core = { remove_core = USA }
-
-				USS = {
-					diplomatic_influence = {
-						who = THIS
-						value = 200
-					}
-					relation = {
-						who = THIS
-						value = 100
+						random_owned = {
+							limit = { owner = { vassal_of = USA } }
+							USA = { release_vassal = THIS }
+						}
+						USS = {
+							diplomatic_influence = { who = THIS value = 200 }
+							relation = { who = THIS value = 100 }
+						}
 					}
 				}
-
-				ai_chance = { factor = 100 }
+				clr_country_flag = uss_americas_return_pending
 			}
-		}
 
+			option = { name = EVTOPTA5084910 }
+		}
 
 		#Description: Upon being dismantled, the USA becomes New America, centered on Chicago
 		country_event = {
@@ -1270,6 +1269,10 @@
 			trigger = {
 				tag = USA
 				has_global_flag = USS_USA_win
+				has_country_flag = uss_americas_settlement_complete
+				NOT = {
+					any_country = { exists = yes has_country_flag = uss_americas_return_pending }
+				}
 				war = no
 				NOT = { exists = UIL }
 				owns = 163 # Chicago
@@ -1284,10 +1287,18 @@
 			option = {
 				name = EVTOPTA1033676
 
-				USA = { all_core = { add_core = UIL } }
-				USA = { all_core = { remove_core = USA } }
-				change_tag = UIL
-				capital = 163
+				# A popup saved before the settlement guard must not bypass it.
+				random_owned = {
+					limit = {
+						owner = { tag = USA has_country_flag = uss_americas_settlement_complete }
+					}
+					owner = {
+						all_core = { add_core = UIL }
+						all_core = { remove_core = USA }
+						change_tag = UIL
+						capital = 163
+					}
+				}
 
 				ai_chance = { factor = 100 }
 			}
