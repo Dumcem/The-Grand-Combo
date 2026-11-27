@@ -29,6 +29,27 @@ La baseline supportata è **Project Alice 1.3.0**, insieme a **Victoria II origi
 | [Verifiche runtime](#verifiche-runtime) | Profili installati, JIT Alice, salvataggi, Loader e prestazioni |
 | [Manutenzione e chiusura](#manutenzione-e-chiusura) | Regole per aggiornamenti, revisioni del motore e chiusura |
 
+## Ripresa della campagna
+
+Il checkpoint di partenza è `a9f8dd674`. Le correzioni consolidate
+comprendono USS, Carrington, LTU, FACTORY_STATE, Chunnel, unione polacca,
+Direct Immigration, Apocalypse e i due difetti del modello di audit 1966.
+L'ultimo checkpoint dei contenuti è `0f491fbde`. Verificare sempre la punta
+effettiva e la working tree prima di riprendere.
+
+| Gruppo del mandato | Stato e punto di ripresa |
+| --- | --- |
+| 3 | [Petrograd](#petrograd_legacy--premi-già-riscossi-nei-salvataggi-storici) conserva le guardie una tantum. [Gold Rush](#gold_rush_scope--proprietà-divisa-e-trasferimenti-durante-la-corsa-alloro) conserva la politica territoriale attuale. Riaprire con una decisione o un riscontro nuovo sui salvataggi. |
+| 4 | [Carrington](#carrington_scheduling--annuncio-storico-del-settembre-1859) consolidato. [Anatolia](#anatolia--perimetro-di-500291-e-verifiche-runtime) ha perimetro approvato e guardie consolidate. Restano le decisioni `ANATOLIA_VASSAL_PROPERTY` e `ANATOLIA_DEPORTATION`. |
+| 5 | [Contratti Loader](deployment/script_extender_profile.md#contratti-dei-consumatori) riesaminati. Un residuo richiede il termine ottomano esatto. Legare la chiusura alla firma richiede un segnale dal plugin. |
+| 6 | [Migrazione](upstream_delta_register.md#eccezioni-di-contenuto-e-condizioni-di-riesame), [TECH_AI](#tech_ai--condizione-ai-nel-contesto-errato) e [CANAL_CONTROL](#canal_control--controllo-marittimo-degli-attraversamenti) conservano i limiti indicati. Chunnel e pulizia Direct Immigration sono corretti. |
+| 7 | [LTU](#ltu_core_cleanup--ordine-della-pulizia-sic-e-pap) e [FACTORY_STATE](#factory_state--presenza-di-fabbriche-nello-stato) consolidati. [NAVAL_TIMING e NAVAL_AI](#questioni-rinviate) richiedono obiettivi e confronti effettivi. |
+| 8 | [Intersezioni dei submod](deployment/local_deployment.md#optional-component-overlaps) inventariate. Il JIT e le prestazioni restano alle [verifiche runtime](#verifiche-runtime). |
+| 9–11 | I consumatori e i limiti sono nelle [schede unità e Marina](#ricerca-economia-e-unità) e in [ALICE_REMAINING](#questioni-rinviate). I valori ignorati non vanno spostati in uno scope più ampio senza provarne equivalenza e conseguenze. |
+| 12–13 | [Guardie SUB_*](#workaround-navali) e [riscontri OOB](#ordini-di-battaglia-e-storia). Riaprire i pacchetti al supporto della consegna e gli OOB con evidenza mirata sulle esclusioni residue. |
+| 14 | [EVENT_ORPHAN](event_orphan_review.md#inventario). Unione polacca corretta. Verificare le famiglie con ingresso dubbio senza attivare i segnaposto. |
+| 15–17 | [BALANCE e CRASH_1949](#questioni-rinviate), [BATTLE_EVENT](#battle_event--catena-della-cattura-di-santa-anna). Modello di audit aggiornato. Restano obiettivi numerici, contratto del dispatch e fixture del crash. |
+
 ## Provenienza della diagnostica Alice
 
 Il [checkpoint Task 36](https://github.com/Dumcem/The-Grand-Combo/commit/8ccb9326db0bbeef603b17405a9bf84e6e2abe7b) ha generato e caricato fino alla schermata iniziale lo scenario con avvio 1836, profilo core + Timeline. Il Task 37 ha ricondotto **197 errori non fatali e 314 warning**, 466 dal core e 45 dalla Timeline, a **31 gruppi**. Il catalogo locale conserva per ogni occorrenza messaggio, riga del log, file effettivo e ambito. I 197/314 sono storici. La [riconciliazione](upstream_reconciliation.md#evidenza-runtime-e-di-recupero) registra anche i conteggi del successivo checkpoint a `864c81fe8`. Il caricamento costituisce evidenza runtime per lo scenario. Le singole meccaniche conservano il grado di evidenza indicato sotto.
@@ -475,7 +496,7 @@ La decisione di progetto rinvia l'integrazione della filiera. La Timeline rimuov
 
 **A · Media · P2 · Sorgenti · Motore · Timeline.** Nove naval_organisation in navy_base sono scartati. default_organisation ha una rappresentazione distinta.
 
-In Alice il modificatore nazionale `naval_organisation` moltiplica l'organizzazione massima delle navi per `1 + modificatore`. È un candidato per i nove effetti globali sulla marina. Per preservare entrambi i motori serve prima sapere se 3.04 applica i valori annidati e se lo spostamento a livello nazionale riproduce composizione e valori. [Consumatore Alice](https://github.com/schombert/Project-Alice/blob/v1.3.0/src/military/military.cpp#L6542-L6552)
+In Alice il modificatore nazionale `naval_organisation` moltiplica l'organizzazione massima delle navi per `1 + modificatore`. In 3.04 la forma annidata cade nella ricerca di una merce (`0x005BB2EE`), e il trasferimento diretto al livello principale della tecnologia non raggiunge il parser dei modificatori nazionali. Attivare i valori con modificatori nazionali condizionati dalle tecnologie introdurrebbe bonus finora assenti in entrambi i motori. La somma dichiarata è +0,18 prima del 1966 e +0,27 contando le tre tecnologie datate alla fine della Timeline. Si raccomanda di rinviare `NAV_ORG_ACTIVATION` fino alla calibrazione navale. Un'eventuale attivazione deve conservare i quattro profili e riconciliare il carrier Loader. [Consumatore Alice](https://github.com/schombert/Project-Alice/blob/v1.3.0/src/military/military.cpp#L6542-L6552)
 
 **Traccia.** 9 errori e 0 warning. Log 8, 10–11, 13–18. [navy_tech.txt](../TGC_Timeline_1966/technologies/navy_tech.txt#L3584) · [Alice · parser_defs.txt](https://github.com/schombert/Project-Alice/blob/v1.3.0/src/parsing/parser_defs.txt#L869-L890) · [Alice · culture.cpp](https://github.com/schombert/Project-Alice/blob/v1.3.0/src/culture/culture.cpp)
 
@@ -578,6 +599,27 @@ Origine delle guardie nei commit [3dadb6622](https://github.com/Dumcem/The-Grand
 
 **Condizione comune di riesame per ogni percorso.** L’implementazione effettiva di `sub_unit` o di un equivalente può rendere superflua la guardia. Verificare quantità, tipi, provincia, proprietario, scope, fallimenti parziali e comportamento con gli eventi già in coda. Confrontare i rami V2 con i blocchi pre-guardia e ripetere le regressioni dei [Task 34](../tools/tests/test_task34_naval.py) e [Task 35](../tools/tests/test_task35_sub_unit.py) in entrambe le composizioni, con controlli drift e validator/auditor dove richiesti da [AGENTS.md](../AGENTS.md). Dopo deployment controllato, rigenerare lo scenario Alice della baseline adottata e verificare caricamento e semantica dei percorsi. Il ripristino resta candidato e richiede una decisione esplicita per ciascun ramo.
 
+**Controllo delle code.** Nei sei inventari i percorsi condividono gli script
+core. Per Beiyang e EIC, nella 1.3.0 anche una definizione raggiunta da
+un evento pendente valuta il limite dello scope provincia prima dei suoi
+effetti. Il ramo navale resta escluso. EIC conserva i due effetti
+territoriali e una finestra Beiyang già accodata può mostrare il testo.
+[Compilazione scope](https://github.com/schombert/Project-Alice/blob/v1.3.0/src/parsing/effect_parsing.cpp#L1367-L1383) · [Esecuzione](https://github.com/schombert/Project-Alice/blob/v1.3.0/src/scripting/effects.cpp#L1332-L1344)
+
+**Decisione pendente SUB_AI_AFFORDABILITY.** Su 3.04 i pacchetti navali
+per IA possono accodare più rami di consegna e addebitarli in sequenza.
+Un caso GP britannico con trasporti a vapore e corazzate combina
+3.500 + 25.000, contro una soglia di 25.000. Con incrociatori protetti
+arriva a 43.500. Un caso SP con trasporti e incrociatori protetti,
+senza l'invenzione delle corazzate, combina 750 + 3.500 contro una soglia
+di 3.501. Si tratta di somme degli addebiti dichiarati. L'impatto sul saldo
+in partita resta non osservato. Si raccomanda di preservare i rami e
+richiedere copertura per il totale effettivamente selezionato. L'alternativa
+è pagare e consegnare soltanto i rami coperti dal saldo, con una priorità
+espressa e conseguenze diverse per la composizione delle flotte.
+Il contratto è da decidere prima di modificare prezzi o consegne.
+[Decisioni navali](../TGC/decisions/3_Clean-Up.txt#L674)
+
 ## Questioni rinviate
 
 | ID e area | Gravità, blocco e priorità | Evidenza, decisione aperta e condizione di riesame |
@@ -585,8 +627,8 @@ Origine delle guardie nei commit [3dadb6622](https://github.com/Dumcem/The-Grand
 | NAVAL_AI · portaerei e selezione AI | Alta condizionata allo scenario di ricerca · No · P2 · Rinviata | **Sorgenti**, Alice 1.3.0, criterio in entrambe le composizioni e concorrenza della portaerei nella Timeline. Per le nuove costruzioni Alice sceglie una classe per categoria usando lo scafo base e poi verifica il porto, senza un secondo candidato. Nello scenario con tutte le classi attive, scafo 65 perde contro 70 e 80 anche con porto 7. Il refit usa criteri diversi. La composizione delle flotte in partita e il confronto V2 restano aperti. Riesaminare nel workstream navale o quando cambia la selezione, con una decisione su varietà delle flotte e ruolo delle categorie. [Diagnostica AI](../TGC/docs/1966_balance_audit.md#alice-naval-ai-selection-diagnostics) |
 | NAVAL_TIMING · costruzione e logistica navale | Media · No · P2 · Rinviata | **Sorgenti**, Alice 1.3.0, entrambe. La curva provvisoria conserva il tempo base 90 e porta i tempi nazionali dei trasporti a 45/35 con tutti gli effetti diretti. Questi valori regolano l’approvvigionamento. La consegna dipende anche dalla soglia di 90 giorni dall’accodamento, dalla posizione e dalle merci. Tempi effettivi, capacità produttiva e formula V2 restano aperti. Riesaminare quando si calibra la progressione navale o cambia il consumatore Alice, mantenendo la positività e verificando la coda. [Curva provvisoria](../TGC/docs/1966_balance_audit.md#provisional-transport-production-curve) · [Contratto di costruzione](../TGC/docs/1966_balance_audit.md#alice-130-naval-construction-and-scripted-grants) |
 | ALICE_REMAINING · compatibilità residua dei campi | Media · No · P2 · Aperta | **Sorgenti e Dati**, Alice 1.3.0, entrambe. Oltre ai campi già schedati in UNIT_STRENGTH e UNIT_WEIGHT, lo schema scarta silenziosamente `priority` in 21 unità core e 23 con Timeline, e `limit_per_port` in 10 e 12. Altri casi e limiti di rappresentazione sono nell’audit tecnico. Riesaminare durante il workstream unità/AI o quando cambiano parser e consumatori. Verificare l’ambito V2 prima di scegliere equivalenti e collegare qui eventuali nuovi riscontri della stessa causa. [Schema Alice](https://github.com/schombert/Project-Alice/blob/v1.3.0/src/parsing/parser_defs.txt#L512-L542) · [Contratto applicato](../TGC/docs/1966_balance_audit.md#raw-values-versus-engine-applied-values) |
-| BALANCE · bilanciamento 1836–1966 | Da stimare · No · P2 · Rinviata | **Dati**, entrambi i motori e le composizioni. Le soglie legacy sono diagnostiche normative senza validazione. Il workstream deve fondare ruoli, progressione, infrastrutture e logistica e confrontare i valori effettivamente applicati. Riesaminare quando si definiscono obiettivi e misure della progressione. Le violazioni di uno stesso criterio restano raggruppate. [Contratto legacy](../TGC/docs/1966_balance_audit.md#legacy-normative-contract) |
-| CRASH_1949 · stabilità di campagna | Alta · Condizionale · P1 · Rinviata | **Aperta**. Il Project Hub registra un crash riproducibile verso fine aprile 1949. Motore, composizione, salvataggio di riferimento e causa restano da accertare nel workstream stabilità. Blocca la verifica di una campagna che lo riproduce e deve superare quella data. Rinviata fino a nuova decisione esplicita. Fonte interna del progetto, sezione «Questioni aperte». |
+| BALANCE · bilanciamento 1836–1966 | Da stimare · No · P2 · Aperta | L'audit ora normalizza la disciplina terrestre e rispetta la precedenza adiacente degli ID di ricerca in Alice. Nessun valore di gioco è stato ritoccato. Le soglie legacy restano non validate. Il prossimo punto di ripresa è definire ruoli e finestre operative misurabili per una sola famiglia, quindi confrontare requisiti, valori applicati e disponibilità effettiva. [Contratto legacy](../TGC/docs/1966_balance_audit.md#legacy-normative-contract) |
+| CRASH_1949 · stabilità di campagna | Alta · Condizionale · P1 · In attesa di evidenza | Il rapporto storico colloca l'arresto a fine aprile 1949. Il riesame statico di checkout, archivio sintetico e Hub non ha trovato una fixture identificabile o una data esatta negli script. Data approssimativa e sola etichetta di un evento non consentono attribuzione. Riprendere con motore, revisione, profilo e salvataggio o traccia a ridosso del giorno fatale. Nessuna campagna o prova live è stata avviata. |
 
 ## Verifiche runtime
 
@@ -620,7 +662,7 @@ collaudato la ricostruzione locale della fixture sintetica. Al Task 11 Windows S
 | SONDERBUND | `bf55d38a2` preserva le risposte registrate in aggiunta alla guardia per destinatario. Alice 1.3.0 scrive il flag prima di accodare e ricontrolla il trigger al dispatch. Il singolo popup pendente non è interrogabile dal percorso esaminato. Un popup anteriore alle guardie può ricomparire. Il caso è accettato senza migrazione. La parità in partita resta non osservata. [Dispatch Alice](https://github.com/schombert/Project-Alice/blob/v1.3.0/src/scripting/events.cpp#L200-L262) |
 | PR #429 e #433 | Riesaminare staticamente la guardia finlandese durante SWE → SCA e le grafie storiche del flag messicano. Copertura in partita e sui salvataggi storici non osservata. [Evidenza statica](upstream_reconciliation.md#riconciliazione-selettiva-428442) |
 | PETROGRAD | Riesame statico o deterministico di ingressi, rinomine, beneficiari e guardie per regione divisa, vassallaggio e flag storico. La persistenza in partita resta non osservata. [Matrice](upstream_delta_register.md#petrograd--decisioni-e-rinomine-della-provincia-994) |
-| DEPLOY_BILLING | Il payload include la correzione. Tracciare servizi concorrenti, ripristino mensile di override_campaigns e doppio addebito. Per la migrazione distinguere esborso e movimento POP, Direct Immigration e idoneità della destinazione con casi deterministici. |
+| DEPLOY_BILLING | Il modello delle due campagne migratorie applica 0, −0,2 o −0,4 per ricorrenza secondo i modificatori nazionali attivi. Direct Immigration aggiunge −0,02 per provincia con selettore e −0,01 per provincia con immigratore. La ricostruzione mensile della guardia trova gli altri servizi rimasti attivi. Il movimento può restare zero senza destinazioni o POP idonei, anche quando l'addebito è dovuto. Restano da verificare il gettito effettivo 3.04 e la corrispondenza con il costo descritto. |
 | LOADER_TREATY | Il caso ottomano 22/23 registra `SE_TREATY_TERM_INVALID` dopo la validazione iniziale. Il codice circoscrive la causa alla rivalidazione contestuale della clausola. Gli artefatti conservati non identificano la clausola né l'addebito. Il costo finale dell'obiettivo `acquire_province` resta aperto. |
 | GOLD RUSH | Analisi di dispatch, refutazione, flag, storico e pacchetto provinciale per MEX, USA, CAL e proprietari terzi. Lo scope al cambio di proprietario di 104 tra dispatch e scelta su 3.04 resta da chiarire. I vecchi salvataggi compatibili sono fixture facoltative. [Evidenza statica](upstream_delta_register.md#gold-rush--california-e-flag-persistenti) |
 | LOADER_PEACE | Il modello di sei transizioni mostra che 96094 può chiudere prima della firma umana. La seconda guerra rinvia solo la chiusura generale. La deduplicazione finisce con l'apertura dell'editor. Resta condizionale la scelta tardiva di 96021 già consegnato. La firma richiederebbe un segnale del Loader per governare 96094. |

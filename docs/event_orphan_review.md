@@ -23,7 +23,7 @@ Il riscontro usa i cataloghi di pubblicazione, il parser strutturale del reposit
 | BRZFlavor | 2 | 2 × 3 |
 | CBsAndCores | 2 | 1 × 2, 1 × 6 |
 | GEF Events | 3 | 3 × 2 |
-| Germany VS Hungary Events | 12 | 12 × 6 |
+| Germany VS Hungary Events | 12 | 1 × 2, 11 × 6 |
 | JANFlavor | 1 | 1 × 2 |
 | MEXFlavor | 4 | 4 × 4 in Alice, 4 × 6 in 3.04 |
 | POLFlavor | 3 | 2 × 2, 1 × 6 |
@@ -31,8 +31,8 @@ Il riscontro usa i cataloghi di pubblicazione, il parser strutturale del reposit
 | SlaveryEvents | 4 | 4 × 6 |
 | SPAFlavor | 1 | 1 × 6 |
 | USA_Minors | 4 | 4 × 6 |
-| **Totale Alice** | **48** | **6 × 1, 10 × 2, 2 × 3, 4 × 4, 0 × 5, 26 × 6** |
-| **Totale 3.04** | **48** | **6 × 1, 10 × 2, 2 × 3, 0 × 4, 0 × 5, 30 × 6** |
+| **Totale Alice** | **48** | **6 × 1, 11 × 2, 2 × 3, 4 × 4, 0 × 5, 25 × 6** |
+| **Totale 3.04** | **48** | **6 × 1, 11 × 2, 2 × 3, 0 × 4, 0 × 5, 29 × 6** |
 
 ## Inventario
 
@@ -63,7 +63,7 @@ Il riscontro usa i cataloghi di pubblicazione, il parser strutturale del reposit
 | 247 | [2000000015](../TGC/events/Germany%20VS%20Hungary%20Events.txt#L488) | 6 | Risposta completa con BAN e SIE, senza ingressi e con TODO. Il possibile aggancio da `2000000010` va approvato con la catena. |
 | 248 | [2000000016](../TGC/events/Germany%20VS%20Hungary%20Events.txt#L528) | 6 | `2000000011/B → GER` a +5, cessioni, BAN/SIE e restaurazione. |
 | 249 | [2000000085](../TGC/events/Germany%20VS%20Hungary%20Events.txt#L2386) | 6 | Rilascia RUT e SLV da HUN e li vassallizza per il destinatario. TODO senza chiamante. Serve distinguere questa variante dagli esiti già scriptati del trattato. |
-| 250 | [2000000093](../TGC/events/Germany%20VS%20Hungary%20Events.txt#L2585) | 6 | Scelta di scambio demografico, modificatore per 360 giorni. La decisione attiva accoda 94 e 95, manca 93. Serve il contratto dell'accordo e l'ordine delle finestre. |
+| 250 | [2000000093](../TGC/events/Germany%20VS%20Hungary%20Events.txt#L2585) | 2 | Upstream ha ritirato intenzionalmente la chiamata allo scambio incompleto. Restano i richiami a 94 e 95. Il modificatore di 360 giorni ha solo un'icona. [Ritiro upstream](https://github.com/The-Grand-Combination/The-Grand-Combo/commit/23c37e466a954cc33b6e86ed5bb9acafab66fb2d) |
 | 251 | [83](../TGC/events/JANFlavor.txt#L3569) | 2 | Segnaposto Utility 4/4 da `e15568479`: due scelte prive di effetti, senza ingresso o localizzazione. Versioni precedenti usavano lo stesso ID per funzioni diverse. La rimozione ha bassa priorità e coinvolgerebbe anche il carrier Loader. |
 | 253 | [44841](../TGC/events/MEXFlavor.txt#L761) | 4 Alice · 6 V2 | `44840/A → MEX`. Trattato, cessate il fuoco o prosecuzione della guerra; dipende da BATTLE_EVENT. |
 | 254 | [44842](../TGC/events/MEXFlavor.txt#L830) | 4 Alice · 6 V2 | `44841/A → TEX`, trattato di Velasco, flag, relazioni e modificatore di 1.825 giorni. |
@@ -82,7 +82,7 @@ Il riscontro usa i cataloghi di pubblicazione, il parser strutturale del reposit
 | 283 | [443038](../TGC/events/SlaveryEvents.txt#L364) | 6 | `443035/C`, ramo per entrambi. Occorre approvare riforma d'ingresso, popolazione ammissibile, precedenze e interazione con l'abolizione prima di riaprire la catena. |
 | 284 | [971714](../TGC/events/SPAFlavor.txt#L4252) | 6 | Dottrina falangista con core su Gibilterra, opzioni su Francia e Portogallo e infamia variabile. Nessun ingresso. Servono regime, date e perimetro territoriale approvati. |
 | 285 | [44373](../TGC/events/USA_Minors.txt#L2436) | 6 | Vendita del Colorado, scelta TEX. TODO per decisione dopo piena indipendenza, senza condizioni operative. Servono proprietà, requisiti di indipendenza e rapporto con annessione/altre cessioni. |
-| 286 | [44374](../TGC/events/USA_Minors.txt#L2467) | 6 | `44373/A → USA`, acquisto o rifiuto. Acquisto usa lo stato `USA_106`. |
+| 286 | [44374](../TGC/events/USA_Minors.txt#L2467) | 6 | `44373/A → USA`, acquisto o rifiuto. La scelta può trasferire tutte le province di `USA_106`, anche di terzi, e addebitare 25.000 senza guardia di cassa. Prima di riattivarla, richiedere una regola per proprietà correnti, fondi e vendita parziale. Il flag del trattato non ha lettori. |
 | 287 | [44375](../TGC/events/USA_Minors.txt#L2515) | 6 | `44374/A → TEX`, notifica positiva e 25.000. |
 | 288 | [44376](../TGC/events/USA_Minors.txt#L2533) | 6 | `44374/B → TEX`, notifica negativa e peggioramento relazioni. |
 | 291 | [2610](../TGC/events/CBsAndCores.txt#L1331) | 2 | Provinciale. `4e474c80f` lo rese trigger-only e commentò trigger e MTTH (600 mesi). Nessuna on-action provinciale per l'ID. Le opzioni di assimilazione o rifiuto restano nei dati. |
