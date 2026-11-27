@@ -130,8 +130,9 @@ def project_unit(data: dict, assignments: list[dict], engine: str = ALICE) -> di
 
     RAW inventory is unchanged. Every applied, overwritten or excluded occurrence
     retains its physical source; unknown V2 semantics never produces numbers.
-    Defaults are the zero-initialized unit_variable_stats members, not invented
-    baseline script occurrences. Float arithmetic approximates engine float32.
+    Defaults reflect the initialized fields and the unit-definition finish step.
+    They do not create baseline script occurrences. Float arithmetic approximates
+    engine float32.
     """
     domain = data['unit_domain']
     if engine == V2:
@@ -178,6 +179,9 @@ def project_unit(data: dict, assignments: list[dict], engine: str = ALICE) -> di
         if b is None:
             # Only variable members have verified zero defaults here.
             b = {'value': 0., 'status': 'applied', 'source': 'engine zero default'} if key in {applied_stat(s, domain) for s in VARIABLE} else {'value': None, 'status': 'unverified', 'source': None}
+        if key == 'discipline' and domain == 'land' and b['status'] == 'applied' and b['value'] <= 0:
+            # Alice's unit_definition::finish normalizes land discipline before modifiers.
+            b = dict(b, value=1.0, normalization='land base discipline at or below zero becomes 1')
         included = selected.get(key, [])
         omitted = excluded.get(key, [])
         stats[key] = {'status': ('applied_subset' if omitted else 'applied') if b['status'] == 'applied' else b['status'],

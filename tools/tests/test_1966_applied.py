@@ -95,6 +95,23 @@ class AppliedFixtures(unittest.TestCase):
                           'T = { u = { default_organisation = 2.5 } u = { default_organisation = 2.5 } }')
         self.assertEqual(s.project_unit(data, xs)['stats']['default_organisation']['final'], 34)
 
+    def test_land_discipline_is_normalized_before_modifiers(self):
+        for field, expected in (('', 1.0), ('discipline = 0', 1.0),
+                                ('evasion = -0.2', 1.0), ('discipline = 0.8', 0.8)):
+            with self.subTest(field=field):
+                data, xs = fixture(f'u = {{ type = land {field} build_cost = {{}} supply_cost = {{}} }}',
+                                   'T = { u = { discipline = -0.3 } }')
+                result = s.project_unit(data, xs)['stats']['discipline']
+                self.assertEqual(result['baseline'], expected)
+                self.assertAlmostEqual(result['final'], expected - 0.3)
+                self.assertEqual('normalization' in result['baseline_origin'], expected == 1.0)
+
+        data, xs = fixture('u = { type = naval evasion = 0 build_cost = {} supply_cost = {} }',
+                           'T = { u = { evasion = 0.1 } }')
+        result = s.project_unit(data, xs)['stats']['evasion']
+        self.assertEqual((result['baseline'], result['final']), (0, 0.1))
+        self.assertNotIn('normalization', result['baseline_origin'])
+
 
 class IndependentAppliedCorpus(unittest.TestCase):
     @classmethod

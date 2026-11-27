@@ -131,6 +131,12 @@ V2 precedence and shared storage remain unverified.
 the signed integer prefix without checking full token consumption: `2.5 -> 2`,
 `0.5 -> 0`; `.5` and `+2` have no accepted integer prefix. Overflow and unverified
 real-number syntax are reported without guessing application.
+After the last base assignment, Alice normalizes land discipline at or below
+zero to 1 before technology and invention modifiers are added. This includes
+the default for an omitted field and a nonpositive assignment through the
+shared `evasion` alias on land units. Naval evasion keeps its parsed value.
+Engine projection records the normalization alongside the base provenance.
+[Alice unit finalization](https://github.com/schombert/Project-Alice/blob/v1.3.0/src/parsing/parsers_declarations.cpp#L414-L419)
 
 Free entries in definition/effect/modifier bodies, duplicate effect groups,
 non-assignment effect/modifier operators and malformed known numeric values
