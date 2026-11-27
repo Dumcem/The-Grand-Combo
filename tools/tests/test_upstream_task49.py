@@ -167,11 +167,13 @@ class UpstreamFirstTests(unittest.TestCase):
             grant, transfer = (node for node in choice.children if node.key == 'any_owned')
             self.assertEqual(scalar(grant, 'add_core'), 'GRE')
             self.assertEqual(scalar(transfer, 'secede_province'), 'GRE')
-            for owned, previous in (
-                (anatolia | straits | {805, 855, 883, 994}, {805}),
-                ({860, 873, 876, 862, 865, 866, 859, 805, 855, 883, 994},
+            for russian, owned, previous in (
+                (True, anatolia | straits | {805, 855, 883, 994}, {805}),
+                (True, {860, 873, 876, 862, 865, 866, 859, 805, 855, 883, 994},
                  {805, 855, 859, 860, 862, 865, 866, 883, 869}),
-                ({860, 873, 876}, set()),
+                (True, {860, 873, 876}, set()),
+                (True, {873, 876, 994}, {860}),
+                (False, {860, 873, 876, 855}, {855}),
             ):
                 def select(scope, cores):
                     def matches(node, province):
@@ -180,7 +182,7 @@ class UpstreamFirstTests(unittest.TestCase):
                         if node.key == 'province_id':
                             return province == int(node.value)
                         if (node.key, node.value) == ('owned_by', 'RUS'):
-                            return province in owned
+                            return russian and province in owned
                         if (node.key, node.value) == ('is_core', 'GRE'):
                             return province in cores
                         raise AssertionError(node.key)
@@ -188,11 +190,12 @@ class UpstreamFirstTests(unittest.TestCase):
                     limit = section(scope, 'limit')
                     return {p for p in owned if evaluate(limit.children, lambda node: matches(node, p))}
 
-                with self.subTest(option=letter, owned=sorted(owned), previous=sorted(previous)):
+                with self.subTest(option=letter, russian=russian, owned=sorted(owned), previous=sorted(previous)):
+                    russian_land = owned if russian else set()
                     granted = select(grant, previous)
-                    self.assertEqual(granted - previous, (owned & core_area) - previous)
+                    self.assertEqual(granted - previous, (russian_land & core_area) - previous)
                     self.assertEqual(select(transfer, previous | granted),
-                                     (owned & (previous | core_area)) - retained)
+                                     (russian_land & (previous | core_area)) - retained)
 
     def test_anatolia_greek_vassal_and_capital_effects_follow_cession(self):
         popup = event('RUSFlavor', 500291)
@@ -206,12 +209,16 @@ class UpstreamFirstTests(unittest.TestCase):
             self.assertLess(relation.start.offset, selection.start.offset)
             self.assertEqual(scalar(relation, 'who'), 'GRE')
             self.assertEqual(shape(section(selection, 'limit').children),
-                             [('tag', 'GRE'), ('ai', 'yes'), ('exists', 'yes')])
-            self.assertEqual(scalar(selection, 'capital'), capital)
+                             [('THIS', [('tag', 'RUS')]), ('tag', 'GRE'),
+                              ('ai', 'yes'), ('exists', 'yes')])
+            self.assertIsNone(scalar(selection, 'capital'))
             overlord = section(selection, 'RUS')
             self.assertEqual(scalar(overlord, 'create_vassal'), 'GRE')
             if capital:
-                self.assertLess(section(selection, 'capital').start.offset, overlord.start.offset)
+                owned = section(selection, 'any_owned')
+                self.assertEqual(shape(section(owned, 'limit').children), [('province_id', capital)])
+                self.assertEqual(scalar(section(owned, 'owner'), 'capital'), capital)
+                self.assertLess(overlord.start.offset, owned.start.offset)
 
     def test_direct_immigration_cleanup_protects_other_human_countries(self):
         immigration = ROOT / 'TGCDirectImmigration'

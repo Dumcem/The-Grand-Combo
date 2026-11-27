@@ -9015,6 +9015,7 @@ country_event = {
 			    }
 		        }
 				any_owned = { limit = {
+					owned_by = RUS
 					is_core = GRE
 					NOT = { region = TUR_861 } #These are Bosphorus provinces
 					NOT = { region = TUR_860 }
@@ -9027,6 +9028,7 @@ country_event = {
 				relation = { who = GRE value = 200 }
 				random_country = {
 					limit = {
+					THIS = { tag = RUS }
 					tag = GRE
 					ai = yes
 					exists = yes
@@ -9073,18 +9075,22 @@ country_event = {
 			    }
 		        }
 				any_owned = {
-					limit = { is_core = GRE }
+					limit = { owned_by = RUS is_core = GRE }
 					secede_province = GRE
 				}
 				relation = { who = GRE value = 200 }
 				random_country = {
 					limit = {
+					THIS = { tag = RUS }
 					tag = GRE
 					ai = yes
 					exists = yes
 					}
-					capital = 860
 					RUS = { create_vassal = GRE }
+					any_owned = {
+						limit = { province_id = 860 }
+						owner = { capital = 860 }
+					}
 				}
 				badboy = -5
 			    ai_chance = { factor = 25 }
