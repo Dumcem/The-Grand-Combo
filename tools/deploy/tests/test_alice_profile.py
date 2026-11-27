@@ -242,6 +242,45 @@ class AliceProfileTests(unittest.TestCase):
                                              ("5", "2190"), ("5", "2555"))
                 ])
 
+    def test_carrington_filters_the_recipient_and_each_other_country(self):
+        event_path = "events/NaturalDisasters.txt"
+        decision_path = "decisions/Natural_Disasters.txt"
+        for profile, files in self.inventories.items():
+            with self.subTest(profile=profile):
+                self.assertEqual(files[event_path], CORE / event_path)
+                self.assertEqual(files[decision_path], CORE / decision_path)
+
+        event, = (n for n in nodes(CORE / event_path) if scalar(n, "id") == "21501")
+        others, recipient = effects(child(event, "option"))
+        self.assertEqual(others.keyword, "any_country")
+        self.assertEqual(recipient.keyword, "any_owned")
+
+        exclude, *other_conditions = child(others, "limit").children
+        capital, owner = child(recipient, "limit").children
+        self.assertEqual(shape([exclude, capital]), [
+            ("not", "=", [("tag", "=", "THIS")]), ("is_capital", "=", "yes")
+        ])
+        self.assertEqual(owner.keyword, "owner")
+        self.assertEqual(shape(other_conditions), [
+            ("exists", "=", "yes"), ("early_railroad", "=", "1"),
+            ("invention", "=", "telegraph_coordination")
+        ])
+        self.assertEqual(shape(owner.children), shape(other_conditions))
+        modifier = child(others, "add_country_modifier")
+        self.assertEqual(shape(modifier.children), [
+            ("name", "=", "magnetic_interference"), ("duration", "=", "60")
+        ])
+        self.assertEqual(shape(child(recipient, "owner").children), shape([modifier]))
+
+        decisions, = nodes(CORE / decision_path)
+        effect = child(child(decisions, "carrington_event"), "effect")
+        broadcaster, = effect.children
+        self.assertEqual(broadcaster.keyword, "random_country")
+        self.assertEqual(scalar(broadcaster, "set_global_flag"), "carrington_event_fired")
+        self.assertEqual(shape(child(broadcaster, "country_event").children), [
+            ("id", "=", "21501"), ("days", "=", "31")
+        ])
+
     def test_chunnel_preserves_effects_and_normalized_weights(self):
         original = options(self.original["36996"])
         first, second = (options(self.adapted[event_id]) for event_id in ("36996", "37001"))

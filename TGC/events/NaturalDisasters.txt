@@ -54,6 +54,7 @@ country_event = {
 		name = "EVTOPTA21501"
 		any_country = {
 			limit = {
+				NOT = { tag = THIS }
 				exists = yes
 				early_railroad = 1
 				invention = telegraph_coordination
@@ -61,6 +62,23 @@ country_event = {
 			add_country_modifier = {
 				name = magnetic_interference
 				duration = 60
+			}
+		}
+		# any_country skips the country receiving the event.
+		any_owned = {
+			limit = {
+				is_capital = yes
+				owner = {
+					exists = yes
+					early_railroad = 1
+					invention = telegraph_coordination
+				}
+			}
+			owner = {
+				add_country_modifier = {
+					name = magnetic_interference
+					duration = 60
+				}
 			}
 		}
 	}

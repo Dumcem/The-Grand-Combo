@@ -15,11 +15,11 @@ political_decisions = {
 		}
 		
 		effect = {
-			set_global_flag = carrington_event_fired
 			random_country = {
 				limit = {
 					is_greater_power = yes
 				}
+				set_global_flag = carrington_event_fired
 				country_event = {
 					id = 21501
 					days = 31
