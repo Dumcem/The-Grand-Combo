@@ -94,10 +94,14 @@ The deployer assembles core, the selected Timeline and the Alice event overlay
 before staging. It generates one descriptor per profile from `TGC.mod` with
 its own path and user directory, and updates that payload's map definition path.
 Each event file has one runtime path. `tools/deploy/alice_overlay.json` pins
-the original hashes for replacements and declares the added localisation file.
-When either core event file changes, reconcile the overlay and update the
+the original hashes for replacements and declares the added localisation and
+scripted trigger. When a covered core event file changes, reconcile the overlay and update the
 corresponding hash after checking the event contracts. The combined profile
 also checks the canonical Timeline override list used by the Extender build.
+
+The Alice factory trigger covers completed factories, including closed ones,
+in the owner's part of a state. When a factory type changes in either profile,
+update the shared predicate and run the Alice profile tests.
 
 The legacy Performance Addon is retired. Its historical deployment records
 remain recoverable through the digest-specific catalog described under

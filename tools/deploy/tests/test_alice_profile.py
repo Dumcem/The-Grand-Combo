@@ -21,7 +21,11 @@ from lib_1966_parser import parse_script, scalar, walk
 AID_PATH = "events/CountryAid.txt"
 CHUNNEL_PATH = "events/Canals Construction.txt"
 LOCALE_PATH = "localisation/tgc_alice_event_options.csv"
-OVERLAY_PATHS = {AID_PATH, CHUNNEL_PATH, LOCALE_PATH}
+FACTORY_TRIGGER = "tgc_state_has_completed_factory"
+FACTORY_PATH = f"scripted triggers/{FACTORY_TRIGGER}.txt"
+FACTORY_EVENTS = {"events/GERFlavor.txt": ("200049", 1),
+                  "events/LiberalRevolutions.txt": ("10150", 7)}
+OVERLAY_PATHS = {AID_PATH, CHUNNEL_PATH, LOCALE_PATH, FACTORY_PATH, *FACTORY_EVENTS}
 AID_PAGES = dict(zip(("100013", "100003", "100005", "100007", "100009"),
                      ("100014", "100015", "100016", "100017", "100018")))
 
@@ -116,7 +120,7 @@ class AliceProfileTests(unittest.TestCase):
             actual, baseline = self.inventories[alice], self.inventories[shared]
             changed = {name for name, src in actual.items() if baseline.get(name) != src}
             self.assertEqual(changed, OVERLAY_PATHS | {"map/default.map"})
-            self.assertEqual(actual.keys(), baseline.keys() | {LOCALE_PATH})
+            self.assertEqual(actual.keys(), baseline.keys() | {LOCALE_PATH, FACTORY_PATH})
             self.assertIn(f'../mod/{ALICE_PROFILES[alice]}/map/definition.csv'.encode(), actual["map/default.map"])
             self.assertEqual(actual["map/definition.csv"], baseline["map/definition.csv"])
 
@@ -224,6 +228,41 @@ class AliceProfileTests(unittest.TestCase):
             step = int(scalar(original[1], "treasury")) * -1
             self.assertEqual(balances, {donor: -17 * step, requester_a: 8 * step, requester_b: 9 * step})
             self.assertFalse(pending)
+
+    def test_factory_checks_are_scoped_and_cover_the_effective_factory_types(self):
+        generic = b"has_factories = yes"
+        predicate = f"test = {FACTORY_TRIGGER}".encode()
+        for profile, files in self.inventories.items():
+            with self.subTest(profile=profile):
+                if profile not in ALICE_PROFILES:
+                    self.assertNotIn(FACTORY_PATH, files)
+                    for path in FACTORY_EVENTS:
+                        self.assertEqual(files[path], CORE / path)
+                    continue
+
+                helper, = nodes(files[FACTORY_PATH])
+                self.assertEqual(helper.key, FACTORY_TRIGGER)
+                self.assertEqual(scalar(helper, "main_parameter"), "state")
+                checks = child(helper, "or").children
+                self.assertTrue(all(n.keyword == "has_building" for n in checks))
+                factory_types = {n.key for n in nodes(files["common/buildings.txt"])
+                                 if scalar(n, "type") == "factory"}
+                self.assertTrue(factory_types)
+                self.assertCountEqual([n.value for n in checks], factory_types)
+
+                for path, (event_id, count) in FACTORY_EVENTS.items():
+                    before = (CORE / path).read_bytes().replace(b"\r\n", b"\n")
+                    after = files[path].read_bytes().replace(b"\r\n", b"\n")
+                    self.assertEqual(before.count(generic), count)
+                    self.assertEqual(after, before.replace(generic, predicate))
+                    event, = (n for n in nodes(files[path]) if scalar(n, "id") == event_id)
+                    state_contexts = [
+                        child(n, "limit") if n.keyword == "random_state" else n
+                        for n in walk(event.children)
+                        if n.keyword in {"state_scope", "any_state", "random_state"}
+                    ]
+                    self.assertEqual(sum(scalar(n, "test") == FACTORY_TRIGGER
+                                         for n in state_contexts), count)
 
     def test_chunnel_financing_times_construction_at_both_ends(self):
         for profile, files in self.inventories.items():

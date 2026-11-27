@@ -18,7 +18,7 @@
       "profiles": ["core+alice"],
       "runtime_policy": {
         "files": "git-tracked-working-copy-bytes",
-        "roots": ["events", "localisation"]
+        "roots": ["events", "localisation", "scripted triggers"]
       },
       "exclusions": [],
       "extends": "TGC",
@@ -36,7 +36,7 @@
       "profiles": ["core+alice+1966"],
       "runtime_policy": {
         "files": "git-tracked-working-copy-bytes",
-        "roots": ["events", "localisation"]
+        "roots": ["events", "localisation", "scripted triggers"]
       },
       "exclusions": [],
       "extends": "TGC",
