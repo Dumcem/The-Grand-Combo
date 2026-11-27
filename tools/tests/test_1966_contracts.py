@@ -134,6 +134,15 @@ class RuntimeFixtures(unittest.TestCase):
             inv = runtime.compose_runtime(root, 'Core', 'Late')
             self.assertEqual(inv.files('inventions'), ['Late/inventions/new.txt'])
 
+    def test_technology_order_follows_folders_not_filenames(self):
+        with tempfile.TemporaryDirectory(prefix='tgc-contract-', dir=Path(__file__).parent) as td:
+            root = Path(td); w = self.fixture(root)
+            w('Core/common/technology.txt', 'folders = { later_name = { doctrine } branch = { tactics } }')
+            w('Late/technologies/later_name.txt', 'U = { area = doctrine year = 1900 }')
+            inv = runtime.compose_runtime(root, 'Core', 'Late')
+            self.assertEqual(inv.technology_order, ('Late/technologies/later_name.txt',
+                                                    'Core/technologies/branch.txt'))
+
     def test_missing_dependency_and_branch_fail(self):
         for alteration in ['dependency', 'branch', 'path']:
             with self.subTest(alteration=alteration), tempfile.TemporaryDirectory(prefix='tgc-contract-', dir=Path(__file__).parent) as td:

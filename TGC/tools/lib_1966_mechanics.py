@@ -8,6 +8,7 @@ All at https://github.com/schombert/Project-Alice/tree/v1.3.0/src .
 """
 from lib_1966_parser import member, scalar, integer, parse_file, unique_definitions
 from lib_1966_semantics import ALICE, effect_body
+from lib_1966_functional import technology_predecessors
 
 
 def land_factors(values: dict, unit_type: str | None) -> dict:
@@ -151,15 +152,11 @@ def necessary_references(nodes, definitions: set[tuple[str, str]], *, disjunctio
 
 def availability_inventory(files, timing) -> tuple[dict, list]:
     definitions = {}
-    previous_by_area, predecessors = {}, {}
-    for file in sorted(files):
+    for file in files:
         kind = 'technology' if '/technologies/' in '/' + file.replace('\\','/') else 'invention'
         for n in parse_file(file).definitions:
             definitions[kind,n.key] = (file,n)
-            if kind=='technology':
-                area = scalar(n,'area',required=True)
-                predecessors[kind,n.key] = previous_by_area.get(area)
-                previous_by_area[area] = ('technology',n.key)
+    predecessors = technology_predecessors({key: node for key, (_, node) in definitions.items()})
     activations, increments = {}, []
     for key,(file,n) in sorted(definitions.items()):
         body = effect_body(n,key[0])

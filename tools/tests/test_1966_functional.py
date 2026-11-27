@@ -43,6 +43,13 @@ class DependencyFixtures(unittest.TestCase):
         self.assertIn(('technology','A'), d.closure(('invention','C')))
         self.assertEqual(len(r['negative_dependencies'][0]['forced_positive']), 2)
 
+    def test_only_adjacent_technology_in_the_same_area_is_required(self):
+        d = dependencies('A1={area=x year=1900} B1={area=y year=1900} '
+                         'A2={area=x year=1910} A3={area=x year=1920}')
+        self.assertEqual(d.closure(('technology', 'A2')), {('technology', 'A2')})
+        self.assertEqual(d.closure(('technology', 'A3')),
+                         {('technology', 'A2'), ('technology', 'A3')})
+
     def test_whole_owner_not_individual_negative_bodies(self):
         d = dependencies('A={ area=x year=1900 }')
         self.assertAlmostEqual(d.lower_bound(projection(.4, [
@@ -214,7 +221,7 @@ class HorizonFixtures(unittest.TestCase):
 class FunctionalCorpus(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.inv=compose_runtime(ROOT);cls.files=cls.inv.files('technologies')+cls.inv.files('inventions')
+        cls.inv=compose_runtime(ROOT);cls.files=[*cls.inv.technology_order,*cls.inv.files('inventions')]
         cls.paths=unit_definitions(cls.inv,ROOT)
         cls.units={u:audit.parse_unit_block(f,u) for u,f in cls.paths.items()}
         cls.naval={u for u,d in cls.units.items() if d['unit_domain']=='naval'}
@@ -227,7 +234,7 @@ class FunctionalCorpus(unittest.TestCase):
     def test_supply_bounds_against_independent_literal_tree_enumeration(self):
         # Independent reader, owner aggregation and direct-positive closures. Real
         # negative-supply limits use direct references; extra conditions are relaxed.
-        definitions={};previous={};pred={};effects=defaultdict(dict)
+        definitions={};previous=(None,None);pred={};effects=defaultdict(dict)
         # Select effective immediate files independently of compose_runtime and
         # read unit bases independently of parse_unit_block/project_unit.
         selected={}
@@ -241,13 +248,19 @@ class FunctionalCorpus(unittest.TestCase):
                 for name,body,_,_ in reference_tree((ROOT/f).read_text(encoding='utf-8-sig')):
                     fields={k:v for k,v,_,_ in body}
                     if fields['type']=='land':bases[name]=float(fields['supply_consumption'])
-        source_files=sorted(f for (directory,_),f in selected.items() if directory!='units')
+        folders = next(body for name,body,_,_ in
+                       reference_tree((ROOT/'TGC/common/technology.txt').read_text(encoding='utf-8-sig'))
+                       if name == 'folders')
+        source_files = [selected['technologies', name + '.txt'] for name,_,_,_ in folders]
+        source_files += sorted(f for (directory,_),f in selected.items() if directory=='inventions')
         for f in source_files:
             kind='technology' if '/technologies/' in f else 'invention'
             for name,body,_,_ in reference_tree((ROOT/f).read_text(encoding='utf-8-sig')):
                 key=kind,name;definitions[key]=body
                 if kind=='technology':
-                    area=next(v for k,v,_,_ in body if k=='area');pred[key]=previous.get(area);previous[area]=key
+                    area=next(v for k,v,_,_ in body if k=='area')
+                    pred[key]=previous[1] if previous[0]==area else None
+                    previous=area,key
         for key,body in definitions.items():
             if key[0]=='invention':body=next((v for k,v,_,_ in body if k=='effect'),[])
             for scope,body0,_,_ in body:
@@ -282,7 +295,7 @@ class FunctionalCorpus(unittest.TestCase):
                 value=bases[u]+sum(v for k,v in effects[u].items() if k in acquired and (k[0]=='technology' or v<0))
                 minimum=min(minimum,value)
             self.assertAlmostEqual(dep.lower_bound(q)['lower_bound'],minimum,u)
-            self.assertAlmostEqual(minimum,bases[u],u)
+            self.assertAlmostEqual(minimum,.07,msg=u)
             self.assertGreater(minimum,0,u)
 
     def test_real_ai_and_horizon_are_conditional_and_do_not_change_data(self):

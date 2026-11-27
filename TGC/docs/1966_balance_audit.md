@@ -258,7 +258,9 @@ projections do not produce a technical PASS.
 Activation diagnostics preserve positive necessary references (AND union, OR
 intersection, NOT excluded), research anchors, invention bounds/probability-year
 notes, culture/overseas restrictions and commodity baskets. Technology predecessor
-references follow source order within each area of the declared scheduled tree.
+references use the immediately preceding registered technology ID, and only
+when both IDs have the same area. Registration follows the branch order in
+`common/technology.txt` and the definition order inside each branch file.
 Country histories, scripted grants, discovery probabilities, actual construction,
 industry and national ownership remain explicit boundaries.
 
@@ -324,9 +326,12 @@ Search outcomes alone never declassify it. These are computational limits, not
 balance thresholds.
 
 The eleven real land supply cases retain their original negative relaxed endpoints.
-The prerequisite model and a separate literal-tree oracle both derive a positive
-minimum equal to the current base supply, 0.15, without using 0.15 as a rule or
-constant in the implementation. Their consumer findings become INFO with
+The prerequisite model and a separate literal-tree oracle derive an untimed
+lower bound of 0.07. Treating the previous technology in the same area as
+required across intervening areas incorrectly gave 0.15. The correction
+removes 20 edges in the Timeline and changes 104 transitive closures. Two
+technologies in the minimizing set are dated 1966, so this bound does not
+establish a reachable game state before the campaign ends. The consumer findings are INFO with
 `classification=relaxed_violation_excluded_by_prerequisites`, retaining both views
 and per-negative-owner forced-positive provenance. Other warnings are not removed
 by this analysis. Negative prerequisite bounds remain WARN; direct invalid bases
@@ -400,7 +405,7 @@ the old failure, compare small generated graphs to a separate sequence oracle,
 cover unknowns/limits and compare processes with different hash seeds/file orders.
 The real supply oracle independently selects effective files, reads land bases
 and effects, and enumerates positive prerequisite closures without NOT rejections;
-the observed 0.15 is re-derived, never an implementation constant.
+the 0.07 bound is re-derived from the actual files.
 
 ## Alice naval AI selection diagnostics
 
@@ -456,8 +461,9 @@ predecessors can delay a technology beyond its own nominal year. Positive
 invention references and literal eligibility years contribute; probability-only
 years do not become gates. Missing dates remain unverified.
 
-Alice's ordinary research command requires the technology year and its preceding
-folder technology, as well as civilization and other command conditions. An
+Alice's ordinary research command checks the technology year and the immediately
+preceding technology ID if it is in the same area. Civilization and additional
+command conditions also apply. An
 invention additionally requires discovery, not just its limiting technology.
 A reference before the end is therefore not proof of research completion,
 discovery or useful operational time. An anchor on 1966.1.1 offers no ordinary

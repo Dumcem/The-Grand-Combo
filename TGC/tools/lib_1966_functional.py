@@ -46,6 +46,18 @@ def necessary_literals(nodes, definitions, *, disjunction=False, negate=False):
     return set.intersection(*parts) if disjunction != negate else set.union(*parts)
 
 
+def technology_predecessors(definitions):
+    """Apply Alice's adjacent technology-ID check in registration order."""
+    predecessors = {}
+    previous, previous_area = None, None
+    for key, node in definitions.items():
+        if key[0] == 'technology':
+            area = scalar(node, 'area', required=True)
+            predecessors[key] = previous if previous_area == area else None
+            previous, previous_area = key, area
+    return predecessors
+
+
 class ResearchDependencies:
     """Required effects under normal prefix research; extraordinary grants excluded.
 
@@ -55,18 +67,14 @@ class ResearchDependencies:
     """
     def __init__(self, files):
         self.definitions, self.required, self.forbidden = {}, {}, {}
-        previous, self.predecessors = {}, {}
-        for file in sorted(files):
+        for file in files:
             kind = 'technology' if '/technologies/' in '/' + file.replace('\\', '/') else 'invention'
             for node in parse_file(file).definitions:
                 key = kind, node.key
                 if key in self.definitions:
                     raise ScriptError(f'{node.start}: duplicate dependency definition {key}')
                 self.definitions[key] = node
-                if kind == 'technology':
-                    area = scalar(node, 'area', required=True)
-                    self.predecessors[key] = previous.get(area)
-                    previous[area] = key
+        self.predecessors = technology_predecessors(self.definitions)
         keys = set(self.definitions)
         for key, node in self.definitions.items():
             limit = member(node, 'limit') if key[0] == 'invention' else None

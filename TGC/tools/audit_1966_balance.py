@@ -747,9 +747,10 @@ def _run() -> int:
         assignments_by_unit_stat[unit] = grouped
 
     engine_units = {u: project_unit(unit_inputs[u], all_assignments.get(u, []), ALICE) for u in units_cfg}
-    dependencies = ResearchDependencies(scan_files)
+    research_files = [*inventory.technology_order, *inventory.files('inventions')]
+    dependencies = ResearchDependencies(research_files)
     report_consumers(unit_inputs, engine_units, rep, dependencies)
-    report_availability(inventory, unit_inputs, engine_units, scan_files, inferred_years, rep)
+    report_availability(inventory, unit_inputs, engine_units, research_files, inferred_years, rep)
     report_functional(inventory, unit_inputs, engine_units, scan_files, inferred_years, dependencies, rep)
     core_inventory = compose_runtime(ROOT, args.core_root, timeline_root=None)
     core_timing = build_year_inference(core_inventory.files('technologies') + core_inventory.files('inventions'))

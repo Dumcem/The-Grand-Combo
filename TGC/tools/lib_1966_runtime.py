@@ -26,6 +26,7 @@ class RuntimeInventory:
     replaced: list[Source]
     excluded: list[Source]
     boundaries: list[str]
+    technology_order: tuple[str, ...] = ()
 
     def files(self, directory: str) -> list[str]:
         return [s.file for _, s in sorted(self.selected.items())
@@ -116,9 +117,8 @@ def compose_runtime(repo: Path, core_root: str = 'TGC', timeline_root: str | Non
     if 'folders' not in roots:
         raise ScriptError('common/technology.txt: missing folders')
     branches = unique_definitions(roots['folders'].children)
-    scheduled = {'technologies/' + name + '.txt' for name in branches}
-    for rel in sorted(scheduled):
-        inv.require(rel)
+    scheduled = tuple('technologies/' + name + '.txt' for name in branches)
+    inv.technology_order = tuple(inv.require(rel) for rel in scheduled)
     for rel in list(inv.selected):
         if rel.startswith('technologies/') and rel not in scheduled:
             src = inv.selected.pop(rel)
