@@ -64,7 +64,7 @@ Il riscontro usa i cataloghi di pubblicazione, il parser strutturale del reposit
 | 248 | [2000000016](../TGC/events/Germany%20VS%20Hungary%20Events.txt#L528) | 6 | `2000000011/B → GER` a +5, cessioni, BAN/SIE e restaurazione. |
 | 249 | [2000000085](../TGC/events/Germany%20VS%20Hungary%20Events.txt#L2386) | 6 | Rilascia RUT e SLV da HUN e li vassallizza per il destinatario. TODO senza chiamante. Serve distinguere questa variante dagli esiti già scriptati del trattato. |
 | 250 | [2000000093](../TGC/events/Germany%20VS%20Hungary%20Events.txt#L2585) | 6 | Scelta di scambio demografico, modificatore per 360 giorni. La decisione attiva accoda 94 e 95, manca 93. Serve il contratto dell'accordo e l'ordine delle finestre. |
-| 251 | [83](../TGC/events/JANFlavor.txt#L3569) | 2 | Segnaposto Utility 4/4 da `e15568479`: due scelte prive di effetti, senza ingresso. Navigazione attiva dei menu separata. |
+| 251 | [83](../TGC/events/JANFlavor.txt#L3569) | 2 | Segnaposto Utility 4/4 da `e15568479`: due scelte prive di effetti, senza ingresso o localizzazione. Versioni precedenti usavano lo stesso ID per funzioni diverse. La rimozione ha bassa priorità e coinvolgerebbe anche il carrier Loader. |
 | 253 | [44841](../TGC/events/MEXFlavor.txt#L761) | 4 Alice · 6 V2 | `44840/A → MEX`. Trattato, cessate il fuoco o prosecuzione della guerra; dipende da BATTLE_EVENT. |
 | 254 | [44842](../TGC/events/MEXFlavor.txt#L830) | 4 Alice · 6 V2 | `44841/A → TEX`, trattato di Velasco, flag, relazioni e modificatore di 1.825 giorni. |
 | 255 | [44843](../TGC/events/MEXFlavor.txt#L860) | 4 Alice · 6 V2 | `44841/B → TEX`, cessate il fuoco, relazioni e modificatore di 1.095 giorni. |

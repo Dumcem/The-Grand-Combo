@@ -134,6 +134,18 @@ flag possono rendere incompatibile un salvataggio passato per l'Extender.
   territoriale atteso usa il valore nativo di quell’ID. `badboy_factor = 1.0`
   usa la base 5 prima dei correttivi. Il costo osservato nell’editor del
   trattato volontario vale per quel percorso. [Selettore e costo](https://github.com/The-Grand-Combination/The-Grand-Loader/blob/3.0.0/script_extender/src/features/demand_province.cpp)
+- **Clausole scartate.** Il caso ottomano del Task 56 registrò
+  `SE_TREATY_TERM_INVALID` su una clausola di 23. Il plugin 3.0.0 valida il
+  pacchetto prima di applicarlo e ricontrolla ogni clausola dopo le mutazioni
+  precedenti. Le fonti circoscrivono il problema alla validità contestuale
+  dell'obiettivo dopo quei cambiamenti. Il rapporto conservato non identifica
+  la clausola. Nei trattati forzati il calcolo di costo fuori budget e infamia
+  precede il ricontrollo e può includere una clausola poi scartata. Nei
+  volontari l'infamia segue il ricontrollo. L'addebito effettivo del caso
+  ottomano resta ignoto.
+  [Rapporto](https://github.com/Dumcem/The-Grand-Combo/blob/798eaab6e/docs/deployment/script_extender_task56.md) ·
+  [Validità e applicazione Loader](https://github.com/The-Grand-Combination/The-Grand-Loader/blob/3.0.0/script_extender/src/features/treaty.cpp#L815-L925) ·
+  [Ordine degli addebiti](https://github.com/The-Grand-Combination/The-Grand-Loader/blob/3.0.0/script_extender/src/features/treaty.cpp#L1301-L1351)
 - **Smembramento.** La coda del plugin aggrega per perdente, trattiene il primo
   vincitore e alza il budget al massimo delle richieste pendenti. L’editor o il
   trattato AI intervengono dopo la pace bilaterale. Il 96094 richiede invece
@@ -144,6 +156,15 @@ flag possono rendere incompatibile un salvataggio passato per l'Extender.
   mutazione precedente, quindi l’esito della convalida iniziale può cambiare.
   [Coda](https://github.com/The-Grand-Combination/The-Grand-Loader/blob/3.0.0/script_extender/src/features/treaty.cpp#L1939-L1958) ·
   [Applicazione](https://github.com/The-Grand-Combination/The-Grand-Loader/blob/3.0.0/script_extender/src/features/treaty.cpp#L1301-L1351)
+- **Firma e chiusura.** Il 96094 può chiudere lo smembramento prima che il
+  vincitore umano firmi. Una seconda guerra del perdente rinvia il 96094,
+  mentre la pace bilaterale basta per aprire l'editor. Durante l'attesa due
+  richieste per lo stesso perdente si fondono. Una nuova richiesta dopo
+  l'apertura dell'editor può generarne un secondo. La firma non scrive i
+  flag di 96094. Un 96021 già consegnato per la via dell'ultimatum può
+  consumare il flag di chiusura se 3.04 esegue l'opzione senza ricontrollo.
+  Per legare la chiusura alla firma occorre un segnale applicativo del plugin.
+  [Uscita dalla coda](https://github.com/The-Grand-Combination/The-Grand-Loader/blob/3.0.0/script_extender/src/features/treaty.cpp#L2047-L2076)
 - **Reddito.** Nella progressione culturale ordinaria ogni curva lascia il
   posto alla successiva. Le ultime due si escludono alla soglia del 1990.
   Per i pagamenti supportati il plugin moltiplica il netto positivo dello
@@ -153,6 +174,13 @@ flag possono rendere incompatibile un salvataggio passato per l'Extender.
   estranee ai sette siti restano invariati. L’evento 53 conserva il richiamo a
   un giorno e le spese nazionali delle campagne sotto `override_campaigns`.
   I sei trasferimenti POP diretti sono rimossi nella composizione Loader.
+  Il 1990 è raggiungibile in `core+extender`. La Timeline termina il 1º gennaio
+  1966. Le 32 combinazioni delle cinque tecnologie ammettono cumuli fino a
+  tre fasce solo fuori dalla progressione ordinaria. Con tutte le tecnologie
+  attive, i tre moltiplicatori aggiuntivi in millesimi sono 400/250/150
+  fino al 1989 e 500/400/250 dal 1990. Nei log storici risultano inizializzati
+  tutti e sette gli hook in entrambi i profili. Mancano pagamenti effettivi
+  comparabili.
   [Sorgente redditi](https://github.com/The-Grand-Combination/The-Grand-Loader/blob/3.0.0/script_extender/src/features/income_modifiers.cpp#L10-L76)
 
 ## Avvio in finestra e isolamento

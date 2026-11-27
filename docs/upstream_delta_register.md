@@ -165,6 +165,11 @@ regressione appartengono al fork. [Difetto e casi ancora aperti](rebaseline_back
 
 ## Anatolia — evento 500291
 
+Il perimetro approvato è l'accordo russo-greco esteso. B e C restituiscono i
+core greci di proprietà russa anche fuori dalle sei regioni. B riserva le nove
+province della zona di sicurezza degli stretti e C cede tutta Adrianopoli
+e Costantinopoli. Le proprietà dei terzi sono protette.
+
 Il Task 8 parte da `911cdb790`. Le punte di `master` lette su GitHub coincidono con i riferimenti locali del fork e dell'upstream, rispettivamente `911cdb790` e `85f173164`. L'evento scatta una volta per RUS con i due flag globali del trattato e dello smembramento, TUR senza province, l'invenzione `the_dark_continent` e proprietà russa di 860, 873 e 876. Il trigger lascia aperta la proprietà del resto della mappa e la condizione di GRE. [Evento](../TGC/events/RUSFlavor.txt#L8909) · [Testi](../TGC/localisation/00_events_0500000.csv#L429)
 
 ### Matrice territoriale
