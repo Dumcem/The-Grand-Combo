@@ -878,12 +878,14 @@ country_event = {
 				limit = {
 					SIC = { exists = no }
 				}
+				owner = { any_owned = { limit = { is_core = SIC } add_core = THIS remove_core = SIC } }
 				SIC = { all_core = { remove_core = SIC } }
 			}
 			random_owned = {
 				limit = {
 					PAP = { exists = no }
 				}
+				owner = { any_owned = { limit = { is_core = PAP } add_core = THIS remove_core = PAP } }
 				PAP = { all_core = { remove_core = PAP } }
 			}
 			random_owned = {

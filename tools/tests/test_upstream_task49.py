@@ -213,6 +213,25 @@ class UpstreamFirstTests(unittest.TestCase):
             if capital:
                 self.assertLess(section(selection, 'capital').start.offset, overlord.start.offset)
 
+    def test_latin_union_converts_owned_cores_before_extinct_tag_cleanup(self):
+        reform = option(event('FRAFlavourExtra', 10417), 'EVTOPTC10417')
+        scopes = [node for node in reform.children if node.key == 'random_owned']
+        for tag in ('SIC', 'PAP'):
+            with self.subTest(tag=tag):
+                early, = (node for node in scopes if member(section(node, 'limit'), tag))
+                later, = (node for node in scopes if scalar(section(node, 'limit'), 'is_core') == tag)
+                self.assertLess(scopes.index(early), scopes.index(later))
+                self.assertEqual(shape(early.children), [
+                    ('limit', [(tag, [('exists', 'no')])]),
+                    ('owner', [('any_owned', [
+                        ('limit', [('is_core', tag)]),
+                        ('add_core', 'THIS'),
+                        ('remove_core', tag),
+                    ])]),
+                    (tag, [('all_core', [('remove_core', tag)])]),
+                ])
+                self.assertEqual(shape([section(later, 'owner')]), shape([section(early, 'owner')]))
+
     def test_petrograd_rewards_are_one_time_in_each_direction(self):
         for name, flag in (
             ('petrograd_renaming_act', 'petrograd_renaming_completed'),
