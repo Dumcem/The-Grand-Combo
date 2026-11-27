@@ -1,5 +1,6 @@
 """Static contracts for the Project Alice 1.3.0 event overlay."""
 from collections import Counter
+from datetime import date, timedelta
 from fractions import Fraction
 from itertools import product
 from pathlib import Path
@@ -242,44 +243,73 @@ class AliceProfileTests(unittest.TestCase):
                                              ("5", "2190"), ("5", "2555"))
                 ])
 
-    def test_carrington_filters_the_recipient_and_each_other_country(self):
+    def test_carrington_runs_once_independently_of_the_broadcaster(self):
         event_path = "events/NaturalDisasters.txt"
-        decision_path = "decisions/Natural_Disasters.txt"
+        daily_path = "events/JANFlavor.txt"
         for profile, files in self.inventories.items():
             with self.subTest(profile=profile):
                 self.assertEqual(files[event_path], CORE / event_path)
-                self.assertEqual(files[decision_path], CORE / decision_path)
+                self.assertNotIn("decisions/Natural_Disasters.txt", files)
+                daily, = (n for n in nodes(files[daily_path]) if scalar(n, "id") == "53")
+                option = child(daily, "option")
+                self.assertEqual(shape(child(option, "country_event").children),
+                                 [("id", "=", "53"), ("days", "=", "1")])
+                storm, = (n for n in option.children
+                          if scalar(n, "set_global_flag") == "carrington_event_fired")
+                self.assertEqual(storm.keyword, "random_owned")
+                gate = child(child(storm, "limit"), "owner")
+                self.assertEqual(shape(gate.children), [
+                    ("year", "=", "1859"),
+                    ("not", "=", [("year", "=", "1860"),
+                                  ("has_global_flag", "=", "carrington_event_fired")]),
+                    ("or", "=", [
+                        ("and", "=", [("has_global_flag", "=", "project_alice"),
+                                      ("month", "=", "9"), ("not", "=", [("month", "=", "10")])]),
+                        ("and", "=", [("not", "=", [("has_global_flag", "=", "project_alice")]),
+                                      ("month", "=", "8"), ("not", "=", [("month", "=", "9")])]),
+                    ]),
+                ])
+
+                _, mark, affected, broadcaster = storm.children
+                self.assertEqual([mark.keyword, affected.keyword, broadcaster.keyword],
+                                 ["set_global_flag", "any_country", "random_country"])
+                self.assertEqual(shape(child(affected, "limit").children), [
+                    ("exists", "=", "yes"), ("early_railroad", "=", "1"),
+                    ("invention", "=", "telegraph_coordination"),
+                ])
+                self.assertEqual(shape(child(affected, "add_country_modifier").children), [
+                    ("name", "=", "magnetic_interference"), ("duration", "=", "60"),
+                ])
+                self.assertEqual(shape(child(broadcaster, "limit").children),
+                                 [("exists", "=", "yes"), ("is_greater_power", "=", "yes")])
+                self.assertEqual(scalar(broadcaster, "country_event"), "21501")
 
         event, = (n for n in nodes(CORE / event_path) if scalar(n, "id") == "21501")
-        others, recipient = effects(child(event, "option"))
-        self.assertEqual(others.keyword, "any_country")
-        self.assertEqual(recipient.keyword, "any_owned")
+        self.assertEqual(scalar(event, "is_triggered_only"), "yes")
+        self.assertEqual(scalar(event, "news"), "yes")
+        self.assertFalse(effects(child(event, "option")))
+        self.assertFalse(any(n.keyword == "immediate" for n in event.children))
 
-        exclude, *other_conditions = child(others, "limit").children
-        capital, owner = child(recipient, "limit").children
-        self.assertEqual(shape([exclude, capital]), [
-            ("not", "=", [("tag", "=", "THIS")]), ("is_capital", "=", "yes")
-        ])
-        self.assertEqual(owner.keyword, "owner")
-        self.assertEqual(shape(other_conditions), [
-            ("exists", "=", "yes"), ("early_railroad", "=", "1"),
-            ("invention", "=", "telegraph_coordination")
-        ])
-        self.assertEqual(shape(owner.children), shape(other_conditions))
-        modifier = child(others, "add_country_modifier")
-        self.assertEqual(shape(modifier.children), [
-            ("name", "=", "magnetic_interference"), ("duration", "=", "60")
-        ])
-        self.assertEqual(shape(child(recipient, "owner").children), shape([modifier]))
-
-        decisions, = nodes(CORE / decision_path)
-        effect = child(child(decisions, "carrington_event"), "effect")
-        broadcaster, = effect.children
-        self.assertEqual(broadcaster.keyword, "random_country")
-        self.assertEqual(scalar(broadcaster, "set_global_flag"), "carrington_event_fired")
-        self.assertEqual(shape(child(broadcaster, "country_event").children), [
-            ("id", "=", "21501"), ("days", "=", "31")
-        ])
+        for alice, marked, initially_eligible, great_power in product((False, True), repeat=4):
+            with self.subTest(alice=alice, legacy_marked=marked,
+                              initially_eligible=initially_eligible, great_power=great_power):
+                fired = marked
+                effects_dates, announcements = [], []
+                start = date(1859, 8, 30)
+                september = date(1859, 9, 1)
+                for offset in range(402):
+                    current = start + timedelta(days=offset)
+                    month = current.month if alice else current.month - 1
+                    expected_month = 9 if alice else 8
+                    if fired or current.year != 1859 or month != expected_month:
+                        continue
+                    fired = True
+                    if initially_eligible or current > september:
+                        effects_dates.append(current)
+                    if great_power:
+                        announcements.append(current)
+                self.assertEqual(effects_dates, [september] if initially_eligible and not marked else [])
+                self.assertEqual(announcements, [september] if great_power and not marked else [])
 
     def test_chunnel_preserves_effects_and_normalized_weights(self):
         original = options(self.original["36996"])

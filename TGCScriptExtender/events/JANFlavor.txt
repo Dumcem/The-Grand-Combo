@@ -2437,6 +2437,38 @@ country_event = {
 										any_owned = { limit = { has_building = immigrator } owner = { add_tax_relative_income = -0.01 } }
 						}
 		}
+
+		# Carrington storm: the daily updater reaches the September window once.
+		random_owned = {
+			limit = {
+				owner = {
+					year = 1859
+					NOT = { year = 1860 has_global_flag = carrington_event_fired }
+					OR = {
+						AND = {
+							has_global_flag = project_alice
+							month = 9
+							NOT = { month = 10 }
+						}
+						AND = {
+							NOT = { has_global_flag = project_alice }
+							month = 8
+							NOT = { month = 9 }
+						}
+					}
+				}
+			}
+			set_global_flag = carrington_event_fired
+			# Province scope includes the updater's owner in both country selections.
+			any_country = {
+				limit = { exists = yes early_railroad = 1 invention = telegraph_coordination }
+				add_country_modifier = { name = magnetic_interference duration = 60 }
+			}
+			random_country = {
+				limit = { exists = yes is_greater_power = yes }
+				country_event = 21501
+			}
+		}
 	}
 }
 
