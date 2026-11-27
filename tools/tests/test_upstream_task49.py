@@ -220,6 +220,24 @@ class UpstreamFirstTests(unittest.TestCase):
                 self.assertEqual(scalar(section(owned, 'owner'), 'capital'), capital)
                 self.assertLess(overlord.start.offset, owned.start.offset)
 
+    def test_global_land_scope_covers_apocalypse_cleanup(self):
+        provinces = {line.partition(b';')[0].decode('ascii')
+                     for line in (ROOT / 'TGC/map/definition.csv').read_bytes().splitlines()
+                     if line.partition(b';')[0].isdigit()}
+        map_path = ROOT / 'TGC/map/default.map'
+        seas, = (n for n in parse_script(map_path.read_bytes().decode('latin-1')).nodes
+                 if n.key == 'sea_starts')
+        land = provinces - {n.value for n in seas.children} - {'0'}
+        for path in ('map/region.txt', 'map/super_region.txt'):
+            region, = (n for n in definitions(path) if n.key == 'any_land_province')
+            self.assertCountEqual([n.value for n in region.children], land)
+
+        path = ROOT / 'TGCApocalypse1836/events/Apocalypse1836.txt'
+        victory, = (n for n in parse_script(path.read_bytes().decode('latin-1')).definitions
+                    if scalar(n, 'id') == '66031')
+        cleanup = section(section(victory, 'option'), 'any_land_province')
+        self.assertEqual(shape(cleanup.children), [('remove_province_modifier', 'zombie_outbreak')])
+
     def test_direct_immigration_cleanup_protects_other_human_countries(self):
         immigration = ROOT / 'TGCDirectImmigration'
         setup, = parse_script((immigration / 'decisions/01_Setup-DirectImmigration.txt')

@@ -76,10 +76,11 @@ Direct Immigration uses country ownership to clean up selectors,
 immigrators and expulsion modifiers under AI control. Its activation and
 stop paths previously named an undefined region. Its stop option also
 cleans up the acting player's provinces. Other human players' provinces
-are outside both cleanups. In Apocalypse, the victory event has a separate
-use of the same undefined name. The existing `any_land_province` region
-omits the 21 land provinces 3510–3530, so substituting it there would leave
-part of the global victory cleanup uncovered.
+are outside both cleanups. The Apocalypse victory uses the declared
+`any_land_province` region to remove the outbreak, including in unowned
+land. Both regional files now cover the same 2,985 land provinces. The
+previous `region.txt` omitted 3510–3530, including the province already
+targeted by three Cherkasy renaming rules.
 
 ### Project Alice profiles
 

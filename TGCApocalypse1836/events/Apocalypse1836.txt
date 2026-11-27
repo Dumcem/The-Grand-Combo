@@ -402,7 +402,7 @@ country_event = {
 	option = {
 		name = "global_victory"
 		any_country = { country_event = 66033 clr_country_flag = zombie_outbreak clr_country_flag = assets_siezed set_country_flag = zombie_outbreak_victory }
-		all_land_provinces = { remove_province_modifier = zombie_outbreak }
+		any_land_province = { remove_province_modifier = zombie_outbreak }
 		clr_global_flag = infection_mode
 		set_global_flag = global_victory
 		set_variable = { which = zombified_provinces value = 0 }
