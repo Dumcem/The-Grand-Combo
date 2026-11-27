@@ -213,6 +213,21 @@ class UpstreamFirstTests(unittest.TestCase):
             if capital:
                 self.assertLess(section(selection, 'capital').start.offset, overlord.start.offset)
 
+    def test_direct_immigration_cleanup_protects_other_human_countries(self):
+        immigration = ROOT / 'TGCDirectImmigration'
+        setup, = parse_script((immigration / 'decisions/01_Setup-DirectImmigration.txt')
+                              .read_bytes().decode('latin-1')).definitions
+        activate = section(section(setup, 'override_activate_immigration'), 'effect')
+        events = parse_script((immigration / 'events/DirectImmigrationEvents.txt')
+                              .read_bytes().decode('latin-1')).definitions
+        menu, = (n for n in events if scalar(n, 'id') == '980000')
+        stop = option(menu, 'EVTOPTE980000')
+        for action in (activate, stop):
+            cleanup = section(action, 'any_country')
+            self.assertEqual(shape(section(cleanup, 'limit').children), [('exists', 'yes'), ('ai', 'yes')])
+            self.assertEqual(shape(section(cleanup, 'any_owned').children), shape(section(stop, 'any_owned').children))
+            self.assertIsNone(member(action, 'all_land_provinces'))
+
     def test_latin_union_converts_owned_cores_before_extinct_tag_cleanup(self):
         reform = option(event('FRAFlavourExtra', 10417), 'EVTOPTC10417')
         scopes = [node for node in reform.children if node.key == 'random_owned']

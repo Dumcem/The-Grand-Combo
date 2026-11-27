@@ -36,14 +36,17 @@ country_event = {
 			remove_province_modifier = forced_expulsion
 		}
 		set_variable = { which = has_province_selector value = 0 }
-		all_land_provinces = { #failsafe in case AI builds it
-			province_selector = -1
-			province_selector = -1
-			province_selector = -1
-			immigrator = -1
-			immigrator = -1
-			immigrator = -1
-			remove_province_modifier = forced_expulsion
+		any_country = { # Clear migration buildings left under AI control.
+			limit = { exists = yes ai = yes }
+			any_owned = {
+				province_selector = -1
+				province_selector = -1
+				province_selector = -1
+				immigrator = -1
+				immigrator = -1
+				immigrator = -1
+				remove_province_modifier = forced_expulsion
+			}
 		}
 		remove_country_modifier = direct_immigration_program
 	}

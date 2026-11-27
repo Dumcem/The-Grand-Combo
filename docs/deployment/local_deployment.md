@@ -49,6 +49,38 @@ its ownership and its prior commit; disable it in the launcher for core-only
 play. There is no implicit uninstall operation. Optional-mod compatibility
 with Timeline or other options is not certified by the deployment tool.
 
+### Optional component overlaps
+
+The static inventory checks file paths without case distinctions. These
+combinations require a merged carrier or a decision about which feature
+takes precedence. The assembled Alice and Loader profiles do not select
+optional components.
+
+| Combination | Overlap and consequence |
+| --- | --- |
+| Timeline + Less Combat RNG | `defines.lua` sets different end dates. The Less Combat RNG carrier of `army_tech.txt` omits all 25 Timeline technologies. |
+| Timeline + Six Great Powers | The competing `defines.lua` contains a 9999 end date and a six-power limit. |
+| Less Combat RNG + Six Great Powers | The two `defines.lua` versions disagree on the great-power limit and combat and AI settings. |
+| Timeline + Direct Immigration | The two `buildings.txt` versions contain different buildings and upgrade tables. Direct Immigration adds two migration buildings and omits the Timeline levels 7–8 and their colonial points. |
+| Timeline + Apocalypse | `backend.gui` carries the extended date display in one copy and omits the second rank list in the other. |
+| Belle Cartographie, HFM, HoI3 and Pastel | Each of the six pairs shares at least one asset path with different bytes. |
+| Fantasy Formables + Endonymic Localisation | Eight Byzantine government localisation keys compete across different files. |
+
+Apocalypse and Fantasy Formables also share byte-identical
+`localisation/vt_localization.csv`. A separate scan found no duplicate
+country or province event IDs in different files among the compared
+components. These checks establish overlap and content. The launcher order
+and combined runtime rendering remain unverified.
+
+Direct Immigration uses country ownership to clean up selectors,
+immigrators and expulsion modifiers under AI control. Its activation and
+stop paths previously named an undefined region. Its stop option also
+cleans up the acting player's provinces. Other human players' provinces
+are outside both cleanups. In Apocalypse, the victory event has a separate
+use of the same undefined name. The existing `any_land_province` region
+omits the 21 land provinces 3510–3530, so substituting it there would leave
+part of the global victory cleanup uncovered.
+
 ### Project Alice profiles
 
 Use a Victoria II game-data root prepared for Alice 1.3.0 that is separate
