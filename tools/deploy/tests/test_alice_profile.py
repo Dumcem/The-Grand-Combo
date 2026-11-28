@@ -268,6 +268,12 @@ class AliceProfileTests(unittest.TestCase):
         for profile, files in self.inventories.items():
             with self.subTest(profile=profile):
                 event, = (n for n in nodes(files[CHUNNEL_PATH]) if scalar(n, "id") == "36999")
+                for financing in options(event):
+                    self.assertEqual(scalar(financing, "set_global_flag"), "chunnel_under_construction")
+                    self.assertEqual(scalar(financing, "clr_global_flag"), "chunnel_under_discussion")
+                    self.assertNotIn("clr_country_flag", [n.keyword for n in financing.children])
+                    self.assertLess(child(financing, "set_global_flag").start.offset,
+                                    child(financing, "clr_global_flag").start.offset)
                 option, = (n for n in options(event) if scalar(n, "name") == "EVTOPTE36999")
                 actual = []
                 for outcome in child(option, "random_list").children:

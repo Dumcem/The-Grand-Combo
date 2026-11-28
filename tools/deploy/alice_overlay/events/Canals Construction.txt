@@ -2048,7 +2048,7 @@ country_event = {
 
 			treasury = -1750000
 			set_global_flag = chunnel_under_construction
-			clr_country_flag = chunnel_under_discussion
+			clr_global_flag = chunnel_under_discussion
 			random_list = {
 				30 = {
 					301 = { add_province_modifier = { name = chunnel_construction duration = 2190 } }
@@ -2084,7 +2084,7 @@ country_event = {
 
 			treasury = -1500000
 			set_global_flag = chunnel_under_construction
-			clr_country_flag = chunnel_under_discussion
+			clr_global_flag = chunnel_under_discussion
 			random_list = {
 				40 = {
 					301 = { add_province_modifier = { name = chunnel_construction duration = 3285 } }
@@ -2120,7 +2120,7 @@ country_event = {
 
 			treasury = -1250000
 			set_global_flag = chunnel_under_construction
-			clr_country_flag = chunnel_under_discussion
+			clr_global_flag = chunnel_under_discussion
 			random_list = {
 				30 = {
 					301 = { add_province_modifier = { name = chunnel_construction duration = 2920 } }
@@ -2156,7 +2156,7 @@ country_event = {
 
 			treasury = -1000000
 			set_global_flag = chunnel_under_construction
-			clr_country_flag = chunnel_under_discussion
+			clr_global_flag = chunnel_under_discussion
 			random_list = {
 				40 = {
 					301 = { add_province_modifier = { name = chunnel_construction duration = 3285 } }
