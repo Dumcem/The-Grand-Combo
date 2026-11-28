@@ -625,19 +625,19 @@ effetti. Il ramo navale resta escluso. EIC conserva i due effetti
 territoriali e una finestra Beiyang già accodata può mostrare il testo.
 [Compilazione scope](https://github.com/schombert/Project-Alice/blob/v1.3.0/src/parsing/effect_parsing.cpp#L1367-L1383) · [Esecuzione](https://github.com/schombert/Project-Alice/blob/v1.3.0/src/scripting/effects.cpp#L1332-L1344)
 
-**Decisione pendente SUB_AI_AFFORDABILITY.** Su 3.04 i pacchetti navali
-per IA possono accodare più rami di consegna e addebitarli in sequenza.
-Un caso GP britannico con trasporti a vapore e corazzate combina
-3.500 + 25.000, contro una soglia di 25.000. Con incrociatori protetti
-arriva a 43.500. Un caso SP con trasporti e incrociatori protetti,
-senza l'invenzione delle corazzate, combina 750 + 3.500 contro una soglia
-di 3.501. Si tratta di somme degli addebiti dichiarati. L'impatto sul saldo
-in partita resta non osservato. Si raccomanda di preservare i rami e
-richiedere copertura per il totale effettivamente selezionato. L'alternativa
-è pagare e consegnare soltanto i rami coperti dal saldo, con una priorità
-espressa e conseguenze diverse per la composizione delle flotte.
-Il contratto è da decidere prima di modificare prezzi o consegne.
-[Decisioni navali](../TGC/decisions/3_Clean-Up.txt#L674)
+**SUB_AI_AFFORDABILITY · Approvata e verificata staticamente.** Le due
+decisioni richiedono il saldo per l'intero pacchetto compatibile con
+invenzioni, cultura e porti correnti. Il controllo si ripete prima di
+qualsiasi effetto della decisione accodata, incluso il cooldown. Il caso
+britannico richiede 28.500 con il bonus corazzate o 43.500 con anche gli
+incrociatori protetti. Per le potenze secondarie i due cumuli sopra la
+soglia originaria richiedono 3.750 o 4.250. I prezzi, le unità, l'ordine e
+le condizioni di ciascun ramo sono verificati contro il corpo originale.
+Il modello somma gli addebiti dei rami idonei in 480 stati per pacchetto
+e controlla il fondo minimo e quello immediatamente inferiore. I pagamenti
+indipendenti conservano il proprio ingresso. Le guardie escludono i
+pacchetti non supportati sia all'ingresso sia all'effetto in Alice.
+[Decisioni navali](../TGC/decisions/3_Clean-Up.txt#L674) · [Regressione](../tools/tests/test_task34_naval.py)
 
 ## Questioni rinviate
 

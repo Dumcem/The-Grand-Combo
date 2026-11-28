@@ -672,162 +672,206 @@ political_decisions = {
 			war = no
 			NOT = { war_exhaustion = 1 }
 			money = 25000
+			OR = {
+				NOT = {
+					AND = {
+						is_culture_group = pan_british
+						invention = ironclads
+						NOT = { invention = pre_dreadnought }
+						any_owned_province = { port = yes is_overseas = no is_colonial = no controlled_by = THIS }
+					}
+				}
+				AND = {
+					money = 28500
+					OR = { NOT = { invention = protected_cruisers } money = 43500 }
+				}
+			}
 			is_disarmed = no
 			NOT = { num_of_revolts = 1 }
 		}
 
 		effect = {
-			add_country_modifier = {
-				name = ai_warships_cooldown
-				duration = 545
-			}
-			#Bonus for British
-			random_owned = {
+			# Recheck funds before starting the package or its cooldown.
+			any_owned = {
 				limit = {
-					port = yes
-					is_overseas = yes
-					is_colonial = yes
-					controlled_by = THIS
-					owner = { NOT = { invention = ironclads } is_culture_group = pan_british }
+					is_capital = yes
+					owner = {
+						ai = yes
+						NOT = {
+							has_global_flag = project_alice
+							has_country_modifier = ai_warships_cooldown
+						}
+						money = 25000
+						OR = {
+							NOT = {
+								AND = {
+									is_culture_group = pan_british
+									invention = ironclads
+									NOT = { invention = pre_dreadnought }
+									any_owned_province = { port = yes is_overseas = no is_colonial = no controlled_by = THIS }
+								}
+							}
+							AND = {
+								money = 28500
+								OR = { NOT = { invention = protected_cruisers } money = 43500 }
+							}
+						}
+					}
 				}
-				sub_unit = { type = manowar value = current }
-				sub_unit = { type = manowar value = current }
-				sub_unit = { type = manowar value = current }
-				sub_unit = { type = frigate value = current }
-				sub_unit = { type = frigate value = current }
-			}
+				owner = {
+					add_country_modifier = {
+						name = ai_warships_cooldown
+						duration = 545
+					}
+					#Bonus for British
+					random_owned = {
+						limit = {
+							port = yes
+							is_overseas = yes
+							is_colonial = yes
+							controlled_by = THIS
+							owner = { NOT = { invention = ironclads } is_culture_group = pan_british }
+						}
+						sub_unit = { type = manowar value = current }
+						sub_unit = { type = manowar value = current }
+						sub_unit = { type = manowar value = current }
+						sub_unit = { type = frigate value = current }
+						sub_unit = { type = frigate value = current }
+					}
 
-			#Steamers Before Dreadnoughts
-			random_owned = {
-				limit = {
-					port = yes
-					#is_core = yes
-					is_overseas = no
-					controlled_by = THIS
-					owner = { NOT = { invention = pre_dreadnought } }
-				}
-				sub_unit = { type = steam_transport value = current }
-				sub_unit = { type = steam_transport value = current }
-				owner = { treasury = -3500 }
-			}
+					#Steamers Before Dreadnoughts
+					random_owned = {
+						limit = {
+							port = yes
+							#is_core = yes
+							is_overseas = no
+							controlled_by = THIS
+							owner = { NOT = { invention = pre_dreadnought } }
+						}
+						sub_unit = { type = steam_transport value = current }
+						sub_unit = { type = steam_transport value = current }
+						owner = { treasury = -3500 }
+					}
 
-			#Steamers After Dreadnoughts
-			random_owned = {
-				limit = {
-					port = yes
-					#is_core = yes
-					is_overseas = no
-					controlled_by = THIS
-					owner = { invention = pre_dreadnought }
-				}
-				sub_unit = { type = steam_transport value = current }
-				owner = { treasury = -1500 }
-			}
+					#Steamers After Dreadnoughts
+					random_owned = {
+						limit = {
+							port = yes
+							#is_core = yes
+							is_overseas = no
+							controlled_by = THIS
+							owner = { invention = pre_dreadnought }
+						}
+						sub_unit = { type = steam_transport value = current }
+						owner = { treasury = -1500 }
+					}
 
-			#Commerce Raiders
-			random_owned = {
-				limit = {
-					port = yes
-					is_overseas = no
-					is_colonial = no
-					controlled_by = THIS
-					owner = { invention = commerce_raiders NOT = { invention = protected_cruisers } }
-				}
-				sub_unit = { type = commerce_raider value = current }
-				sub_unit = { type = commerce_raider value = current }
-				sub_unit = { type = commerce_raider value = current }
-				sub_unit = { type = commerce_raider value = current }
-				sub_unit = { type = commerce_raider value = current }
-			}
+					#Commerce Raiders
+					random_owned = {
+						limit = {
+							port = yes
+							is_overseas = no
+							is_colonial = no
+							controlled_by = THIS
+							owner = { invention = commerce_raiders NOT = { invention = protected_cruisers } }
+						}
+						sub_unit = { type = commerce_raider value = current }
+						sub_unit = { type = commerce_raider value = current }
+						sub_unit = { type = commerce_raider value = current }
+						sub_unit = { type = commerce_raider value = current }
+						sub_unit = { type = commerce_raider value = current }
+					}
 
-			#Ironclads
-			random_owned = {
-				limit = {
-					port = yes
-					is_overseas = no
-					is_colonial = no
-					controlled_by = THIS
-					owner = { invention = ironclads NOT = { invention = pre_dreadnought } }
-				}
-				sub_unit = { type = ironclad value = current }
-				sub_unit = { type = ironclad value = current }
-				sub_unit = { type = ironclad value = current }
-				sub_unit = { type = ironclad value = current }
-				sub_unit = { type = ironclad value = current }
-				sub_unit = { type = ironclad value = current }
-			}
+					#Ironclads
+					random_owned = {
+						limit = {
+							port = yes
+							is_overseas = no
+							is_colonial = no
+							controlled_by = THIS
+							owner = { invention = ironclads NOT = { invention = pre_dreadnought } }
+						}
+						sub_unit = { type = ironclad value = current }
+						sub_unit = { type = ironclad value = current }
+						sub_unit = { type = ironclad value = current }
+						sub_unit = { type = ironclad value = current }
+						sub_unit = { type = ironclad value = current }
+						sub_unit = { type = ironclad value = current }
+					}
 
-			#Bonus for British
-			random_owned = {
-				limit = {
-					port = yes
-					is_overseas = no
-					is_colonial = no
-					controlled_by = THIS
-					owner = { invention = ironclads NOT = { invention = pre_dreadnought } is_culture_group = pan_british }
-				}
-				sub_unit = { type = ironclad value = current }
-				sub_unit = { type = ironclad value = current }
-				sub_unit = { type = ironclad value = current }
-				sub_unit = { type = ironclad value = current }
-				sub_unit = { type = ironclad value = current }
-				sub_unit = { type = ironclad value = current }
-				sub_unit = { type = ironclad value = current }
-				sub_unit = { type = ironclad value = current }
-				owner = { treasury = -25000 }
-			}
+					#Bonus for British
+					random_owned = {
+						limit = {
+							port = yes
+							is_overseas = no
+							is_colonial = no
+							controlled_by = THIS
+							owner = { invention = ironclads NOT = { invention = pre_dreadnought } is_culture_group = pan_british }
+						}
+						sub_unit = { type = ironclad value = current }
+						sub_unit = { type = ironclad value = current }
+						sub_unit = { type = ironclad value = current }
+						sub_unit = { type = ironclad value = current }
+						sub_unit = { type = ironclad value = current }
+						sub_unit = { type = ironclad value = current }
+						sub_unit = { type = ironclad value = current }
+						sub_unit = { type = ironclad value = current }
+						owner = { treasury = -25000 }
+					}
 
-			#Bonus for Japan
-			random_owned = {
-				limit = {
-					port = yes
-					is_overseas = no
-					is_colonial = no
-					controlled_by = THIS
-					owner = { invention = ironclads NOT = { invention = pre_dreadnought } primary_culture = japanese }
-				}
-				sub_unit = { type = ironclad value = current }
-				sub_unit = { type = ironclad value = current }
-				sub_unit = { type = ironclad value = current }
-				sub_unit = { type = ironclad value = current }
-				sub_unit = { type = ironclad value = current }
-				sub_unit = { type = commerce_raider value = current }
-				sub_unit = { type = commerce_raider value = current }
-				sub_unit = { type = commerce_raider value = current }
-				sub_unit = { type = commerce_raider value = current }
-				sub_unit = { type = steam_transport value = current }
-				sub_unit = { type = steam_transport value = current }
-				sub_unit = { type = steam_transport value = current }
-				sub_unit = { type = steam_transport value = current }
-				sub_unit = { type = steam_transport value = current }
-				sub_unit = { type = steam_transport value = current }
-				owner = { treasury = -15000 }
-			}
+					#Bonus for Japan
+					random_owned = {
+						limit = {
+							port = yes
+							is_overseas = no
+							is_colonial = no
+							controlled_by = THIS
+							owner = { invention = ironclads NOT = { invention = pre_dreadnought } primary_culture = japanese }
+						}
+						sub_unit = { type = ironclad value = current }
+						sub_unit = { type = ironclad value = current }
+						sub_unit = { type = ironclad value = current }
+						sub_unit = { type = ironclad value = current }
+						sub_unit = { type = ironclad value = current }
+						sub_unit = { type = commerce_raider value = current }
+						sub_unit = { type = commerce_raider value = current }
+						sub_unit = { type = commerce_raider value = current }
+						sub_unit = { type = commerce_raider value = current }
+						sub_unit = { type = steam_transport value = current }
+						sub_unit = { type = steam_transport value = current }
+						sub_unit = { type = steam_transport value = current }
+						sub_unit = { type = steam_transport value = current }
+						sub_unit = { type = steam_transport value = current }
+						sub_unit = { type = steam_transport value = current }
+						owner = { treasury = -15000 }
+					}
 
-			#Cruisers
-			random_owned = {
-				limit = {
-					port = yes
-					is_overseas = no
-					is_colonial = no
-					controlled_by = THIS
-					owner = { invention = protected_cruisers }
-				}
-				sub_unit = { type = cruiser value = current }
-			}
+					#Cruisers
+					random_owned = {
+						limit = {
+							port = yes
+							is_overseas = no
+							is_colonial = no
+							controlled_by = THIS
+							owner = { invention = protected_cruisers }
+						}
+						sub_unit = { type = cruiser value = current }
+					}
 
-			#Bonus for British
-			random_owned = {
-				limit = {
-					port = yes
-					is_overseas = no
-					is_colonial = no
-					controlled_by = THIS
-					owner = { invention = protected_cruisers is_culture_group = pan_british }
+					#Bonus for British
+					random_owned = {
+						limit = {
+							port = yes
+							is_overseas = no
+							is_colonial = no
+							controlled_by = THIS
+							owner = { invention = protected_cruisers is_culture_group = pan_british }
+						}
+						sub_unit = { type = cruiser value = current }
+						sub_unit = { type = steam_transport value = current }
+						owner = { treasury = -15000 }
+					}
 				}
-				sub_unit = { type = cruiser value = current }
-				sub_unit = { type = steam_transport value = current }
-				owner = { treasury = -15000 }
 			}
 		}
 	}
@@ -862,6 +906,17 @@ political_decisions = {
 
 		allow = {
 			money = 3501
+			OR = {
+				NOT = {
+					AND = {
+						invention = protected_cruisers
+						any_owned_province = { port = yes is_overseas = no is_colonial = no controlled_by = THIS }
+					}
+				}
+				money = 4250
+				AND = { NOT = { invention = steamer_transports } money = 3750 }
+				AND = { invention = steamer_transports invention = ironclads }
+			}
 			is_disarmed = no
 			war = no
 			NOT = { war_exhaustion = 1 }
@@ -869,100 +924,127 @@ political_decisions = {
 		}
 
 		effect = {
-
-			#Before Steamers
-			random_owned = {
+			# Recheck funds before starting the package or its cooldown.
+			any_owned = {
 				limit = {
-					port = yes
-					is_overseas = no
-					controlled_by = THIS
-					owner = { NOT = { invention = steamer_transports } }
-				}
-				sub_unit = { type = clipper_transport value = current }
-				sub_unit = { type = clipper_transport value = current }
-				owner = {
-					treasury = -250
-					add_country_modifier = {
-						name = ai_warships_cooldown
-						duration = 720
+					is_capital = yes
+					owner = {
+						ai = yes
+						NOT = {
+							has_global_flag = project_alice
+							has_country_modifier = ai_warships_cooldown
+						}
+						money = 3501
+						OR = {
+							NOT = {
+								AND = {
+									invention = protected_cruisers
+									any_owned_province = { port = yes is_overseas = no is_colonial = no controlled_by = THIS }
+								}
+							}
+							money = 4250
+							AND = { NOT = { invention = steamer_transports } money = 3750 }
+							AND = { invention = steamer_transports invention = ironclads }
+						}
 					}
 				}
-			}
-
-
-			#Steamers Before Dreadnoughts
-			random_owned = {
-				limit = {
-					port = yes
-					is_overseas = no
-					controlled_by = THIS
-					owner = { invention = steamer_transports NOT = { invention = ironclads } }
-				}
-				sub_unit = { type = steam_transport value = current }
-				sub_unit = { type = steam_transport value = current }
-				sub_unit = { type = manowar value = current }
-				sub_unit = { type = frigate value = current }
 				owner = {
-					treasury = -750
-					add_country_modifier = {
-						name = ai_warships_cooldown
-						duration = 720
+
+					#Before Steamers
+					random_owned = {
+						limit = {
+							port = yes
+							is_overseas = no
+							controlled_by = THIS
+							owner = { NOT = { invention = steamer_transports } }
+						}
+						sub_unit = { type = clipper_transport value = current }
+						sub_unit = { type = clipper_transport value = current }
+						owner = {
+							treasury = -250
+							add_country_modifier = {
+								name = ai_warships_cooldown
+								duration = 720
+							}
+						}
 					}
-				}
-			}
 
-			#Commerce Raiders
-			random_owned = {
-				limit = {
-					port = yes
-					is_overseas = no
-					is_colonial = no
-					controlled_by = THIS
-					owner = { invention = commerce_raiders NOT = { invention = protected_cruisers } }
-				}
-				sub_unit = { type = commerce_raider value = current }
-				owner = { treasury = -550 }
-			}
 
-			#Ironclads
-			random_owned = {
-				limit = {
-					port = yes
-					is_overseas = no
-					is_colonial = no
-					controlled_by = THIS
-					owner = { invention = ironclads NOT = { invention = protected_cruisers } }
-				}
-				sub_unit = { type = ironclad value = current }
-				sub_unit = { type = steam_transport value = current }
-				sub_unit = { type = steam_transport value = current }
-				owner = {
-					treasury = -1500
-					add_country_modifier = {
-						name = ai_warships_cooldown
-						duration = 545
+					#Steamers Before Dreadnoughts
+					random_owned = {
+						limit = {
+							port = yes
+							is_overseas = no
+							controlled_by = THIS
+							owner = { invention = steamer_transports NOT = { invention = ironclads } }
+						}
+						sub_unit = { type = steam_transport value = current }
+						sub_unit = { type = steam_transport value = current }
+						sub_unit = { type = manowar value = current }
+						sub_unit = { type = frigate value = current }
+						owner = {
+							treasury = -750
+							add_country_modifier = {
+								name = ai_warships_cooldown
+								duration = 720
+							}
+						}
 					}
-				}
-			}
 
-			#Cruisers
-			random_owned = {
-				limit = {
-					port = yes
-					is_overseas = no
-					is_colonial = no
-					controlled_by = THIS
-					owner = { invention = protected_cruisers }
-				}
-				sub_unit = { type = cruiser value = current }
-				sub_unit = { type = steam_transport value = current }
-				sub_unit = { type = steam_transport value = current }
-				sub_unit = { type = steam_transport value = current }
-				owner = {
-					treasury = -3500
-					add_country_modifier = {
-						name = ai_warships_cooldown
-						duration = 1095
+					#Commerce Raiders
+					random_owned = {
+						limit = {
+							port = yes
+							is_overseas = no
+							is_colonial = no
+							controlled_by = THIS
+							owner = { invention = commerce_raiders NOT = { invention = protected_cruisers } }
+						}
+						sub_unit = { type = commerce_raider value = current }
+						owner = { treasury = -550 }
+					}
+
+					#Ironclads
+					random_owned = {
+						limit = {
+							port = yes
+							is_overseas = no
+							is_colonial = no
+							controlled_by = THIS
+							owner = { invention = ironclads NOT = { invention = protected_cruisers } }
+						}
+						sub_unit = { type = ironclad value = current }
+						sub_unit = { type = steam_transport value = current }
+						sub_unit = { type = steam_transport value = current }
+						owner = {
+							treasury = -1500
+							add_country_modifier = {
+								name = ai_warships_cooldown
+								duration = 545
+							}
+						}
+					}
+
+					#Cruisers
+					random_owned = {
+						limit = {
+							port = yes
+							is_overseas = no
+							is_colonial = no
+							controlled_by = THIS
+							owner = { invention = protected_cruisers }
+						}
+						sub_unit = { type = cruiser value = current }
+						sub_unit = { type = steam_transport value = current }
+						sub_unit = { type = steam_transport value = current }
+						sub_unit = { type = steam_transport value = current }
+						owner = {
+							treasury = -3500
+							add_country_modifier = {
+								name = ai_warships_cooldown
+								duration = 1095
+							}
+						}
 					}
 				}
 			}

@@ -1,5 +1,6 @@
 """Regressions for the shared scripted guard and Alice 1.3.0 construction."""
 import hashlib
+from itertools import product
 import json
 import subprocess
 import sys
@@ -10,6 +11,8 @@ import test_1966_applied as independent
 from lib_1966_construction import delivery_gates, naval_time_multiplier, procurement_scenario
 from lib_1966_parser import ScriptError
 from lib_1966_runtime import RuntimeInventory, Source, compose_runtime
+from test_upstream_task42 import decision, evaluate, section
+from lib_1966_parser import scalar, walk
 
 
 ROOT = independent.ROOT
@@ -48,6 +51,11 @@ class ScriptedNavalGuard(unittest.TestCase):
                 self.assertIn('add_country_modifier', effect_keys)
                 # Fingerprints of the ordered original blocks at 158ab2d.
                 del potential[0]
+                allow, = [fields for k, fields, _, _ in body if k == 'allow']
+                allow[:] = [item for item in allow if item[0] != 'OR']
+                scope, = [fields for k, fields, _, _ in effect if k == 'any_owned']
+                original, = [fields for k, fields, _, _ in scope if k == 'owner']
+                effect[:] = original
                 restored = json.dumps(self.shape(body), separators=(',', ':')).encode()
                 self.assertEqual(hashlib.sha256(restored).hexdigest(), original_digest)
 
@@ -62,6 +70,55 @@ class ScriptedNavalGuard(unittest.TestCase):
                     guard_passes = not flags.get(flag_name, False)
                     eligible_effects = effect_keys if all((guard_passes, original_potential)) else []
                     self.assertEqual(eligible_effects, effect_keys if allowed else [])
+
+    def test_package_guard_matches_sum_of_eligible_debits_at_both_checks(self):
+        inventions = ('pre_dreadnought', 'ironclads', 'protected_cruisers',
+                      'steamer_transports', 'commerce_raiders')
+        ports = ((), ((True, False, False, True),), ((True, False, True, True),),
+                 ((True, True, True, True),), ((True, False, False, False),))
+        for name in TARGETS:
+            package = decision('3_Clean-Up', name)
+            allow = section(package, 'allow')
+            apply = section(section(package, 'effect'), 'any_owned')
+            limit = section(apply, 'limit')
+            self.assertEqual(scalar(limit, 'is_capital'), 'yes')
+            owner = section(limit, 'owner')
+            effects = section(apply, 'owner')
+            floor = int(scalar(allow, 'money'))
+            selectors = [
+                (section(n, 'limit').children,
+                 -sum(int(e.value) for e in walk(n.children) if e.key == 'treasury'))
+                for n in effects.children if n.key == 'random_owned'
+            ]
+            entry_gate = [n for n in allow.children if n.key in {'money', 'OR'}]
+            payment_gate = [n for n in owner.children if n.key in {'money', 'OR'}]
+            for bits, culture, owned_ports in product(product((False, True), repeat=5),
+                                                      ('british', 'japanese', 'other'), ports):
+                discovered = {key for key, enabled in zip(inventions, bits) if enabled}
+                def matches(node, balance, province=None):
+                    if node.key == 'invention':
+                        return node.value in discovered
+                    if node.key in {'is_culture_group', 'primary_culture'}:
+                        return culture == {'pan_british': 'british', 'japanese': 'japanese'}[node.value]
+                    if node.key == 'money':
+                        return balance >= int(node.value)
+                    if node.key == 'owner':
+                        return evaluate(node.children, lambda n: matches(n, balance))
+                    if node.key == 'any_owned_province':
+                        return any(evaluate(node.children, lambda n: matches(n, balance, p))
+                                   for p in owned_ports)
+                    if node.key in {'port', 'is_overseas', 'is_colonial', 'controlled_by'}:
+                        index = ('port', 'is_overseas', 'is_colonial', 'controlled_by').index(node.key)
+                        return province[index] == (node.value in {'yes', 'THIS'})
+                    raise AssertionError(node.key)
+
+                debit = sum(cost for gate, cost in selectors
+                            if any(evaluate(gate, lambda n: matches(n, 0, p)) for p in owned_ports))
+                minimum = max(debit, floor)
+                for balance in (minimum - 1, minimum):
+                    for gate in (entry_gate, payment_gate):
+                        self.assertEqual(evaluate(gate, lambda n: matches(n, balance)), balance >= minimum,
+                                         (name, discovered, culture, owned_ports, balance))
 
     @staticmethod
     def shape(tree):
