@@ -30,8 +30,10 @@ AID_PAGES = dict(zip(("100013", "100003", "100005", "100007", "100009"),
                      ("100014", "100015", "100016", "100017", "100018")))
 
 
-def nodes(path):
-    return parse_script(path.read_bytes().decode("latin-1"), file=str(path)).nodes
+def nodes(source):
+    data = source if isinstance(source, bytes) else source.read_bytes()
+    return parse_script(data.decode("latin-1"),
+                        file="<generated payload>" if isinstance(source, bytes) else str(source)).nodes
 
 
 def shape(items):
@@ -267,26 +269,137 @@ class AliceProfileTests(unittest.TestCase):
     def test_chunnel_financing_times_construction_at_both_ends(self):
         for profile, files in self.inventories.items():
             with self.subTest(profile=profile):
-                event, = (n for n in nodes(files[CHUNNEL_PATH]) if scalar(n, "id") == "36999")
-                for financing in options(event):
-                    self.assertEqual(scalar(financing, "set_global_flag"), "chunnel_under_construction")
-                    self.assertEqual(scalar(financing, "clr_global_flag"), "chunnel_under_discussion")
-                    self.assertNotIn("clr_country_flag", [n.keyword for n in financing.children])
-                    self.assertLess(child(financing, "set_global_flag").start.offset,
-                                    child(financing, "clr_global_flag").start.offset)
-                option, = (n for n in options(event) if scalar(n, "name") == "EVTOPTE36999")
-                actual = []
-                for outcome in child(option, "random_list").children:
-                    actual.append((outcome.keyword, [
-                        (province.keyword, scalar(child(province, "add_province_modifier"), "name"),
-                         scalar(child(province, "add_province_modifier"), "duration"))
-                        for province in outcome.children
-                    ]))
-                self.assertEqual(actual, [
-                    (weight, [(province, "chunnel_construction", duration) for province in ("301", "401")])
-                    for weight, duration in (("40", "3285"), ("35", "2920"), ("15", "3650"),
-                                             ("5", "2190"), ("5", "2555"))
+                events = {scalar(n, "id"): n for n in nodes(files[CHUNNEL_PATH])}
+                region, = (n for n in nodes(files["map/region.txt"]) if n.key == "ENG_300")
+                self.assertEqual([n.value for n in region.children].count("301"), 1)
+                sea, = (n for n in nodes(files["map/default.map"]) if n.key == "sea_starts")
+                self.assertIn("2724", [n.value for n in sea.children])
+                self.assertTrue(any(line.startswith(b"301;401;canal;2724;12;")
+                                    for line in files["map/adjacencies.csv"].read_bytes().splitlines()))
+                self.assertEqual(scalar(events["37002"], "is_triggered_only"), "yes")
+                self.assertEqual(events["37002"].keyword, "province_event")
+                self.assertEqual(effects(child(events["37002"], "option")), [])
+                self.assertEqual(scalar(child(events["37000"], "trigger"), "has_country_flag"),
+                                 "chunnel_pending_announcement")
+                self.assertEqual(scalar(child(events["37000"], "immediate"), "clr_country_flag"),
+                                 "chunnel_pending_announcement")
+                self.assertEqual(effects(child(events["37000"], "option")), [])
+
+                funded = ["36996", "36999"]
+                if "37001" in events:
+                    funded.append("37001")
+                durations = set()
+                whole_funding = []
+                for event_id in funded:
+                    for option in options(events[event_id]):
+                        if scalar(option, "country_event") == "37001":
+                            continue
+                        gate = child(option, "eng_300")
+                        self.assertEqual(shape(child(gate, "limit").children), [
+                            ("province_id", "=", "301"),
+                            ("has_global_flag", "=", "chunnel_under_discussion"),
+                            ("not", "=", [("has_global_flag", "=", "chunnel_under_construction"),
+                                          ("is_canal_enabled", "=", "12")]),
+                        ])
+                        financing = child(gate, "this")
+                        self.assertEqual(scalar(financing, "set_global_flag"), "chunnel_under_construction")
+                        self.assertEqual([n.value for n in financing.children if n.keyword == "clr_global_flag"],
+                                         ["chunnel_under_discussion", "chunnel_offer_sent"])
+                        rolls = child(financing, "random_list").children if event_id == "36999" else [financing]
+                        lottery = []
+                        for roll in rolls:
+                            timer = child(child(roll, "2724"), "province_event")
+                            days = scalar(timer, "days")
+                            self.assertEqual(scalar(timer, "id"), "37002")
+                            durations.add(int(days))
+                            if event_id == "36999":
+                                lottery.append((int(roll.key), int(days)))
+                            for shore in ("301", "401"):
+                                works = child(child(roll, shore), "add_province_modifier")
+                                self.assertEqual(shape(works.children), [
+                                    ("name", "=", "chunnel_construction"), ("duration", "=", days)
+                                ])
+                        if lottery:
+                            whole_funding.append((int(scalar(financing, "treasury")), lottery))
+                self.assertEqual(durations, set(range(1825, 5476, 365)))
+                self.assertEqual(whole_funding, [
+                    (-2000000, [(35, 2190), (30, 2555), (25, 2920), (5, 3285), (5, 3650)]),
+                    (-1750000, [(30, 2190), (25, 2555), (25, 2920), (10, 3285), (10, 3650)]),
+                    (-1500000, [(40, 3285), (15, 3650), (15, 2555), (15, 2920), (15, 2190)]),
+                    (-1250000, [(30, 2920), (20, 3285), (20, 2555), (20, 3650), (10, 2190)]),
+                    (-1000000, [(40, 3285), (35, 2920), (15, 3650), (5, 2190), (5, 2555)]),
                 ])
+
+    def test_chunnel_proposals_record_and_clear_only_original_parties(self):
+        proposal = options(self.original["36988"])[0]
+        negotiation, no_counterpart = [n for n in proposal.children if n.keyword == "eng_300"]
+        partner = child(negotiation, "random_country")
+        self.assertEqual(scalar(partner, "set_country_flag"), "chunnel_counterpart")
+        self.assertEqual(scalar(child(partner, "this"), "set_country_flag"), "chunnel_proposer")
+        self.assertEqual(scalar(child(partner, "this"), "prestige"), "5")
+        self.assertIsNone(scalar(no_counterpart, "prestige"))
+        self.assertEqual(scalar(partner, "country_event"), "36989")
+        self.assertEqual(scalar(no_counterpart, "clr_global_flag"), "chunnel_under_discussion")
+        for event_id, option_index, prestige in (("36991", 0, "-10"), ("36997", 1, "-10"), ("36998", 1, "5")):
+            refusal = child(child(options(self.original[event_id])[option_index], "eng_300"), "this")
+            self.assertEqual(scalar(refusal, "prestige"), prestige)
+            self.assertEqual(scalar(refusal, "set_global_flag"), "chunnel_failed")
+            self.assertCountEqual([n.value for n in refusal.children if n.keyword == "clr_global_flag"],
+                                  ["chunnel_under_discussion", "chunnel_offer_sent"])
+            for party in (refusal, child(refusal, "from")):
+                self.assertCountEqual([n.value for n in party.children if n.keyword == "clr_country_flag"],
+                                      ["chunnel_proposer", "chunnel_counterpart"])
+
+    def test_chunnel_opening_and_recognition_after_territorial_changes(self):
+        gate = child(child(self.original["37002"], "immediate"), "eng_300")
+        self.assertEqual(shape(child(gate, "limit").children), [
+            ("province_id", "=", "301"),
+            ("has_global_flag", "=", "chunnel_under_construction"),
+            ("not", "=", [("is_canal_enabled", "=", "12")]),
+        ])
+        self.assertEqual(scalar(gate, "enable_canal"), "12")
+        self.assertEqual(shape([child(gate, coast) for coast in ("301", "401")]),
+                         [(coast, "=", [("trade_goods", "=", "precious_goods")]) for coast in ("301", "401")])
+        selectors = [n for n in gate.children if n.keyword == "random_country"]
+        self.assertEqual([scalar(child(n, "limit"), "has_country_flag") for n in selectors],
+                         ["chunnel_proposer", "chunnel_counterpart"])
+        self.assertEqual(scalar(selectors[0], "set_global_flag"), "chunnel_recognition_paid")
+        self.assertEqual(scalar(child(child(selectors[1], "limit"), "not"), "has_global_flag"),
+                         "chunnel_recognition_paid")
+
+        # The clocks model the persisted values traced in the two engines.
+        # A territorial change removes both visible modifiers in the Alice case.
+        start = date(1900, 1, 1)
+        for days, engine, first, second, bilateral in product(
+            range(1825, 5476, 365), ("3.04", "Alice"), ("P", "C", "third", None),
+            ("P", "C", "third", None), (True, False)
+        ):
+            with self.subTest(engine=engine, days=days, owners=(first, second), bilateral=bilateral):
+                due = start + timedelta(days=days)
+                reload = start + timedelta(days=days // 2)
+                restored_due = reload + (due - reload) if engine == "3.04" else due
+                owners = {"301": first, "401": second}
+                roles = {"chunnel_proposer": "P"}
+                if bilateral:
+                    roles["chunnel_counterpart"] = "C"
+                opened = False
+                recognition = []
+                for now in (reload, restored_due - timedelta(days=1), restored_due, restored_due):
+                    if now < restored_due or opened:
+                        continue
+                    opened = True
+                    for selector in selectors:
+                        limit = child(selector, "limit")
+                        recipient = roles.get(scalar(limit, "has_country_flag"))
+                        if recipient and any(owners[n.value] == recipient for n in child(limit, "or").children):
+                            recognition.append((recipient, scalar(selector, "prestige"),
+                                                scalar(selector, "set_country_flag")))
+                            break
+                    self.assertEqual(now, due)
+                self.assertTrue(opened)
+                recipient = "P" if "P" in owners.values() else "C" if bilateral and "C" in owners.values() else None
+                self.assertEqual(recognition,
+                                 [(recipient, "100", "chunnel_pending_announcement")] if recipient else [])
 
     def test_carrington_runs_once_independently_of_the_broadcaster(self):
         event_path = "events/NaturalDisasters.txt"

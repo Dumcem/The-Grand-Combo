@@ -132,7 +132,11 @@ La cronologia di TGC documenta un primo scrittore nazionale `manifest_destiny_re
 Chunnel: consigliata una patch upstream minima per rimuovere i cinque esiti
 che applicano a Suez i lavori finanziati dall'opzione E di `36999` e
 cancellare il flag di discussione in scope globale nelle opzioni B–E.
-`85f173164` contiene entrambi i difetti. L'overlay Alice appartiene al fork. [Difetto e casi ancora aperti](rebaseline_backlog.md#canal_control--controllo-marittimo-degli-attraversamenti)
+`85f173164` contiene entrambi i difetti. L'overlay Alice appartiene al fork.
+L'inaugurazione indipendente dalle cessioni è anche una candidata upstream
+se il progetto originale approva la stessa attribuzione del prestigio.
+Conviene tenere separata la patch del timer dai due fix di finanziamento e
+proporla dopo una verifica sulla composizione upstream. [Difetto e casi ancora aperti](rebaseline_backlog.md#canal_control--controllo-marittimo-degli-attraversamenti)
 
 | Contributo | Stato e rapporto con il fork |
 | --- | --- |

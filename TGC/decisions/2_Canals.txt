@@ -664,6 +664,7 @@ political_decisions = {
 
 		effect = {
 			set_global_flag = chunnel_under_discussion
+			set_global_flag = chunnel_offer_sent
 			set_country_flag = chunnel_proposer
 			country_event = 36999
 		}
