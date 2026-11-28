@@ -1,6 +1,7 @@
 """Static contracts for the upstream-first reconciliation."""
 
 from collections import defaultdict
+from itertools import product
 import re
 import unittest
 
@@ -213,12 +214,54 @@ class UpstreamFirstTests(unittest.TestCase):
                               ('ai', 'yes'), ('exists', 'yes')])
             self.assertIsNone(scalar(selection, 'capital'))
             overlord = section(selection, 'RUS')
-            self.assertEqual(scalar(overlord, 'create_vassal'), 'GRE')
+            witness = section(overlord, 'random_owned')
+            recipient = section(section(witness, 'limit'), 'GRE')
+            self.assertEqual(shape(recipient.children), [
+                ('exists', 'yes'), ('is_vassal', 'no'), ('is_substate', 'no'),
+                ('NOT', [('any_owned_province', [
+                    ('is_core', 'RUS'),
+                    ('OR', [('controlled_by', 'GRE'), ('controlled_by', 'RUS')]),
+                ])]),
+            ])
+            self.assertEqual(scalar(section(witness, 'owner'), 'create_vassal'), 'GRE')
             if capital:
                 owned = section(selection, 'any_owned')
                 self.assertEqual(shape(section(owned, 'limit').children), [('province_id', capital)])
                 self.assertEqual(scalar(section(owned, 'owner'), 'capital'), capital)
                 self.assertLess(overlord.start.offset, owned.start.offset)
+
+    def test_anatolia_deportation_uses_only_available_russian_destinations(self):
+        option_a = option(event('RUSFlavor', 500294), 'EVTOPTA500294')
+        provinces = section(option_a, 'any_owned')
+        self.assertEqual(scalar(section(provinces, 'limit'), 'owned_by'), 'RUS')
+        branches = [n for n in provinces.children if n.key == 'any_pop']
+        destinations = ('1195', '1197', '1199', '1202')
+        self.assertEqual(len(branches), 15)
+        for bits in product((False, True), repeat=4):
+            russian = {p for p, owned in zip(destinations, bits, strict=True) if owned}
+            def matches(node):
+                if node.key in destinations:
+                    self.assertEqual(scalar(node, 'owned_by'), 'RUS')
+                    return node.key in russian
+                if node.key == 'is_state_religion':
+                    return node.value == 'no'
+                if node.key == 'has_pop_culture':
+                    return node.value == 'turkish'
+                if node.key == 'pop_type':
+                    return node.value == 'aristocrats'
+                raise AssertionError(node.key)
+
+            eligible = [n for n in branches if evaluate(section(n, 'limit').children, matches)]
+            self.assertEqual(len(eligible), bool(russian), russian)
+            if eligible:
+                selected, = eligible
+                self.assertEqual(scalar(selected, 'pop_type'), 'farmers')
+                if len(russian) == 1:
+                    self.assertEqual({scalar(selected, 'move_pop')}, russian)
+                else:
+                    lottery = section(selected, 'random_list')
+                    self.assertEqual([n.key for n in lottery.children], ['25'] * len(russian))
+                    self.assertCountEqual([scalar(n, 'move_pop') for n in lottery.children], russian)
 
     def test_global_land_scope_covers_apocalypse_cleanup(self):
         provinces = {line.partition(b';')[0].decode('ascii')

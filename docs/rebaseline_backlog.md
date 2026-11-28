@@ -40,7 +40,7 @@ effettiva e la working tree prima di riprendere.
 | Gruppo del mandato | Stato e punto di ripresa |
 | --- | --- |
 | 3 | [Petrograd](#petrograd_legacy--premi-già-riscossi-nei-salvataggi-storici) conserva le guardie una tantum. [Gold Rush](#gold_rush_scope--proprietà-divisa-e-trasferimenti-durante-la-corsa-alloro) conserva la politica territoriale attuale. Riaprire con una decisione o un riscontro nuovo sui salvataggi. |
-| 4 | [Carrington](#carrington_scheduling--annuncio-storico-del-settembre-1859) consolidato. [Anatolia](#anatolia--perimetro-di-500291-e-verifiche-runtime) ha perimetro approvato e guardie consolidate. Restano le decisioni `ANATOLIA_VASSAL_PROPERTY` e `ANATOLIA_DEPORTATION`. |
+| 4 | [Carrington](#carrington_scheduling--annuncio-storico-del-settembre-1859) consolidato. [Anatolia](#anatolia--perimetro-di-500291-e-verifiche-runtime) ha perimetro approvato e guardie consolidate. Vassallaggio e destinazioni approvati e verificati staticamente. Restano gli esiti runtime indicati nella scheda. |
 | 5 | [Contratti Loader](deployment/script_extender_profile.md#contratti-dei-consumatori) riesaminati. Un residuo richiede il termine ottomano esatto. Legare la chiusura alla firma richiede un segnale dal plugin. |
 | 6 | [Migrazione](upstream_delta_register.md#eccezioni-di-contenuto-e-condizioni-di-riesame), [TECH_AI](#tech_ai--condizione-ai-nel-contesto-errato) e [CANAL_CONTROL](#canal_control--controllo-marittimo-degli-attraversamenti) conservano i limiti indicati. Chunnel e pulizia Direct Immigration sono corretti. |
 | 7 | [LTU](#ltu_core_cleanup--ordine-della-pulizia-sic-e-pap) e [FACTORY_STATE](#factory_state--presenza-di-fabbriche-nello-stato) consolidati. [NAVAL_TIMING e NAVAL_AI](#questioni-rinviate) richiedono obiettivi e confronti effettivi. |
@@ -444,9 +444,28 @@ I quattro profili Victoria II 3.04 conservano `has_factories = yes`. Il binario 
 
 **Guardie verificate.** B e C rivalutano la proprietà russa durante il secondo passaggio e verificano il tag del decisore prima del ramo GRE. Un popup salvato prima di RUS → SOV non può più cedere i possedimenti sovietici o eseguire quel ramo diplomatico. L'opzione C verifica il possesso greco di 860 dopo il tentativo di vassallaggio prima di assegnarla come capitale. In 3.04 l'effetto capitale nativo controlla l'ID ma non il proprietario. Se 860 appartiene a un terzo, C può ancora eseguire le altre cessioni. Le verifiche coprono anche GRE umana e i casi con RUS ridotta alle tre province richieste. In Alice, la perdita dell'ultima provincia con C porta all'eliminazione di RUS e alla fine della campagna del suo giocatore. B lascia 860 a RUS se la possiede ancora. [Regressioni](../tools/tests/test_upstream_task49.py)
 
-**Decisione pendente ANATOLIA_VASSAL_PROPERTY.** Il vassallaggio ha effetti diversi nei due motori. In 3.04 il comando può restituire a RUS province già greche su cui rivendica un core, trasferire il governo russo e sostituire un sovrano terzo. Alice non restituisce province o governo, ma può sostituire un sovrano se i due paesi hanno terra. Si raccomanda di conservare le cessioni e saltare il vassallaggio se RUS non possiede più province, GRE ha un sovrano terzo o il comando potrebbe sottrarre province greche. Nei casi ordinari resterebbe il vassallaggio con i suoi effetti nativi, compresa la differenza di governo. L'alternativa è accettare integralmente le conseguenze native, con la possibile revoca delle cessioni in 3.04. In D, un TUR riemerso mentre il popup è in attesa può ricevere territorio ed essere reso vassallo. L'audit ha identificato il caso e il ramo resta invariato.
+**ANATOLIA_VASSAL_PROPERTY · Approvata e verificata staticamente.** B e C
+tentano il vassallaggio solo con una provincia russa ancora posseduta e
+una GRE AI territoriale e indipendente. Un rapporto russo già esistente
+e un sovrano terzo restano in vigore. Su entrambi i motori la guardia salta
+l'operazione se GRE possiede una provincia con core russo controllata da
+GRE o RUS. Sono le condizioni con cui il comando nativo 3.04 potrebbe
+cedere quella provincia alla Russia. In assenza di questi ostacoli si
+mantiene l'effetto politico originario, incluso il cambio di governo nativo
+in 3.04. Il controllo della capitale di C resta indipendente. In D resta
+aperto il caso di TUR riemerso mentre il popup è in attesa.
 
-**Decisione pendente ANATOLIA_DEPORTATION.** La scelta A può aprire 500294, che trasforma alcuni POP in contadini e ne sceglie a caso la destinazione centroasiatica. Alice applica lo spostamento anche in province controllate da altri paesi. All'inizio 1195, 1197 e 1202 appartengono a KOK e 1199 a BUK. Si raccomanda di scegliere soltanto destinazioni russe e lasciare invariato il POP se nessuna è disponibile. L'alternativa conserva il trasferimento anche all'estero. La scelta riguarda il trattamento dei POP, distinto dalle cessioni territoriali approvate.
+**ANATOLIA_DEPORTATION · Approvata e verificata staticamente.** In 500294
+si usano soltanto 1195, 1197, 1199 e 1202 quando appartengono a RUS. La
+scelta mantiene il sorteggio uniforme per ciascun POP idoneo e l'effetto
+di conversione a contadini prima del trasferimento. Con una sola
+destinazione l'assegnazione è diretta. Con zero destinazioni nessuna
+conversione o movimento viene eseguito. La stessa opzione ricontrolla
+che le province di partenza appartengano a RUS. Le 15 combinazioni
+con almeno una destinazione usano filtri POP espliciti perché 3.04 non
+valuta limiti all'interno dei rami numerici di `random_list`. La regressione
+copre tutte le 16 combinazioni, inclusa l'assenza di destinazioni.
+[Script](../TGC/events/RUSFlavor.txt#L9150) · [Verifica](../tools/tests/test_upstream_task49.py)
 
 **Casi di riferimento.** La matrice seguente conserva le condizioni delle ricette. Usarla per analisi statica e riproduzioni deterministiche. Una prova live richiede l'applicazione del [criterio di necessità](#verifiche-runtime) e una singola variante pertinente.
 

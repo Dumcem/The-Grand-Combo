@@ -9033,7 +9033,24 @@ country_event = {
 					ai = yes
 					exists = yes
 					}
-					RUS = { create_vassal = GRE }
+					RUS = {
+						random_owned = {
+							limit = {
+								GRE = {
+									exists = yes
+									is_vassal = no
+									is_substate = no
+									NOT = {
+										any_owned_province = {
+											is_core = RUS
+											OR = { controlled_by = GRE controlled_by = RUS }
+										}
+									}
+								}
+							}
+							owner = { create_vassal = GRE }
+						}
+					}
 				}
 				badboy = 3
 			    ai_chance = { factor = 25 }
@@ -9086,7 +9103,24 @@ country_event = {
 					ai = yes
 					exists = yes
 					}
-					RUS = { create_vassal = GRE }
+					RUS = {
+						random_owned = {
+							limit = {
+								GRE = {
+									exists = yes
+									is_vassal = no
+									is_substate = no
+									NOT = {
+										any_owned_province = {
+											is_core = RUS
+											OR = { controlled_by = GRE controlled_by = RUS }
+										}
+									}
+								}
+							}
+							owner = { create_vassal = GRE }
+						}
+					}
 					any_owned = {
 						limit = { province_id = 860 }
 						owner = { capital = 860 }
@@ -9133,6 +9167,7 @@ country_event = {
 		name = "EVTOPTA500294"
 		any_owned = {
 			limit = {
+				owned_by = RUS
 				OR = {
 				is_core = TUR
 				is_core = ANT
@@ -9144,26 +9179,410 @@ country_event = {
 				is_core = AZB
 				}
 			}
-		any_pop = { #This will demote and deport the Ottoman elite to Central Asia
+			# Random-list weights are fixed. One POP branch matches the current destinations.
+			any_pop = {
 				limit = {
-				AND = {
-				    is_state_religion = no
-					OR = {
-					has_pop_culture = turkish
-					has_pop_culture = azerbaijani
+					1195 = { owned_by = RUS }
+					NOT = {
+						1197 = { owned_by = RUS }
+						1199 = { owned_by = RUS }
+						1202 = { owned_by = RUS }
 					}
+					is_state_religion = no
+					OR = { has_pop_culture = turkish has_pop_culture = azerbaijani }
 					OR = {
-					pop_type = aristocrats
-					pop_type = artisans
-					pop_type = craftsmen
-					pop_type = clerks
-					pop_type = officers
-					pop_type = soldiers
-					pop_type = bureaucrats
-					pop_type = capitalists
-					pop_type = clergymen
+						pop_type = aristocrats
+						pop_type = artisans
+						pop_type = craftsmen
+						pop_type = clerks
+						pop_type = officers
+						pop_type = soldiers
+						pop_type = bureaucrats
+						pop_type = capitalists
+						pop_type = clergymen
 					}
 				}
+				pop_type = farmers
+				move_pop = 1195
+			}
+			any_pop = {
+				limit = {
+					1197 = { owned_by = RUS }
+					NOT = {
+						1195 = { owned_by = RUS }
+						1199 = { owned_by = RUS }
+						1202 = { owned_by = RUS }
+					}
+					is_state_religion = no
+					OR = { has_pop_culture = turkish has_pop_culture = azerbaijani }
+					OR = {
+						pop_type = aristocrats
+						pop_type = artisans
+						pop_type = craftsmen
+						pop_type = clerks
+						pop_type = officers
+						pop_type = soldiers
+						pop_type = bureaucrats
+						pop_type = capitalists
+						pop_type = clergymen
+					}
+				}
+				pop_type = farmers
+				move_pop = 1197
+			}
+			any_pop = {
+				limit = {
+					1199 = { owned_by = RUS }
+					NOT = {
+						1195 = { owned_by = RUS }
+						1197 = { owned_by = RUS }
+						1202 = { owned_by = RUS }
+					}
+					is_state_religion = no
+					OR = { has_pop_culture = turkish has_pop_culture = azerbaijani }
+					OR = {
+						pop_type = aristocrats
+						pop_type = artisans
+						pop_type = craftsmen
+						pop_type = clerks
+						pop_type = officers
+						pop_type = soldiers
+						pop_type = bureaucrats
+						pop_type = capitalists
+						pop_type = clergymen
+					}
+				}
+				pop_type = farmers
+				move_pop = 1199
+			}
+			any_pop = {
+				limit = {
+					1202 = { owned_by = RUS }
+					NOT = {
+						1195 = { owned_by = RUS }
+						1197 = { owned_by = RUS }
+						1199 = { owned_by = RUS }
+					}
+					is_state_religion = no
+					OR = { has_pop_culture = turkish has_pop_culture = azerbaijani }
+					OR = {
+						pop_type = aristocrats
+						pop_type = artisans
+						pop_type = craftsmen
+						pop_type = clerks
+						pop_type = officers
+						pop_type = soldiers
+						pop_type = bureaucrats
+						pop_type = capitalists
+						pop_type = clergymen
+					}
+				}
+				pop_type = farmers
+				move_pop = 1202
+			}
+			any_pop = {
+				limit = {
+					1195 = { owned_by = RUS }
+					1197 = { owned_by = RUS }
+					NOT = {
+						1199 = { owned_by = RUS }
+						1202 = { owned_by = RUS }
+					}
+					is_state_religion = no
+					OR = { has_pop_culture = turkish has_pop_culture = azerbaijani }
+					OR = {
+						pop_type = aristocrats
+						pop_type = artisans
+						pop_type = craftsmen
+						pop_type = clerks
+						pop_type = officers
+						pop_type = soldiers
+						pop_type = bureaucrats
+						pop_type = capitalists
+						pop_type = clergymen
+					}
+				}
+				pop_type = farmers
+				random_list = {
+					25 = { move_pop = 1195 }
+					25 = { move_pop = 1197 }
+				}
+			}
+			any_pop = {
+				limit = {
+					1195 = { owned_by = RUS }
+					1199 = { owned_by = RUS }
+					NOT = {
+						1197 = { owned_by = RUS }
+						1202 = { owned_by = RUS }
+					}
+					is_state_religion = no
+					OR = { has_pop_culture = turkish has_pop_culture = azerbaijani }
+					OR = {
+						pop_type = aristocrats
+						pop_type = artisans
+						pop_type = craftsmen
+						pop_type = clerks
+						pop_type = officers
+						pop_type = soldiers
+						pop_type = bureaucrats
+						pop_type = capitalists
+						pop_type = clergymen
+					}
+				}
+				pop_type = farmers
+				random_list = {
+					25 = { move_pop = 1195 }
+					25 = { move_pop = 1199 }
+				}
+			}
+			any_pop = {
+				limit = {
+					1195 = { owned_by = RUS }
+					1202 = { owned_by = RUS }
+					NOT = {
+						1197 = { owned_by = RUS }
+						1199 = { owned_by = RUS }
+					}
+					is_state_religion = no
+					OR = { has_pop_culture = turkish has_pop_culture = azerbaijani }
+					OR = {
+						pop_type = aristocrats
+						pop_type = artisans
+						pop_type = craftsmen
+						pop_type = clerks
+						pop_type = officers
+						pop_type = soldiers
+						pop_type = bureaucrats
+						pop_type = capitalists
+						pop_type = clergymen
+					}
+				}
+				pop_type = farmers
+				random_list = {
+					25 = { move_pop = 1195 }
+					25 = { move_pop = 1202 }
+				}
+			}
+			any_pop = {
+				limit = {
+					1197 = { owned_by = RUS }
+					1199 = { owned_by = RUS }
+					NOT = {
+						1195 = { owned_by = RUS }
+						1202 = { owned_by = RUS }
+					}
+					is_state_religion = no
+					OR = { has_pop_culture = turkish has_pop_culture = azerbaijani }
+					OR = {
+						pop_type = aristocrats
+						pop_type = artisans
+						pop_type = craftsmen
+						pop_type = clerks
+						pop_type = officers
+						pop_type = soldiers
+						pop_type = bureaucrats
+						pop_type = capitalists
+						pop_type = clergymen
+					}
+				}
+				pop_type = farmers
+				random_list = {
+					25 = { move_pop = 1197 }
+					25 = { move_pop = 1199 }
+				}
+			}
+			any_pop = {
+				limit = {
+					1197 = { owned_by = RUS }
+					1202 = { owned_by = RUS }
+					NOT = {
+						1195 = { owned_by = RUS }
+						1199 = { owned_by = RUS }
+					}
+					is_state_religion = no
+					OR = { has_pop_culture = turkish has_pop_culture = azerbaijani }
+					OR = {
+						pop_type = aristocrats
+						pop_type = artisans
+						pop_type = craftsmen
+						pop_type = clerks
+						pop_type = officers
+						pop_type = soldiers
+						pop_type = bureaucrats
+						pop_type = capitalists
+						pop_type = clergymen
+					}
+				}
+				pop_type = farmers
+				random_list = {
+					25 = { move_pop = 1197 }
+					25 = { move_pop = 1202 }
+				}
+			}
+			any_pop = {
+				limit = {
+					1199 = { owned_by = RUS }
+					1202 = { owned_by = RUS }
+					NOT = {
+						1195 = { owned_by = RUS }
+						1197 = { owned_by = RUS }
+					}
+					is_state_religion = no
+					OR = { has_pop_culture = turkish has_pop_culture = azerbaijani }
+					OR = {
+						pop_type = aristocrats
+						pop_type = artisans
+						pop_type = craftsmen
+						pop_type = clerks
+						pop_type = officers
+						pop_type = soldiers
+						pop_type = bureaucrats
+						pop_type = capitalists
+						pop_type = clergymen
+					}
+				}
+				pop_type = farmers
+				random_list = {
+					25 = { move_pop = 1199 }
+					25 = { move_pop = 1202 }
+				}
+			}
+			any_pop = {
+				limit = {
+					1195 = { owned_by = RUS }
+					1197 = { owned_by = RUS }
+					1199 = { owned_by = RUS }
+					NOT = {
+						1202 = { owned_by = RUS }
+					}
+					is_state_religion = no
+					OR = { has_pop_culture = turkish has_pop_culture = azerbaijani }
+					OR = {
+						pop_type = aristocrats
+						pop_type = artisans
+						pop_type = craftsmen
+						pop_type = clerks
+						pop_type = officers
+						pop_type = soldiers
+						pop_type = bureaucrats
+						pop_type = capitalists
+						pop_type = clergymen
+					}
+				}
+				pop_type = farmers
+				random_list = {
+					25 = { move_pop = 1195 }
+					25 = { move_pop = 1197 }
+					25 = { move_pop = 1199 }
+				}
+			}
+			any_pop = {
+				limit = {
+					1195 = { owned_by = RUS }
+					1197 = { owned_by = RUS }
+					1202 = { owned_by = RUS }
+					NOT = {
+						1199 = { owned_by = RUS }
+					}
+					is_state_religion = no
+					OR = { has_pop_culture = turkish has_pop_culture = azerbaijani }
+					OR = {
+						pop_type = aristocrats
+						pop_type = artisans
+						pop_type = craftsmen
+						pop_type = clerks
+						pop_type = officers
+						pop_type = soldiers
+						pop_type = bureaucrats
+						pop_type = capitalists
+						pop_type = clergymen
+					}
+				}
+				pop_type = farmers
+				random_list = {
+					25 = { move_pop = 1195 }
+					25 = { move_pop = 1197 }
+					25 = { move_pop = 1202 }
+				}
+			}
+			any_pop = {
+				limit = {
+					1195 = { owned_by = RUS }
+					1199 = { owned_by = RUS }
+					1202 = { owned_by = RUS }
+					NOT = {
+						1197 = { owned_by = RUS }
+					}
+					is_state_religion = no
+					OR = { has_pop_culture = turkish has_pop_culture = azerbaijani }
+					OR = {
+						pop_type = aristocrats
+						pop_type = artisans
+						pop_type = craftsmen
+						pop_type = clerks
+						pop_type = officers
+						pop_type = soldiers
+						pop_type = bureaucrats
+						pop_type = capitalists
+						pop_type = clergymen
+					}
+				}
+				pop_type = farmers
+				random_list = {
+					25 = { move_pop = 1195 }
+					25 = { move_pop = 1199 }
+					25 = { move_pop = 1202 }
+				}
+			}
+			any_pop = {
+				limit = {
+					1197 = { owned_by = RUS }
+					1199 = { owned_by = RUS }
+					1202 = { owned_by = RUS }
+					NOT = {
+						1195 = { owned_by = RUS }
+					}
+					is_state_religion = no
+					OR = { has_pop_culture = turkish has_pop_culture = azerbaijani }
+					OR = {
+						pop_type = aristocrats
+						pop_type = artisans
+						pop_type = craftsmen
+						pop_type = clerks
+						pop_type = officers
+						pop_type = soldiers
+						pop_type = bureaucrats
+						pop_type = capitalists
+						pop_type = clergymen
+					}
+				}
+				pop_type = farmers
+				random_list = {
+					25 = { move_pop = 1197 }
+					25 = { move_pop = 1199 }
+					25 = { move_pop = 1202 }
+				}
+			}
+			any_pop = {
+				limit = {
+					1195 = { owned_by = RUS }
+					1197 = { owned_by = RUS }
+					1199 = { owned_by = RUS }
+					1202 = { owned_by = RUS }
+					is_state_religion = no
+					OR = { has_pop_culture = turkish has_pop_culture = azerbaijani }
+					OR = {
+						pop_type = aristocrats
+						pop_type = artisans
+						pop_type = craftsmen
+						pop_type = clerks
+						pop_type = officers
+						pop_type = soldiers
+						pop_type = bureaucrats
+						pop_type = capitalists
+						pop_type = clergymen
+					}
 				}
 				pop_type = farmers
 				random_list = {
@@ -9172,7 +9591,7 @@ country_event = {
 					25 = { move_pop = 1199 }
 					25 = { move_pop = 1202 }
 				}
-		}
+			}
 		}
 		ai_chance = {
 			factor = 90
