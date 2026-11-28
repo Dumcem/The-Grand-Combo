@@ -296,6 +296,21 @@ class UpstreamFirstTests(unittest.TestCase):
             self.assertEqual(shape(section(cleanup, 'any_owned').children), shape(section(stop, 'any_owned').children))
             self.assertIsNone(member(action, 'all_land_provinces'))
 
+    def test_mexican_reconquest_notifies_each_existing_target_once(self):
+        effect = section(decision('MEX', 'mexico_reconquest'), 'effect')
+        notifications = [n for n in effect.children if n.key == 'random_country'
+                         and member(n, 'country_event')]
+        countries = ('USA', 'CSA', 'FSA', 'CAL', 'TEX', 'DES', 'UNM')
+        self.assertEqual(len(notifications), len(countries))
+        for node, country in zip(notifications, countries, strict=True):
+            self.assertEqual(shape(section(node, 'limit').children),
+                             [('tag', country), ('exists', 'yes')])
+            self.assertEqual(shape(section(node, 'country_event').children),
+                             [('id', '72739'), ('days', '0')])
+        response = option(event('MEXFlavor', 72739), 'EVTOPTA72739')
+        self.assertEqual(shape(section(response, 'relation').children),
+                         [('who', 'MEX'), ('value', '-200')])
+
     def test_latin_union_converts_owned_cores_before_extinct_tag_cleanup(self):
         reform = option(event('FRAFlavourExtra', 10417), 'EVTOPTC10417')
         scopes = [node for node in reform.children if node.key == 'random_owned']

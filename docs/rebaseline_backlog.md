@@ -277,7 +277,7 @@ Il passaggio dal MTTH alla vittoria in battaglia risale a `82e6ddcac`. La disass
 
 ### MEX_RECONQUEST_NOTIFY — Condizionali e notifiche della riconquista
 
-**Aperta · compatibilità.** `mexico_reconquest` usa sette effetti `if` per chiamare `72739` sui tag esistenti. Alice 1.3.0 implementa il condizionale. Gli script vanilla 3.04 consultati attestano gli scope con `limit`. La documentazione di CreatineCore presenta `if` come estensione del motore modificato, insufficiente a stabilire la consegna con 3.04 originale o con l'overlay Loader del fork. Riesaminare il parser del motore originale e i ganci Loader prima di determinare se serve un ingresso equivalente con scope filtrato, preservando destinatari, `FROM` e unicità. [Decisione MEX](../TGC/decisions/MEX.txt#L153) · [Notifica](../TGC/events/MEXFlavor.txt#L2860) · [Effetto Alice](https://github.com/schombert/Project-Alice/blob/v1.3.0/src/scripting/effects.cpp#L37-L57) · [Descrizione dell'estensione](https://www.reddit.com/r/victoria2/comments/1xgn223/creatinecore_modding_toolkit_if_else_if_and_else/)
+**Corretta e verificata staticamente · Entrambe.** Ripristinato il blocco di notifica di `85f173164`. I sette scope `random_country` filtrati per tag ed esistenza chiamano `72739` una volta per ciascun destinatario esistente, con ritardo zero e il Messico come mittente. Le penalità diplomatiche e le altre modifiche del fork sono conservate. Il percorso usa lo scope supportato da 3.04 e Alice 1.3.0. L'esito del vecchio `if` su 3.04 rimane indeterminato. La correzione è già presente a monte. [Decisione MEX](../TGC/decisions/MEX.txt#L153) · [Notifica](../TGC/events/MEXFlavor.txt#L2860) · [Regressione](../tools/tests/test_upstream_task49.py)
 
 ### LITERACY — Alfabetizzazione nelle riforme cinesi
 
