@@ -15,12 +15,29 @@ from lib_1966_parser import ScriptError, member, scalar, parse_file, read_text
 from lib_1966_semantics import ALICE
 
 
+def alice_research_atom(node, definitions):
+    """Resolve a supported equality using Alice's technology-first lookup."""
+    if node.is_group or node.operator != '=':
+        return None, None
+    if node.keyword == 'invention':
+        name, positive = node.value, True
+    elif node.value.lower() in {'yes', '1', 'no', '0'}:
+        name, positive = node.key, node.value.lower() in {'yes', '1'}
+    else:
+        return None, None
+    for kind in ('technology', 'invention'):
+        key = kind, name
+        if key in definitions:
+            return key, positive
+    return None, None
+
+
 def necessary_literals(nodes, definitions, *, disjunction=False, negate=False):
     """Necessary signed atoms only; De Morgan preserves conservative OR bounds.
 
     Alice NOT wraps an implicit OR (tr_scope_not), then inverts it: multiple
     direct children must all be false. Unknown predicates/scopes produce no atom,
-    never an assumed truth. Explicit invention references retain their kind.
+    never an assumed truth.
     """
     parts = []
     for n in nodes:
@@ -29,17 +46,10 @@ def necessary_literals(nodes, definitions, *, disjunction=False, negate=False):
             if n.keyword in {'and', 'or', 'not'}:
                 refs = necessary_literals(n.children, definitions,
                     disjunction=n.keyword in {'or', 'not'}, negate=negate ^ (n.keyword == 'not'))
-        elif not n.is_group and n.operator == '=':
-            if n.keyword == 'invention':
-                candidates = {('invention', n.value)} & definitions
-                positive = True
-            else:
-                candidates = {k for k in definitions if k[1] == n.key}
-                positive = n.value.lower() in {'yes', '1'}
-                if n.value.lower() not in {'yes', '1', 'no', '0'}:
-                    candidates = set()
-            if len(candidates) == 1:
-                refs = {(next(iter(candidates)), positive != negate)}
+        else:
+            key, positive = alice_research_atom(n, definitions)
+            if key is not None:
+                refs = {(key, positive != negate)}
         parts.append(refs)
     if not parts:
         return set()
@@ -120,22 +130,13 @@ class ResearchDependencies:
                     if n.keyword == 'not' and value is not None:
                         value = not value
                 elif not n.is_group:
-                    key, positive = self._atom(n)
+                    key, positive = alice_research_atom(n, self.definitions)
                     if key is not None:
                         value = (key in acquired) == positive
             values.append(value)
         if op == 'or':
             return True if True in values else None if None in values else False
         return False if False in values else None if None in values else True
-
-    def _atom(self, node):
-        if node.keyword == 'invention':
-            key = ('invention', node.value)
-            return (key, True) if key in self.definitions else (None, None)
-        keys = [k for k in self.definitions if k[1] == node.key]
-        if len(keys) == 1 and node.value.lower() in {'yes', '1', 'no', '0'}:
-            return keys[0], node.value.lower() in {'yes', '1'}
-        return None, None
 
     def _references(self, nodes):
         """All boolean alternatives, including negative refs, for search support.
@@ -150,7 +151,7 @@ class ResearchDependencies:
             if n.is_group and n.keyword in {'and', 'or', 'not'}:
                 refs.update(self._references(n.children))
             elif not n.is_group:
-                key, _ = self._atom(n)
+                key, _ = alice_research_atom(n, self.definitions)
                 if key is not None:
                     refs.add(key)
         return refs

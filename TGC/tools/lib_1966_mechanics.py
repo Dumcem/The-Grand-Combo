@@ -8,7 +8,7 @@ All at https://github.com/schombert/Project-Alice/tree/v1.3.0/src .
 """
 from lib_1966_parser import member, scalar, integer, parse_file, unique_definitions
 from lib_1966_semantics import ALICE, effect_body
-from lib_1966_functional import technology_predecessors
+from lib_1966_functional import alice_research_atom, technology_predecessors
 
 
 def land_factors(values: dict, unit_type: str | None) -> dict:
@@ -139,11 +139,10 @@ def necessary_references(nodes, definitions: set[tuple[str, str]], *, disjunctio
         if n.is_group:
             if n.keyword in {'and','or'} and n.operator=='=':
                 refs = necessary_references(n.children,definitions,disjunction=n.keyword=='or')
-        elif n.operator=='=':
-            name = n.value if n.keyword=='invention' else n.key if n.value.lower() in {'yes','1'} else None
-            candidates = {k for k in definitions if k[1]==name}
-            if len(candidates)==1:
-                refs = candidates
+        else:
+            key, positive = alice_research_atom(n, definitions)
+            if positive:
+                refs = {key}
         parts.append(refs)
     if not parts:
         return set()

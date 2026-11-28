@@ -14,9 +14,9 @@ import lib_1966_parser as parser
 from lib_1966_diagnostics import Reporter
 from lib_1966_functional import (ResearchDependencies, necessary_literals, naval_ai_scenario,
                                  horizon_inventory, campaign_end)
-from lib_1966_mechanics import report_consumers
+from lib_1966_mechanics import necessary_references, report_consumers
 from lib_1966_runtime import compose_runtime, unit_definitions
-from lib_1966_semantics import VARIABLE, project_unit
+from lib_1966_semantics import ALICE, VARIABLE, project_unit
 from test_1966_applied import reference_tree
 import test_1966_applied as independent
 
@@ -86,11 +86,25 @@ class DependencyFixtures(unittest.TestCase):
         self.assertEqual(r['lower_bound'],-.5)
         self.assertEqual(r['temporal_search']['status'],'proven_unreachable')
 
-    def test_negated_or_and_explicit_invention_namespace(self):
+    def test_negated_or_and_alice_technology_first_lookup(self):
         text = 'L={ NOT={ OR={ invention=A invention=B } } }'
         nodes = parser.parse_script(text).definitions[0].children
         atoms = necessary_literals(nodes,{('technology','A'),('invention','A'),('invention','B')})
-        self.assertEqual(atoms,{(('invention','A'),False),(('invention','B'),False)})
+        self.assertEqual(atoms,{(('technology','A'),False),(('invention','B'),False)})
+
+    def test_alice_uses_the_technology_for_both_trigger_spellings(self):
+        technology = ('technology', 'A')
+        target = ('invention', 'B')
+        for trigger in ('A = 1', 'invention = A'):
+            with self.subTest(trigger=trigger):
+                model = dependencies('A = { area = x year = 1910 }',
+                                     f'A = {{ chance = {{ base = 0 }} }} '
+                                     f'B = {{ limit = {{ {trigger} }} chance = {{ base = 3 }} }}')
+                limit = parser.member(model.definitions[target], 'limit')
+                self.assertEqual(model.required[target], {technology})
+                self.assertEqual(necessary_references(limit.children, set(model.definitions)),
+                                 {technology})
+                self.assertEqual(model.acquisition_path({target})['sequence'], [technology, target])
 
     def test_alice_not_has_implicit_or_children(self):
         d=dependencies('A={area=x year=1900} B={area=y year=1900}',
@@ -230,6 +244,21 @@ class FunctionalCorpus(unittest.TestCase):
             for u,xs in audit.parse_effect_unit_assignments(f,set(cls.units),VARIABLE,timing,
                 {'navy_base':cls.naval,'army_base':set(cls.units)-cls.naval}).items():assignments[u].extend(xs)
         cls.projections={u:project_unit(d,assignments[u]) for u,d in cls.units.items()}
+
+    def test_scholarships_has_alice_gate_but_raw_timing_stays_unresolved(self):
+        scholarships = ('invention', 'scholarships')
+        social_psychology = ('technology', 'social_psychology')
+        raw = audit.build_year_inference(self.files)
+        alice = audit.build_year_inference(self.files, engine=ALICE)
+        self.assertIsNone(raw[scholarships].not_before)
+        self.assertEqual(alice[scholarships].not_before, 1910)
+        self.assertEqual(alice[scholarships].references, (social_psychology,))
+        model = ResearchDependencies(self.files)
+        self.assertEqual(model.required[scholarships], {social_psychology})
+        row = next(row for row in horizon_inventory(model, alice, campaign_end(self.inv))
+                   if (row['kind'], row['owner']) == scholarships)
+        self.assertEqual(row['necessary_reference_year'], 1910)
+        self.assertEqual(row['status'], 'reference_before_end')
 
     def test_supply_bounds_against_independent_literal_tree_enumeration(self):
         # Independent reader, owner aggregation and direct-positive closures. Real

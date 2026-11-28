@@ -158,6 +158,15 @@ and takes their minimum. Negated/unsupported conditions remain uncertainty notes
 Synchronous updates resolve forward references deterministically; unanchored
 cycles remain unknown. Probability years are recorded separately from eligibility.
 
+In Alice 1.3.0, both a named predicate and the explicit `invention = name`
+form search technologies before inventions. The Alice diagnostics use that
+precedence for supported predicates. The effective `scholarships` limit
+`social_psychology = 1` therefore uses the 1910 technology as its research
+reference. Raw-script dating retains uncertainty for the name collision, and
+Victoria II's lookup precedence remains unverified.
+[Named predicate](https://github.com/schombert/Project-Alice/blob/v1.3.0/src/parsing/trigger_parsing.hpp#L5861-L5883)
+· [Explicit invention predicate](https://github.com/schombert/Project-Alice/blob/v1.3.0/src/parsing/trigger_parsing.hpp#L1489-L1509)
+
 At a milestone, eligible uncertain positive effects contribute to the upper
 endpoint, negative effects to the lower endpoint. Correlations are relaxed. These
 are possibility envelopes under the declared model, not statistical intervals.

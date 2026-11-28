@@ -18,7 +18,7 @@ from lib_1966_parser import (
 from lib_1966_diagnostics import Reporter
 from lib_1966_construction import report_naval_construction
 from lib_1966_mechanics import report_consumers, report_availability
-from lib_1966_functional import ResearchDependencies, report_functional
+from lib_1966_functional import ResearchDependencies, alice_research_atom, report_functional
 from lib_1966_runtime import compose_runtime, unit_definitions
 from lib_1966_semantics import (
     ALICE, V2, BASE_KNOWN, canonical_stat, effect_body,
@@ -233,6 +233,13 @@ class YearEvidence:
     references: tuple[DefinitionKey, ...] = ()
     probability_years: tuple[int, ...] = ()
 
+    def assignment_fields(self) -> dict[str, Any]:
+        return {
+            "year": self.year, "not_before": self.not_before, "year_source": self.source,
+            "year_notes": self.notes, "year_references": self.references,
+            "probability_years": self.probability_years,
+        }
+
 
 def definition_kind(rel_path: str) -> str:
     path = "/" + rel_path.replace("\\", "/").lower()
@@ -243,7 +250,7 @@ def definition_kind(rel_path: str) -> str:
     raise ScriptError(f"{rel_path}: explicitly identified technology/invention directory required")
 
 
-def build_year_inference(scan_files: list[str]) -> dict[DefinitionKey, YearEvidence]:
+def build_year_inference(scan_files: list[str], *, engine: str | None = None) -> dict[DefinitionKey, YearEvidence]:
     """Research-model lower bounds, never exact invention acquisition dates.
 
     AND takes the maximum known necessary bound; unknown siblings remain noted.
@@ -252,6 +259,7 @@ def build_year_inference(scan_files: list[str]) -> dict[DefinitionKey, YearEvide
     handle chains independently of hash/file order; unresolved cycles stay unknown.
     Scripted early technology grants and actual discovery probability are outside
     this static research model, so even a complete gate only yields a bound.
+    Only the pinned Alice view resolves collisions by technology-first lookup.
     """
     definitions: dict[DefinitionKey, Node] = {}
     for rel in sorted(scan_files):
@@ -272,6 +280,9 @@ def build_year_inference(scan_files: list[str]) -> dict[DefinitionKey, YearEvide
             name = node.key
         else:
             return None, None
+        if engine == ALICE:
+            key, _ = alice_research_atom(node, definitions)
+            return key, None if key else f"unresolved or unmodelled predicate: {name}"
         candidates = [(kind, name) for kind in ("technology", "invention") if (kind, name) in definitions]
         if len(candidates) == 1:
             return candidates[0], None
@@ -414,9 +425,7 @@ def parse_effect_unit_assignments(
                         "column": stat.start.column, "stat": stat_key, "value": value, "raw_value": stat.value,
                         "raw_stat": stat.key,
                         "block_id": f'{rel_path}:{scope.start.offset}',
-                        "year": timing.year, "not_before": timing.not_before, "year_source": timing.source,
-                        "year_notes": timing.notes, "year_references": timing.references,
-                        "probability_years": timing.probability_years,
+                        **timing.assignment_fields(),
                         "scope_key": scope.key, "scope_kind": "unit" if scope.key in monitored_units else "global",
                     })
     return dict(sorted(out.items()))
@@ -598,6 +607,7 @@ def _run() -> int:
     )
     default_milestone_year = milestone_years[0] if milestone_years else 1836
     inferred_years = build_year_inference(scan_files)
+    alice_years = build_year_inference(scan_files, engine=ALICE)
     report_modifier_semantics(scan_files, discovered_units, rep)
     direct_blocks = sum(e.source == "direct" for e in inferred_years.values())
     bound_blocks = sum(e.source == "availability_bound" for e in inferred_years.values())
@@ -746,18 +756,25 @@ def _run() -> int:
             grouped[stat_name].append(item)
         assignments_by_unit_stat[unit] = grouped
 
-    engine_units = {u: project_unit(unit_inputs[u], all_assignments.get(u, []), ALICE) for u in units_cfg}
+    engine_units = {
+        unit: project_unit(unit_inputs[unit], [
+            dict(item, **alice_years[ResearchDependencies.owner(item)].assignment_fields())
+            for item in all_assignments.get(unit, [])
+        ], ALICE)
+        for unit in units_cfg
+    }
     research_files = [*inventory.technology_order, *inventory.files('inventions')]
     dependencies = ResearchDependencies(research_files)
     report_consumers(unit_inputs, engine_units, rep, dependencies)
-    report_availability(inventory, unit_inputs, engine_units, research_files, inferred_years, rep)
-    report_functional(inventory, unit_inputs, engine_units, scan_files, inferred_years, dependencies, rep)
+    report_availability(inventory, unit_inputs, engine_units, research_files, alice_years, rep)
+    report_functional(inventory, unit_inputs, engine_units, scan_files, alice_years, dependencies, rep)
     core_inventory = compose_runtime(ROOT, args.core_root, timeline_root=None)
-    core_timing = build_year_inference(core_inventory.files('technologies') + core_inventory.files('inventions'))
+    core_timing = build_year_inference(core_inventory.files('technologies') + core_inventory.files('inventions'),
+                                       engine=ALICE)
     report_naval_construction('core', core_inventory,
                               naval_construction_projections(core_inventory, unit_definitions(core_inventory, ROOT), core_timing), rep)
     report_naval_construction('core + Timeline', inventory,
-                              naval_construction_projections(inventory, effective_units, inferred_years), rep)
+                              naval_construction_projections(inventory, effective_units, alice_years), rep)
 
     for unit, cfg in units_cfg.items():
         historical_start_year = get_historical_relevance_start_year(cfg, default_milestone_year)
