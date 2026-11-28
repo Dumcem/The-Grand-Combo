@@ -34,19 +34,32 @@ La baseline supportata è **Project Alice 1.3.0**, insieme a **Victoria II origi
 Il checkpoint di partenza è `a9f8dd674`. Le correzioni consolidate
 comprendono USS, Carrington, LTU, FACTORY_STATE, Chunnel, unione polacca,
 Direct Immigration, Apocalypse e i due difetti del modello di audit 1966.
-L'ultimo checkpoint dei contenuti è `0f491fbde`. Verificare sempre la punta
+La ripresa da `5d2f2dfec` ha consolidato anche vassallaggio e deportazione
+in Anatolia, finanziamento dei pacchetti navali IA, notifiche della
+riconquista messicana e uscita dalla trattativa Chunnel. L'ultimo
+checkpoint dei contenuti è `e1be7d101`. Verificare sempre la punta
 effettiva e la working tree prima di riprendere.
+
+Verifica del checkpoint: 15 regressioni Task 49, 8 Task 34, 7 Task 35 e
+19 verifiche di composizione Alice ed Extender superate. Drift Core e
+Timeline rispetto a `5d2f2dfec` con 0 FAIL e 0 WARN in entrambi i
+sensi. Gli script modificati esulano dal ruleset di bilanciamento 1966.
+Cinque verifiche mirate di deployment simulato sono passate. La suite
+completa interrotta resta [senza esito](deployment/runtime_lab_matrix.md).
+Le verifiche di composizione usano fixture statiche. Lo scenario Alice
+sulle nuove modifiche resta da qualificare quando il deployment di
+verifica sarà autorizzato.
 
 | Gruppo del mandato | Stato e punto di ripresa |
 | --- | --- |
 | 3 | [Petrograd](#petrograd_legacy--premi-già-riscossi-nei-salvataggi-storici) conserva le guardie una tantum. [Gold Rush](#gold_rush_scope--proprietà-divisa-e-trasferimenti-durante-la-corsa-alloro) conserva la politica territoriale attuale. Riaprire con una decisione o un riscontro nuovo sui salvataggi. |
 | 4 | [Carrington](#carrington_scheduling--annuncio-storico-del-settembre-1859) consolidato. [Anatolia](#anatolia--perimetro-di-500291-e-verifiche-runtime) ha perimetro approvato e guardie consolidate. Vassallaggio e destinazioni approvati e verificati staticamente. Restano gli esiti runtime indicati nella scheda. |
 | 5 | [Contratti Loader](deployment/script_extender_profile.md#contratti-dei-consumatori) riesaminati. Un residuo richiede il termine ottomano esatto. Legare la chiusura alla firma richiede un segnale dal plugin. |
-| 6 | [Migrazione](upstream_delta_register.md#eccezioni-di-contenuto-e-condizioni-di-riesame), [TECH_AI](#tech_ai--condizione-ai-nel-contesto-errato) e [CANAL_CONTROL](#canal_control--controllo-marittimo-degli-attraversamenti) conservano i limiti indicati. Chunnel e pulizia Direct Immigration sono corretti. |
+| 6 | [Migrazione](upstream_delta_register.md#eccezioni-di-contenuto-e-condizioni-di-riesame), [TECH_AI](#tech_ai--condizione-ai-nel-contesto-errato) e [CANAL_CONTROL](#canal_control--controllo-marittimo-degli-attraversamenti) conservano i limiti indicati. La durata dei lavori, il flag di trattativa del Chunnel e la pulizia Direct Immigration sono corretti. L'inaugurazione bilaterale attende la decisione CHUNNEL_NEGOTIATED_COMPLETION. |
 | 7 | [LTU](#ltu_core_cleanup--ordine-della-pulizia-sic-e-pap) e [FACTORY_STATE](#factory_state--presenza-di-fabbriche-nello-stato) consolidati. [NAVAL_TIMING e NAVAL_AI](#questioni-rinviate) richiedono obiettivi e confronti effettivi. |
 | 8 | [Intersezioni dei submod](deployment/local_deployment.md#optional-component-overlaps) inventariate. Il JIT e le prestazioni restano alle [verifiche runtime](#verifiche-runtime). |
 | 9–11 | I consumatori e i limiti sono nelle [schede unità e Marina](#ricerca-economia-e-unità) e in [ALICE_REMAINING](#questioni-rinviate). I valori ignorati non vanno spostati in uno scope più ampio senza provarne equivalenza e conseguenze. |
-| 12–13 | [Guardie SUB_*](#workaround-navali) e [riscontri OOB](#ordini-di-battaglia-e-storia). Riaprire i pacchetti al supporto della consegna e gli OOB con evidenza mirata sulle esclusioni residue. |
+| 12–13 | [Guardie SUB_*](#workaround-navali) e [riscontri OOB](#ordini-di-battaglia-e-storia). Controlli di cassa SUB_AI_AFFORDABILITY applicati all'ingresso e all'esecuzione. Riaprire i percorsi Alice al supporto della consegna e gli OOB con evidenza mirata sulle esclusioni residue. |
 | 14 | [EVENT_ORPHAN](event_orphan_review.md#inventario). Unione polacca corretta. Verificare le famiglie con ingresso dubbio senza attivare i segnaposto. |
 | 15–17 | [BALANCE e CRASH_1949](#questioni-rinviate), [BATTLE_EVENT](#battle_event--catena-della-cattura-di-santa-anna). Modello di audit aggiornato. Restano obiettivi numerici, contratto del dispatch e fixture del crash. |
 

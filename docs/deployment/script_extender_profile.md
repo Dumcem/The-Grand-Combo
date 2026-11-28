@@ -142,7 +142,11 @@ flag possono rendere incompatibile un salvataggio passato per l'Extender.
   la clausola. Nei trattati forzati il calcolo di costo fuori budget e infamia
   precede il ricontrollo e può includere una clausola poi scartata. Nei
   volontari l'infamia segue il ricontrollo. L'addebito effettivo del caso
-  ottomano resta ignoto.
+  ottomano resta ignoto. Il rapporto conserva il digest dei file e
+  documenta la rimozione dell'archivio isolato dopo il rollback. La radice
+  originaria è assente. Riaprire il caso con una copia del log storico che
+  identifichi la clausola, con la sequenza ordinata dei termini e lo stato
+  iniziale oppure con una fixture equivalente già disponibile.
   [Rapporto](https://github.com/Dumcem/The-Grand-Combo/blob/798eaab6e/docs/deployment/script_extender_task56.md) ·
   [Validità e applicazione Loader](https://github.com/The-Grand-Combination/The-Grand-Loader/blob/3.0.0/script_extender/src/features/treaty.cpp#L815-L925) ·
   [Ordine degli addebiti](https://github.com/The-Grand-Combination/The-Grand-Loader/blob/3.0.0/script_extender/src/features/treaty.cpp#L1301-L1351)

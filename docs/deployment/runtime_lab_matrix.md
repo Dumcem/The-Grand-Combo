@@ -1,5 +1,15 @@
 # Matrice delle verifiche runtime
 
+La suite completa di deployment simulato del checkpoint precedente è stata
+interrotta. La pipeline con `Select-Object -Last 26` tratteneva l'avanzamento
+fino alla fine. I poll vuoti non identificano un test bloccato e
+l'interruzione non ha prodotto un traceback. Dopo la ripresa da
+`5d2f2dfec` sono stati eseguiti in modalità verbosa e senza pipeline
+cinque test mirati, tutti superati. Coprono pubblicazione, verifica e
+rollback di entrambe le composizioni Alice, ciclo Extender + Timeline,
+stabilità del digest, recupero dopo rinomina del descrittore e rifiuto di
+sorgenti obsolete o collisioni. La suite completa resta senza esito.
+
 [Procedura del laboratorio](runtime_lab.md) · [Qualifica Victoria II 3.04](runtime_lab_operations.md#task-14--victoria-ii-304-x86) · [Backlog](../rebaseline_backlog.md#verifiche-runtime)
 
 ## Fixture condivise
