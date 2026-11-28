@@ -148,6 +148,37 @@ because they are outside this auditor's verified contract. The reader remains a
 structural subset, not the whole engine grammar. Required Lua/GUI patterns in the
 validator remain targeted checks, not full parsers for those languages.
 
+**Naval construction ceiling (`limit_per_port`).** In Steam 3.04 the
+unit parser stores the signed value in `CSubUnitDefinition+0xA4`
+(`0x005BB1F0`). The navy code caches a per-country, per-class maximum.
+It multiplies the cap by the number of counted ports at or above
+`min_port_level` (`0x0051F818–0x0051F885`). A negative cap stores the
+unlimited sentinel. The build checks skip the negative ceiling and reject
+a class at its cached ceiling (`0x0051418D–0x005141B0`,
+`0x005142DD–0x005142FD`). Exact membership in the built/queued count
+remains outside this trace. The original tooltip uses the raw field
+(`0x00736D3C`) and the national ceiling (`0x0071524B`).
+
+Alice 1.3.0 keeps the minimum port level and overseas restriction in
+the construction command. It has no equivalent numeric ceiling there.
+The fork's positive definitions are ironclad 10 at level 2, battleship 2
+at level 4, dreadnought 1 at level 5, and Timeline aircraftcarrier 1
+at level 7. The other eight explicit declarations are negative in the
+Timeline composition. This is an engine divergence and supports keeping
+the 3.04 fields until an equivalent is verified. No unit values changed.
+[Alice unit schema](https://github.com/schombert/Project-Alice/blob/v1.3.0/src/parsing/parser_defs.txt#L512-L542) · [Alice build command](https://github.com/schombert/Project-Alice/blob/v1.3.0/src/gamestate/commands.cpp#L762-L803)
+
+**Unit presentation precedence (`priority`).** Steam 3.04 parses the
+field into `CSubUnitDefinition+0x178` (`0x005BA853–0x005BA861`). In the
+definition merge, a strictly higher incoming priority replaces the
+sprite field at `+0x17C` and associated fields
+(`0x005BDB25–0x005BDB97`). Equal priority keeps the previous fields.
+The adjacent parser case for `sprite` writes the field at `+0x17C`
+(`0x005BA86C`). This establishes a presentation use. The wider call
+graph, including any effect on AI construction, remains unverified.
+Alice's unit schema discards the field.
+[Alice unit schema](https://github.com/schombert/Project-Alice/blob/v1.3.0/src/parsing/parser_defs.txt#L512-L542)
+
 ## Dating and uncertainty
 
 A technology's direct year is a reference research-scenario anchor, not an actual
